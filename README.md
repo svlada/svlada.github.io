@@ -1,1 +1,0 @@
-# svlada.github.io
