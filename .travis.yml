@@ -10,7 +10,7 @@ deploy:
   local-dir: _site
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  github-token: $GITHUB_TOKEN  # Sdet in travis-ci.org dashboard, marked secure
   keep-history: true
   target_branch: master
   on:
