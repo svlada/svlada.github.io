@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design patterns - Step builder</title>
+    <meta name="Description" content="The Step Builder pattern is an object creation software design pattern.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="svlada">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">svlada</a></h1>
+      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>Design patterns - Step builder</h1>
+
+<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A" aria-hidden="true">#</a></h2>
+<ol>
+<li><a title="Introduction: Step builder pattern" href="#introduction">Introduction</a></li>
+<li><a title="Pros and cons about step builder pattern" href="#step-builder-pattern-pros-and-cons">Pros and cons</a></li>
+<li><a title="Code walkthrough" href="#code-walkthrough">Code-walkthrough</a></li>
+<li><a title="Source code" href="#source-code">Source code</a></li>
+<li><a title="Eclipse plug-in" href="#eclipse-plugin">Eclipse plug-in</a></li>
+</ol>
+<h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h3>
+<p>I have recently decided to use Amazon SES API in order to be able to send emails to my <a href="http://microservicesweekly.com">Microservices Weekly</a> subscribers. What prompted me to use Amazon SES API is its price. It's really cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a <a href="https://github.com/svlada/ziggy">small wrapper</a> around their API.</p>
+<p>To make long story short, the main purpose here is to share my experience with a less well-known derivate of Builder pattern - Step Builder pattern.</p>
+<p>The Step Builder pattern is an object creation software design pattern. It's not so commonly mentioned in popular readings about design patterns. Honestly, I've heard about this pattern only recently from my collegue <a href="https://twitter.com/mikeladev">@mikeladev</a>.</p>
+<p>The Step Builder pattern offers some neat benefits when you compare it to traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects.</p>
+<h3 id="pros-and-cons"><a name="step-builder-pattern-pros-and-cons" id="step-builder-pattern-pros-and-cons">Pros and cons</a> <a class="direct-link" href="#pros-and-cons" aria-hidden="true">#</a></h3>
+<p><strong>Pros</strong></p>
+<ol>
+<li>User guidance for your API through object creation process step by step.</li>
+<li>API User can call builder's build() method once the object is in the consistent state.</li>
+<li>Reduced opportunity for creation of inconsistent object instances.</li>
+<li>Sequencing initialization of mandatory fields.</li>
+<li>Fluent API.</li>
+<li>No need for providing validate() method for field validation.</li>
+</ol>
+<p><strong>Cons</strong></p>
+<ol>
+<li>Low readability of code needed to implement the pattern itself.</li>
+<li>No eclipse plugin to help with code generation. (On the other hand, there are plenty of code generators for Builder pattern generator).</li>
+</ol>
+<h3 id="code-walkthrough"><a name="code-walkthrough" id="code-walkthrough">Code-walkthrough</a> <a class="direct-link" href="#code-walkthrough" aria-hidden="true">#</a></h3>
+<p>Since the Step Builder pattern is a creational design pattern, let's focus on its purpose - creation of objects.</p>
+<p>Example of API usage is shown below:</p>
+<pre><code>Email email = 
+Email.builder().from(EmailAddress.of(&quot;Microservices Weekly &lt;mw@microservicesweekly.com&gt;&quot;))
+	.to(EmailAddress.of(&quot;svlada@gmail.com&quot;))
+	.subject(Subject.of(&quot;Subject&quot;))
+	.content(Content.of(&quot;Test email&quot;))
+	.build();
+</code></pre>
+<p>Now, let's see how API is enforcing initialiation of object in the pre-defined order.</p>
+<p>The following image is the graphical representation of the state machine for constructing Email object with the Step Builder pattern (mandatory values are marked purple and optional values are yellow):<br>
+<img src="/img/step-builder/step-builder.png" alt="Builder pattern"></p>
+<p>Rules of thumb for implementation:</p>
+<ol>
+<li>Add dependencies to your class. It's recommended to add private modifier to class attributes.</li>
+<li>Define creational steps as inner interfaces in your base class.</li>
+<li>Each creational step should return next step (interface) in chain.</li>
+<li>Final step should be interface called &quot;Build&quot; which will provide build() method.</li>
+<li>Define one inner static Builder class which implements all of defined steps.</li>
+<li>Implement step interface methods.</li>
+</ol>
+<h3 id="source-code"><a name="source-code" id="source-code">Source code</a> <a class="direct-link" href="#source-code" aria-hidden="true">#</a></h3>
+<p>Complete Example of Step by Step builder pattern:</p>
+<pre><code>public class Email {
+	private EmailAddress from;
+	private List&lt;EmailAddress&gt; to;
+	private List&lt;EmailAddress&gt; cc;
+	private List&lt;EmailAddress&gt; bcc;
+	private Subject subject;
+	private Content content;
+	
+	public static FromStep builder() {
+		return new Builder();
+	}
+
+	public interface FromStep {
+		ToStep from(EmailAddress from);
+	}
+	
+	public interface ToStep {
+		SubjectStep to(EmailAddress... from);
+	}
+	
+	public interface SubjectStep {
+		ContentStep subject(Subject subject);
+	}
+	
+	public interface ContentStep {
+		Build content(Content content);
+	}
+	
+	public interface Build {
+		Email build();
+		Build cc(EmailAddress... cc);
+		Build bcc(EmailAddress... bcc);
+	}
+	
+	public static class Builder implements FromStep, ToStep, SubjectStep, ContentStep, Build {
+		private EmailAddress from;
+		private List&lt;EmailAddress&gt; to;
+		private List&lt;EmailAddress&gt; cc;
+		private List&lt;EmailAddress&gt; bcc;
+		private Subject subject;
+		private Content content;
+		
+		@Override
+		public Email build() {
+			return new Email(this);
+		}
+		@Override
+		public Build cc(EmailAddress... cc) {
+			Objects.requireNonNull(cc);
+			this.cc = new ArrayList&lt;EmailAddress&gt;(Arrays.asList(cc));
+			return this;
+		}
+		@Override
+		public Build bcc(EmailAddress... bcc) {
+			Objects.requireNonNull(bcc);
+			this.bcc = new ArrayList&lt;EmailAddress&gt;(Arrays.asList(bcc));
+			return this;
+		}
+		@Override
+		public Build content(Content content) {
+			Objects.requireNonNull(content);
+			this.content = content;
+			return this;
+		}
+		@Override
+		public ContentStep subject(Subject subject) {
+			Objects.requireNonNull(subject);
+			this.subject = subject;
+			return this;
+		}
+		@Override
+		public SubjectStep to(EmailAddress... to) {
+			Objects.requireNonNull(to);
+			this.to = new ArrayList&lt;EmailAddress&gt;(Arrays.asList(to));
+			return this;
+		}
+		@Override
+		public ToStep from(EmailAddress from) {
+			Objects.requireNonNull(from);
+			this.from = from;
+			return this;
+		}
+	}
+
+	private Email(Builder builder) {
+		this.from = builder.from;
+		this.to = builder.to;
+		this.cc = builder.cc;
+		this.bcc = builder.bcc;
+		this.subject = builder.subject;
+		this.content = builder.content;
+	}
+
+	public EmailAddress getFrom() {
+		return from;
+	}
+
+	public List&lt;EmailAddress&gt; getTo() {
+		return to;
+	}
+
+	public List&lt;EmailAddress&gt; getCc() {
+		return cc;
+	}
+
+	public List&lt;EmailAddress&gt; getBcc() {
+		return bcc;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public Content getContent() {
+		return content;
+	}
+}
+</code></pre>
+<h3 id="eclipse-plug-in"><a name="eclipse-plugin" id="eclipse-plugin">Eclipse plug-in</a> <a class="direct-link" href="#eclipse-plug-in" aria-hidden="true">#</a></h3>
+<p>So far, I haven't found a plug-in for Eclipse that provides Step Builder code generation feature.</p>
+<p>I have created a github repository with the intention of creating an Eclipse plug-in that will provide support for Step Builder pattern generation: <a href="https://github.com/svlada/alyx">https://github.com/svlada/alyx</a></p>
+
+
+<p><a href="/">← Home</a></p>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /step-builder-pattern/ -->
+  </body>
+</html>

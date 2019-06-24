@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Authentication Tutorial - An example using Spring Boot</title>
+    <meta name="Description" content="This article will guide you on how you can implement JWT authentication with Spring Boot.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="svlada">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">svlada</a></h1>
+      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>JWT Authentication Tutorial - An example using Spring Boot</h1>
+
+<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A" aria-hidden="true">#</a></h2>
+<ol>
+<li><a title="Introduction: JWT Token" href="#introduction">Introduction</a></li>
+<li><a title="pre-requisites" href="#pre-requisites">PRE-requisites</a></li>
+<li><a title="Spring Security: Ajax authentication" href="#ajax-authentication">Ajax authentication</a></li>
+<li><a title="jwt-authentication" href="#jwt-authentication">JWT Authentication</a></li>
+</ol>
+<h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h3>
+<p>This article will guide you on how you can implement JWT authentication with Spring Boot.</p>
+<p>We will cover the following two scenarios:</p>
+<ol>
+<li>Ajax Authentication</li>
+<li>JWT Token Authentication</li>
+</ol>
+<h3 id="pre-requisites"><a name="pre-requisites" id="pre-requisites">PRE-requisites</a> <a class="direct-link" href="#pre-requisites" aria-hidden="true">#</a></h3>
+<p>Please check out the sample code/project from the following GitHub repository: <a href="https://github.com/svlada/springboot-security-jwt">https://github.com/svlada/springboot-security-jwt</a> before going further reading the article.</p>
+<p>This project is using H2 in-memory database to store sample user information. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (<code>/jwt-demo/src/main/resources/data.sql</code>).</p>
+<p>Overall project structure is shown below:</p>
+<pre><code>+---main
+|   +---java
+|   |   \---com
+|   |       \---svlada
+|   |           +---common
+|   |           +---entity
+|   |           +---profile
+|   |           |   \---endpoint
+|   |           +---security
+|   |           |   +---auth
+|   |           |   |   +---ajax
+|   |           |   |   \---jwt
+|   |           |   |       +---extractor
+|   |           |   |       \---verifier
+|   |           |   +---config
+|   |           |   +---endpoint
+|   |           |   +---exceptions
+|   |           |   \---model
+|   |           |       \---token
+|   |           \---user
+|   |               +---repository
+|   |               \---service
+|   \---resources
+|       +---static
+|       \---templates
+</code></pre>
+<h3 id="ajax-authentication"><a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a> <a class="direct-link" href="#ajax-authentication" aria-hidden="true">#</a></h3>
+<p>When we talk about Ajax authentication we usually refer to process where user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.</p>
+<p>In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.</p>
+<p>Following is the list of components that we'll implement:</p>
+<ol>
+<li><code>AjaxLoginProcessingFilter</code></li>
+<li><code>AjaxAuthenticationProvider</code></li>
+<li><code>AjaxAwareAuthenticationSuccessHandler</code></li>
+<li><code>AjaxAwareAuthenticationFailureHandler</code></li>
+<li><code>RestAuthenticationEntryPoint</code></li>
+<li><code>WebSecurityConfig</code></li>
+</ol>
+<p>Before we get to the details of the implementation, let's look at the request/response authentication flow.</p>
+<p><strong>Ajax authentication request example</strong></p>
+<p>The Authentication API allows user to pass in credentials in order to receive authentication token.</p>
+<p>In our example, client initiates authentication process by invoking Authentication API endpoint (<code>/api/auth/login</code>).</p>
+<p>Raw HTTP request:</p>
+<pre><code>POST /api/auth/login HTTP/1.1
+Host: localhost:9966
+X-Requested-With: XMLHttpRequest
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+    &quot;username&quot;: &quot;svlada@gmail.com&quot;,
+    &quot;password&quot;: &quot;test1234&quot;
+}
+</code></pre>
+<p>CURL:</p>
+<pre><code>curl -X POST -H &quot;X-Requested-With: XMLHttpRequest&quot; -H &quot;Content-Type: application/json&quot; -H &quot;Cache-Control: no-cache&quot; -d '{
+    &quot;username&quot;: &quot;svlada@gmail.com&quot;,
+    &quot;password&quot;: &quot;test1234&quot;
+}' &quot;http://localhost:9966/api/auth/login&quot;
+</code></pre>
+<p><strong>Ajax authentication response example</strong></p>
+<p>If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:</p>
+<ol>
+<li>HTTP status &quot;200 OK&quot;</li>
+<li>Signed JWT Access and Refresh tokens are included in the response body</li>
+</ol>
+<p><strong>JWT Access token</strong> - used to authenticate against protected API resources. It must be set in <code>X-Authorization</code> header.</p>
+<p><strong>JWT Refresh token</strong> - used to acquire new Access Token. Token refresh is handled by the following API endpoint: <code>/api/auth/token</code>.</p>
+<p>Raw HTTP Response:</p>
+<pre><code>{
+  &quot;token&quot;: &quot;eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMDMzMzA4LCJleHAiOjE0NzIwMzQyMDh9.41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ&quot;,
+  
+  &quot;refreshToken&quot;: &quot;eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfUkVGUkVTSF9UT0tFTiJdLCJpc3MiOiJodHRwOi8vc3ZsYWRhLmNvbSIsImp0aSI6IjkwYWZlNzhjLTFkMmUtNDg2OS1hNzdlLTFkNzU0YjYwZTBjZSIsImlhdCI6MTQ3MjAzMzMwOCwiZXhwIjoxNDcyMDM2OTA4fQ.SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg&quot;
+}
+</code></pre>
+<p><strong>JWT Access Token</strong></p>
+<p>JWT Access token can be used for authentication and authorization:</p>
+<ol>
+<li>Authentication is performed by verifying JWT Access Token signature. If signature proves to be valid, access to requested API resource is granted.</li>
+<li>Authorization is done by looking up privileges in the <strong>scope</strong> attribute of JWT Access token.</li>
+</ol>
+<p>Decoded JWT Access token has three parts: Header, Claims and Signature as shown below:</p>
+<p>Header</p>
+<pre><code>
+{
+    &quot;alg&quot;: &quot;HS512&quot;
+}
+</code></pre>
+<p>Claims</p>
+<pre><code>{
+  &quot;sub&quot;: &quot;svlada@gmail.com&quot;,
+  &quot;scopes&quot;: [
+    &quot;ROLE_ADMIN&quot;,
+    &quot;ROLE_PREMIUM_MEMBER&quot;
+  ],
+  &quot;iss&quot;: &quot;http://svlada.com&quot;,
+  &quot;iat&quot;: 1472033308,
+  &quot;exp&quot;: 1472034208
+}
+</code></pre>
+<p>Signature (base64 encoded)</p>
+<pre><code>41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ
+</code></pre>
+<p><strong>JWT Refresh Token</strong></p>
+<p>Refresh token is long-lived token used to request new Access tokens. It's expiration time is greater than expiration time of Access token.</p>
+<p>In this tutorial we'll use <code>jti</code> claim to maintain list of blacklisted or revoked tokens. JWT ID(<code>jti</code>) claim is defined by <a href="https://tools.ietf.org/html/rfc7519#section-4.1.7">RFC7519</a> with purpose to uniquely identify individual Refresh token.</p>
+<p>Decoded Refresh token has three parts: Header, Claims and Signature as shown below:</p>
+<p>Header</p>
+<pre><code>{
+  &quot;alg&quot;: &quot;HS512&quot;
+}
+</code></pre>
+<p>Claims</p>
+<pre><code>{
+  &quot;sub&quot;: &quot;svlada@gmail.com&quot;,
+  &quot;scopes&quot;: [
+    &quot;ROLE_REFRESH_TOKEN&quot;
+  ],
+  &quot;iss&quot;: &quot;http://svlada.com&quot;,
+  &quot;jti&quot;: &quot;90afe78c-1d2e-4869-a77e-1d754b60e0ce&quot;,
+  &quot;iat&quot;: 1472033308,
+  &quot;exp&quot;: 1472036908
+}
+</code></pre>
+<p>Signature (base64 encoded)</p>
+<pre><code>SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg
+</code></pre>
+<h4 id="ajaxloginprocessingfilter">AjaxLoginProcessingFilter <a class="direct-link" href="#ajaxloginprocessingfilter" aria-hidden="true">#</a></h4>
+<p>First step is to extend <code>AbstractAuthenticationProcessingFilter</code> in order to provide custom processing of Ajax authentication requests.</p>
+<p>De-serialization and basic validation of the incoming JSON payload is done in the <code>AjaxLoginProcessingFilter#attemptAuthentication</code> method. Upon successful validation of the JSON payload authentication logic is delegated to AjaxAuthenticationProvider class.</p>
+<p>In case of a successful authentication <code>AjaxLoginProcessingFilter#successfulAuthentication</code> method is invoked.<br>
+In case of failure authentication  <code>AjaxLoginProcessingFilter#unsuccessfulAuthentication</code> method is invoked.</p>
+<pre><code>public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private static Logger logger = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
+
+    private final AuthenticationSuccessHandler successHandler;
+    private final AuthenticationFailureHandler failureHandler;
+
+    private final ObjectMapper objectMapper;
+    
+    public AjaxLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler, 
+            AuthenticationFailureHandler failureHandler, ObjectMapper mapper) {
+        super(defaultProcessUrl);
+        this.successHandler = successHandler;
+        this.failureHandler = failureHandler;
+        this.objectMapper = mapper;
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+        if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isAjax(request)) {
+            if(logger.isDebugEnabled()) {
+                logger.debug(&quot;Authentication method not supported. Request method: &quot; + request.getMethod());
+            }
+            throw new AuthMethodNotSupportedException(&quot;Authentication method not supported&quot;);
+        }
+
+        LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
+        
+        if (StringUtils.isBlank(loginRequest.getUsername()) || StringUtils.isBlank(loginRequest.getPassword())) {
+            throw new AuthenticationServiceException(&quot;Username or Password not provided&quot;);
+        }
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+
+        return this.getAuthenticationManager().authenticate(token);
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        successHandler.onAuthenticationSuccess(request, response, authResult);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+}
+</code></pre>
+<h4 id="ajaxauthenticationprovider">AjaxAuthenticationProvider <a class="direct-link" href="#ajaxauthenticationprovider" aria-hidden="true">#</a></h4>
+<p>Responsibility of the AjaxAuthenticationProvider class is to:</p>
+<ol>
+<li>Verify user credentials against database, LDAP or some other system which holds the user data</li>
+<li>If <code>username</code> and <code>password</code> do not match the record in the database authentication exception is thrown</li>
+<li>Create UserContext and populate it with user data you need (in our case just <code>username</code> and <code>user privileges</code>)</li>
+<li>Upon successful authentication delegate creation of JWT Token to <code>AjaxAwareAuthenticationSuccessHandler</code></li>
+</ol>
+<pre><code>@Component
+public class AjaxAuthenticationProvider implements AuthenticationProvider {
+    private final BCryptPasswordEncoder encoder;
+    private final DatabaseUserService userService;
+
+    @Autowired
+    public AjaxAuthenticationProvider(final DatabaseUserService userService, final BCryptPasswordEncoder encoder) {
+        this.userService = userService;
+        this.encoder = encoder;
+    }
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        Assert.notNull(authentication, &quot;No authentication data provided&quot;);
+
+        String username = (String) authentication.getPrincipal();
+        String password = (String) authentication.getCredentials();
+
+        User user = userService.getByUsername(username).orElseThrow(() -&gt; new UsernameNotFoundException(&quot;User not found: &quot; + username));
+        
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException(&quot;Authentication Failed. Username or Password not valid.&quot;);
+        }
+
+        if (user.getRoles() == null) throw new InsufficientAuthenticationException(&quot;User has no roles assigned&quot;);
+        
+        List&lt;GrantedAuthority&gt; authorities = user.getRoles().stream()
+                .map(authority -&gt; new SimpleGrantedAuthority(authority.getRole().authority()))
+                .collect(Collectors.toList());
+        
+        UserContext userContext = UserContext.create(user.getUsername(), authorities);
+        
+        return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class&lt;?&gt; authentication) {
+        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+}
+</code></pre>
+<h4 id="ajaxawareauthenticationsuccesshandler">AjaxAwareAuthenticationSuccessHandler <a class="direct-link" href="#ajaxawareauthenticationsuccesshandler" aria-hidden="true">#</a></h4>
+<p>We'll implement AuthenticationSuccessHandler interface that is called when client has been successfully authenticated.</p>
+<p>AjaxAwareAuthenticationSuccessHandler class is our custom implementation of AuthenticationSuccessHandler interface. Responsibility of this class is to add JSON payload containing JWT Access and Refresh tokens into the HTTP response body.</p>
+<pre><code>@Component
+public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    private final ObjectMapper mapper;
+    private final JwtTokenFactory tokenFactory;
+
+    @Autowired
+    public AjaxAwareAuthenticationSuccessHandler(final ObjectMapper mapper, final JwtTokenFactory tokenFactory) {
+        this.mapper = mapper;
+        this.tokenFactory = tokenFactory;
+    }
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws IOException, ServletException {
+        UserContext userContext = (UserContext) authentication.getPrincipal();
+        
+        JwtToken accessToken = tokenFactory.createAccessJwtToken(userContext);
+        JwtToken refreshToken = tokenFactory.createRefreshToken(userContext);
+        
+        Map&lt;String, String&gt; tokenMap = new HashMap&lt;String, String&gt;();
+        tokenMap.put(&quot;token&quot;, accessToken.getToken());
+        tokenMap.put(&quot;refreshToken&quot;, refreshToken.getToken());
+
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        mapper.writeValue(response.getWriter(), tokenMap);
+
+        clearAuthenticationAttributes(request);
+    }
+
+    /**
+     * Removes temporary authentication-related data which may have been stored
+     * in the session during the authentication process..
+     * 
+     */
+    protected final void clearAuthenticationAttributes(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            return;
+        }
+
+        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+    }
+}
+</code></pre>
+<p>Let's focus for a moment on how JWT Access token is created. In this tutorial we are using <a href="https://github.com/jwtk/jjwt">Java JWT</a> library created by <a href="https://stormpath.com/">Stormpath</a>.</p>
+<p>Make sure that <code>JJWT</code> dependency is included in your <code>pom.xml</code>.</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+    &lt;artifactId&gt;jjwt&lt;/artifactId&gt;
+    &lt;version&gt;${jjwt.version}&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>We have created factory class (<code>JwtTokenFactory</code>) to decouple token creation logic.</p>
+<p>Method <code>JwtTokenFactory#createAccessJwtToken</code>  creates signed JWT Access token.</p>
+<p>Method <code>JwtTokenFactory#createRefreshToken</code> creates signed JWT Refresh token.</p>
+<pre><code>@Component
+public class JwtTokenFactory {
+    private final JwtSettings settings;
+
+    @Autowired
+    public JwtTokenFactory(JwtSettings settings) {
+        this.settings = settings;
+    }
+
+    /**
+     * Factory method for issuing new JWT Tokens.
+     * 
+     * @param username
+     * @param roles
+     * @return
+     */
+    public AccessJwtToken createAccessJwtToken(UserContext userContext) {
+        if (StringUtils.isBlank(userContext.getUsername())) 
+            throw new IllegalArgumentException(&quot;Cannot create JWT Token without username&quot;);
+
+        if (userContext.getAuthorities() == null || userContext.getAuthorities().isEmpty()) 
+            throw new IllegalArgumentException(&quot;User doesn't have any privileges&quot;);
+
+        Claims claims = Jwts.claims().setSubject(userContext.getUsername());
+        claims.put(&quot;scopes&quot;, userContext.getAuthorities().stream().map(s -&gt; s.toString()).collect(Collectors.toList()));
+
+        DateTime currentTime = new DateTime();
+
+        String token = Jwts.builder()
+          .setClaims(claims)
+          .setIssuer(settings.getTokenIssuer())
+          .setIssuedAt(currentTime.toDate())
+          .setExpiration(currentTime.plusMinutes(settings.getTokenExpirationTime()).toDate())
+          .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+        .compact();
+
+        return new AccessJwtToken(token, claims);
+    }
+
+    public JwtToken createRefreshToken(UserContext userContext) {
+        if (StringUtils.isBlank(userContext.getUsername())) {
+            throw new IllegalArgumentException(&quot;Cannot create JWT Token without username&quot;);
+        }
+
+        DateTime currentTime = new DateTime();
+
+        Claims claims = Jwts.claims().setSubject(userContext.getUsername());
+        claims.put(&quot;scopes&quot;, Arrays.asList(Scopes.REFRESH_TOKEN.authority()));
+        
+        String token = Jwts.builder()
+          .setClaims(claims)
+          .setIssuer(settings.getTokenIssuer())
+          .setId(UUID.randomUUID().toString())
+          .setIssuedAt(currentTime.toDate())
+          .setExpiration(currentTime.plusMinutes(settings.getRefreshTokenExpTime()).toDate())
+          .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+        .compact();
+
+        return new AccessJwtToken(token, claims);
+    }
+}
+</code></pre>
+<p>Please note that if you are instantiating Claims object outside of <code>Jwts.builder()</code> make sure to first invoke <code>Jwts.builder()#setClaims(claims)</code>. Why? Well, if you don't do that, Jwts.builder will, by default, create empty Claims object. What that means? Well if you call <code>Jwts.builder()#setClaims()</code> after you have set subject with <code>Jwts.builder()#setSubject()</code> your subject will be lost. Simply new instance of Claims class will overwrite default one created by Jwts.builder().</p>
+<h4 id="ajaxawareauthenticationfailurehandler">AjaxAwareAuthenticationFailureHandler <a class="direct-link" href="#ajaxawareauthenticationfailurehandler" aria-hidden="true">#</a></h4>
+<p>AjaxAwareAuthenticationFailureHandler is invoked by <code>AjaxLoginProcessingFilter</code> in case of authentication failures. You can design specific error messages based on exception type that have occurred during the authentication process.</p>
+<pre><code>@Component
+public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    private final ObjectMapper mapper;
+    
+    @Autowired
+    public AjaxAwareAuthenticationFailureHandler(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }   
+    
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException e) throws IOException, ServletException {
+        
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        
+        if (e instanceof BadCredentialsException) {
+            mapper.writeValue(response.getWriter(), ErrorResponse.of(&quot;Invalid username or password&quot;, ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+        } else if (e instanceof JwtExpiredTokenException) {
+            mapper.writeValue(response.getWriter(), ErrorResponse.of(&quot;Token has expired&quot;, ErrorCode.JWT_TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED));
+        } else if (e instanceof AuthMethodNotSupportedException) {
+            mapper.writeValue(response.getWriter(), ErrorResponse.of(e.getMessage(), ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+        }
+
+        mapper.writeValue(response.getWriter(), ErrorResponse.of(&quot;Authentication failed&quot;, ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+    }
+}
+
+</code></pre>
+<h3 id="jwt-authentication"><a name="jwt-authentication" id="jwt-authentication">JWT Authentication</a> <a class="direct-link" href="#jwt-authentication" aria-hidden="true">#</a></h3>
+<p>Token based authentication schema's became immensely popular in recent times, as they provide important benefits when compared to sessions/cookies:</p>
+<ol>
+<li>CORS</li>
+<li>No need for CSRF protection</li>
+<li>Better integration with mobile</li>
+<li>Reduced load on authorization server</li>
+<li>No need for distributed session store</li>
+</ol>
+<p>Some trade-offs have to be made with this approach:</p>
+<ol>
+<li>More vulnerable to XSS attacks</li>
+<li>Access token can contain outdated authorization claims (e.g when some of the user privileges are revoked)</li>
+<li>Access tokens can grow in size in case of increased number of claims</li>
+<li>File download API can be tricky to implement</li>
+<li>True statelessness and revocation are mutually exclusive</li>
+</ol>
+<p>In this article we'll investigate how JWT's can used for token based authentication.</p>
+<p>JWT Authentication flow is very simple:</p>
+<ol>
+<li>User obtains Refresh and Access tokens by providing credentials to the Authorization server</li>
+<li>User sends Access token with each request to access protected API resource</li>
+<li>Access token is signed and contains user identity (e.g. user id) and authorization claims.</li>
+</ol>
+<p>It's important to note that authorization claims will be included with the Access token. Why is this important? Well, let's say that authorization claims (e.g user privileges in the database) are changed during the life time of Access token. Those changes will not become effective until new Access token is issued. In most cases this is not big issue, because Access tokens are short-lived. Otherwise go with the opaque token pattern.</p>
+<p>Before we get to the details of the implementation, let's look the sample request to protected API resource.</p>
+<p><strong>Signed request to protected API resource</strong></p>
+<p>Following pattern should be used when sending access tokens: <code>&lt;header-name&gt; Bearer &lt;access_token&gt;</code>.</p>
+<p>In our example for header name (<code>&lt;header-name&gt;</code>) we are using <code>X-Authorization</code>.</p>
+<p>Raw HTTP request:</p>
+<pre><code>GET /api/me HTTP/1.1
+Host: localhost:9966
+X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w
+Cache-Control: no-cache
+</code></pre>
+<p>CURL:</p>
+<pre><code>curl -X GET -H &quot;X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w&quot; -H &quot;Cache-Control: no-cache&quot; &quot;http://localhost:9966/api/me&quot;
+</code></pre>
+<p>Let's see the implementation details. Following are components we need to implement JWT Authentication:</p>
+<ol>
+<li>JwtTokenAuthenticationProcessingFilter</li>
+<li>JwtAuthenticationProvider</li>
+<li>SkipPathRequestMatcher</li>
+<li>JwtHeaderTokenExtractor</li>
+<li>BloomFilterTokenVerifier</li>
+<li>WebSecurityConfig</li>
+</ol>
+<h4 id="jwttokenauthenticationprocessingfilter">JwtTokenAuthenticationProcessingFilter <a class="direct-link" href="#jwttokenauthenticationprocessingfilter" aria-hidden="true">#</a></h4>
+<p>JwtTokenAuthenticationProcessingFilter filter is applied to each API (<code>/api/**</code>) with exception of the refresh token endpoint (<code>/api/auth/token</code>) and login endpoint (<code>/api/auth/login</code>).</p>
+<p>This filter has the following responsibilities:</p>
+<ol>
+<li>Check for access token in <code>X-Authorization</code> header. If Access token is found in the header, delegate authentication to <code>JwtAuthenticationProvider</code> otherwise throw authentication exception</li>
+<li>Invokes success or failure strategies based on the outcome of authentication process performed by <code>JwtAuthenticationProvider</code></li>
+</ol>
+<p>Please ensure that <code>chain.doFilter(request, response)</code> is invoked upon successful authentication. You want processing of the request to advance to the next filter, because very last one filter <code>FilterSecurityInterceptor#doFilter</code> is responsible to actually invoke method in your controller that is handling requested API resource.</p>
+<pre><code>public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private final AuthenticationFailureHandler failureHandler;
+    private final TokenExtractor tokenExtractor;
+    
+    @Autowired
+    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler, 
+            TokenExtractor tokenExtractor, RequestMatcher matcher) {
+        super(matcher);
+        this.failureHandler = failureHandler;
+        this.tokenExtractor = tokenExtractor;
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+        String tokenPayload = request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM);
+        RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
+        return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authResult);
+        SecurityContextHolder.setContext(context);
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+}
+</code></pre>
+<h4 id="jwtheadertokenextractor">JwtHeaderTokenExtractor <a class="direct-link" href="#jwtheadertokenextractor" aria-hidden="true">#</a></h4>
+<p>JwtHeaderTokenExtractor is very simple class used to extract Authorization token from header. You can extend TokenExtractor interface and provide your custom implementation that will for example extract token from URL.</p>
+<pre><code>@Component
+public class JwtHeaderTokenExtractor implements TokenExtractor {
+    public static String HEADER_PREFIX = &quot;Bearer &quot;;
+
+    @Override
+    public String extract(String header) {
+        if (StringUtils.isBlank(header)) {
+            throw new AuthenticationServiceException(&quot;Authorization header cannot be blank!&quot;);
+        }
+
+        if (header.length() &lt; HEADER_PREFIX.length()) {
+            throw new AuthenticationServiceException(&quot;Invalid authorization header size.&quot;);
+        }
+
+        return header.substring(HEADER_PREFIX.length(), header.length());
+    }
+}
+</code></pre>
+<h4 id="jwtauthenticationprovider">JwtAuthenticationProvider <a class="direct-link" href="#jwtauthenticationprovider" aria-hidden="true">#</a></h4>
+<p>JwtAuthenticationProvider has the following responsibilities:</p>
+<ol>
+<li>Verify the access token's signature</li>
+<li>Extract identity and authorization claims from Access token and use them to create UserContext</li>
+<li>If Access token is malformed, expired or simply if token is not signed with the appropriate signing key Authentication exception will be thrown</li>
+</ol>
+<pre><code>@Component
+public class JwtAuthenticationProvider implements AuthenticationProvider {
+    private final JwtSettings jwtSettings;
+    
+    @Autowired
+    public JwtAuthenticationProvider(JwtSettings jwtSettings) {
+        this.jwtSettings = jwtSettings;
+    }
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
+
+        Jws&lt;Claims&gt; jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
+        String subject = jwsClaims.getBody().getSubject();
+        List&lt;String&gt; scopes = jwsClaims.getBody().get(&quot;scopes&quot;, List.class);
+        List&lt;GrantedAuthority&gt; authorities = scopes.stream()
+                .map(authority -&gt; new SimpleGrantedAuthority(authority))
+                .collect(Collectors.toList());
+        
+        UserContext context = UserContext.create(subject, authorities);
+        
+        return new JwtAuthenticationToken(context, context.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class&lt;?&gt; authentication) {
+        return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+}
+
+</code></pre>
+<h4 id="skippathrequestmatcher">SkipPathRequestMatcher <a class="direct-link" href="#skippathrequestmatcher" aria-hidden="true">#</a></h4>
+<p>JwtTokenAuthenticationProcessingFilter  filter is configured to skip following endpoints: <code>/api/auth/login</code> and <code>/api/auth/token</code>. This is achieved with <code>SkipPathRequestMatcher</code> implementation of <code>RequestMatcher</code>.</p>
+<pre><code>public class SkipPathRequestMatcher implements RequestMatcher {
+    private OrRequestMatcher matchers;
+    private RequestMatcher processingMatcher;
+    
+    public SkipPathRequestMatcher(List&lt;String&gt; pathsToSkip, String processingPath) {
+        Assert.notNull(pathsToSkip);
+        List&lt;RequestMatcher&gt; m = pathsToSkip.stream().map(path -&gt; new AntPathRequestMatcher(path)).collect(Collectors.toList());
+        matchers = new OrRequestMatcher(m);
+        processingMatcher = new AntPathRequestMatcher(processingPath);
+    }
+
+    @Override
+    public boolean matches(HttpServletRequest request) {
+        if (matchers.matches(request)) {
+            return false;
+        }
+        return processingMatcher.matches(request) ? true : false;
+    }
+}
+</code></pre>
+<h4 id="websecurityconfig">WebSecurityConfig <a class="direct-link" href="#websecurityconfig" aria-hidden="true">#</a></h4>
+<p>WebSecurityConfig class extends WebSecurityConfigurerAdapter to provide custom security configuration.</p>
+<p>Following beans are configured and instantiated in this class:</p>
+<ol>
+<li>AjaxLoginProcessingFilter</li>
+<li>JwtTokenAuthenticationProcessingFilter</li>
+<li>AuthenticationManager</li>
+<li>BCryptPasswordEncoder</li>
+</ol>
+<p>Also, inside <code>WebSecurityConfig#configure(HttpSecurity http)</code> method we'll configure patterns to define protected/unprotected API endpoints. Please note that we have disabled CSRF protection because we are not using Cookies.</p>
+<pre><code>@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    public static final String JWT_TOKEN_HEADER_PARAM = &quot;X-Authorization&quot;;
+    public static final String FORM_BASED_LOGIN_ENTRY_POINT = &quot;/api/auth/login&quot;;
+    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = &quot;/api/**&quot;;
+    public static final String TOKEN_REFRESH_ENTRY_POINT = &quot;/api/auth/token&quot;;
+    
+    @Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired private AuthenticationSuccessHandler successHandler;
+    @Autowired private AuthenticationFailureHandler failureHandler;
+    @Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
+    @Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
+    
+    @Autowired private TokenExtractor tokenExtractor;
+    
+    @Autowired private AuthenticationManager authenticationManager;
+    
+    @Autowired private ObjectMapper objectMapper;
+        
+    protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() throws Exception {
+        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, successHandler, failureHandler, objectMapper);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+    
+    protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
+        List&lt;String&gt; pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        JwtTokenAuthenticationProcessingFilter filter 
+            = new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(ajaxAuthenticationProvider);
+        auth.authenticationProvider(jwtAuthenticationProvider);
+    }
+    
+    @Bean
+    protected BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+        .csrf().disable() // We don't need CSRF for JWT based authentication
+        .exceptionHandling()
+        .authenticationEntryPoint(this.authenticationEntryPoint)
+        
+        .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        .and()
+            .authorizeRequests()
+                .antMatchers(FORM_BASED_LOGIN_ENTRY_POINT).permitAll() // Login end-point
+                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll() // Token refresh end-point
+                .antMatchers(&quot;/console&quot;).permitAll() // H2 Console Dash-board - only for testing
+        .and()
+            .authorizeRequests()
+                .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
+        .and()
+            .addFilterBefore(buildAjaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+}
+</code></pre>
+<h4 id="passwordencoderconfig">PasswordEncoderConfig <a class="direct-link" href="#passwordencoderconfig" aria-hidden="true">#</a></h4>
+<p>BCrypt encoder that is in AjaxAuthenticationProvider.</p>
+<pre><code>@Configuration
+public class PasswordEncoderConfig {
+    @Bean
+    protected BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+</code></pre>
+<h4 id="bloomfiltertokenverifier">BloomFilterTokenVerifier <a class="direct-link" href="#bloomfiltertokenverifier" aria-hidden="true">#</a></h4>
+<p>This is dummy class. You should ideally implement your own TokenVerifier to check for revoked tokens.</p>
+<pre><code>@Component
+public class BloomFilterTokenVerifier implements TokenVerifier {
+    @Override
+    public boolean verify(String jti) {
+        return true;
+    }
+}
+</code></pre>
+<h3 id="conclusion">Conclusion <a class="direct-link" href="#conclusion" aria-hidden="true">#</a></h3>
+<p>I heard people whispering on the web that loosing a JWT token is like loosing your house keys. So be careful.</p>
+<h2 id="references">References <a class="direct-link" href="#references" aria-hidden="true">#</a></h2>
+<h3 id="i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt"><a href="https://www.dinochiesa.net/?p=1388">I don’t see the point in Revoking or Blacklisting JWT</a> <a class="direct-link" href="#i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt" aria-hidden="true">#</a></h3>
+<h3 id="spring-security-architecture---dave-syer"><a href="https://github.com/dsyer/spring-security-architecture">Spring Security Architecture - Dave Syer</a> <a class="direct-link" href="#spring-security-architecture---dave-syer" aria-hidden="true">#</a></h3>
+<h3 id="invalidating-jwt"><a href="http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens/36884683#36884683">Invalidating JWT</a> <a class="direct-link" href="#invalidating-jwt" aria-hidden="true">#</a></h3>
+<h3 id="secure-and-stateless-jwt-implementation"><a href="http://stackoverflow.com/questions/38557379/secure-and-stateless-jwt-implementation">Secure and stateless JWT implementation</a> <a class="direct-link" href="#secure-and-stateless-jwt-implementation" aria-hidden="true">#</a></h3>
+<h3 id="learn-jwt"><a href="https://github.com/dwyl/learn-json-web-tokens">Learn JWT</a> <a class="direct-link" href="#learn-jwt" aria-hidden="true">#</a></h3>
+<h3 id="opaque-access-tokens-and-cloud-foundry"><a href="https://www.cloudfoundry.org/opaque-access-tokens-cloud-foundry/">Opaque access tokens and cloud foundry</a> <a class="direct-link" href="#opaque-access-tokens-and-cloud-foundry" aria-hidden="true">#</a></h3>
+<h3 id="the-unspoken-vulnerability-of-jwts"><a href="http://by.jtl.xyz/2016/06/the-unspoken-vulnerability-of-jwts.html">The unspoken vulnerability of JWTS</a> <a class="direct-link" href="#the-unspoken-vulnerability-of-jwts" aria-hidden="true">#</a></h3>
+<h3 id="how-to-control-user-identity-within-micro-services"><a href="http://nordicapis.com/how-to-control-user-identity-within-microservices/">How To Control User Identity Within Micro-services</a> <a class="direct-link" href="#how-to-control-user-identity-within-micro-services" aria-hidden="true">#</a></h3>
+<h3 id="why-does-oauth-v2-have-both-access-and-refresh-tokens%3F"><a href="http://stackoverflow.com/questions/3487991/why-does-oauth-v2-have-both-access-and-refresh-tokens/12885823">Why Does OAuth v2 Have Both Access and Refresh Tokens?</a> <a class="direct-link" href="#why-does-oauth-v2-have-both-access-and-refresh-tokens%3F" aria-hidden="true">#</a></h3>
+<h3 id="rfc-6749"><a href="https://tools.ietf.org/html/rfc6749">RFC-6749</a> <a class="direct-link" href="#rfc-6749" aria-hidden="true">#</a></h3>
+<h3 id="are-breaches-of-jwt-based-servers-more-damaging%3F"><a href="https://www.sslvpn.online/are-breaches-of-jwt-based-servers-more-damaging/">Are breaches of JWT-based servers more damaging?</a> <a class="direct-link" href="#are-breaches-of-jwt-based-servers-more-damaging%3F" aria-hidden="true">#</a></h3>
+
+
+<p><a href="/">← Home</a></p>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /jwt-token-authentication-with-spring-boot/ -->
+  </body>
+</html>

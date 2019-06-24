@@ -1,65 +1,1087 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<title>Your Blog Name</title>
+	<title>svlada</title>
 	<subtitle>I am writing about my experiences as a naval navel-gazer.</subtitle>
 	<link href="https://myurl.com/feed/feed.xml" rel="self"/>
 	<link href="https://myurl.com/"/>
-	<updated>2018-09-30T00:00:00+00:00</updated>
+	<updated>2018-05-01T00:00:00+00:00</updated>
 	<id>https://myurl.com/</id>
 	<author>
-		<name>Your Name Here</name>
-		<email>youremailaddress@example.com</email>
+		<name>Vladimir Stankovic</name>
+		<email>svlada@gmail.com</email>
 	</author>
 	
 	<entry>
-		<title>This is my first post.</title>
-		<link href="https://myurl.com/posts/firstpost/"/>
+		<title>Design patterns - Step builder</title>
+		<link href="https://myurl.com/step-builder-pattern/"/>
+		<updated>2016-06-09T00:00:00+00:00</updated>
+		<id>https://myurl.com/step-builder-pattern/</id>
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a title=&quot;Introduction: Step builder pattern&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Pros and cons about step builder pattern&quot; href=&quot;#step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Code walkthrough&quot; href=&quot;#code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Source code&quot; href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Eclipse plug-in&quot; href=&quot;#eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I have recently decided to use Amazon SES API in order to be able to send emails to my &lt;a href=&quot;http://microservicesweekly.com/&quot;&gt;Microservices Weekly&lt;/a&gt; subscribers. What prompted me to use Amazon SES API is its price. It&#39;s really cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a &lt;a href=&quot;https://github.com/svlada/ziggy&quot;&gt;small wrapper&lt;/a&gt; around their API.&lt;/p&gt;
+&lt;p&gt;To make long story short, the main purpose here is to share my experience with a less well-known derivate of Builder pattern - Step Builder pattern.&lt;/p&gt;
+&lt;p&gt;The Step Builder pattern is an object creation software design pattern. It&#39;s not so commonly mentioned in popular readings about design patterns. Honestly, I&#39;ve heard about this pattern only recently from my collegue &lt;a href=&quot;https://twitter.com/mikeladev&quot;&gt;@mikeladev&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The Step Builder pattern offers some neat benefits when you compare it to traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects.&lt;/p&gt;
+&lt;h3 id=&quot;pros-and-cons&quot;&gt;&lt;a name=&quot;step-builder-pattern-pros-and-cons&quot; id=&quot;step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pros-and-cons&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;User guidance for your API through object creation process step by step.&lt;/li&gt;
+&lt;li&gt;API User can call builder&#39;s build() method once the object is in the consistent state.&lt;/li&gt;
+&lt;li&gt;Reduced opportunity for creation of inconsistent object instances.&lt;/li&gt;
+&lt;li&gt;Sequencing initialization of mandatory fields.&lt;/li&gt;
+&lt;li&gt;Fluent API.&lt;/li&gt;
+&lt;li&gt;No need for providing validate() method for field validation.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Low readability of code needed to implement the pattern itself.&lt;/li&gt;
+&lt;li&gt;No eclipse plugin to help with code generation. (On the other hand, there are plenty of code generators for Builder pattern generator).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;code-walkthrough&quot;&gt;&lt;a name=&quot;code-walkthrough&quot; id=&quot;code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#code-walkthrough&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Since the Step Builder pattern is a creational design pattern, let&#39;s focus on its purpose - creation of objects.&lt;/p&gt;
+&lt;p&gt;Example of API usage is shown below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Email email = 
+Email.builder().from(EmailAddress.of(&amp;quot;Microservices Weekly &amp;lt;mw@microservicesweekly.com&amp;gt;&amp;quot;))
+	.to(EmailAddress.of(&amp;quot;svlada@gmail.com&amp;quot;))
+	.subject(Subject.of(&amp;quot;Subject&amp;quot;))
+	.content(Content.of(&amp;quot;Test email&amp;quot;))
+	.build();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, let&#39;s see how API is enforcing initialiation of object in the pre-defined order.&lt;/p&gt;
+&lt;p&gt;The following image is the graphical representation of the state machine for constructing Email object with the Step Builder pattern (mandatory values are marked purple and optional values are yellow):&lt;br&gt;
+&lt;img src=&quot;https://myurl.com/img/step-builder/step-builder.png&quot; alt=&quot;Builder pattern&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Rules of thumb for implementation:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Add dependencies to your class. It&#39;s recommended to add private modifier to class attributes.&lt;/li&gt;
+&lt;li&gt;Define creational steps as inner interfaces in your base class.&lt;/li&gt;
+&lt;li&gt;Each creational step should return next step (interface) in chain.&lt;/li&gt;
+&lt;li&gt;Final step should be interface called &amp;quot;Build&amp;quot; which will provide build() method.&lt;/li&gt;
+&lt;li&gt;Define one inner static Builder class which implements all of defined steps.&lt;/li&gt;
+&lt;li&gt;Implement step interface methods.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Complete Example of Step by Step builder pattern:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class Email {
+	private EmailAddress from;
+	private List&amp;lt;EmailAddress&amp;gt; to;
+	private List&amp;lt;EmailAddress&amp;gt; cc;
+	private List&amp;lt;EmailAddress&amp;gt; bcc;
+	private Subject subject;
+	private Content content;
+	
+	public static FromStep builder() {
+		return new Builder();
+	}
+
+	public interface FromStep {
+		ToStep from(EmailAddress from);
+	}
+	
+	public interface ToStep {
+		SubjectStep to(EmailAddress... from);
+	}
+	
+	public interface SubjectStep {
+		ContentStep subject(Subject subject);
+	}
+	
+	public interface ContentStep {
+		Build content(Content content);
+	}
+	
+	public interface Build {
+		Email build();
+		Build cc(EmailAddress... cc);
+		Build bcc(EmailAddress... bcc);
+	}
+	
+	public static class Builder implements FromStep, ToStep, SubjectStep, ContentStep, Build {
+		private EmailAddress from;
+		private List&amp;lt;EmailAddress&amp;gt; to;
+		private List&amp;lt;EmailAddress&amp;gt; cc;
+		private List&amp;lt;EmailAddress&amp;gt; bcc;
+		private Subject subject;
+		private Content content;
+		
+		@Override
+		public Email build() {
+			return new Email(this);
+		}
+		@Override
+		public Build cc(EmailAddress... cc) {
+			Objects.requireNonNull(cc);
+			this.cc = new ArrayList&amp;lt;EmailAddress&amp;gt;(Arrays.asList(cc));
+			return this;
+		}
+		@Override
+		public Build bcc(EmailAddress... bcc) {
+			Objects.requireNonNull(bcc);
+			this.bcc = new ArrayList&amp;lt;EmailAddress&amp;gt;(Arrays.asList(bcc));
+			return this;
+		}
+		@Override
+		public Build content(Content content) {
+			Objects.requireNonNull(content);
+			this.content = content;
+			return this;
+		}
+		@Override
+		public ContentStep subject(Subject subject) {
+			Objects.requireNonNull(subject);
+			this.subject = subject;
+			return this;
+		}
+		@Override
+		public SubjectStep to(EmailAddress... to) {
+			Objects.requireNonNull(to);
+			this.to = new ArrayList&amp;lt;EmailAddress&amp;gt;(Arrays.asList(to));
+			return this;
+		}
+		@Override
+		public ToStep from(EmailAddress from) {
+			Objects.requireNonNull(from);
+			this.from = from;
+			return this;
+		}
+	}
+
+	private Email(Builder builder) {
+		this.from = builder.from;
+		this.to = builder.to;
+		this.cc = builder.cc;
+		this.bcc = builder.bcc;
+		this.subject = builder.subject;
+		this.content = builder.content;
+	}
+
+	public EmailAddress getFrom() {
+		return from;
+	}
+
+	public List&amp;lt;EmailAddress&amp;gt; getTo() {
+		return to;
+	}
+
+	public List&amp;lt;EmailAddress&amp;gt; getCc() {
+		return cc;
+	}
+
+	public List&amp;lt;EmailAddress&amp;gt; getBcc() {
+		return bcc;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public Content getContent() {
+		return content;
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;eclipse-plug-in&quot;&gt;&lt;a name=&quot;eclipse-plugin&quot; id=&quot;eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#eclipse-plug-in&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;So far, I haven&#39;t found a plug-in for Eclipse that provides Step Builder code generation feature.&lt;/p&gt;
+&lt;p&gt;I have created a github repository with the intention of creating an Eclipse plug-in that will provide support for Step Builder pattern generation: &lt;a href=&quot;https://github.com/svlada/alyx&quot;&gt;https://github.com/svlada/alyx&lt;/a&gt;&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>JWT Authentication Tutorial - An example using Spring Boot</title>
+		<link href="https://myurl.com/jwt-token-authentication-with-spring-boot/"/>
+		<updated>2016-09-05T00:00:00+00:00</updated>
+		<id>https://myurl.com/jwt-token-authentication-with-spring-boot/</id>
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a title=&quot;Introduction: JWT Token&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;pre-requisites&quot; href=&quot;#pre-requisites&quot;&gt;PRE-requisites&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Spring Security: Ajax authentication&quot; href=&quot;#ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;jwt-authentication&quot; href=&quot;#jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This article will guide you on how you can implement JWT authentication with Spring Boot.&lt;/p&gt;
+&lt;p&gt;We will cover the following two scenarios:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Ajax Authentication&lt;/li&gt;
+&lt;li&gt;JWT Token Authentication&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;pre-requisites&quot;&gt;&lt;a name=&quot;pre-requisites&quot; id=&quot;pre-requisites&quot;&gt;PRE-requisites&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pre-requisites&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Please check out the sample code/project from the following GitHub repository: &lt;a href=&quot;https://github.com/svlada/springboot-security-jwt&quot;&gt;https://github.com/svlada/springboot-security-jwt&lt;/a&gt; before going further reading the article.&lt;/p&gt;
+&lt;p&gt;This project is using H2 in-memory database to store sample user information. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (&lt;code&gt;/jwt-demo/src/main/resources/data.sql&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Overall project structure is shown below:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+---main
+|   +---java
+|   |   \---com
+|   |       \---svlada
+|   |           +---common
+|   |           +---entity
+|   |           +---profile
+|   |           |   \---endpoint
+|   |           +---security
+|   |           |   +---auth
+|   |           |   |   +---ajax
+|   |           |   |   \---jwt
+|   |           |   |       +---extractor
+|   |           |   |       \---verifier
+|   |           |   +---config
+|   |           |   +---endpoint
+|   |           |   +---exceptions
+|   |           |   \---model
+|   |           |       \---token
+|   |           \---user
+|   |               +---repository
+|   |               \---service
+|   \---resources
+|       +---static
+|       \---templates
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;ajax-authentication&quot;&gt;&lt;a name=&quot;ajax-authentication&quot; id=&quot;ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#ajax-authentication&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;When we talk about Ajax authentication we usually refer to process where user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.&lt;/p&gt;
+&lt;p&gt;In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.&lt;/p&gt;
+&lt;p&gt;Following is the list of components that we&#39;ll implement:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;AjaxLoginProcessingFilter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AjaxAuthenticationProvider&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AjaxAwareAuthenticationSuccessHandler&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AjaxAwareAuthenticationFailureHandler&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RestAuthenticationEntryPoint&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;WebSecurityConfig&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Before we get to the details of the implementation, let&#39;s look at the request/response authentication flow.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ajax authentication request example&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The Authentication API allows user to pass in credentials in order to receive authentication token.&lt;/p&gt;
+&lt;p&gt;In our example, client initiates authentication process by invoking Authentication API endpoint (&lt;code&gt;/api/auth/login&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Raw HTTP request:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;POST /api/auth/login HTTP/1.1
+Host: localhost:9966
+X-Requested-With: XMLHttpRequest
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+    &amp;quot;username&amp;quot;: &amp;quot;svlada@gmail.com&amp;quot;,
+    &amp;quot;password&amp;quot;: &amp;quot;test1234&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;CURL:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -X POST -H &amp;quot;X-Requested-With: XMLHttpRequest&amp;quot; -H &amp;quot;Content-Type: application/json&amp;quot; -H &amp;quot;Cache-Control: no-cache&amp;quot; -d &#39;{
+    &amp;quot;username&amp;quot;: &amp;quot;svlada@gmail.com&amp;quot;,
+    &amp;quot;password&amp;quot;: &amp;quot;test1234&amp;quot;
+}&#39; &amp;quot;http://localhost:9966/api/auth/login&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Ajax authentication response example&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;HTTP status &amp;quot;200 OK&amp;quot;&lt;/li&gt;
+&lt;li&gt;Signed JWT Access and Refresh tokens are included in the response body&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;JWT Access token&lt;/strong&gt; - used to authenticate against protected API resources. It must be set in &lt;code&gt;X-Authorization&lt;/code&gt; header.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;JWT Refresh token&lt;/strong&gt; - used to acquire new Access Token. Token refresh is handled by the following API endpoint: &lt;code&gt;/api/auth/token&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Raw HTTP Response:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;token&amp;quot;: &amp;quot;eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMDMzMzA4LCJleHAiOjE0NzIwMzQyMDh9.41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ&amp;quot;,
+  
+  &amp;quot;refreshToken&amp;quot;: &amp;quot;eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfUkVGUkVTSF9UT0tFTiJdLCJpc3MiOiJodHRwOi8vc3ZsYWRhLmNvbSIsImp0aSI6IjkwYWZlNzhjLTFkMmUtNDg2OS1hNzdlLTFkNzU0YjYwZTBjZSIsImlhdCI6MTQ3MjAzMzMwOCwiZXhwIjoxNDcyMDM2OTA4fQ.SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;JWT Access Token&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;JWT Access token can be used for authentication and authorization:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Authentication is performed by verifying JWT Access Token signature. If signature proves to be valid, access to requested API resource is granted.&lt;/li&gt;
+&lt;li&gt;Authorization is done by looking up privileges in the &lt;strong&gt;scope&lt;/strong&gt; attribute of JWT Access token.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Decoded JWT Access token has three parts: Header, Claims and Signature as shown below:&lt;/p&gt;
+&lt;p&gt;Header&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+{
+    &amp;quot;alg&amp;quot;: &amp;quot;HS512&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Claims&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;sub&amp;quot;: &amp;quot;svlada@gmail.com&amp;quot;,
+  &amp;quot;scopes&amp;quot;: [
+    &amp;quot;ROLE_ADMIN&amp;quot;,
+    &amp;quot;ROLE_PREMIUM_MEMBER&amp;quot;
+  ],
+  &amp;quot;iss&amp;quot;: &amp;quot;http://svlada.com&amp;quot;,
+  &amp;quot;iat&amp;quot;: 1472033308,
+  &amp;quot;exp&amp;quot;: 1472034208
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Signature (base64 encoded)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;JWT Refresh Token&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Refresh token is long-lived token used to request new Access tokens. It&#39;s expiration time is greater than expiration time of Access token.&lt;/p&gt;
+&lt;p&gt;In this tutorial we&#39;ll use &lt;code&gt;jti&lt;/code&gt; claim to maintain list of blacklisted or revoked tokens. JWT ID(&lt;code&gt;jti&lt;/code&gt;) claim is defined by &lt;a href=&quot;https://tools.ietf.org/html/rfc7519#section-4.1.7&quot;&gt;RFC7519&lt;/a&gt; with purpose to uniquely identify individual Refresh token.&lt;/p&gt;
+&lt;p&gt;Decoded Refresh token has three parts: Header, Claims and Signature as shown below:&lt;/p&gt;
+&lt;p&gt;Header&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;alg&amp;quot;: &amp;quot;HS512&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Claims&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;sub&amp;quot;: &amp;quot;svlada@gmail.com&amp;quot;,
+  &amp;quot;scopes&amp;quot;: [
+    &amp;quot;ROLE_REFRESH_TOKEN&amp;quot;
+  ],
+  &amp;quot;iss&amp;quot;: &amp;quot;http://svlada.com&amp;quot;,
+  &amp;quot;jti&amp;quot;: &amp;quot;90afe78c-1d2e-4869-a77e-1d754b60e0ce&amp;quot;,
+  &amp;quot;iat&amp;quot;: 1472033308,
+  &amp;quot;exp&amp;quot;: 1472036908
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Signature (base64 encoded)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;ajaxloginprocessingfilter&quot;&gt;AjaxLoginProcessingFilter &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxloginprocessingfilter&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;First step is to extend &lt;code&gt;AbstractAuthenticationProcessingFilter&lt;/code&gt; in order to provide custom processing of Ajax authentication requests.&lt;/p&gt;
+&lt;p&gt;De-serialization and basic validation of the incoming JSON payload is done in the &lt;code&gt;AjaxLoginProcessingFilter#attemptAuthentication&lt;/code&gt; method. Upon successful validation of the JSON payload authentication logic is delegated to AjaxAuthenticationProvider class.&lt;/p&gt;
+&lt;p&gt;In case of a successful authentication &lt;code&gt;AjaxLoginProcessingFilter#successfulAuthentication&lt;/code&gt; method is invoked.&lt;br&gt;
+In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsuccessfulAuthentication&lt;/code&gt; method is invoked.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private static Logger logger = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
+
+    private final AuthenticationSuccessHandler successHandler;
+    private final AuthenticationFailureHandler failureHandler;
+
+    private final ObjectMapper objectMapper;
+    
+    public AjaxLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler, 
+            AuthenticationFailureHandler failureHandler, ObjectMapper mapper) {
+        super(defaultProcessUrl);
+        this.successHandler = successHandler;
+        this.failureHandler = failureHandler;
+        this.objectMapper = mapper;
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+        if (!HttpMethod.POST.name().equals(request.getMethod()) || !WebUtil.isAjax(request)) {
+            if(logger.isDebugEnabled()) {
+                logger.debug(&amp;quot;Authentication method not supported. Request method: &amp;quot; + request.getMethod());
+            }
+            throw new AuthMethodNotSupportedException(&amp;quot;Authentication method not supported&amp;quot;);
+        }
+
+        LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
+        
+        if (StringUtils.isBlank(loginRequest.getUsername()) || StringUtils.isBlank(loginRequest.getPassword())) {
+            throw new AuthenticationServiceException(&amp;quot;Username or Password not provided&amp;quot;);
+        }
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+
+        return this.getAuthenticationManager().authenticate(token);
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        successHandler.onAuthenticationSuccess(request, response, authResult);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;ajaxauthenticationprovider&quot;&gt;AjaxAuthenticationProvider &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxauthenticationprovider&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Responsibility of the AjaxAuthenticationProvider class is to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Verify user credentials against database, LDAP or some other system which holds the user data&lt;/li&gt;
+&lt;li&gt;If &lt;code&gt;username&lt;/code&gt; and &lt;code&gt;password&lt;/code&gt; do not match the record in the database authentication exception is thrown&lt;/li&gt;
+&lt;li&gt;Create UserContext and populate it with user data you need (in our case just &lt;code&gt;username&lt;/code&gt; and &lt;code&gt;user privileges&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Upon successful authentication delegate creation of JWT Token to &lt;code&gt;AjaxAwareAuthenticationSuccessHandler&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class AjaxAuthenticationProvider implements AuthenticationProvider {
+    private final BCryptPasswordEncoder encoder;
+    private final DatabaseUserService userService;
+
+    @Autowired
+    public AjaxAuthenticationProvider(final DatabaseUserService userService, final BCryptPasswordEncoder encoder) {
+        this.userService = userService;
+        this.encoder = encoder;
+    }
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        Assert.notNull(authentication, &amp;quot;No authentication data provided&amp;quot;);
+
+        String username = (String) authentication.getPrincipal();
+        String password = (String) authentication.getCredentials();
+
+        User user = userService.getByUsername(username).orElseThrow(() -&amp;gt; new UsernameNotFoundException(&amp;quot;User not found: &amp;quot; + username));
+        
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException(&amp;quot;Authentication Failed. Username or Password not valid.&amp;quot;);
+        }
+
+        if (user.getRoles() == null) throw new InsufficientAuthenticationException(&amp;quot;User has no roles assigned&amp;quot;);
+        
+        List&amp;lt;GrantedAuthority&amp;gt; authorities = user.getRoles().stream()
+                .map(authority -&amp;gt; new SimpleGrantedAuthority(authority.getRole().authority()))
+                .collect(Collectors.toList());
+        
+        UserContext userContext = UserContext.create(user.getUsername(), authorities);
+        
+        return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class&amp;lt;?&amp;gt; authentication) {
+        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;ajaxawareauthenticationsuccesshandler&quot;&gt;AjaxAwareAuthenticationSuccessHandler &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxawareauthenticationsuccesshandler&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;We&#39;ll implement AuthenticationSuccessHandler interface that is called when client has been successfully authenticated.&lt;/p&gt;
+&lt;p&gt;AjaxAwareAuthenticationSuccessHandler class is our custom implementation of AuthenticationSuccessHandler interface. Responsibility of this class is to add JSON payload containing JWT Access and Refresh tokens into the HTTP response body.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    private final ObjectMapper mapper;
+    private final JwtTokenFactory tokenFactory;
+
+    @Autowired
+    public AjaxAwareAuthenticationSuccessHandler(final ObjectMapper mapper, final JwtTokenFactory tokenFactory) {
+        this.mapper = mapper;
+        this.tokenFactory = tokenFactory;
+    }
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws IOException, ServletException {
+        UserContext userContext = (UserContext) authentication.getPrincipal();
+        
+        JwtToken accessToken = tokenFactory.createAccessJwtToken(userContext);
+        JwtToken refreshToken = tokenFactory.createRefreshToken(userContext);
+        
+        Map&amp;lt;String, String&amp;gt; tokenMap = new HashMap&amp;lt;String, String&amp;gt;();
+        tokenMap.put(&amp;quot;token&amp;quot;, accessToken.getToken());
+        tokenMap.put(&amp;quot;refreshToken&amp;quot;, refreshToken.getToken());
+
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        mapper.writeValue(response.getWriter(), tokenMap);
+
+        clearAuthenticationAttributes(request);
+    }
+
+    /**
+     * Removes temporary authentication-related data which may have been stored
+     * in the session during the authentication process..
+     * 
+     */
+    protected final void clearAuthenticationAttributes(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            return;
+        }
+
+        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let&#39;s focus for a moment on how JWT Access token is created. In this tutorial we are using &lt;a href=&quot;https://github.com/jwtk/jjwt&quot;&gt;Java JWT&lt;/a&gt; library created by &lt;a href=&quot;https://stormpath.com/&quot;&gt;Stormpath&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Make sure that &lt;code&gt;JJWT&lt;/code&gt; dependency is included in your &lt;code&gt;pom.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;io.jsonwebtoken&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;jjwt&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;${jjwt.version}&amp;lt;/version&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We have created factory class (&lt;code&gt;JwtTokenFactory&lt;/code&gt;) to decouple token creation logic.&lt;/p&gt;
+&lt;p&gt;Method &lt;code&gt;JwtTokenFactory#createAccessJwtToken&lt;/code&gt;  creates signed JWT Access token.&lt;/p&gt;
+&lt;p&gt;Method &lt;code&gt;JwtTokenFactory#createRefreshToken&lt;/code&gt; creates signed JWT Refresh token.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class JwtTokenFactory {
+    private final JwtSettings settings;
+
+    @Autowired
+    public JwtTokenFactory(JwtSettings settings) {
+        this.settings = settings;
+    }
+
+    /**
+     * Factory method for issuing new JWT Tokens.
+     * 
+     * @param username
+     * @param roles
+     * @return
+     */
+    public AccessJwtToken createAccessJwtToken(UserContext userContext) {
+        if (StringUtils.isBlank(userContext.getUsername())) 
+            throw new IllegalArgumentException(&amp;quot;Cannot create JWT Token without username&amp;quot;);
+
+        if (userContext.getAuthorities() == null || userContext.getAuthorities().isEmpty()) 
+            throw new IllegalArgumentException(&amp;quot;User doesn&#39;t have any privileges&amp;quot;);
+
+        Claims claims = Jwts.claims().setSubject(userContext.getUsername());
+        claims.put(&amp;quot;scopes&amp;quot;, userContext.getAuthorities().stream().map(s -&amp;gt; s.toString()).collect(Collectors.toList()));
+
+        DateTime currentTime = new DateTime();
+
+        String token = Jwts.builder()
+          .setClaims(claims)
+          .setIssuer(settings.getTokenIssuer())
+          .setIssuedAt(currentTime.toDate())
+          .setExpiration(currentTime.plusMinutes(settings.getTokenExpirationTime()).toDate())
+          .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+        .compact();
+
+        return new AccessJwtToken(token, claims);
+    }
+
+    public JwtToken createRefreshToken(UserContext userContext) {
+        if (StringUtils.isBlank(userContext.getUsername())) {
+            throw new IllegalArgumentException(&amp;quot;Cannot create JWT Token without username&amp;quot;);
+        }
+
+        DateTime currentTime = new DateTime();
+
+        Claims claims = Jwts.claims().setSubject(userContext.getUsername());
+        claims.put(&amp;quot;scopes&amp;quot;, Arrays.asList(Scopes.REFRESH_TOKEN.authority()));
+        
+        String token = Jwts.builder()
+          .setClaims(claims)
+          .setIssuer(settings.getTokenIssuer())
+          .setId(UUID.randomUUID().toString())
+          .setIssuedAt(currentTime.toDate())
+          .setExpiration(currentTime.plusMinutes(settings.getRefreshTokenExpTime()).toDate())
+          .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+        .compact();
+
+        return new AccessJwtToken(token, claims);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please note that if you are instantiating Claims object outside of &lt;code&gt;Jwts.builder()&lt;/code&gt; make sure to first invoke &lt;code&gt;Jwts.builder()#setClaims(claims)&lt;/code&gt;. Why? Well, if you don&#39;t do that, Jwts.builder will, by default, create empty Claims object. What that means? Well if you call &lt;code&gt;Jwts.builder()#setClaims()&lt;/code&gt; after you have set subject with &lt;code&gt;Jwts.builder()#setSubject()&lt;/code&gt; your subject will be lost. Simply new instance of Claims class will overwrite default one created by Jwts.builder().&lt;/p&gt;
+&lt;h4 id=&quot;ajaxawareauthenticationfailurehandler&quot;&gt;AjaxAwareAuthenticationFailureHandler &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxawareauthenticationfailurehandler&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;AjaxAwareAuthenticationFailureHandler is invoked by &lt;code&gt;AjaxLoginProcessingFilter&lt;/code&gt; in case of authentication failures. You can design specific error messages based on exception type that have occurred during the authentication process.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    private final ObjectMapper mapper;
+    
+    @Autowired
+    public AjaxAwareAuthenticationFailureHandler(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }   
+    
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException e) throws IOException, ServletException {
+        
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        
+        if (e instanceof BadCredentialsException) {
+            mapper.writeValue(response.getWriter(), ErrorResponse.of(&amp;quot;Invalid username or password&amp;quot;, ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+        } else if (e instanceof JwtExpiredTokenException) {
+            mapper.writeValue(response.getWriter(), ErrorResponse.of(&amp;quot;Token has expired&amp;quot;, ErrorCode.JWT_TOKEN_EXPIRED, HttpStatus.UNAUTHORIZED));
+        } else if (e instanceof AuthMethodNotSupportedException) {
+            mapper.writeValue(response.getWriter(), ErrorResponse.of(e.getMessage(), ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+        }
+
+        mapper.writeValue(response.getWriter(), ErrorResponse.of(&amp;quot;Authentication failed&amp;quot;, ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;jwt-authentication&quot;&gt;&lt;a name=&quot;jwt-authentication&quot; id=&quot;jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#jwt-authentication&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Token based authentication schema&#39;s became immensely popular in recent times, as they provide important benefits when compared to sessions/cookies:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;CORS&lt;/li&gt;
+&lt;li&gt;No need for CSRF protection&lt;/li&gt;
+&lt;li&gt;Better integration with mobile&lt;/li&gt;
+&lt;li&gt;Reduced load on authorization server&lt;/li&gt;
+&lt;li&gt;No need for distributed session store&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Some trade-offs have to be made with this approach:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;More vulnerable to XSS attacks&lt;/li&gt;
+&lt;li&gt;Access token can contain outdated authorization claims (e.g when some of the user privileges are revoked)&lt;/li&gt;
+&lt;li&gt;Access tokens can grow in size in case of increased number of claims&lt;/li&gt;
+&lt;li&gt;File download API can be tricky to implement&lt;/li&gt;
+&lt;li&gt;True statelessness and revocation are mutually exclusive&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In this article we&#39;ll investigate how JWT&#39;s can used for token based authentication.&lt;/p&gt;
+&lt;p&gt;JWT Authentication flow is very simple:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;User obtains Refresh and Access tokens by providing credentials to the Authorization server&lt;/li&gt;
+&lt;li&gt;User sends Access token with each request to access protected API resource&lt;/li&gt;
+&lt;li&gt;Access token is signed and contains user identity (e.g. user id) and authorization claims.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;It&#39;s important to note that authorization claims will be included with the Access token. Why is this important? Well, let&#39;s say that authorization claims (e.g user privileges in the database) are changed during the life time of Access token. Those changes will not become effective until new Access token is issued. In most cases this is not big issue, because Access tokens are short-lived. Otherwise go with the opaque token pattern.&lt;/p&gt;
+&lt;p&gt;Before we get to the details of the implementation, let&#39;s look the sample request to protected API resource.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Signed request to protected API resource&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Following pattern should be used when sending access tokens: &lt;code&gt;&amp;lt;header-name&amp;gt; Bearer &amp;lt;access_token&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In our example for header name (&lt;code&gt;&amp;lt;header-name&amp;gt;&lt;/code&gt;) we are using &lt;code&gt;X-Authorization&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Raw HTTP request:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GET /api/me HTTP/1.1
+Host: localhost:9966
+X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w
+Cache-Control: no-cache
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;CURL:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -X GET -H &amp;quot;X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w&amp;quot; -H &amp;quot;Cache-Control: no-cache&amp;quot; &amp;quot;http://localhost:9966/api/me&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let&#39;s see the implementation details. Following are components we need to implement JWT Authentication:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;JwtTokenAuthenticationProcessingFilter&lt;/li&gt;
+&lt;li&gt;JwtAuthenticationProvider&lt;/li&gt;
+&lt;li&gt;SkipPathRequestMatcher&lt;/li&gt;
+&lt;li&gt;JwtHeaderTokenExtractor&lt;/li&gt;
+&lt;li&gt;BloomFilterTokenVerifier&lt;/li&gt;
+&lt;li&gt;WebSecurityConfig&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;jwttokenauthenticationprocessingfilter&quot;&gt;JwtTokenAuthenticationProcessingFilter &lt;a class=&quot;direct-link&quot; href=&quot;#jwttokenauthenticationprocessingfilter&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;JwtTokenAuthenticationProcessingFilter filter is applied to each API (&lt;code&gt;/api/**&lt;/code&gt;) with exception of the refresh token endpoint (&lt;code&gt;/api/auth/token&lt;/code&gt;) and login endpoint (&lt;code&gt;/api/auth/login&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;This filter has the following responsibilities:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Check for access token in &lt;code&gt;X-Authorization&lt;/code&gt; header. If Access token is found in the header, delegate authentication to &lt;code&gt;JwtAuthenticationProvider&lt;/code&gt; otherwise throw authentication exception&lt;/li&gt;
+&lt;li&gt;Invokes success or failure strategies based on the outcome of authentication process performed by &lt;code&gt;JwtAuthenticationProvider&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Please ensure that &lt;code&gt;chain.doFilter(request, response)&lt;/code&gt; is invoked upon successful authentication. You want processing of the request to advance to the next filter, because very last one filter &lt;code&gt;FilterSecurityInterceptor#doFilter&lt;/code&gt; is responsible to actually invoke method in your controller that is handling requested API resource.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private final AuthenticationFailureHandler failureHandler;
+    private final TokenExtractor tokenExtractor;
+    
+    @Autowired
+    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler, 
+            TokenExtractor tokenExtractor, RequestMatcher matcher) {
+        super(matcher);
+        this.failureHandler = failureHandler;
+        this.tokenExtractor = tokenExtractor;
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+        String tokenPayload = request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM);
+        RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
+        return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authResult);
+        SecurityContextHolder.setContext(context);
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;jwtheadertokenextractor&quot;&gt;JwtHeaderTokenExtractor &lt;a class=&quot;direct-link&quot; href=&quot;#jwtheadertokenextractor&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;JwtHeaderTokenExtractor is very simple class used to extract Authorization token from header. You can extend TokenExtractor interface and provide your custom implementation that will for example extract token from URL.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class JwtHeaderTokenExtractor implements TokenExtractor {
+    public static String HEADER_PREFIX = &amp;quot;Bearer &amp;quot;;
+
+    @Override
+    public String extract(String header) {
+        if (StringUtils.isBlank(header)) {
+            throw new AuthenticationServiceException(&amp;quot;Authorization header cannot be blank!&amp;quot;);
+        }
+
+        if (header.length() &amp;lt; HEADER_PREFIX.length()) {
+            throw new AuthenticationServiceException(&amp;quot;Invalid authorization header size.&amp;quot;);
+        }
+
+        return header.substring(HEADER_PREFIX.length(), header.length());
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;jwtauthenticationprovider&quot;&gt;JwtAuthenticationProvider &lt;a class=&quot;direct-link&quot; href=&quot;#jwtauthenticationprovider&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;JwtAuthenticationProvider has the following responsibilities:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Verify the access token&#39;s signature&lt;/li&gt;
+&lt;li&gt;Extract identity and authorization claims from Access token and use them to create UserContext&lt;/li&gt;
+&lt;li&gt;If Access token is malformed, expired or simply if token is not signed with the appropriate signing key Authentication exception will be thrown&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class JwtAuthenticationProvider implements AuthenticationProvider {
+    private final JwtSettings jwtSettings;
+    
+    @Autowired
+    public JwtAuthenticationProvider(JwtSettings jwtSettings) {
+        this.jwtSettings = jwtSettings;
+    }
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
+
+        Jws&amp;lt;Claims&amp;gt; jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
+        String subject = jwsClaims.getBody().getSubject();
+        List&amp;lt;String&amp;gt; scopes = jwsClaims.getBody().get(&amp;quot;scopes&amp;quot;, List.class);
+        List&amp;lt;GrantedAuthority&amp;gt; authorities = scopes.stream()
+                .map(authority -&amp;gt; new SimpleGrantedAuthority(authority))
+                .collect(Collectors.toList());
+        
+        UserContext context = UserContext.create(subject, authorities);
+        
+        return new JwtAuthenticationToken(context, context.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class&amp;lt;?&amp;gt; authentication) {
+        return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;skippathrequestmatcher&quot;&gt;SkipPathRequestMatcher &lt;a class=&quot;direct-link&quot; href=&quot;#skippathrequestmatcher&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;JwtTokenAuthenticationProcessingFilter  filter is configured to skip following endpoints: &lt;code&gt;/api/auth/login&lt;/code&gt; and &lt;code&gt;/api/auth/token&lt;/code&gt;. This is achieved with &lt;code&gt;SkipPathRequestMatcher&lt;/code&gt; implementation of &lt;code&gt;RequestMatcher&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class SkipPathRequestMatcher implements RequestMatcher {
+    private OrRequestMatcher matchers;
+    private RequestMatcher processingMatcher;
+    
+    public SkipPathRequestMatcher(List&amp;lt;String&amp;gt; pathsToSkip, String processingPath) {
+        Assert.notNull(pathsToSkip);
+        List&amp;lt;RequestMatcher&amp;gt; m = pathsToSkip.stream().map(path -&amp;gt; new AntPathRequestMatcher(path)).collect(Collectors.toList());
+        matchers = new OrRequestMatcher(m);
+        processingMatcher = new AntPathRequestMatcher(processingPath);
+    }
+
+    @Override
+    public boolean matches(HttpServletRequest request) {
+        if (matchers.matches(request)) {
+            return false;
+        }
+        return processingMatcher.matches(request) ? true : false;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;websecurityconfig&quot;&gt;WebSecurityConfig &lt;a class=&quot;direct-link&quot; href=&quot;#websecurityconfig&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;WebSecurityConfig class extends WebSecurityConfigurerAdapter to provide custom security configuration.&lt;/p&gt;
+&lt;p&gt;Following beans are configured and instantiated in this class:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;AjaxLoginProcessingFilter&lt;/li&gt;
+&lt;li&gt;JwtTokenAuthenticationProcessingFilter&lt;/li&gt;
+&lt;li&gt;AuthenticationManager&lt;/li&gt;
+&lt;li&gt;BCryptPasswordEncoder&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Also, inside &lt;code&gt;WebSecurityConfig#configure(HttpSecurity http)&lt;/code&gt; method we&#39;ll configure patterns to define protected/unprotected API endpoints. Please note that we have disabled CSRF protection because we are not using Cookies.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    public static final String JWT_TOKEN_HEADER_PARAM = &amp;quot;X-Authorization&amp;quot;;
+    public static final String FORM_BASED_LOGIN_ENTRY_POINT = &amp;quot;/api/auth/login&amp;quot;;
+    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = &amp;quot;/api/**&amp;quot;;
+    public static final String TOKEN_REFRESH_ENTRY_POINT = &amp;quot;/api/auth/token&amp;quot;;
+    
+    @Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired private AuthenticationSuccessHandler successHandler;
+    @Autowired private AuthenticationFailureHandler failureHandler;
+    @Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
+    @Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
+    
+    @Autowired private TokenExtractor tokenExtractor;
+    
+    @Autowired private AuthenticationManager authenticationManager;
+    
+    @Autowired private ObjectMapper objectMapper;
+        
+    protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() throws Exception {
+        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, successHandler, failureHandler, objectMapper);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+    
+    protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
+        List&amp;lt;String&amp;gt; pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        JwtTokenAuthenticationProcessingFilter filter 
+            = new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(ajaxAuthenticationProvider);
+        auth.authenticationProvider(jwtAuthenticationProvider);
+    }
+    
+    @Bean
+    protected BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+        .csrf().disable() // We don&#39;t need CSRF for JWT based authentication
+        .exceptionHandling()
+        .authenticationEntryPoint(this.authenticationEntryPoint)
+        
+        .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        .and()
+            .authorizeRequests()
+                .antMatchers(FORM_BASED_LOGIN_ENTRY_POINT).permitAll() // Login end-point
+                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll() // Token refresh end-point
+                .antMatchers(&amp;quot;/console&amp;quot;).permitAll() // H2 Console Dash-board - only for testing
+        .and()
+            .authorizeRequests()
+                .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
+        .and()
+            .addFilterBefore(buildAjaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;passwordencoderconfig&quot;&gt;PasswordEncoderConfig &lt;a class=&quot;direct-link&quot; href=&quot;#passwordencoderconfig&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;BCrypt encoder that is in AjaxAuthenticationProvider.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Configuration
+public class PasswordEncoderConfig {
+    @Bean
+    protected BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;bloomfiltertokenverifier&quot;&gt;BloomFilterTokenVerifier &lt;a class=&quot;direct-link&quot; href=&quot;#bloomfiltertokenverifier&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;This is dummy class. You should ideally implement your own TokenVerifier to check for revoked tokens.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class BloomFilterTokenVerifier implements TokenVerifier {
+    @Override
+    public boolean verify(String jti) {
+        return true;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion &lt;a class=&quot;direct-link&quot; href=&quot;#conclusion&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I heard people whispering on the web that loosing a JWT token is like loosing your house keys. So be careful.&lt;/p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References &lt;a class=&quot;direct-link&quot; href=&quot;#references&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt&quot;&gt;&lt;a href=&quot;https://www.dinochiesa.net/?p=1388&quot;&gt;I don’t see the point in Revoking or Blacklisting JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;spring-security-architecture---dave-syer&quot;&gt;&lt;a href=&quot;https://github.com/dsyer/spring-security-architecture&quot;&gt;Spring Security Architecture - Dave Syer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#spring-security-architecture---dave-syer&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;invalidating-jwt&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens/36884683#36884683&quot;&gt;Invalidating JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#invalidating-jwt&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;secure-and-stateless-jwt-implementation&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/38557379/secure-and-stateless-jwt-implementation&quot;&gt;Secure and stateless JWT implementation&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#secure-and-stateless-jwt-implementation&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;learn-jwt&quot;&gt;&lt;a href=&quot;https://github.com/dwyl/learn-json-web-tokens&quot;&gt;Learn JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#learn-jwt&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;opaque-access-tokens-and-cloud-foundry&quot;&gt;&lt;a href=&quot;https://www.cloudfoundry.org/opaque-access-tokens-cloud-foundry/&quot;&gt;Opaque access tokens and cloud foundry&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#opaque-access-tokens-and-cloud-foundry&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;the-unspoken-vulnerability-of-jwts&quot;&gt;&lt;a href=&quot;http://by.jtl.xyz/2016/06/the-unspoken-vulnerability-of-jwts.html&quot;&gt;The unspoken vulnerability of JWTS&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#the-unspoken-vulnerability-of-jwts&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;how-to-control-user-identity-within-micro-services&quot;&gt;&lt;a href=&quot;http://nordicapis.com/how-to-control-user-identity-within-microservices/&quot;&gt;How To Control User Identity Within Micro-services&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-control-user-identity-within-micro-services&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;why-does-oauth-v2-have-both-access-and-refresh-tokens%3F&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/3487991/why-does-oauth-v2-have-both-access-and-refresh-tokens/12885823&quot;&gt;Why Does OAuth v2 Have Both Access and Refresh Tokens?&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#why-does-oauth-v2-have-both-access-and-refresh-tokens%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;rfc-6749&quot;&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc6749&quot;&gt;RFC-6749&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#rfc-6749&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;are-breaches-of-jwt-based-servers-more-damaging%3F&quot;&gt;&lt;a href=&quot;https://www.sslvpn.online/are-breaches-of-jwt-based-servers-more-damaging/&quot;&gt;Are breaches of JWT-based servers more damaging?&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#are-breaches-of-jwt-based-servers-more-damaging%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Spring Session Tutorial - JDBC Configuration</title>
+		<link href="https://myurl.com/spring-session-tutorial/"/>
 		<updated>2018-05-01T00:00:00+00:00</updated>
-		<id>https://myurl.com/posts/firstpost/</id>
-		<content type="html">&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-&lt;h2 id=&quot;section-header&quot;&gt;Section Header &lt;a class=&quot;direct-link&quot; href=&quot;#section-header&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;// this is a command&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;function myCommand() {&lt;/span&gt;&lt;br&gt;&lt;mark class=&quot;highlight-line highlight-line-active&quot;&gt;	let counter = 0;&lt;/mark&gt;&lt;br&gt;&lt;mark class=&quot;highlight-line highlight-line-active&quot;&gt;	counter++;&lt;/mark&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;}&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;// Test with a line break above this line.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;console.log(&#39;Test&#39;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>This is my second post.</title>
-		<link href="https://myurl.com/posts/secondpost/"/>
-		<updated>2018-07-04T00:00:00+00:00</updated>
-		<id>https://myurl.com/posts/secondpost/</id>
-		<content type="html">&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-&lt;h2 id=&quot;section-header&quot;&gt;Section Header &lt;a class=&quot;direct-link&quot; href=&quot;#section-header&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://myurl.com/posts/firstpost/&quot;&gt;First post&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;https://myurl.com/posts/thirdpost/&quot;&gt;Third post&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>This is my third post.</title>
-		<link href="https://myurl.com/posts/thirdpost/"/>
-		<updated>2018-08-24T00:00:00+00:00</updated>
-		<id>https://myurl.com/posts/thirdpost/</id>
-		<content type="html">&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// this is a command&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;myCommand&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;ins class=&quot;highlight-line highlight-line-add&quot;&gt;	&lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; counter &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/ins&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;del class=&quot;highlight-line highlight-line-remove&quot;&gt;	counter&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/del&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// Test with a line break above this line.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Test&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-&lt;h2 id=&quot;section-header&quot;&gt;Section Header &lt;a class=&quot;direct-link&quot; href=&quot;#section-header&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>This is my fourth post.</title>
-		<link href="https://myurl.com/posts/fourthpost/"/>
-		<updated>2018-09-30T00:00:00+00:00</updated>
-		<id>https://myurl.com/posts/fourthpost/</id>
-		<content type="html">&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-&lt;h2 id=&quot;section-header&quot;&gt;Section Header &lt;a class=&quot;direct-link&quot; href=&quot;#section-header&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+		<id>https://myurl.com/spring-session-tutorial/</id>
+		<content type="html">&lt;p&gt;This article will show you how to configure and use &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; to manage session data in your web application. Please checkout the code from the following &lt;a href=&quot;https://github.com/svlada/springsession-jdbc&quot;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a title=&quot;Introduction: Spring Session&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Project setup using Maven&quot; href=&quot;#project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;CURL&quot; href=&quot;#curl&quot;&gt;Curl&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Before we go into the more details of &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; configuration, I would like to provide my view on recent hype around Stateful vs Stateless session management.&lt;/p&gt;
+&lt;p&gt;Lately, a lot of people started using JSON Web Token (JWT) as an stateless mechanism for handling sessions. A couple years ago I event wrote an &lt;a href=&quot;http://www.svlada.com/jwt-token-authentication-with-spring-boot/&quot;&gt;article on that topic&lt;/a&gt; and honestly didn&#39;t know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let&#39;s see what are the pro&#39;s and cons of stateless and stateful session management approaches.&lt;/p&gt;
+&lt;h3 id=&quot;stateless-on-server-side&quot;&gt;Stateless on server side &lt;a class=&quot;direct-link&quot; href=&quot;#stateless-on-server-side&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;No need to scale session data on server side as session is maintained through cryptographically signed JSON Web Token (JWT).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;No way to provide &lt;strong&gt;log-out&lt;/strong&gt; feature without introducing state on server side.&lt;/li&gt;
+&lt;li&gt;Potential token explosion as JSON Web Token becomes larger in size.&lt;/li&gt;
+&lt;li&gt;Sending JSON Web Token (JWT) payload on each request can be expensive.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;stateful-on-server-side&quot;&gt;Stateful on server side &lt;a class=&quot;direct-link&quot; href=&quot;#stateful-on-server-side&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Ability to log-out user&lt;/li&gt;
+&lt;li&gt;Out-of-box sliding session&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;/&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In short, don&#39;t use JSON Web Token to manage session data for your web applications. The most of the web applications will be fine with storing session related data on Redis.&lt;/p&gt;
+&lt;p&gt;If you have microservices architecture, you can use API Gateway as an translation layer that would validate session id and create federated token to be used by the services. That&#39;s one use case where JSON Web Token fits nicely.&lt;/p&gt;
+&lt;h3 id=&quot;project-setup&quot;&gt;&lt;a name=&quot;project-setup&quot; id=&quot;project-setup&quot;&gt;Project setup&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#project-setup&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Include &lt;code&gt;spring-session-core&lt;/code&gt; and &lt;code&gt;spring-session-jdbc&lt;/code&gt; in your &lt;code&gt;pom.xml&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Maven dependencies&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.session&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-session-jdbc&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&amp;lt;dependency&amp;gt;
+  &amp;lt;groupId&amp;gt;org.springframework.session&amp;lt;/groupId&amp;gt;
+  &amp;lt;artifactId&amp;gt;spring-session-core&amp;lt;/artifactId&amp;gt;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Spring security configuration&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The following class shows how to configure REST API security with the Spring Session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Configuration
+@EnableWebSecurity
+@EnableJdbcHttpSession
+public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final AuthenticationProvider provider;
+
+    @Autowired
+    public WebSecurityConfig(final RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+        final AuthenticationProvider provider) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.provider = provider;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(restAuthenticationEntryPoint)
+            .and()
+                .formLogin()
+                .successHandler(new SessionAuthenticationSuccessHandler())
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
+            .and()
+                .logout()
+                    .defaultLogoutSuccessHandlerFor(new HttpStatusReturningLogoutSuccessHandler(),
+                        new AntPathRequestMatcher(&amp;quot;/logout&amp;quot;))
+            .and()
+                .authorizeRequests()
+                    .antMatchers(&amp;quot;/login&amp;quot;).permitAll()
+                    .antMatchers(&amp;quot;/h2/**&amp;quot;).permitAll()
+            .and()
+                .authorizeRequests().antMatchers(&amp;quot;/api/**&amp;quot;).hasAnyRole(&amp;quot;ADMIN&amp;quot;)
+            .and()
+                .requestCache()
+                .requestCache(new NullRequestCache());
+    }
+
+    @Bean
+    public HttpSessionIdResolver httpSessionIdResolver() {
+        return new HeaderHttpSessionIdResolver(&amp;quot;X-Auth-Token&amp;quot;);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(provider);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The following list describes the WebSecurityConfig elements:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;RestAuthenticationEntryPoint&lt;/strong&gt; - The entry point implementation which returns 401 status, indicating that the request requires authentication.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SessionAuthenticationSuccessHandler&lt;/strong&gt; - Success authentication handler that returns 200 status on successuful authentication.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HttpSessionIdResolver&lt;/strong&gt; - Use &lt;code&gt;HeaderHttpSessionIdResolver&lt;/code&gt; if you want to send authentication token through http headers. Please check the following &lt;a href=&quot;https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f&quot;&gt;git commit&lt;/a&gt; regarding class name changes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;@EnableJdbcHttpSession&lt;/strong&gt; - This annotation is needed as it exposes &lt;code&gt;SessionRepositoryFilter&lt;/code&gt; that will use database for storing session data.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;curl-command&quot;&gt;&lt;a name=&quot;curl&quot; id=&quot;curl&quot;&gt;Curl command&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#curl-command&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;user-login&quot;&gt;User login &lt;a class=&quot;direct-link&quot; href=&quot;#user-login&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Check for the &lt;code&gt;x-auth-token&lt;/code&gt; in response and include it with the subsequent requests.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -X POST \
+  http://localhost:1999/login \
+  -H &#39;cache-control: no-cache&#39; \
+  -H &#39;content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW&#39; \
+  -F username=test \
+  -F password=test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;user-logout&quot;&gt;User logout &lt;a class=&quot;direct-link&quot; href=&quot;#user-logout&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;curl -X GET \
+  http://localhost:1999/logout \
+  -H &#39;cache-control: no-cache&#39; \
+  -H &#39;x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;access-to-protected-resource&quot;&gt;Access to protected resource &lt;a class=&quot;direct-link&quot; href=&quot;#access-to-protected-resource&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This is an example on how to access protected resource by including access token in the headers:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -X GET \
+  http://localhost:1999/api/sample \
+  -H &#39;cache-control: no-cache&#39; \
+  -H &#39;x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;source-code&quot;&gt;Source code &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Session Authentication Success Handler&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class SessionAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+        Authentication authentication) throws IOException, ServletException {
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;RestAuthenticationEntryPoint&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Component
+public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest httpServletRequest,
+        HttpServletResponse httpServletResponse, AuthenticationException e)
+        throws IOException, ServletException {
+
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, &amp;quot;Unauthorized&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;AuthenticationProviderConfig&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Configuration
+public class AuthenticationProviderConfig {
+    private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+
+    public AuthenticationProviderConfig(PasswordEncoder passwordEncoder,
+        @Qualifier(&amp;quot;databaseUserDetailsService&amp;quot;) UserDetailsService userDetailsService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Bean
+    public AuthenticationProvider databaseAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        return daoAuthenticationProvider;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Password encoder configuration&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Configuration
+public class PasswordEncoderConfig {
+    @Bean
+    protected PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(11);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
 </content>
 	</entry>
 </feed>

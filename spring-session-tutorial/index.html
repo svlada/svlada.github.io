@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Session Tutorial - JDBC Configuration</title>
+    <meta name="Description" content="This article will show you how to configure and use Spring Session to manage session data in your web application.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="svlada">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">svlada</a></h1>
+      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>Spring Session Tutorial - JDBC Configuration</h1>
+
+<p>This article will show you how to configure and use <a href="https://projects.spring.io/spring-session/">Spring Session</a> to manage session data in your web application. Please checkout the code from the following <a href="https://github.com/svlada/springsession-jdbc">GitHub repository</a>.</p>
+<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A" aria-hidden="true">#</a></h2>
+<ol>
+<li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
+<li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
+<li><a title="CURL" href="#curl">Curl</a></li>
+</ol>
+<h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h3>
+<p>Before we go into the more details of <a href="https://projects.spring.io/spring-session/">Spring Session</a> configuration, I would like to provide my view on recent hype around Stateful vs Stateless session management.</p>
+<p>Lately, a lot of people started using JSON Web Token (JWT) as an stateless mechanism for handling sessions. A couple years ago I event wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pro's and cons of stateless and stateful session management approaches.</p>
+<h3 id="stateless-on-server-side">Stateless on server side <a class="direct-link" href="#stateless-on-server-side" aria-hidden="true">#</a></h3>
+<p><strong>Pros</strong></p>
+<ol>
+<li>No need to scale session data on server side as session is maintained through cryptographically signed JSON Web Token (JWT).</li>
+</ol>
+<p><strong>Cons</strong></p>
+<ol>
+<li>No way to provide <strong>log-out</strong> feature without introducing state on server side.</li>
+<li>Potential token explosion as JSON Web Token becomes larger in size.</li>
+<li>Sending JSON Web Token (JWT) payload on each request can be expensive.</li>
+</ol>
+<h3 id="stateful-on-server-side">Stateful on server side <a class="direct-link" href="#stateful-on-server-side" aria-hidden="true">#</a></h3>
+<p><strong>Pros</strong></p>
+<ol>
+<li>Ability to log-out user</li>
+<li>Out-of-box sliding session</li>
+</ol>
+<p><strong>Cons</strong></p>
+<ol>
+<li>/</li>
+</ol>
+<p>In short, don't use JSON Web Token to manage session data for your web applications. The most of the web applications will be fine with storing session related data on Redis.</p>
+<p>If you have microservices architecture, you can use API Gateway as an translation layer that would validate session id and create federated token to be used by the services. That's one use case where JSON Web Token fits nicely.</p>
+<h3 id="project-setup"><a name="project-setup" id="project-setup">Project setup</a> <a class="direct-link" href="#project-setup" aria-hidden="true">#</a></h3>
+<p>Include <code>spring-session-core</code> and <code>spring-session-jdbc</code> in your <code>pom.xml</code> file.</p>
+<p><strong>Maven dependencies</strong></p>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-session-jdbc&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-session-core&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>Spring security configuration</strong></p>
+<p>The following class shows how to configure REST API security with the Spring Session:</p>
+<pre><code>@Configuration
+@EnableWebSecurity
+@EnableJdbcHttpSession
+public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final AuthenticationProvider provider;
+
+    @Autowired
+    public WebSecurityConfig(final RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+        final AuthenticationProvider provider) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.provider = provider;
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(restAuthenticationEntryPoint)
+            .and()
+                .formLogin()
+                .successHandler(new SessionAuthenticationSuccessHandler())
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
+            .and()
+                .logout()
+                    .defaultLogoutSuccessHandlerFor(new HttpStatusReturningLogoutSuccessHandler(),
+                        new AntPathRequestMatcher(&quot;/logout&quot;))
+            .and()
+                .authorizeRequests()
+                    .antMatchers(&quot;/login&quot;).permitAll()
+                    .antMatchers(&quot;/h2/**&quot;).permitAll()
+            .and()
+                .authorizeRequests().antMatchers(&quot;/api/**&quot;).hasAnyRole(&quot;ADMIN&quot;)
+            .and()
+                .requestCache()
+                .requestCache(new NullRequestCache());
+    }
+
+    @Bean
+    public HttpSessionIdResolver httpSessionIdResolver() {
+        return new HeaderHttpSessionIdResolver(&quot;X-Auth-Token&quot;);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(provider);
+    }
+}
+</code></pre>
+<p>The following list describes the WebSecurityConfig elements:</p>
+<ol>
+<li><strong>RestAuthenticationEntryPoint</strong> - The entry point implementation which returns 401 status, indicating that the request requires authentication.</li>
+<li><strong>SessionAuthenticationSuccessHandler</strong> - Success authentication handler that returns 200 status on successuful authentication.</li>
+<li><strong>HttpSessionIdResolver</strong> - Use <code>HeaderHttpSessionIdResolver</code> if you want to send authentication token through http headers. Please check the following <a href="https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f">git commit</a> regarding class name changes.</li>
+<li><strong>@EnableJdbcHttpSession</strong> - This annotation is needed as it exposes <code>SessionRepositoryFilter</code> that will use database for storing session data.</li>
+</ol>
+<h3 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command" aria-hidden="true">#</a></h3>
+<h3 id="user-login">User login <a class="direct-link" href="#user-login" aria-hidden="true">#</a></h3>
+<p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
+<pre><code>curl -X POST \
+  http://localhost:1999/login \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -F username=test \
+  -F password=test
+</code></pre>
+<h3 id="user-logout">User logout <a class="direct-link" href="#user-logout" aria-hidden="true">#</a></h3>
+<pre><code>curl -X GET \
+  http://localhost:1999/logout \
+  -H 'cache-control: no-cache' \
+  -H 'x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc'
+</code></pre>
+<h3 id="access-to-protected-resource">Access to protected resource <a class="direct-link" href="#access-to-protected-resource" aria-hidden="true">#</a></h3>
+<p>This is an example on how to access protected resource by including access token in the headers:</p>
+<pre><code>curl -X GET \
+  http://localhost:1999/api/sample \
+  -H 'cache-control: no-cache' \
+  -H 'x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390'
+</code></pre>
+<h2 id="source-code">Source code <a class="direct-link" href="#source-code" aria-hidden="true">#</a></h2>
+<p><strong>Session Authentication Success Handler</strong></p>
+<pre><code>public class SessionAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+        Authentication authentication) throws IOException, ServletException {
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+}
+</code></pre>
+<p><strong>RestAuthenticationEntryPoint</strong></p>
+<pre><code>@Component
+public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest httpServletRequest,
+        HttpServletResponse httpServletResponse, AuthenticationException e)
+        throws IOException, ServletException {
+
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, &quot;Unauthorized&quot;);
+    }
+}
+</code></pre>
+<p><strong>AuthenticationProviderConfig</strong></p>
+<pre><code>@Configuration
+public class AuthenticationProviderConfig {
+    private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+
+    public AuthenticationProviderConfig(PasswordEncoder passwordEncoder,
+        @Qualifier(&quot;databaseUserDetailsService&quot;) UserDetailsService userDetailsService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Bean
+    public AuthenticationProvider databaseAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        return daoAuthenticationProvider;
+    }
+}
+</code></pre>
+<p><strong>Password encoder configuration</strong></p>
+<pre><code>@Configuration
+public class PasswordEncoderConfig {
+    @Bean
+    protected PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(11);
+    }
+}
+</code></pre>
+
+
+<p><a href="/">← Home</a></p>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /spring-session-tutorial/ -->
+  </body>
+</html>
