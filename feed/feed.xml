@@ -12,6 +12,851 @@
 	</author>
 	
 	<entry>
+		<title>Require.js Dependency management - part1</title>
+		<link href="https://myurl.com/require-js-dependency-management-part1/"/>
+		<updated>2013-11-23T00:00:00+00:00</updated>
+		<id>https://myurl.com/require-js-dependency-management-part1/</id>
+		<content type="html">&lt;p&gt;Jump to complete source code &lt;a href=&quot;#source&quot;&gt;source code&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is introductory RequireJS tutorial in RequireJs series(&lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part1&lt;/a&gt;, &lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;part2&lt;/a&gt;). Reading material about AMD and RequireJS is in references section of article.&lt;/p&gt;
+&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Before or after reading this article I strongly recommend to read documentation on &lt;a href=&quot;http://requirejs.org/docs/start.html&quot;&gt;RequireJS website&lt;/a&gt;. James Burke did great job here.&lt;/p&gt;
+&lt;p&gt;RequireJS is a Javascript file and module loader which allows for asynchronous JavaScript loading and dependency management(can be used to load more than just Javascript files).&lt;/p&gt;
+&lt;p&gt;Require.js is a dependency management and asynchronous script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.&lt;/p&gt;
+&lt;p&gt;RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.&lt;/p&gt;
+&lt;p&gt;RequireJS is built around Module pattern. Modern web applications tend to have fairly complex front-ends. Module pattern should improve maintability of our bloated javascript code. Remmember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures.&lt;/p&gt;
+&lt;p&gt;RequireJS is well defined and standardized. While we wait ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint how we should structure our applications. Require.js works in current browsers.&lt;/p&gt;
+&lt;h3 id=&quot;basic-structure&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t1&quot;&gt;Basic structure&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#basic-structure&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;STEP 1 - How to structure RequireJS project&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This is our sample RequireJS project structure.&lt;/p&gt;
+&lt;pre&gt;
+ |-[wepapp]
+ |--- [build]
+ |----- r.js
+ |----- build.js
+ |----- build.single.js
+ |--- [js]
+ |------ [app]
+ |------ [lib]
+ |--------- jquery.js
+ |----- app.js
+ |----- app-built.js*
+ |-index.html
+ |-readme.md
+&lt;/pre&gt;
+&lt;p&gt;Build scripts and RequireJS optimization tool r.js are inside &lt;code&gt;[build]&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;Application code reside in &lt;code&gt;[webapp/js/app]&lt;/code&gt; directory. This is place where you should place all of your /Model/View/Router/Template code.&lt;/p&gt;
+&lt;p&gt;Libraries like jQuery, Backbone, Handlebars and others are inside &lt;code&gt;[webapp/js/lib]&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;Application config and main entry point is &lt;code&gt;[webapp/js/app.js]&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&quot;step-2---how-to-include-requirejs&quot;&gt;STEP 2 - How to include RequireJS &lt;a class=&quot;direct-link&quot; href=&quot;#step-2---how-to-include-requirejs&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Your &lt;code&gt;[webapp/index.html]&lt;/code&gt; should look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;lt;html&amp;gt;
+ &amp;lt;head&amp;gt;&amp;lt;/head&amp;gt;
+ &amp;lt;body&amp;gt;
+ &amp;lt;div id=&amp;quot;test&amp;quot;&amp;gt;Some sample content&amp;lt;/div&amp;gt;
+ &amp;lt;script data-main=&amp;quot;js/app.js&amp;quot; src=&amp;quot;js/lib/require.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+ &amp;lt;/body&amp;gt;
+ &amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Attribute &lt;code&gt;[data-main=&amp;quot;js/app.js&amp;quot;]&lt;/code&gt; is entry point of our application. This means that RequireJS will first load &lt;code&gt;[js/app.js]&lt;/code&gt; after initialization.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;STEP 3 - How to configure RequireJS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Open your &lt;code&gt;[webapp/js/app.js]&lt;/code&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; requirejs.config({
+ 	baseUrl: &#39;js/lib&#39;,
+ 	paths: {
+ 		app: &#39;../app&#39;,
+ 		jquery: &#39;jquery&#39;
+ 	}
+ 
+ });
+ 
+ requirejs([&#39;jquery&#39;], function($) {
+ 	console.log($(&#39;#test&#39;));
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;[baseUrl: &#39;js/lib&#39;]&lt;/code&gt; - RequireJS loads code realative to directory specified in baseUrl. By default baseUrl is set to the same directory as data-main. If you dont specify data-main attribute and baseUrl property is not present in RequireJS config, than default path is directory that contains html page which include RequireJS library.&lt;br&gt;
+&lt;a href=&quot;http://requirejs.org/docs/api.html#config-baseUrl&quot;&gt;base url&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Attribute &lt;code&gt;[paths]&lt;/code&gt; &lt;a href=&quot;http://requirejs.org/docs/api.html#config-paths&quot;&gt;paths config&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;STEP 4 - How to use requre() and define() in RequireJS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;require() and define() are most important concepts in RequireJS.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;define()&lt;/strong&gt; - Used for module definition.&lt;br&gt;
+Consists of module wrapper, dependency list and definition function.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;define([&#39;dependency1&#39;, [&#39;dependency2&#39;, [&#39;dependency3&#39;], function(dependency1, dependency2, dependency3) {
+ 	var Module = function(value) {
+ 		this.property = value;
+ 	}
+ 	return (Module);
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;require()&lt;/strong&gt; - Used for dependency loading&lt;br&gt;
+Consists of public api, dependency list, callback function&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; requirejs([&#39;dependency1&#39;, [&#39;dependency2&#39;, [&#39;dependency3&#39;], function(dependency1, dependency2, dependency3) {
+ 	// You can use your imported module here
+ 	var instance = dependency1;
+ 	var constructorFunction = new dependency2();
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;prototypal-inheritance-and-require.js&quot;&gt;&lt;a name=&quot;t2&quot; id=&quot;t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#prototypal-inheritance-and-require.js&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Skip to &lt;a href=&quot;#source&quot;&gt;complete source code&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With RequireJS you can organize your modules in separate files with ease.&lt;/p&gt;
+&lt;p&gt;Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.&lt;/p&gt;
+&lt;pre&gt;
+ |-[wepapp]
+ |--- [build]
+ |----- r.js
+ |----- build.js
+ |----- build.single.js
+ |--- [js]
+ |------ [app]
+ |--------- [category]
+ |------------ category.js
+ |------------ item.js
+ |------------ specializedItem.js
+ |------ [lib]
+ |--------- jquery.js
+ |----- app.js
+ |----- app-built.js*
+ |-index.html
+ |-readme.md
+&lt;/pre&gt;
+&lt;p&gt;With RequireJS you can provide function or object in return statement. We are going to use this feature to retrieve constructor functions for our object.&lt;/p&gt;
+&lt;p&gt;With RequireJS you can import and use external dependencies inside your module. We are going to use this feature to achieve prototypal inheritance in RequireJS.&lt;/p&gt;
+&lt;p&gt;Category is collection of our Items. &lt;code&gt;[webapp/js/app/category/category.js]&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;quot;use strict&amp;quot;;
+ 
+ define(function() {
+ 	
+ 	var Category = function() {
+ 		this.name = &#39;Default name&#39;;
+ 		this.category = &#39;Default category&#39;;
+ 		this.items = [];		
+ 	}
+ 
+ 	Category.prototype.showItems = function() {
+ 		for (var i = 0, len = this.items.length; i &amp;lt; len; i++) {
+ 			console.log(this.items[i]);
+ 		}
+ 	}
+ 
+ 	Category.prototype.addItem = function(item) {
+ 		this.items.push(item);
+ 	}
+ 
+ 	return (Category);
+ 
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Item is base object. &lt;code&gt;[webapp/js/app/category/item.js]&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;quot;use strict&amp;quot;;
+ 
+ define(function() {
+ 
+ 	var Item = function(itemName) {
+ 		this.name = itemName;
+ 	}
+ 
+ 	Item.prototype.getItemName = function() {
+ 		return this.name;
+ 	}
+ 
+ 	return (Item);
+ 
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;[webapp/js/app/category/specialItem.js]&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency&lt;strong&gt;[&#39;./item&#39;].&lt;/strong&gt;&lt;br&gt;
+Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;quot;use strict&amp;quot;;
+ 
+ define([&#39;./item&#39;], function(Item) {
+ 
+ 	var SpecialItem = function(itemName) {
+ 		this.color = &#39;Default color&#39;;
+ 		this.weigth = &#39;Default weigth&#39;;
+ 		Item.call(this, itemName);
+ 	}
+ 
+ 	SpecialItem.prototype = new Item;
+ 	SpecialItem.prototype.constructor = SpecialItem;
+ 
+ 	return (SpecialItem);
+ 
+ });
+&lt;/code&gt;&lt;/pre&gt;
+ &lt;h1&gt;&lt;a name=&quot;source&quot; id=&quot;source&quot;&gt;Source code listing&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;[webapp/js/app.js]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; requirejs.config({
+ 	baseUrl: &#39;js/lib&#39;,
+ 	paths: {
+ 		app: &#39;../app&#39;,
+ 		jquery: &#39;jquery&#39;
+ 	}
+ });
+ 
+ requirejs([&#39;jquery&#39;, &#39;app/category/category&#39;, &#39;app/category/item&#39;, &#39;app/category/specialItem&#39;],
+ function($, Category, Item, SpecialItem) {
+ 	var c1 = new Category();
+ 	c1.items.push(new Item(&#39;RequireJS in Action&#39;));
+ 	c1.items.push(new Item(&#39;Javascript Good parts&#39;));
+ 	c1.items.push(new Item(&#39;Some book&#39;));
+ 	c1.items.push(new SpecialItem(&#39;Special promotion book&#39;));
+ 	c1.showItems();
+ 	console.log(c1);
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;[webapp/js/app/category/category.js]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;quot;use strict&amp;quot;;
+ 
+ define(function() {
+ 	
+ 	var Category = function() {
+ 		this.name = &#39;Default name&#39;;
+ 		this.category = &#39;Default category&#39;;
+ 		this.items = [];		
+ 	}
+ 
+ 	Category.prototype.showItems = function() {
+ 		for (var i = 0, len = this.items.length; i &amp;lt; len; i++) {
+ 			console.log(this.items[i]);
+ 		}
+ 	}
+ 
+ 	Category.prototype.addItem = function(item) {
+ 		this.items.push(item);
+ 	}
+ 
+ 	return (Category);
+ 
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;[webapp/js/app/category/item.js]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;quot;use strict&amp;quot;;
+ 
+ define(function() {
+ 
+ 	var Item = function(itemName) {
+ 		this.name = itemName;
+ 	}
+ 
+ 	Item.prototype.getItemName = function() {
+ 		return this.name;
+ 	}
+ 
+ 	return (Item);
+ 
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;[webapp/js/app/category/specialItem.js]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;quot;use strict&amp;quot;;
+ 
+ define([&#39;./item&#39;], function(Item) {
+ 
+ 	var SpecialItem = function(itemName) {
+ 		this.color = &#39;Default color&#39;;
+ 		this.weigth = &#39;Default weigth&#39;;
+ 		Item.call(this, itemName);
+ 	}
+ 
+ 	SpecialItem.prototype = new Item;
+ 	SpecialItem.prototype.constructor = SpecialItem;
+ 
+ 	return (SpecialItem);
+ 
+ });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In next part of Require.js series I will talk about r.js RequireJS optimization and build tool.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/#!/svlada&quot;&gt;Follow me on Twitter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://addyosmani.com/writing-modular-js/&quot;&gt;http://addyosmani.com/writing-modular-js/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/magazine/hh227261.aspx&quot;&gt;http://msdn.microsoft.com/en-us/magazine/hh227261.aspx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://tomdale.net/2012/01/amd-is-not-the-answer/&quot;&gt;http://tomdale.net/2012/01/amd-is-not-the-answer/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://tagneto.blogspot.com/2012/01/reply-to-tom-on-amd.html&quot;&gt;http://tagneto.blogspot.com/2012/01/reply-to-tom-on-amd.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Require.js Dependency management - part2</title>
+		<link href="https://myurl.com/require-js-optimization-part2/"/>
+		<updated>2013-11-25T00:00:00+00:00</updated>
+		<id>https://myurl.com/require-js-optimization-part2/</id>
+		<content type="html">&lt;p&gt;Jump to complete source code &lt;a href=&quot;#source&quot;&gt;source code&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is RequireJS optimizer tutorial, second one in the RequireJs series(&lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt;,&lt;a href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;part 2&lt;/a&gt;. Reading material about r.js and RequireJS is in references section of article.&lt;/p&gt;
+&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#t1&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#t2&quot;&gt;Require.js optimizer dump dependencies to single file&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This is short article in which I will explain you how to build and optimize your javascript code with ReqireJS optimization tool r.js.&lt;/p&gt;
+&lt;p&gt;James Burke &lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;recommends&lt;/a&gt; using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from &lt;a href=&quot;http://nodejs.org/#download&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;require.js-optimizer&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t0&quot;&gt;Require.js optimizer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Create your build script file on following location &lt;code&gt;[webapp/build/build.js]&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt; 
+ [cc lang=&quot;javascript&quot;]
+ |-[wepapp]
+ |--- [build]
+ |----- r.js
+ |----- build.js
+ |----- build.single.js
+ |--- [js]
+ |------ [app]
+ |------ [lib]
+ |--------- jquery.js
+ |----- app.js
+ |----- app-built.js*
+ |-index.html
+ |-readme.md
+ [/cc]
+ &lt;/pre&gt;
+&lt;p&gt;Build your application with node.js and r.js executing the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; node r.js -o build.js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For demonstration purposes I have made 3 examples of building application with RequireJS.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 1: Optimize modules&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Main module app.js has many dependencies and we want to bundle all that dependencies into single file. Mark modules for optimization in modules array of configuration object inside build.js. First example will contain only one module for optimization &lt;code&gt;[webapp/js/app.js]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Paste the following code to your build.js file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; {
+     baseUrl: &amp;quot;js/lib&amp;quot;,
+     appDir: &amp;quot;..&amp;quot;,
+     dir: &amp;quot;dist&amp;quot;,
+ 
+     modules: [
+         { name: &amp;quot;app&amp;quot; }
+     ],
+ 
+     paths: {
+         app: &#39;../app&#39;,
+         jquery: &#39;jquery&#39;
+     }
+ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;appDir&lt;/strong&gt; - Telling us where webapp root directory is located relative to build.js script.&lt;br&gt;&lt;br&gt;
+&lt;strong&gt;dir&lt;/strong&gt; - Output directory relative to build.js&lt;/p&gt;
+&lt;p&gt;Console output of build.js&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/category.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/item.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/specialItem.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/jquery.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/require.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/text.js
+ 
+ js/app.js
+ ----------------
+ js/lib/jquery.js
+ js/app/category/category.js
+ js/app/category/item.js
+ js/app/category/specialItem.js
+ js/app.js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All &lt;code&gt;[webapp/js/app.js]&lt;/code&gt; dependencies are now minified with Uglify.js and concatenated into single file. But what happened with individual modules? Module &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt; has a dependency &lt;code&gt;[webapp/js/app/category/Item.js]&lt;/code&gt;. Open your optimized &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt; and pass it to beautifier. As you can see from the output &lt;code&gt;[js/app/category/item.js]&lt;/code&gt; is not bundled with &lt;code&gt;[js/app/category/specialItem.js]&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Optimized module:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; define([&amp;quot;./item&amp;quot;], function (Item) {
+     var SpecialItem = function (itemName) {
+             this.color = &amp;quot;Default color&amp;quot;, this.weigth = &amp;quot;Default weigth&amp;quot;, Item.call(this, itemName)
+         };
+     return SpecialItem.prototype = new Item, SpecialItem.prototype.constructor = SpecialItem, SpecialItem
+ })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 2: Optimize additional modules&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In this example we will add &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt; to modules array of build.js configuration object.&lt;/p&gt;
+&lt;p&gt;Paste following code to your build.js file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; {
+     baseUrl: &amp;quot;js/lib&amp;quot;,
+     appDir: &amp;quot;..&amp;quot;,
+     dir: &amp;quot;dist&amp;quot;,
+ 
+     modules: [
+         { name: &amp;quot;app&amp;quot; },
+         { name: &amp;quot;app/category/specialItem&amp;quot; }
+     ],
+ 
+     paths: {
+         app: &#39;../app&#39;,
+         jquery: &#39;jquery&#39;
+     }
+ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Console output of build.js&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/category.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/item.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/specialItem.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/jquery.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/require.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/text.js
+ 
+ js/app.js
+ ----------------
+ js/lib/jquery.js
+ js/app/category/category.js
+ js/app/category/item.js
+ js/app/category/specialItem.js
+ js/app.js
+ 
+ js/app/category/specialItem.js
+ ----------------
+ js/app/category/item.js
+ js/app/category/specialItem.js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now &lt;code&gt;[js/app/category/item.js]&lt;/code&gt; is bundled with &lt;code&gt;[js/app/category/specialItem.js]&lt;/code&gt; module.&lt;/p&gt;
+&lt;p&gt;Optimized module:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; define(&amp;quot;app/category/item&amp;quot;, [], function () {
+     var Item = function (itemName) {
+             this.name = itemName
+         };
+     return Item.prototype.getItemName = function () {
+         return this.name
+     }, Item
+ }), define(&amp;quot;app/category/specialItem&amp;quot;, [&amp;quot;./item&amp;quot;], function (Item) {
+     var SpecialItem = function (itemName) {
+             this.color = &amp;quot;Default color&amp;quot;, this.weigth = &amp;quot;Default weigth&amp;quot;, Item.call(this, itemName)
+         };
+     return SpecialItem.prototype = new Item, SpecialItem.prototype.constructor = SpecialItem, SpecialItem
+ })
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;require.js-optimizer-compile-dependencies-to-single-file&quot;&gt;&lt;a name=&quot;t2&quot; id=&quot;t0&quot;&gt;Require.js optimizer compile dependencies to single file&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer-compile-dependencies-to-single-file&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Paste the following code to your &lt;code&gt;build.single.js&lt;/code&gt; file.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; {
+     baseUrl: &amp;quot;../js/lib&amp;quot;,
+     name: &amp;quot;../app&amp;quot;,
+     out: &amp;quot;app-built.js&amp;quot;,
+ 
+     paths: {
+         app: &#39;../app&#39;,
+         jquery: &#39;jquery&#39;,
+     }
+ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt; - Location of module you want to export as a single file with all dependencies.&lt;br&gt;&lt;br&gt;
+&lt;strong&gt;out&lt;/strong&gt; - File &amp;quot;app-built.js&amp;quot; is created.&lt;/p&gt;
+&lt;p&gt;Console output of build.single.js:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; Tracing dependencies for: ../app
+ Uglifying file: C:/vlada/practice/require/webapp/build/app-built.js
+ 
+ C:/vlada/practice/require/webapp/build/app-built.js
+ ----------------
+ C:/vlada/practice/require/webapp/js/lib/jquery.js
+ C:/vlada/practice/require/webapp/js/app/category/category.js
+ C:/vlada/practice/require/webapp/js/app/category/item.js
+ C:/vlada/practice/require/webapp/js/app/category/specialItem.js
+ C:/vlada/practice/require/webapp/js/lib/../app.js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All of our modules are now glued together into single &lt;code&gt;[webapp/build/app-built.js]&lt;/code&gt; file.&lt;/p&gt;
+&lt;h3 id=&quot;source-code-listing&quot;&gt;&lt;a name=&quot;source&quot; id=&quot;source&quot;&gt;Source code listing&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code-listing&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;build.js&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; {
+     baseUrl: &amp;quot;js/lib&amp;quot;,
+     appDir: &amp;quot;..&amp;quot;,
+     dir: &amp;quot;dist&amp;quot;,
+ 
+     modules: [
+         { name: &amp;quot;app&amp;quot; },
+         { name: &amp;quot;app/category/specialItem&amp;quot; }
+     ],
+ 
+     paths: {
+         app: &#39;../app&#39;,
+         jquery: &#39;jquery&#39;
+     }
+ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;build.single.js&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; {
+     baseUrl: &amp;quot;../js/lib&amp;quot;,
+     name: &amp;quot;../app&amp;quot;,
+     out: &amp;quot;app-built.js&amp;quot;,
+ 
+     paths: {
+         app: &#39;../app&#39;,
+         jquery: &#39;jquery&#39;
+     }
+ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the RequireJS tutorial part 3 I will talk about RequireJS integration with Backbone, Handlebars and jQuery with Require.js. Stay tuned :)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;http://requirejs.org/docs/optimization.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jrburke/r.js/blob/master/build/example.build.js&quot;&gt;https://github.com/jrburke/r.js/blob/master/build/example.build.js&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Proxy Ajax requests, Curl and Symfony 2</title>
+		<link href="https://myurl.com/require-js-dependency-management-part1/"/>
+		<updated>2013-12-23T00:00:00+00:00</updated>
+		<id>https://myurl.com/require-js-dependency-management-part1/</id>
+		<content type="html">&lt;p&gt;In this article I will explain, how to make cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
+&lt;p&gt;Jump to the &lt;a href=&quot;#source-code&quot;&gt;#source-code&lt;/a&gt; and skip following errata on how to proxy Ajax requests.&lt;/p&gt;
+&lt;p&gt;Usual scenario looks like this:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Client send ajax request to server&lt;/li&gt;
+&lt;li&gt;Your server forwards request to external/remote server&lt;/li&gt;
+&lt;li&gt;Waiting on response from remote server&lt;/li&gt;
+&lt;li&gt;Parse and process response from remote server&lt;/li&gt;
+&lt;li&gt;Send response back to client&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;First we shall check if client request is XmlHttpRequest using Symfony 2 built in method&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; $request-&amp;gt;isXmlHttpRequest()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;step-1%3A-client-code&quot;&gt;STEP 1: Client code &lt;a class=&quot;direct-link&quot; href=&quot;#step-1%3A-client-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Client code is quite simple.&lt;/p&gt;
+&lt;p&gt;You need to craft Ajax request in following way.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Specify rest url on your server for handling cross-domain ajax requests.&lt;code&gt;url: &amp;quot;&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Wrap request data&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We need some data in order to create curl request on server-side.&lt;/p&gt;
+&lt;p&gt;For this example you need to send object with following properties to your server.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;     restUrl: &amp;quot;external-api-url&amp;quot;, // Your target url on remote server
+     method: &amp;quot;POST&amp;quot;, // Type of request you want to issue to remote server
+     params: { 
+         action: &amp;quot;getFriendsList&amp;quot; // Parameters you are sending to remote server
+     }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;step-2%3A-forward-request-to-remote-server&quot;&gt;STEP 2: Forward request to remote server &lt;a class=&quot;direct-link&quot; href=&quot;#step-2%3A-forward-request-to-remote-server&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This step is bit tricky.&lt;/p&gt;
+&lt;p&gt;Client request is arrived to your server-side code. First you need to parse and validate request data.&lt;/p&gt;
+&lt;p&gt;To repeat once more ... you&#39;ll need the following data on server:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+ $restUrl = $request-&amp;gt;request-&amp;gt;get(&#39;restUrl&#39;); // Your target url on remote server
+ $method = $request-&amp;gt;request-&amp;gt;get(&#39;method&#39;); // Type of request you want to issue to remote server
+ $params = $request-&amp;gt;request-&amp;gt;get(&#39;params&#39;); // Parameters you are sending to remote server
+ $contentType = $request-&amp;gt;request-&amp;gt;get(&#39;contentType&#39;); // Content-type
+ ?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You need to create curl request and set parameters you have recieved from client.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; &amp;lt;?php
+     // Initialize curl handle
+     $ch = curl_init(); 
+     
+     // Set request url
+     curl_setopt($ch, CURLOPT_URL, $restUrl); 
+     
+     // TRUE to include the header in the output.
+     curl_setopt($ch, CURLOPT_HEADER, true); 
+     
+     // A custom request method to use instead of &amp;quot;GET&amp;quot; or &amp;quot;HEAD&amp;quot; when doing a HTTP request.  
+     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); 
+     if ($params != null) {
+         // The full data to post in a HTTP &amp;quot;POST&amp;quot; operation.
+         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+     }
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+ ?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I strongly suggest to read php manual in order to get familiar with the curl configuration: &lt;a href=&quot;http://php.net/manual/en/function.curl-setopt.php&quot;&gt;http://php.net/manual/en/function.curl-setopt.php&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You have enough data to send request to remote server. After executing curl handle, response from remote server is stored in $response variable.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+     $response = curl_exec($ch);
+     curl_close($ch);
+ ?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You have basic setup. Now we are going to add cookie support to our ajax proxy.&lt;/p&gt;
+&lt;p&gt;Why do we need cookies?&lt;/p&gt;
+&lt;p&gt;Recently I needed to integrate symfony 2 application with wordpress portal. Authentication is done on Wordpress side, and symfony application is using wordpress cookies to authorize users for accessing protected features.&lt;/p&gt;
+&lt;p&gt;In production both applications share same domain, but in test enviorment there is a lot of mess (different domains, ports etc).&lt;/p&gt;
+&lt;p&gt;Where is problem?&lt;/p&gt;
+&lt;p&gt;Application written in Symfony 2 need to consume some protected backend functionalities on Wordpress side. There is a lot personalized data that is fetched via ajax calls, and this is reason why we need cookies.&lt;/p&gt;
+&lt;h3 id=&quot;how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot;&gt;How to get cookies from Symfony2 request and set mutplie cookies to Curl? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;We need to extract multiple cookies from Symfony 2 request object and set them to curl handle.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+     // Get all cookies from Symfony request object
+     $requestCookies = $request-&amp;gt;cookies-&amp;gt;all(); 
+     
+     // Prepare and set multiple cookies to curl handle
+     $cookieArray = array();
+     foreach ($requestCookies as $cookieName =&amp;gt; $cookieValue) {
+         $cookieArray[] = &amp;quot;{$cookieName}={$cookieValue}&amp;quot;;
+     }
+ 
+     // Be sure to set whitespace after &#39;; &#39; when creating cookie string
+     $cookie_string = implode(&#39;; &#39;, $cookieArray);
+     curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot;&gt;How to get cookies Curl response and set multiple cookies to Symfony response? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Remmember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl http response.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php    
+     // Get header and response data from curl response
+     list($headers, $response) = explode(&amp;quot;\r\n\r\n&amp;quot;,$response,2);
+     // We are using regex to parse cookies from curl response
+     preg_match_all(&#39;/Set-Cookie: (.*)\b/&#39;, $headers, $cookies);
+     // Store cookies
+     $cookies = $cookies[1];
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Raw cookies are parsed and stored in cookie array. Then each cookie need to be converted to Symfony Cookie object and injected to Symfony response headers.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+     foreach($cookies as $rawCookie) {
+         $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
+         $value = $cookie-&amp;gt;getValue();
+         if (!empty($value)) {
+             $value = str_replace(&#39; &#39;, &#39;+&#39;, $value);
+         }
+         $customCookie = new Cookie($cookie-&amp;gt;getName(), $value, $cookie-&amp;gt;getExpiresTime()==null?0:$cookie-&amp;gt;getExpiresTime(), $cookie-&amp;gt;getPath());
+         $response-&amp;gt;headers-&amp;gt;setCookie($customCookie);
+     }
+ ?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;FINAL NOTICE:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Close and store session data before initializing curl handle or you can run into deadlock.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+     session_write_close();
+     $ch = curl_init();
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What could happen if you forgot to close session?&lt;/p&gt;
+&lt;p&gt;Here is one scenario:&lt;/p&gt;
+&lt;p&gt;PHP script S1 create/sends curl POST request to script S2 on same Apache server/PHP Enviorment. If page S1 and S2 share same session, script S2 will not start executing until end of script S1 lifetime. But script S1 is waiting on response from script S2. This is point where deadlock happen. The default session handler locks the session file for the duration of the page request.&lt;/p&gt;
+&lt;p&gt;&lt;a id=&quot;source-code&quot; name=&quot;source-code&quot;&gt;Complete source code listing for ajax proxy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Client sample code&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; function sendAjaxRequest(){
+     $.ajax({
+         type: &amp;quot;POST&amp;quot;,
+         dataType: &#39;json&#39;,
+         url: &amp;quot;&amp;quot;,
+         data: {
+         	restUrl : &amp;quot;/external-api-url/&amp;quot;,
+         	method: &#39;POST&#39;,
+             params: {
+             	action: &amp;quot;getFriendList&amp;quot;
+             }
+         },
+         success: function(data, textStatus, jqXHR) {
+             ...
+ 		}
+ 	});
+ }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Server proxy code&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+namespace Proxy\Bundle\ProxyBundle\Controller;
+ 
+ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Cookie;
+ 
+ class AjaxProxyController extends Controller {
+ 	/**
+ 	 * @Route(&amp;quot;/r/ajax/proxy&amp;quot;, name=&amp;quot;_ajaxProxy&amp;quot;)
+ 	 * @Template()
+ 	 */
+ 	public function proxyAction(Request $request)
+ 	{
+ 		// Forbid every request but jquery&#39;s XHR
+ 		if (!$request-&amp;gt;isXmlHttpRequest()) {// isn&#39;t it an Ajax request?
+ 			return new Response(&#39;&#39;, 404, 
+                             array(&#39;Content-Type&#39; =&amp;gt; &#39;application/json&#39;));
+ 		}
+ 		
+ 		$restUrl = $request-&amp;gt;request-&amp;gt;get(&#39;restUrl&#39;);
+ 		$method = $request-&amp;gt;request-&amp;gt;get(&#39;method&#39;);
+ 		$params = $request-&amp;gt;request-&amp;gt;get(&#39;params&#39;);
+ 		$contentType = $request-&amp;gt;request-&amp;gt;get(&#39;contentType&#39;);
+ 		
+ 		if ($contentType == null) {
+ 			$contentType = &#39;application/json&#39;;
+ 		}
+ 	
+ 		if ($restUrl == null || $method == null || 
+                         !in_array($method, array(&#39;GET&#39;, &#39;POST&#39;, &#39;DELETE&#39;))) {
+ 			return new Response(&#39;&#39;, 404, array(&#39;Content-Type&#39; =&amp;gt; $contentType));
+ 		}
+ 	    
+ 		session_write_close();
+ 		$ch = curl_init();
+ 		curl_setopt($ch, CURLOPT_URL, $restUrl);
+ 		curl_setopt($ch, CURLOPT_HEADER, true);
+ 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+ 		if ($params != null) {
+ 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+ 		}
+ 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+ 		
+ 		$requestCookies = $request-&amp;gt;cookies-&amp;gt;all();
+ 		
+ 		$cookieArray = array();
+ 		foreach ($requestCookies as $cookieName =&amp;gt; $cookieValue) {
+ 			$cookieArray[] = &amp;quot;{$cookieName}={$cookieValue}&amp;quot;;
+ 		}
+ 		$cookie_string = implode(&#39;; &#39;, $cookieArray);
+ 		curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
+ 		
+ 		$response = curl_exec($ch);
+ 		curl_close($ch);
+ 		
+ 		list($headers, $response) = explode(&amp;quot;\r\n\r\n&amp;quot;,$response,2);
+ 		preg_match_all(&#39;/Set-Cookie: (.*)\b/&#39;, $headers, $cookies);
+ 		$cookies = $cookies[1];
+ 			
+ 		if ($response === false) {
+ 			return new Response(&#39;&#39;, 404, array(&#39;Content-Type&#39; =&amp;gt; $contentType));
+ 		} else {
+ 			$response = new Response($response, 200, 
+                                              array(&#39;Content-Type&#39; =&amp;gt; $contentType));
+ 			foreach($cookies as $rawCookie) {
+ 				$cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
+ 				$value = $cookie-&amp;gt;getValue();
+ 				if (!empty($value)) {
+ 					$value = str_replace(&#39; &#39;, &#39;+&#39;, $value);
+ 				}
+ 				$customCookie = new Cookie($cookie-&amp;gt;getName(), $value, $cookie-&amp;gt;getExpiresTime()==null?0:$cookie-&amp;gt;getExpiresTime(), $cookie-&amp;gt;getPath());
+ 				$response-&amp;gt;headers-&amp;gt;setCookie($customCookie);
+ 			}
+ 			return $response;
+ 		}
+ 	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Read more about this topic:&lt;/strong&gt;&lt;br&gt;
+&lt;a href=&quot;http://developer.yahoo.com/javascript/howto-proxy.html&quot;&gt;http://developer.yahoo.com/javascript/howto-proxy.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/#!/svlada&quot;&gt;Follow me on Twitter&lt;/a&gt;&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Voxxed Days Belgrade - M&amp;M Challange</title>
+		<link href="https://myurl.com/voxxed-days-m-m-challange/"/>
+		<updated>2015-05-25T00:00:00+00:00</updated>
+		<id>https://myurl.com/voxxed-days-m-m-challange/</id>
+		<content type="html">&lt;p&gt;Voxxed days u Beogradu je objavio zanimljiv ticket giwavay (&lt;a href=&quot;https://twitter.com/VoxxedBelgrade/status/602767912248672256&quot;&gt;https://twitter.com/VoxxedBelgrade/status/602767912248672256&lt;/a&gt;). Kudos za ideju!&lt;/p&gt;
+&lt;p&gt;Evo jednog naivnog pokušaja da se kuglice prebroje uz pomoć 3Ds max-a :)&lt;/p&gt;
+&lt;p&gt;Za referentnu vrednost je uzet prečnik jedne m&amp;amp;m ~13mm bombone. Slika je umanjena kako bi se veličine poklopile. Da bismo odredili koliko nam je potrebno objekata (aproksimativno), rešićemo jednostavnu proporciju, ako znamo da u običnu teglu od 946ml staje 1011 komada. Moguće je koristiti i drugu (bolju) jednačinu, koja je zasnovana na zapremini bombone i principu nasumičnog pakovanja, ali bez pristupa tegli i poznavanja tačne zapremine, obe su podjednako nepouzdane.&lt;/p&gt;
+&lt;img src=&quot;https://myurl.com/img/voxxed/1.jpg&quot; alt=&quot;&quot;&gt;
+&lt;img src=&quot;https://myurl.com/img/voxxed/2.jpg&quot; alt=&quot;&quot;&gt;
+&lt;p&gt;Napravio sam pomoćni objekat kako bih izračunao zapreminu koju su zauzele bombonice, ali to je samo aproksimacija, pošto količina odozgo staje u regularnu cilindričnu teglu, a zbog specifičnog oblika m&amp;amp;m-a očekujem veća odstupanja. To, međutim i nije toliko bitno, ali je korisno zbog uštede vremena.&lt;/p&gt;
+&lt;img src=&quot;https://myurl.com/img/voxxed/3.jpg&quot; alt=&quot;&quot;&gt;
+&lt;p&gt;Pokreće se simulacija, i traje dok se ne stabilizuje. Posle prve simulacije je očigledno da treba da se stavi više bombona (i da se koriguje veličina tegle u odnosu na m&amp;amp;m). Dalje se sve svodi na poređenje rezultata simulacije i referentne slike. Kao delimična potvrda poslužiće merenje šake ženske ruke sa slike. Polusavijena šaka ima dužinu od oko 158mm, sto je u skladu sa vrednošću za prosečnu dužinu šake kod žena (170mm ispružena saka).&lt;/p&gt;
+&lt;p&gt;Snimak simulacije: &lt;a href=&quot;https://www.dropbox.com/s/p2tvef52m1k9sa3/simulacija.mp4?dl=0&quot;&gt;https://www.dropbox.com/s/p2tvef52m1k9sa3/simulacija.mp4?dl=0&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Druuuuum rooooll ... U virtuelnoj tegli ima 190 bombonica... My lucky guess je da u slici na telgi ima 160 bombonica  :)&lt;/strong&gt;&lt;/p&gt;
+&lt;img src=&quot;https://myurl.com/img/voxxed/4.jpg&quot; alt=&quot;&quot;&gt;
+&lt;p&gt;Debljina tegle je nepoznata i to ce uticati na rezultat. Ne znamo ni da li je ovo standardni ili mini m&amp;amp;m (drugo je malo verovatno jer bi žena bila izuzetno mala u tom slučaju). Slika ispod pokazuje odnose između veličina svih elemenata na sceni u odnosu na žensku šaku (prosek 170mm od korena šake do vrha srednjeg prsta):&lt;/p&gt;
+&lt;img src=&quot;https://myurl.com/img/voxxed/5.jpg&quot; alt=&quot;&quot;&gt;</content>
+	</entry>
+	
+	<entry>
+		<title>Maven project for creating Spring web applications deployable on Websphere</title>
+		<link href="https://myurl.com/websphere-maven-spring-project/"/>
+		<updated>2015-09-10T00:00:00+00:00</updated>
+		<id>https://myurl.com/websphere-maven-spring-project/</id>
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This article describes how to create Spring web application that can be deployed on WebSphere application server. The goal is to to create maven project that can be used to  generate EAR file.&lt;/p&gt;
+&lt;h3 id=&quot;maven-project-structure&quot;&gt;&lt;a name=&quot;maven-project-structure&quot; id=&quot;maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#maven-project-structure&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The following list shows the multi-module maven project directory structure:&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;|- websphere-maven-spring-project &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|-- app-ear/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- pom.xml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|-- app-webapp/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- src/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- .classpath&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- pom.xml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|- pom.xml&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The project consists of one parent / aggregator module and two sub/child modules. For more information on multi-module please go to &lt;a href=&quot;http://maven.apache.org/pom.html#Aggregation&quot;&gt;maven documentation website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Aggregator module&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Aggregator is a top-level module used to join multiple modules.&lt;/p&gt;
+&lt;p&gt;The following is an excerpt from aggregator pom.xml:&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;modelVersion&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;4.0&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;modelVersion&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;name&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;name&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;version&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;version&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;packaging&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;pom&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;packaging&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;http&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;maven&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apache&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;org&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;url&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;modules&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ear&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;modules&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Sub-modules&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Both sub-modules (app-ear and app-webapp) must include reference to the parent module as follows:&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;parent&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;version&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;version&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;parent&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Sub-module: app-ear&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;WAR module (app-webapp) needs to be included in the list of EAR dependencies.&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;dependencies&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;dependency&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;version&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;version&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;type&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;war&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;type&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dependency&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dependencies&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Include &lt;code&gt;maven-ear-plugin&lt;/code&gt; in the build plugins section of the app-ear pom.xml:&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;plugin&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apache&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;maven&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;plugins&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;maven&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ear&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;plugin&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;version&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2.10&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;version&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;configuration&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;finalName&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;APP_EAR&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;finalName&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;modules&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;			&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;webModule&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;bundleFileName&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;war&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;bundleFileName&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;contextRoot&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;contextRoot&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;			&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webModule&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;modules&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;generateApplicationXml&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;generateApplicationXml&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;configuration&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;plugin&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Sub-module: app-webapp&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Web app module is an simple web application generated with the spring initializr.&lt;/p&gt;
+&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;You can clone entire project from the following &lt;a href=&quot;https://github.com/svlada/websphere-maven-spring-project&quot;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Public key authentication with Java over SSH</title>
+		<link href="https://myurl.com/ssh-public-key-authentication/"/>
+		<updated>2015-11-23T00:00:00+00:00</updated>
+		<id>https://myurl.com/ssh-public-key-authentication/</id>
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#copy-public-key-to-remote-host&quot;&gt;Copy public key to remote host&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#java-code&quot;&gt;Connect to remote host from java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This article shows how to securely connect (i.e. establish ssh connection) to the remote host from java application. In addition, configuration details for enabling public key authentication and protecting ssh keys will be provided.&lt;/p&gt;
+&lt;p&gt;Public key authentication enable users to establish SSH connection without providing (i.e. typing in) explicit password. Immediate benefit is that password is not transfered over the network, thus preventing posibility of password being compromised.&lt;/p&gt;
+&lt;p&gt;Private key should be stored in the ssh keychain and protected with the encryption passphrase.&lt;/p&gt;
+&lt;h3 id=&quot;generate-key-pair&quot;&gt;&lt;a name=&quot;generate-key-pair&quot; id=&quot;generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#generate-key-pair&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The first step is to generate private / public key on server where your java application will be running.&lt;/p&gt;
+&lt;p&gt;Private / public key pair can be generated by executing the following command:&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;ssh-keygen -t rsa&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is the output from my local development box:&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;vladimir.stankovic@PCSVLADA ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;$ ssh-keygen -t rsa&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Generating public/private rsa key pair.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Enter file in which to save the key (/home/vladimir.stankovic/.ssh/id_rsa):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Enter passphrase (empty for no passphrase):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Enter same passphrase again:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Your identification has been saved in /home/vladimir.stankovic/.ssh/id_rsa.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Your public key has been saved in /home/vladimir.stankovic/.ssh/id_rsa.pub.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Private key is identified as &lt;code&gt;id_rsa&lt;/code&gt; and public key as a &lt;code&gt;id_rsa.pub&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;copy-public-key-to-remote-host&quot;&gt;&lt;a name=&quot;copy-public-key-to-remote-host&quot; id=&quot;&quot;&gt;Copy public key to remote host&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#copy-public-key-to-remote-host&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;ssh-copy-id&lt;/code&gt; copies the public key of your default identity (use -i identity_file for other identities) to the remote host.&lt;/p&gt;
+&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;vladimir.stankovic@PCSVLADA ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;$ ssh-copy-id -i /home/vladimir.stankovic/.ssh/id_rsa root@www.svlada.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;root@www.svlada.com&#39;s password:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Number of key(s) added: 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Now try logging into the machine, with:   &quot;ssh &#39;root@www.svlada.com&#39;&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;and check to make sure that only the key(s) you wanted were added.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;connect-to-remote-host-from-java&quot;&gt;&lt;a name=&quot;java-code&quot; id=&quot;java-code&quot;&gt;Connect to remote host from java&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#connect-to-remote-host-from-java&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;I have used &lt;a href=&quot;http://www.jcraft.com/jsch/&quot;&gt;JSch library&lt;/a&gt; to establish SSH connection.&lt;/p&gt;
+&lt;p&gt;The most important part is configuration of &lt;code&gt;com.jcraft.jsch.Session&lt;/code&gt; object and adding &lt;code&gt;publickey&lt;/code&gt; to the list of &lt;code&gt;PreferredAuthentication&lt;/code&gt; options.&lt;/p&gt;
+&lt;p&gt;Here is the sample code for configuring public key authentication:&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;JSch&lt;/span&gt; jsch &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;JSch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;Session&lt;/span&gt; session &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; privateKeyPath &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/home/vladimir.stankovic/.ssh/id_rsa&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        jsch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addIdentity&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;privateKeyPath&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;	    &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; jsch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getSession&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;username&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; host&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; port&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setConfig&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;PreferredAuthentications&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;publickey,keyboard-interactive,password&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Properties&lt;/span&gt; config &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        config&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;StrictHostKeyChecking&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;no&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setConfig&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;config&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;JSchException&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Failed to create Jsch Session object.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The next step is to connect to remote host and execute arbitary command over SSH:&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; command &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;echo \&quot;Sit down, relax, mix yourself a drink and enjoy the show...\&quot; &gt;&gt; /tmp/test.out&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token class-name&quot;&gt;Channel&lt;/span&gt; channel &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;openChannel&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;exec&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ChannelExec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; channel&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setCommand&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;command&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ChannelExec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; channel&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setPty&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        channel&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        channel&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;disconnect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;disconnect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;JSchException&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Error durring SSH command execution. Command: &quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; command&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;For full example you can checkout code from the following &lt;a href=&quot;https://github.com/svlada/ssh-public-key-authentication&quot;&gt;git repository&lt;/a&gt;.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Spring batch job repository configuration for WebSphere and Oracle</title>
+		<link href="https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/"/>
+		<updated>2015-12-02T00:00:00+00:00</updated>
+		<id>https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</id>
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#job-repository-configuration&quot;&gt;Job Repository configuration&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This article describes problem with using default Spring Batch Job Repository configuration deployed on the WebSphere application server backed by Oracle database. The following is the exception you may encounter:&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;springframework&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dao&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;DataAccessResourceFailureException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Could&lt;/span&gt; not create &lt;span class=&quot;token class-name&quot;&gt;Oracle&lt;/span&gt; LOB&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Caused&lt;/span&gt; by&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;springframework&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dao&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;InvalidDataAccessApiUsageException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Couldn&lt;/span&gt;&#39;t initialize &lt;span class=&quot;token class-name&quot;&gt;OracleLobHandler&lt;/span&gt; because &lt;span class=&quot;token class-name&quot;&gt;Oracle&lt;/span&gt; driver classes are not available&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Note&lt;/span&gt; that &lt;span class=&quot;token class-name&quot;&gt;OracleLobHandler&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;requires&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Oracle&lt;/span&gt; JDBC driver &lt;span class=&quot;token number&quot;&gt;9&lt;/span&gt;i or higher&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; nested exception is java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;lang&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassNotFoundException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; oracle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sql&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;BLOB&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Caused&lt;/span&gt; by&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;lang&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassNotFoundException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; oracle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sql&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;BLOB&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This issue is documented on the &lt;a href=&quot;http://www-01.ibm.com/support/docview.wss?uid=swg21633083&quot;&gt;IBM support website&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;configuration&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Configuration&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#configuration&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Proper solution is to configure &lt;code&gt;lob-handler&lt;/code&gt; dependency of the &lt;a href=&quot;http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html&quot;&gt;Job Repository&lt;/a&gt; and inject the &lt;a href=&quot;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/support/lob/OracleLobHandler.html&quot;&gt;OracleLobHandler&lt;/a&gt; bean.&lt;/p&gt;
+&lt;p&gt;In order to support WebSphere &lt;code&gt;lobHandler&lt;/code&gt; bean needs to be instantated with approprate &lt;code&gt;nativeJdbcExtractor&lt;/code&gt; that is supported by WebSphere.&lt;/p&gt;
+&lt;p&gt;The following snippet shows &lt;a href=&quot;http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html&quot;&gt;Job Repository&lt;/a&gt; configuration details&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;batch&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;job&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;repository id&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;jobRepository&quot;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    data&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;source&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;dataSource&quot;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    transaction&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;manager&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;transactionManager&quot;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    lob&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;handler&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;lobHandler&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;bean id&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;lobHandler&quot;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;org.springframework.jdbc.support.lob.OracleLobHandler&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;property name&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;nativeJdbcExtractor&quot;&lt;/span&gt; ref&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;nativeJdbcExtractor&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;bean&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;bean id&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;nativeJdbcExtractor&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;org.springframework.jdbc.support.nativejdbc.WebSphereNativeJdbcExtractor&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Following are additional configuration details:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Data source configuration&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;bean id&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;dataSource&quot;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;org.springframework.jndi.JndiObjectFactoryBean&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;property name&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;jndiName&quot;&lt;/span&gt; value&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;java:comp/env/jdbc/DS_NAME&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;property name&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;lookupOnStartup&quot;&lt;/span&gt; value&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;property name&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;cache&quot;&lt;/span&gt; value&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;property name&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;proxyInterface&quot;&lt;/span&gt; value&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;javax.sql.DataSource&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;bean&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Transaction manager configuration&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;bean id&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;transactionManager&quot;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;&lt;/span&gt; primary&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;property name&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;entityManagerFactory&quot;&lt;/span&gt; ref&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;entityManagerFactory&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;bean&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	
+	<entry>
 		<title>Design patterns - Step builder</title>
 		<link href="https://myurl.com/step-builder-pattern/"/>
 		<updated>2016-06-09T00:00:00+00:00</updated>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Require.js Dependency management - part2</title>
+    <meta name="Description" content="This is RequireJS optimizer tutorial, second one in the RequireJs series.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="svlada">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/">svlada</a></h1>
+      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
+    </header>
+
+    <main class="tmpl-post">
+      <h1>Require.js Dependency management - part2</h1>
+
+<p>Jump to complete source code <a href="#source">source code</a>.</p>
+<p>This is RequireJS optimizer tutorial, second one in the RequireJs series(<a href="/require-js-dependency-management-part1/">part 1</a>,<a href="/require-js-optimization-part2/">part 2</a>. Reading material about r.js and RequireJS is in references section of article.</p>
+<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A" aria-hidden="true">#</a></h2>
+<ol>
+<li><a href="#t0">Introduction</a></li>
+<li><a href="#t1">Require.js optimizer</a></li>
+<li><a href="#t2">Require.js optimizer dump dependencies to single file</a></li>
+</ol>
+<h3 id="introduction"><a name="t0" id="t0">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h3>
+<p>This is short article in which I will explain you how to build and optimize your javascript code with ReqireJS optimization tool r.js.</p>
+<p>James Burke <a href="http://requirejs.org/docs/optimization.html">recommends</a> using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from <a href="http://nodejs.org/#download">here</a>.</p>
+<h3 id="require.js-optimizer"><a name="t1" id="t0">Require.js optimizer</a> <a class="direct-link" href="#require.js-optimizer" aria-hidden="true">#</a></h3>
+<p>Create your build script file on following location <code>[webapp/build/build.js]</code></p>
+<pre> 
+ [cc lang="javascript"]
+ |-[wepapp]
+ |--- [build]
+ |----- r.js
+ |----- build.js
+ |----- build.single.js
+ |--- [js]
+ |------ [app]
+ |------ [lib]
+ |--------- jquery.js
+ |----- app.js
+ |----- app-built.js*
+ |-index.html
+ |-readme.md
+ [/cc]
+ </pre>
+<p>Build your application with node.js and r.js executing the following command</p>
+<pre><code> node r.js -o build.js
+</code></pre>
+<p>For demonstration purposes I have made 3 examples of building application with RequireJS.</p>
+<p><strong>Example 1: Optimize modules</strong></p>
+<p>Main module app.js has many dependencies and we want to bundle all that dependencies into single file. Mark modules for optimization in modules array of configuration object inside build.js. First example will contain only one module for optimization <code>[webapp/js/app.js]</code>.</p>
+<p>Paste the following code to your build.js file.</p>
+<pre><code> {
+     baseUrl: &quot;js/lib&quot;,
+     appDir: &quot;..&quot;,
+     dir: &quot;dist&quot;,
+ 
+     modules: [
+         { name: &quot;app&quot; }
+     ],
+ 
+     paths: {
+         app: '../app',
+         jquery: 'jquery'
+     }
+ }
+</code></pre>
+<p><strong>appDir</strong> - Telling us where webapp root directory is located relative to build.js script.<br/><br>
+<strong>dir</strong> - Output directory relative to build.js</p>
+<p>Console output of build.js</p>
+<pre><code> Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/category.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/item.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/specialItem.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/jquery.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/require.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/text.js
+ 
+ js/app.js
+ ----------------
+ js/lib/jquery.js
+ js/app/category/category.js
+ js/app/category/item.js
+ js/app/category/specialItem.js
+ js/app.js
+</code></pre>
+<p>All <code>[webapp/js/app.js]</code> dependencies are now minified with Uglify.js and concatenated into single file. But what happened with individual modules? Module <code>[webapp/js/app/category/specialItem.js]</code> has a dependency <code>[webapp/js/app/category/Item.js]</code>. Open your optimized <code>[webapp/js/app/category/specialItem.js]</code> and pass it to beautifier. As you can see from the output <code>[js/app/category/item.js]</code> is not bundled with <code>[js/app/category/specialItem.js]</code> file.</p>
+<p>Optimized module:</p>
+<pre><code> define([&quot;./item&quot;], function (Item) {
+     var SpecialItem = function (itemName) {
+             this.color = &quot;Default color&quot;, this.weigth = &quot;Default weigth&quot;, Item.call(this, itemName)
+         };
+     return SpecialItem.prototype = new Item, SpecialItem.prototype.constructor = SpecialItem, SpecialItem
+ })
+</code></pre>
+<p><strong>Example 2: Optimize additional modules</strong></p>
+<p>In this example we will add <code>[webapp/js/app/category/specialItem.js]</code> to modules array of build.js configuration object.</p>
+<p>Paste following code to your build.js file.</p>
+<pre><code> {
+     baseUrl: &quot;js/lib&quot;,
+     appDir: &quot;..&quot;,
+     dir: &quot;dist&quot;,
+ 
+     modules: [
+         { name: &quot;app&quot; },
+         { name: &quot;app/category/specialItem&quot; }
+     ],
+ 
+     paths: {
+         app: '../app',
+         jquery: 'jquery'
+     }
+ }
+</code></pre>
+<p>Console output of build.js</p>
+<pre><code> Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/category.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/item.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/specialItem.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/jquery.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/require.js
+ Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/lib/text.js
+ 
+ js/app.js
+ ----------------
+ js/lib/jquery.js
+ js/app/category/category.js
+ js/app/category/item.js
+ js/app/category/specialItem.js
+ js/app.js
+ 
+ js/app/category/specialItem.js
+ ----------------
+ js/app/category/item.js
+ js/app/category/specialItem.js
+</code></pre>
+<p>Now <code>[js/app/category/item.js]</code> is bundled with <code>[js/app/category/specialItem.js]</code> module.</p>
+<p>Optimized module:</p>
+<pre><code> define(&quot;app/category/item&quot;, [], function () {
+     var Item = function (itemName) {
+             this.name = itemName
+         };
+     return Item.prototype.getItemName = function () {
+         return this.name
+     }, Item
+ }), define(&quot;app/category/specialItem&quot;, [&quot;./item&quot;], function (Item) {
+     var SpecialItem = function (itemName) {
+             this.color = &quot;Default color&quot;, this.weigth = &quot;Default weigth&quot;, Item.call(this, itemName)
+         };
+     return SpecialItem.prototype = new Item, SpecialItem.prototype.constructor = SpecialItem, SpecialItem
+ })
+</code></pre>
+<h3 id="require.js-optimizer-compile-dependencies-to-single-file"><a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a> <a class="direct-link" href="#require.js-optimizer-compile-dependencies-to-single-file" aria-hidden="true">#</a></h3>
+<p>Paste the following code to your <code>build.single.js</code> file.</p>
+<pre><code> {
+     baseUrl: &quot;../js/lib&quot;,
+     name: &quot;../app&quot;,
+     out: &quot;app-built.js&quot;,
+ 
+     paths: {
+         app: '../app',
+         jquery: 'jquery',
+     }
+ }
+</code></pre>
+<p><strong>name</strong> - Location of module you want to export as a single file with all dependencies.<br/><br>
+<strong>out</strong> - File &quot;app-built.js&quot; is created.</p>
+<p>Console output of build.single.js:</p>
+<pre><code> Tracing dependencies for: ../app
+ Uglifying file: C:/vlada/practice/require/webapp/build/app-built.js
+ 
+ C:/vlada/practice/require/webapp/build/app-built.js
+ ----------------
+ C:/vlada/practice/require/webapp/js/lib/jquery.js
+ C:/vlada/practice/require/webapp/js/app/category/category.js
+ C:/vlada/practice/require/webapp/js/app/category/item.js
+ C:/vlada/practice/require/webapp/js/app/category/specialItem.js
+ C:/vlada/practice/require/webapp/js/lib/../app.js
+</code></pre>
+<p>All of our modules are now glued together into single <code>[webapp/build/app-built.js]</code> file.</p>
+<h3 id="source-code-listing"><a name="source" id="source">Source code listing</a> <a class="direct-link" href="#source-code-listing" aria-hidden="true">#</a></h3>
+<p>build.js</p>
+<pre><code> {
+     baseUrl: &quot;js/lib&quot;,
+     appDir: &quot;..&quot;,
+     dir: &quot;dist&quot;,
+ 
+     modules: [
+         { name: &quot;app&quot; },
+         { name: &quot;app/category/specialItem&quot; }
+     ],
+ 
+     paths: {
+         app: '../app',
+         jquery: 'jquery'
+     }
+ }
+</code></pre>
+<p>build.single.js</p>
+<pre><code> {
+     baseUrl: &quot;../js/lib&quot;,
+     name: &quot;../app&quot;,
+     out: &quot;app-built.js&quot;,
+ 
+     paths: {
+         app: '../app',
+         jquery: 'jquery'
+     }
+ }
+</code></pre>
+<p>In the RequireJS tutorial part 3 I will talk about RequireJS integration with Backbone, Handlebars and jQuery with Require.js. Stay tuned :)</p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="http://requirejs.org/docs/optimization.html">http://requirejs.org/docs/optimization.html</a></li>
+<li><a href="https://github.com/jrburke/r.js/blob/master/build/example.build.js">https://github.com/jrburke/r.js/blob/master/build/example.build.js</a></li>
+</ol>
+
+
+<p><a href="/">← Home</a></p>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /require-js-optimization-part2/ -->
+  </body>
+</html>
