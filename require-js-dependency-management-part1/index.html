@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proxy Ajax requests, Curl and Symfony 2</title>
+    <title>Require.js Dependency management - part1</title>
     <meta name="Description" content="This is introductory RequireJS tutorial in RequireJs series.">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
@@ -12,244 +12,274 @@
   <body>
     <header>
       <h1 class="home"><a href="/">svlada</a></h1>
-      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li></ul>
+      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Archive</a></li><li class="nav-item"><a href="/about/">About</a></li><li class="nav-item"><a href="/hire-me/">Have a project in mind? Let&#39;s talk!</a></li></ul>
     </header>
 
     <main class="tmpl-post">
-      <h1>Proxy Ajax requests, Curl and Symfony 2</h1>
+      <h1>Require.js Dependency management - part1</h1>
 
-<p>In this article I will explain, how to make cross-domain requests through the proxy using Curl and Symfony 2.</p>
-<p>Jump to the <a href="#source-code">#source-code</a> and skip following errata on how to proxy Ajax requests.</p>
-<p>Usual scenario looks like this:</p>
+<p>Jump to complete source code <a href="#source">source code</a>.</p>
+<p>This is introductory RequireJS tutorial in RequireJs series(<a target="_blank" href="/require-js-dependency-management-part1/">part1</a>, <a target="_blank"  href="/require-js-optimization-part2/">part2</a>). Reading material about AMD and RequireJS is in references section of article.</p>
+<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A" aria-hidden="true">#</a></h2>
 <ol>
-<li>Client send ajax request to server</li>
-<li>Your server forwards request to external/remote server</li>
-<li>Waiting on response from remote server</li>
-<li>Parse and process response from remote server</li>
-<li>Send response back to client</li>
+<li><a href="#t0">Introduction</a></li>
+<li><a href="#t1">Basic structure</a></li>
+<li><a href="#t2">Prototypal inheritance and Require.js</a></li>
 </ol>
-<p>First we shall check if client request is XmlHttpRequest using Symfony 2 built in method</p>
-<pre><code> $request-&gt;isXmlHttpRequest()
+<h3 id="introduction"><a name="t0" id="t0">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h3>
+<p>Before or after reading this article I strongly recommend to read documentation on <a href="http://requirejs.org/docs/start.html">RequireJS website</a>. James Burke did great job here.</p>
+<p>RequireJS is a Javascript file and module loader which allows for asynchronous JavaScript loading and dependency management(can be used to load more than just Javascript files).</p>
+<p>Require.js is a dependency management and asynchronous script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.</p>
+<p>RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.</p>
+<p>RequireJS is built around Module pattern. Modern web applications tend to have fairly complex front-ends. Module pattern should improve maintability of our bloated javascript code. Remmember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures.</p>
+<p>RequireJS is well defined and standardized. While we wait ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint how we should structure our applications. Require.js works in current browsers.</p>
+<h3 id="basic-structure"><a name="t1" id="t1">Basic structure</a> <a class="direct-link" href="#basic-structure" aria-hidden="true">#</a></h3>
+<p><strong>STEP 1 - How to structure RequireJS project</strong></p>
+<p>This is our sample RequireJS project structure.</p>
+<pre>
+ |-[wepapp]
+ |--- [build]
+ |----- r.js
+ |----- build.js
+ |----- build.single.js
+ |--- [js]
+ |------ [app]
+ |------ [lib]
+ |--------- jquery.js
+ |----- app.js
+ |----- app-built.js*
+ |-index.html
+ |-readme.md
+</pre>
+<p>Build scripts and RequireJS optimization tool r.js are inside <code>[build]</code> directory.</p>
+<p>Application code reside in <code>[webapp/js/app]</code> directory. This is place where you should place all of your /Model/View/Router/Template code.</p>
+<p>Libraries like jQuery, Backbone, Handlebars and others are inside <code>[webapp/js/lib]</code> directory.</p>
+<p>Application config and main entry point is <code>[webapp/js/app.js]</code></p>
+<h4 id="step-2---how-to-include-requirejs">STEP 2 - How to include RequireJS <a class="direct-link" href="#step-2---how-to-include-requirejs" aria-hidden="true">#</a></h4>
+<p>Your <code>[webapp/index.html]</code> should look like this:</p>
+<pre><code> &lt;html&gt;
+ &lt;head&gt;&lt;/head&gt;
+ &lt;body&gt;
+ &lt;div id=&quot;test&quot;&gt;Some sample content&lt;/div&gt;
+ &lt;script data-main=&quot;js/app.js&quot; src=&quot;js/lib/require.js&quot;&gt;&lt;/script&gt;
+ &lt;/body&gt;
+ &lt;/html&gt;
 </code></pre>
-<h3 id="step-1%3A-client-code">STEP 1: Client code <a class="direct-link" href="#step-1%3A-client-code" aria-hidden="true">#</a></h3>
-<p>Client code is quite simple.</p>
-<p>You need to craft Ajax request in following way.</p>
-<ol>
-<li>Specify rest url on your server for handling cross-domain ajax requests.<code>url: &quot;&quot;</code></li>
-<li>Wrap request data</li>
-</ol>
-<p>We need some data in order to create curl request on server-side.</p>
-<p>For this example you need to send object with following properties to your server.</p>
-<pre><code>     restUrl: &quot;external-api-url&quot;, // Your target url on remote server
-     method: &quot;POST&quot;, // Type of request you want to issue to remote server
-     params: { 
-         action: &quot;getFriendsList&quot; // Parameters you are sending to remote server
-     }
-</code></pre>
-<h3 id="step-2%3A-forward-request-to-remote-server">STEP 2: Forward request to remote server <a class="direct-link" href="#step-2%3A-forward-request-to-remote-server" aria-hidden="true">#</a></h3>
-<p>This step is bit tricky.</p>
-<p>Client request is arrived to your server-side code. First you need to parse and validate request data.</p>
-<p>To repeat once more ... you'll need the following data on server:</p>
-<pre><code>&lt;?php
- $restUrl = $request-&gt;request-&gt;get('restUrl'); // Your target url on remote server
- $method = $request-&gt;request-&gt;get('method'); // Type of request you want to issue to remote server
- $params = $request-&gt;request-&gt;get('params'); // Parameters you are sending to remote server
- $contentType = $request-&gt;request-&gt;get('contentType'); // Content-type
- ?&gt;
-</code></pre>
-<p>You need to create curl request and set parameters you have recieved from client.</p>
-<pre><code> &lt;?php
-     // Initialize curl handle
-     $ch = curl_init(); 
-     
-     // Set request url
-     curl_setopt($ch, CURLOPT_URL, $restUrl); 
-     
-     // TRUE to include the header in the output.
-     curl_setopt($ch, CURLOPT_HEADER, true); 
-     
-     // A custom request method to use instead of &quot;GET&quot; or &quot;HEAD&quot; when doing a HTTP request.  
-     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); 
-     if ($params != null) {
-         // The full data to post in a HTTP &quot;POST&quot; operation.
-         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-     }
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
- ?&gt;
-</code></pre>
-<p>I strongly suggest to read php manual in order to get familiar with the curl configuration: <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a></p>
-<p>You have enough data to send request to remote server. After executing curl handle, response from remote server is stored in $response variable.</p>
-<pre><code>&lt;?php
-     $response = curl_exec($ch);
-     curl_close($ch);
- ?&gt;
-</code></pre>
-<p>You have basic setup. Now we are going to add cookie support to our ajax proxy.</p>
-<p>Why do we need cookies?</p>
-<p>Recently I needed to integrate symfony 2 application with wordpress portal. Authentication is done on Wordpress side, and symfony application is using wordpress cookies to authorize users for accessing protected features.</p>
-<p>In production both applications share same domain, but in test enviorment there is a lot of mess (different domains, ports etc).</p>
-<p>Where is problem?</p>
-<p>Application written in Symfony 2 need to consume some protected backend functionalities on Wordpress side. There is a lot personalized data that is fetched via ajax calls, and this is reason why we need cookies.</p>
-<h3 id="how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F">How to get cookies from Symfony2 request and set mutplie cookies to Curl? <a class="direct-link" href="#how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F" aria-hidden="true">#</a></h3>
-<p>We need to extract multiple cookies from Symfony 2 request object and set them to curl handle.</p>
-<pre><code>&lt;?php
-     // Get all cookies from Symfony request object
-     $requestCookies = $request-&gt;cookies-&gt;all(); 
-     
-     // Prepare and set multiple cookies to curl handle
-     $cookieArray = array();
-     foreach ($requestCookies as $cookieName =&gt; $cookieValue) {
-         $cookieArray[] = &quot;{$cookieName}={$cookieValue}&quot;;
-     }
+<p>Attribute <code>[data-main=&quot;js/app.js&quot;]</code> is entry point of our application. This means that RequireJS will first load <code>[js/app.js]</code> after initialization.</p>
+<p><strong>STEP 3 - How to configure RequireJS</strong></p>
+<p>Open your <code>[webapp/js/app.js]</code> file.</p>
+<pre><code> requirejs.config({
+ 	baseUrl: 'js/lib',
+ 	paths: {
+ 		app: '../app',
+ 		jquery: 'jquery'
+ 	}
  
-     // Be sure to set whitespace after '; ' when creating cookie string
-     $cookie_string = implode('; ', $cookieArray);
-     curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
-?&gt;
-</code></pre>
-<h3 id="how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F">How to get cookies Curl response and set multiple cookies to Symfony response? <a class="direct-link" href="#how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F" aria-hidden="true">#</a></h3>
-<p>Remmember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl http response.</p>
-<pre><code>&lt;?php    
-     // Get header and response data from curl response
-     list($headers, $response) = explode(&quot;\r\n\r\n&quot;,$response,2);
-     // We are using regex to parse cookies from curl response
-     preg_match_all('/Set-Cookie: (.*)\b/', $headers, $cookies);
-     // Store cookies
-     $cookies = $cookies[1];
-?&gt;
-</code></pre>
-<p>Raw cookies are parsed and stored in cookie array. Then each cookie need to be converted to Symfony Cookie object and injected to Symfony response headers.</p>
-<pre><code>&lt;?php
-     foreach($cookies as $rawCookie) {
-         $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
-         $value = $cookie-&gt;getValue();
-         if (!empty($value)) {
-             $value = str_replace(' ', '+', $value);
-         }
-         $customCookie = new Cookie($cookie-&gt;getName(), $value, $cookie-&gt;getExpiresTime()==null?0:$cookie-&gt;getExpiresTime(), $cookie-&gt;getPath());
-         $response-&gt;headers-&gt;setCookie($customCookie);
-     }
- ?&gt;
-</code></pre>
-<p><strong>FINAL NOTICE:</strong></p>
-<p>Close and store session data before initializing curl handle or you can run into deadlock.</p>
-<pre><code>&lt;?php
-     session_write_close();
-     $ch = curl_init();
-?&gt;
-</code></pre>
-<p>What could happen if you forgot to close session?</p>
-<p>Here is one scenario:</p>
-<p>PHP script S1 create/sends curl POST request to script S2 on same Apache server/PHP Enviorment. If page S1 and S2 share same session, script S2 will not start executing until end of script S1 lifetime. But script S1 is waiting on response from script S2. This is point where deadlock happen. The default session handler locks the session file for the duration of the page request.</p>
-<p><a id="source-code" name="source-code">Complete source code listing for ajax proxy</a></p>
-<p><strong>Client sample code</strong></p>
-<pre><code> function sendAjaxRequest(){
-     $.ajax({
-         type: &quot;POST&quot;,
-         dataType: 'json',
-         url: &quot;&quot;,
-         data: {
-         	restUrl : &quot;/external-api-url/&quot;,
-         	method: 'POST',
-             params: {
-             	action: &quot;getFriendList&quot;
-             }
-         },
-         success: function(data, textStatus, jqXHR) {
-             ...
- 		}
- 	});
- }
-</code></pre>
-<p><strong>Server proxy code</strong></p>
-<pre><code>&lt;?php
-namespace Proxy\Bundle\ProxyBundle\Controller;
+ });
  
- use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
- use Symfony\Bundle\FrameworkBundle\Controller\Controller;
- use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
- use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
- use Symfony\Component\HttpFoundation\Response;
- use Symfony\Component\HttpFoundation\Request;
- use Symfony\Component\HttpFoundation\Cookie;
+ requirejs(['jquery'], function($) {
+ 	console.log($('#test'));
+ });
+</code></pre>
+<p><code>[baseUrl: 'js/lib']</code> - RequireJS loads code realative to directory specified in baseUrl. By default baseUrl is set to the same directory as data-main. If you dont specify data-main attribute and baseUrl property is not present in RequireJS config, than default path is directory that contains html page which include RequireJS library.<br>
+<a href="http://requirejs.org/docs/api.html#config-baseUrl">base url</a></p>
+<p>Attribute <code>[paths]</code> <a href="http://requirejs.org/docs/api.html#config-paths">paths config</a></p>
+<p><strong>STEP 4 - How to use requre() and define() in RequireJS</strong></p>
+<p>require() and define() are most important concepts in RequireJS.</p>
+<p><strong>define()</strong> - Used for module definition.<br>
+Consists of module wrapper, dependency list and definition function.</p>
+<pre><code>define(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
+ 	var Module = function(value) {
+ 		this.property = value;
+ 	}
+ 	return (Module);
+ });
+</code></pre>
+<p><strong>require()</strong> - Used for dependency loading<br>
+Consists of public api, dependency list, callback function</p>
+<pre><code> requirejs(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
+ 	// You can use your imported module here
+ 	var instance = dependency1;
+ 	var constructorFunction = new dependency2();
+ });
+</code></pre>
+<h3 id="prototypal-inheritance-and-require.js"><a name="t2" id="t2">Prototypal inheritance and Require.js</a> <a class="direct-link" href="#prototypal-inheritance-and-require.js" aria-hidden="true">#</a></h3>
+<p>Skip to <a href="#source">complete source code</a>.</p>
+<p>With RequireJS you can organize your modules in separate files with ease.</p>
+<p>Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.</p>
+<pre>
+ |-[wepapp]
+ |--- [build]
+ |----- r.js
+ |----- build.js
+ |----- build.single.js
+ |--- [js]
+ |------ [app]
+ |--------- [category]
+ |------------ category.js
+ |------------ item.js
+ |------------ specializedItem.js
+ |------ [lib]
+ |--------- jquery.js
+ |----- app.js
+ |----- app-built.js*
+ |-index.html
+ |-readme.md
+</pre>
+<p>With RequireJS you can provide function or object in return statement. We are going to use this feature to retrieve constructor functions for our object.</p>
+<p>With RequireJS you can import and use external dependencies inside your module. We are going to use this feature to achieve prototypal inheritance in RequireJS.</p>
+<p>Category is collection of our Items. <code>[webapp/js/app/category/category.js]</code></p>
+<pre><code> &quot;use strict&quot;;
  
- class AjaxProxyController extends Controller {
- 	/**
- 	 * @Route(&quot;/r/ajax/proxy&quot;, name=&quot;_ajaxProxy&quot;)
- 	 * @Template()
- 	 */
- 	public function proxyAction(Request $request)
- 	{
- 		// Forbid every request but jquery's XHR
- 		if (!$request-&gt;isXmlHttpRequest()) {// isn't it an Ajax request?
- 			return new Response('', 404, 
-                             array('Content-Type' =&gt; 'application/json'));
- 		}
- 		
- 		$restUrl = $request-&gt;request-&gt;get('restUrl');
- 		$method = $request-&gt;request-&gt;get('method');
- 		$params = $request-&gt;request-&gt;get('params');
- 		$contentType = $request-&gt;request-&gt;get('contentType');
- 		
- 		if ($contentType == null) {
- 			$contentType = 'application/json';
- 		}
+ define(function() {
  	
- 		if ($restUrl == null || $method == null || 
-                         !in_array($method, array('GET', 'POST', 'DELETE'))) {
- 			return new Response('', 404, array('Content-Type' =&gt; $contentType));
- 		}
- 	    
- 		session_write_close();
- 		$ch = curl_init();
- 		curl_setopt($ch, CURLOPT_URL, $restUrl);
- 		curl_setopt($ch, CURLOPT_HEADER, true);
- 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
- 		if ($params != null) {
- 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
- 		}
- 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
- 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
- 		
- 		$requestCookies = $request-&gt;cookies-&gt;all();
- 		
- 		$cookieArray = array();
- 		foreach ($requestCookies as $cookieName =&gt; $cookieValue) {
- 			$cookieArray[] = &quot;{$cookieName}={$cookieValue}&quot;;
- 		}
- 		$cookie_string = implode('; ', $cookieArray);
- 		curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
- 		
- 		$response = curl_exec($ch);
- 		curl_close($ch);
- 		
- 		list($headers, $response) = explode(&quot;\r\n\r\n&quot;,$response,2);
- 		preg_match_all('/Set-Cookie: (.*)\b/', $headers, $cookies);
- 		$cookies = $cookies[1];
- 			
- 		if ($response === false) {
- 			return new Response('', 404, array('Content-Type' =&gt; $contentType));
- 		} else {
- 			$response = new Response($response, 200, 
-                                              array('Content-Type' =&gt; $contentType));
- 			foreach($cookies as $rawCookie) {
- 				$cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
- 				$value = $cookie-&gt;getValue();
- 				if (!empty($value)) {
- 					$value = str_replace(' ', '+', $value);
- 				}
- 				$customCookie = new Cookie($cookie-&gt;getName(), $value, $cookie-&gt;getExpiresTime()==null?0:$cookie-&gt;getExpiresTime(), $cookie-&gt;getPath());
- 				$response-&gt;headers-&gt;setCookie($customCookie);
- 			}
- 			return $response;
+ 	var Category = function() {
+ 		this.name = 'Default name';
+ 		this.category = 'Default category';
+ 		this.items = [];		
+ 	}
+ 
+ 	Category.prototype.showItems = function() {
+ 		for (var i = 0, len = this.items.length; i &lt; len; i++) {
+ 			console.log(this.items[i]);
  		}
  	}
-}
+ 
+ 	Category.prototype.addItem = function(item) {
+ 		this.items.push(item);
+ 	}
+ 
+ 	return (Category);
+ 
+ });
 </code></pre>
-<p><strong>Read more about this topic:</strong><br>
-<a href="http://developer.yahoo.com/javascript/howto-proxy.html">http://developer.yahoo.com/javascript/howto-proxy.html</a></p>
+<p>Item is base object. <code>[webapp/js/app/category/item.js]</code></p>
+<pre><code> &quot;use strict&quot;;
+ 
+ define(function() {
+ 
+ 	var Item = function(itemName) {
+ 		this.name = itemName;
+ 	}
+ 
+ 	Item.prototype.getItemName = function() {
+ 		return this.name;
+ 	}
+ 
+ 	return (Item);
+ 
+ });
+</code></pre>
+<p><strong>[webapp/js/app/category/specialItem.js]</strong></p>
+<p>SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency<strong>['./item'].</strong><br>
+Now Item object is available for use in our new SpecialItem module.</p>
+<pre><code> &quot;use strict&quot;;
+ 
+ define(['./item'], function(Item) {
+ 
+ 	var SpecialItem = function(itemName) {
+ 		this.color = 'Default color';
+ 		this.weigth = 'Default weigth';
+ 		Item.call(this, itemName);
+ 	}
+ 
+ 	SpecialItem.prototype = new Item;
+ 	SpecialItem.prototype.constructor = SpecialItem;
+ 
+ 	return (SpecialItem);
+ 
+ });
+</code></pre>
+ <h1><a name="source" id="source">Source code listing</a></h1>
+<p>[webapp/js/app.js]</p>
+<pre><code> requirejs.config({
+ 	baseUrl: 'js/lib',
+ 	paths: {
+ 		app: '../app',
+ 		jquery: 'jquery'
+ 	}
+ });
+ 
+ requirejs(['jquery', 'app/category/category', 'app/category/item', 'app/category/specialItem'],
+ function($, Category, Item, SpecialItem) {
+ 	var c1 = new Category();
+ 	c1.items.push(new Item('RequireJS in Action'));
+ 	c1.items.push(new Item('Javascript Good parts'));
+ 	c1.items.push(new Item('Some book'));
+ 	c1.items.push(new SpecialItem('Special promotion book'));
+ 	c1.showItems();
+ 	console.log(c1);
+ });
+</code></pre>
+<p>[webapp/js/app/category/category.js]</p>
+<pre><code> &quot;use strict&quot;;
+ 
+ define(function() {
+ 	
+ 	var Category = function() {
+ 		this.name = 'Default name';
+ 		this.category = 'Default category';
+ 		this.items = [];		
+ 	}
+ 
+ 	Category.prototype.showItems = function() {
+ 		for (var i = 0, len = this.items.length; i &lt; len; i++) {
+ 			console.log(this.items[i]);
+ 		}
+ 	}
+ 
+ 	Category.prototype.addItem = function(item) {
+ 		this.items.push(item);
+ 	}
+ 
+ 	return (Category);
+ 
+ });
+</code></pre>
+<p>[webapp/js/app/category/item.js]</p>
+<pre><code> &quot;use strict&quot;;
+ 
+ define(function() {
+ 
+ 	var Item = function(itemName) {
+ 		this.name = itemName;
+ 	}
+ 
+ 	Item.prototype.getItemName = function() {
+ 		return this.name;
+ 	}
+ 
+ 	return (Item);
+ 
+ });
+</code></pre>
+<p>[webapp/js/app/category/specialItem.js]</p>
+<pre><code> &quot;use strict&quot;;
+ 
+ define(['./item'], function(Item) {
+ 
+ 	var SpecialItem = function(itemName) {
+ 		this.color = 'Default color';
+ 		this.weigth = 'Default weigth';
+ 		Item.call(this, itemName);
+ 	}
+ 
+ 	SpecialItem.prototype = new Item;
+ 	SpecialItem.prototype.constructor = SpecialItem;
+ 
+ 	return (SpecialItem);
+ 
+ });
+</code></pre>
+<p>In next part of Require.js series I will talk about r.js RequireJS optimization and build tool.</p>
 <p><a href="https://twitter.com/#!/svlada">Follow me on Twitter</a></p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="http://addyosmani.com/writing-modular-js/">http://addyosmani.com/writing-modular-js/</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/magazine/hh227261.aspx">http://msdn.microsoft.com/en-us/magazine/hh227261.aspx</a></li>
+<li><a href="http://tomdale.net/2012/01/amd-is-not-the-answer/">http://tomdale.net/2012/01/amd-is-not-the-answer/</a></li>
+<li><a href="http://tagneto.blogspot.com/2012/01/reply-to-tom-on-amd.html">http://tagneto.blogspot.com/2012/01/reply-to-tom-on-amd.html</a></li>
+</ol>
 
 
 <p><a href="/">← Home</a></p>

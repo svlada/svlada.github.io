@@ -17,6 +17,11 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/hire-me/</loc>
+    <lastmod>2015-01-01</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/voxxed-days-m-m-challange/</loc>
     <lastmod>2015-05-25</lastmod>
   </url>
@@ -53,101 +58,101 @@
   
   <url>
     <loc>https://myurl.com/about/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/posts/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/page-list/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring-batch/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/jwt/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring-security/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/curl/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/javascript/</loc>
-    <lastmod>2019-06-25</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/java/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/ssh/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <loc>https://myurl.com/tags/jwt/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <loc>https://myurl.com/tags/spring-security/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/voxxed-days/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <loc>https://myurl.com/tags/symfony/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/m-m-challange/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/websphere/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <loc>https://myurl.com/tags/javascript/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <loc>https://myurl.com/tags/require-js/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/spring-boot/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/ssh/</loc>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/design-patterns/</loc>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/voxxed-days/</loc>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/websphere/</loc>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring/</loc>
+    <lastmod>2019-06-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring-batch/</loc>
+    <lastmod>2019-06-27</lastmod>
   </url>
 </urlset>
