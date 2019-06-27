@@ -1,9 +1,9 @@
 {
   "title": "svlada",
   "url": "https://myurl.com/",
-  "description": "I am writing about my experiences as a naval navel-gazer.",
+  "description": "Sit down, relax, mix yourself a drink and enjoy the show.",
   "feed": {
-    "subtitle": "I am writing about my experiences as a naval navel-gazer.",
+    "subtitle": "Sit down, relax, mix yourself a drink and enjoy the show.",
     "filename": "feed.xml",
     "path": "/feed/feed.xml",
     "url": "https://myurl.com/feed/feed.xml",
