@@ -1,0 +1,26 @@
+<p>While working on the implementation of secure and HIPAA compliant chat, I've encountered problem using Virgil crypto library with Alpine linux v3.8 and Open JDK 1.8.</p>
+<p>Initial clue was the following exception, meaning there was some problem loading libraries compiled by Virgil:</p>
+<p><code>org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI</code></p>
+<p>Further analysis showed that upon initialization of the Virgil context, precompiled .SO library was created in the tmp directory: <code>/tmp/virgil_crypto_java3134786209685506331.so</code>.</p>
+<p>Next step is to list <code>virgl_crypto_java</code> shared libraries by executing the following command:</p>
+<p><code>ldd /tmp/virgil_crypto_java3134786209685506331.so</code></p>
+<p>Output of the ldd command is as follows:</p>
+<blockquote>
+<p>ldd (0x7f47776a8000)<br>
+libstdc++.so.6 =&gt; /usr/lib/libstdc++.so.6 (0x7f4776fbc000)</p>
+</blockquote>
+<blockquote>
+<p>libm.so.6 =&gt; ldd (0x7f47776a8000)</p>
+</blockquote>
+<blockquote>
+<p>libgcc_s.so.1 =&gt; /usr/lib/libgcc_s.so.1 (0x7f4776daa000)</p>
+</blockquote>
+<blockquote>
+<p>libc.so.6 =&gt; ldd (0x7f47776a8000)<br>
+Error loading shared library ld-linux-x86-64.so.2: No such file or directory (needed by /tmp/virgil_crypto_java3134786209685506331.so)</p>
+</blockquote>
+<p>Let's look at the following error message:<code>Error loading shared library ld-linux-x86-64.so.2</code>. Now, we need to figure out where <code>ld-linux-x86-64.so.2</code> file resides and in order to see that we will use <a href="https://pkgs.alpinelinux.org/contents?file=ld-linux-x86-64.so.2&amp;path=&amp;name=&amp;branch=&amp;repo=&amp;arch=">the following website</a>. We can see that libc6-compat needs to be installed and we will do that by executing the following command: <code>apk add libc6-compat</code>.</p>
+<p>So everything should work now? Right? Well, yes, it worked until Alpine Linux <a href="https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6">realesed patch</a> that broke our code. I've decided to check the Alpine linux git repository and stumbled upon the following commit - <a href="https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6">click here</a>. By default <code>libc6-compat</code> is not installed because Alpine Linux comes with musl compiler by default.</p>
+<p>cp /lib64/ld-linux-x86-64.so.2 /lib/</p>
+<p><a href="https://pkgs.alpinelinux.org/contents?file=ld-linux-x86-64.so.2&amp;path=&amp;name=&amp;branch=&amp;repo=&amp;arch=">https://pkgs.alpinelinux.org/contents?file=ld-linux-x86-64.so.2&amp;path=&amp;name=&amp;branch=&amp;repo=&amp;arch=</a></p>
+<p>apk list</p>
