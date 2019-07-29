@@ -166,7 +166,10 @@ pre {
 }
 
 /* Header */
-/* */
+
+.postlist-item a {
+  text-decoration: none;
+}
 
 .home {
   padding: 0 1rem;
