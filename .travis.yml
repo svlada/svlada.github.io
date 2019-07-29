@@ -7,6 +7,7 @@ script:
   - npx eleventy
   - touch .nojekyll
 deploy:
+  fqdn: svlada.com
   local-dir: _site
   provider: pages
   skip-cleanup: true
