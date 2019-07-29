@@ -1,0 +1,54 @@
+@font-face {
+    font-family: "Computer Modern";
+    font-weight: normal;
+    font-display: swap;
+    src: url("/fonts/cmunrm.otf");
+  }
+  @font-face {
+    font-family: "Computer Modern";
+    font-weight: bold;
+    font-display: swap;
+    src: url("/fonts/cmunbx.otf");
+  }
+  @font-face {
+    font-family: "Computer Modern";
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/fonts/cmunti.otf");
+  }
+  @font-face {
+    font-family: "Computer Modern";
+    font-style: italic;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/fonts/cmunbi.otf");
+  }
+  
+  @font-face {
+    font-family: "Computer Modern Typewriter";
+    font-weight: normal;
+    font-display: swap;
+    src: url("/fonts/cmuntt.otf");
+  }
+  @font-face {
+    font-family: "Computer Modern Typewriter";
+    font-weight: bold;
+    font-display: swap;
+    src: url("/fonts/cmuntb.otf");
+  }
+  @font-face {
+    font-family: "Computer Modern Typewriter";
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/fonts/cmunit.otf");
+  }
+  @font-face {
+    font-family: "Computer Modern Typewriter";
+    font-style: italic;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/fonts/cmuntx.otf");
+  }
+  
