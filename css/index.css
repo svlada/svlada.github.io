@@ -13,9 +13,11 @@
   --blue: #082840;
   --white: #fff;
 }
+
 * {
   box-sizing: border-box;
 }
+
 html,
 body {
   padding: 0;
@@ -234,3 +236,5 @@ a[href].direct-link:focus:visited,
 :hover > a[href].direct-link:visited {
   color: #aaa;
 }
+
+.disqus_thread { padding: 15px }
