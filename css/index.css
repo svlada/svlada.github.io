@@ -146,14 +146,16 @@ pre {
 }
 .nav-item {
   display: inline-block;
-  margin-right: 1em;
+  margin-right: 16px;
 }
 .nav-item a[href]:not(:hover) {
   text-decoration: none;
 }
-.nav-item-active {
-  font-weight: 700;
-  text-decoration: underline;
+ul li.nav-item-active a {
+  border-bottom: 1px solid #17050F
+}
+.nav-item a:hover{
+  text-decoration: none;
 }
 
 /* Posts list */
@@ -164,15 +166,8 @@ pre {
 .postlist-item {
   counter-increment: start-from -1;
 }
-.postlist-item:before {
-  display: inline-block;
-  pointer-events: none;
-  content: "" counter(start-from, decimal-leading-zero) ". ";
-  line-height: 100%;
-  text-align: right;
-}
-.postlist-date,
-.postlist-item:before {
+
+.postlist-date {
   font-size: 0.8125em; /* 13px /16 */
   color: var(--darkgray);
 }

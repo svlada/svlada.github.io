@@ -9,15 +9,14 @@ permalink: "hire-me/index.html"
 date: 2015-01-01
 ---
 
-Need a team of dedicated software developers? Please [contact me](mailto:svlada@gmail.com) to discuss further. 
+Need a team of dedicated software developers? Send an [email](mailto:svlada@gmail.com) to discuss further. 
 
-We are building simple and well tested solutions that works, together, with your team.
+We are building simple and well tested solutions that work, together, with your team.
 
 **Services**
 
-- Designing event-driven micro service solutions.
+- Designing event-driven microservice systems.
 - Maintenance of legacy systems.
-- HL7 integration work.
 - Development of custom HIPAA compliant web applications.
 
 **Technological Expertise**
@@ -26,7 +25,7 @@ We are building simple and well tested solutions that works, together, with your
 - Amazon Web Services
 - Postgres
 - Kafka
-- React Native
+- React
 
 **Currently available for hire**
 
