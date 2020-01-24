@@ -4,7 +4,7 @@
 	<subtitle>Sit down, relax, mix yourself a drink and enjoy the show.</subtitle>
 	<link href="https://myurl.com/feed/feed.xml" rel="self"/>
 	<link href="https://myurl.com/"/>
-	<updated>2018-05-01T00:00:00-00:00</updated>
+	<updated>2020-01-29T00:00:00-00:00</updated>
 	<id>https://myurl.com/</id>
 	<author>
 		<name>Vladimir Stankovic</name>
@@ -18,20 +18,20 @@
 		<id>https://myurl.com/require-js-dependency-management-part1/</id>
 		<content type="html">&lt;p&gt;Jump to complete source code &lt;a href=&quot;#source&quot;&gt;source code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This is introductory RequireJS tutorial in RequireJs series(&lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part1&lt;/a&gt;, &lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;part2&lt;/a&gt;). Reading material about AMD and RequireJS is in references section of article.&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Before or after reading this article I strongly recommend to read documentation on &lt;a href=&quot;http://requirejs.org/docs/start.html&quot;&gt;RequireJS website&lt;/a&gt;. James Burke did great job here.&lt;/p&gt;
 &lt;p&gt;RequireJS is a Javascript file and module loader which allows for asynchronous JavaScript loading and dependency management(can be used to load more than just Javascript files).&lt;/p&gt;
 &lt;p&gt;Require.js is a dependency management and asynchronous script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.&lt;/p&gt;
 &lt;p&gt;RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.&lt;/p&gt;
 &lt;p&gt;RequireJS is built around Module pattern. Modern web applications tend to have fairly complex front-ends. Module pattern should improve maintability of our bloated javascript code. Remmember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures.&lt;/p&gt;
 &lt;p&gt;RequireJS is well defined and standardized. While we wait ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint how we should structure our applications. Require.js works in current browsers.&lt;/p&gt;
-&lt;h3 id=&quot;basic-structure&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t1&quot;&gt;Basic structure&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#basic-structure&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;basic-structure&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t1&quot;&gt;Basic structure&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#basic-structure&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;STEP 1 - How to structure RequireJS project&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;This is our sample RequireJS project structure.&lt;/p&gt;
 &lt;pre&gt;
@@ -53,7 +53,7 @@
 &lt;p&gt;Application code reside in &lt;code&gt;[webapp/js/app]&lt;/code&gt; directory. This is place where you should place all of your /Model/View/Router/Template code.&lt;/p&gt;
 &lt;p&gt;Libraries like jQuery, Backbone, Handlebars and others are inside &lt;code&gt;[webapp/js/lib]&lt;/code&gt; directory.&lt;/p&gt;
 &lt;p&gt;Application config and main entry point is &lt;code&gt;[webapp/js/app.js]&lt;/code&gt;&lt;/p&gt;
-&lt;h4 id=&quot;step-2---how-to-include-requirejs&quot;&gt;STEP 2 - How to include RequireJS &lt;a class=&quot;direct-link&quot; href=&quot;#step-2---how-to-include-requirejs&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;step-2---how-to-include-requirejs&quot;&gt;STEP 2 - How to include RequireJS &lt;a class=&quot;direct-link&quot; href=&quot;#step-2---how-to-include-requirejs&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Your &lt;code&gt;[webapp/index.html]&lt;/code&gt; should look like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; &amp;lt;html&amp;gt;
  &amp;lt;head&amp;gt;&amp;lt;/head&amp;gt;
@@ -101,7 +101,7 @@ Consists of public api, dependency list, callback function&lt;/p&gt;
  	var constructorFunction = new dependency2();
  });
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;prototypal-inheritance-and-require.js&quot;&gt;&lt;a name=&quot;t2&quot; id=&quot;t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#prototypal-inheritance-and-require.js&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;prototypal-inheritance-and-require.js&quot;&gt;&lt;a name=&quot;t2&quot; id=&quot;t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#prototypal-inheritance-and-require.js&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Skip to &lt;a href=&quot;#source&quot;&gt;complete source code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;With RequireJS you can organize your modules in separate files with ease.&lt;/p&gt;
 &lt;p&gt;Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.&lt;/p&gt;
@@ -288,16 +288,16 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
 		<id>https://myurl.com/require-js-optimization-part2/</id>
 		<content type="html">&lt;p&gt;Jump to complete source code &lt;a href=&quot;#source&quot;&gt;source code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This is RequireJS optimizer tutorial, second one in the RequireJs series(&lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt;,&lt;a href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;part 2&lt;/a&gt;. Reading material about r.js and RequireJS is in references section of article.&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t1&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t2&quot;&gt;Require.js optimizer dump dependencies to single file&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This is short article in which I will explain you how to build and optimize your javascript code with ReqireJS optimization tool r.js.&lt;/p&gt;
 &lt;p&gt;James Burke &lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;recommends&lt;/a&gt; using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from &lt;a href=&quot;http://nodejs.org/#download&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;require.js-optimizer&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t0&quot;&gt;Require.js optimizer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;require.js-optimizer&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t0&quot;&gt;Require.js optimizer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Create your build script file on following location &lt;code&gt;[webapp/build/build.js]&lt;/code&gt;&lt;/p&gt;
 &lt;pre&gt; 
  [cc lang=&quot;javascript&quot;]
@@ -425,7 +425,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
      return SpecialItem.prototype = new Item, SpecialItem.prototype.constructor = SpecialItem, SpecialItem
  })
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;require.js-optimizer-compile-dependencies-to-single-file&quot;&gt;&lt;a name=&quot;t2&quot; id=&quot;t0&quot;&gt;Require.js optimizer compile dependencies to single file&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer-compile-dependencies-to-single-file&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;require.js-optimizer-compile-dependencies-to-single-file&quot;&gt;&lt;a name=&quot;t2&quot; id=&quot;t0&quot;&gt;Require.js optimizer compile dependencies to single file&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer-compile-dependencies-to-single-file&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Paste the following code to your &lt;code&gt;build.single.js&lt;/code&gt; file.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; {
      baseUrl: &amp;quot;../js/lib&amp;quot;,
@@ -453,7 +453,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
  C:/vlada/practice/require/webapp/js/lib/../app.js
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;All of our modules are now glued together into single &lt;code&gt;[webapp/build/app-built.js]&lt;/code&gt; file.&lt;/p&gt;
-&lt;h3 id=&quot;source-code-listing&quot;&gt;&lt;a name=&quot;source&quot; id=&quot;source&quot;&gt;Source code listing&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code-listing&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;source-code-listing&quot;&gt;&lt;a name=&quot;source&quot; id=&quot;source&quot;&gt;Source code listing&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code-listing&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;build.js&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; {
      baseUrl: &amp;quot;js/lib&amp;quot;,
@@ -510,7 +510,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
 &lt;p&gt;First we shall check if client request is XmlHttpRequest using Symfony 2 built in method&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; $request-&amp;gt;isXmlHttpRequest()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;step-1%3A-client-code&quot;&gt;STEP 1: Client code &lt;a class=&quot;direct-link&quot; href=&quot;#step-1%3A-client-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;step-1%3A-client-code&quot;&gt;STEP 1: Client code &lt;a class=&quot;direct-link&quot; href=&quot;#step-1%3A-client-code&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Client code is quite simple.&lt;/p&gt;
 &lt;p&gt;You need to craft Ajax request in following way.&lt;/p&gt;
 &lt;ol&gt;
@@ -525,7 +525,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
          action: &amp;quot;getFriendsList&amp;quot; // Parameters you are sending to remote server
      }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;step-2%3A-forward-request-to-remote-server&quot;&gt;STEP 2: Forward request to remote server &lt;a class=&quot;direct-link&quot; href=&quot;#step-2%3A-forward-request-to-remote-server&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;step-2%3A-forward-request-to-remote-server&quot;&gt;STEP 2: Forward request to remote server &lt;a class=&quot;direct-link&quot; href=&quot;#step-2%3A-forward-request-to-remote-server&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This step is bit tricky.&lt;/p&gt;
 &lt;p&gt;Client request is arrived to your server-side code. First you need to parse and validate request data.&lt;/p&gt;
 &lt;p&gt;To repeat once more ... you&#39;ll need the following data on server:&lt;/p&gt;
@@ -570,7 +570,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
 &lt;p&gt;In production both applications share same domain, but in test enviorment there is a lot of mess (different domains, ports etc).&lt;/p&gt;
 &lt;p&gt;Where is problem?&lt;/p&gt;
 &lt;p&gt;Application written in Symfony 2 need to consume some protected backend functionalities on Wordpress side. There is a lot personalized data that is fetched via ajax calls, and this is reason why we need cookies.&lt;/p&gt;
-&lt;h3 id=&quot;how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot;&gt;How to get cookies from Symfony2 request and set mutplie cookies to Curl? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot;&gt;How to get cookies from Symfony2 request and set mutplie cookies to Curl? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;We need to extract multiple cookies from Symfony 2 request object and set them to curl handle.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
      // Get all cookies from Symfony request object
@@ -587,7 +587,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
      curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
 ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot;&gt;How to get cookies Curl response and set multiple cookies to Symfony response? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot;&gt;How to get cookies Curl response and set multiple cookies to Symfony response? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Remmember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl http response.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php    
      // Get header and response data from curl response
@@ -757,15 +757,15 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 		<link href="https://myurl.com/websphere-maven-spring-project/"/>
 		<updated>2015-09-10T00:00:00-00:00</updated>
 		<id>https://myurl.com/websphere-maven-spring-project/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article describes how to create Spring web application that can be deployed on WebSphere application server. The goal is to to create maven project that can be used to  generate EAR file.&lt;/p&gt;
-&lt;h3 id=&quot;maven-project-structure&quot;&gt;&lt;a name=&quot;maven-project-structure&quot; id=&quot;maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#maven-project-structure&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;maven-project-structure&quot;&gt;&lt;a name=&quot;maven-project-structure&quot; id=&quot;maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#maven-project-structure&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The following list shows the multi-module maven project directory structure:&lt;/p&gt;
 &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;|- websphere-maven-spring-project &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|-- app-ear/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- pom.xml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|-- app-webapp/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- src/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- .classpath&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|---- pom.xml&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;|- pom.xml&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The project consists of one parent / aggregator module and two sub/child modules. For more information on multi-module please go to &lt;a href=&quot;http://maven.apache.org/pom.html#Aggregation&quot;&gt;maven documentation website&lt;/a&gt;.&lt;/p&gt;
@@ -783,7 +783,7 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;plugin&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apache&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;maven&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;plugins&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;maven&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ear&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;plugin&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;version&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2.10&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;version&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;configuration&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;finalName&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;APP_EAR&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;finalName&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;modules&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;			&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;webModule&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;bundleFileName&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;war&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;bundleFileName&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;				&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;contextRoot&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;contextRoot&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;			&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webModule&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;modules&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;generateApplicationXml&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;generateApplicationXml&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;	&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;configuration&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;plugin&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Sub-module: app-webapp&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Web app module is an simple web application generated with the spring initializr.&lt;/p&gt;
-&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;You can clone entire project from the following &lt;a href=&quot;https://github.com/svlada/websphere-maven-spring-project&quot;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
 </content>
 	</entry>
@@ -793,7 +793,7 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 		<link href="https://myurl.com/ssh-public-key-authentication/"/>
 		<updated>2015-11-23T00:00:00-00:00</updated>
 		<id>https://myurl.com/ssh-public-key-authentication/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt;&lt;/li&gt;
@@ -801,28 +801,28 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 &lt;li&gt;&lt;a href=&quot;#java-code&quot;&gt;Connect to remote host from java&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article shows how to securely connect (i.e. establish ssh connection) to the remote host from java application. In addition, configuration details for enabling public key authentication and protecting ssh keys will be provided.&lt;/p&gt;
 &lt;p&gt;Public key authentication enable users to establish SSH connection without providing (i.e. typing in) explicit password. Immediate benefit is that password is not transfered over the network, thus preventing posibility of password being compromised.&lt;/p&gt;
 &lt;p&gt;Private key should be stored in the ssh keychain and protected with the encryption passphrase.&lt;/p&gt;
-&lt;h3 id=&quot;generate-key-pair&quot;&gt;&lt;a name=&quot;generate-key-pair&quot; id=&quot;generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#generate-key-pair&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;generate-key-pair&quot;&gt;&lt;a name=&quot;generate-key-pair&quot; id=&quot;generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#generate-key-pair&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The first step is to generate private / public key on server where your java application will be running.&lt;/p&gt;
 &lt;p&gt;Private / public key pair can be generated by executing the following command:&lt;/p&gt;
 &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;ssh-keygen -t rsa&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is the output from my local development box:&lt;/p&gt;
 &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;vladimir.stankovic@PCSVLADA ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;$ ssh-keygen -t rsa&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Generating public/private rsa key pair.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Enter file in which to save the key (/home/vladimir.stankovic/.ssh/id_rsa):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Enter passphrase (empty for no passphrase):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Enter same passphrase again:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Your identification has been saved in /home/vladimir.stankovic/.ssh/id_rsa.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Your public key has been saved in /home/vladimir.stankovic/.ssh/id_rsa.pub.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Private key is identified as &lt;code&gt;id_rsa&lt;/code&gt; and public key as a &lt;code&gt;id_rsa.pub&lt;/code&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;copy-public-key-to-remote-host&quot;&gt;&lt;a name=&quot;copy-public-key-to-remote-host&quot; id=&quot;&quot;&gt;Copy public key to remote host&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#copy-public-key-to-remote-host&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;copy-public-key-to-remote-host&quot;&gt;&lt;a name=&quot;copy-public-key-to-remote-host&quot; id=&quot;&quot;&gt;Copy public key to remote host&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#copy-public-key-to-remote-host&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The &lt;code&gt;ssh-copy-id&lt;/code&gt; copies the public key of your default identity (use -i identity_file for other identities) to the remote host.&lt;/p&gt;
 &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;vladimir.stankovic@PCSVLADA ~&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;$ ssh-copy-id -i /home/vladimir.stankovic/.ssh/id_rsa root@www.svlada.com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;root@www.svlada.com&#39;s password:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Number of key(s) added: 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;Now try logging into the machine, with:   &quot;ssh &#39;root@www.svlada.com&#39;&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;and check to make sure that only the key(s) you wanted were added.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;connect-to-remote-host-from-java&quot;&gt;&lt;a name=&quot;java-code&quot; id=&quot;java-code&quot;&gt;Connect to remote host from java&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#connect-to-remote-host-from-java&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;connect-to-remote-host-from-java&quot;&gt;&lt;a name=&quot;java-code&quot; id=&quot;java-code&quot;&gt;Connect to remote host from java&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#connect-to-remote-host-from-java&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I have used &lt;a href=&quot;http://www.jcraft.com/jsch/&quot;&gt;JSch library&lt;/a&gt; to establish SSH connection.&lt;/p&gt;
 &lt;p&gt;The most important part is configuration of &lt;code&gt;com.jcraft.jsch.Session&lt;/code&gt; object and adding &lt;code&gt;publickey&lt;/code&gt; to the list of &lt;code&gt;PreferredAuthentication&lt;/code&gt; options.&lt;/p&gt;
 &lt;p&gt;Here is the sample code for configuring public key authentication:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;JSch&lt;/span&gt; jsch &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;JSch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;Session&lt;/span&gt; session &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; privateKeyPath &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/home/vladimir.stankovic/.ssh/id_rsa&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        jsch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;addIdentity&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;privateKeyPath&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;	    &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; jsch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getSession&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;username&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; host&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; port&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setConfig&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;PreferredAuthentications&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;publickey,keyboard-interactive,password&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Properties&lt;/span&gt; config &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        config&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;StrictHostKeyChecking&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;no&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setConfig&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;config&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;JSchException&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Failed to create Jsch Session object.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The next step is to connect to remote host and execute arbitary command over SSH:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token class-name&quot;&gt;String&lt;/span&gt; command &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;echo \&quot;Sit down, relax, mix yourself a drink and enjoy the show...\&quot; &gt;&gt; /tmp/test.out&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token class-name&quot;&gt;Channel&lt;/span&gt; channel &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;openChannel&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;exec&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ChannelExec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; channel&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setCommand&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;command&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ChannelExec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; channel&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setPty&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        channel&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        channel&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;disconnect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        session&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;disconnect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;JSchException&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;RuntimeException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Error durring SSH command execution. Command: &quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; command&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;For full example you can checkout code from the following &lt;a href=&quot;https://github.com/svlada/ssh-public-key-authentication&quot;&gt;git repository&lt;/a&gt;.&lt;/p&gt;
 </content>
 	</entry>
@@ -832,18 +832,18 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 		<link href="https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/"/>
 		<updated>2015-12-02T00:00:00-00:00</updated>
 		<id>https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#job-repository-configuration&quot;&gt;Job Repository configuration&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article describes problem with using default Spring Batch Job Repository configuration deployed on the WebSphere application server backed by Oracle database. The following is the exception you may encounter:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;springframework&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dao&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;DataAccessResourceFailureException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Could&lt;/span&gt; not create &lt;span class=&quot;token class-name&quot;&gt;Oracle&lt;/span&gt; LOB&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Caused&lt;/span&gt; by&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;springframework&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dao&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;InvalidDataAccessApiUsageException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Couldn&lt;/span&gt;&#39;t initialize &lt;span class=&quot;token class-name&quot;&gt;OracleLobHandler&lt;/span&gt; because &lt;span class=&quot;token class-name&quot;&gt;Oracle&lt;/span&gt; driver classes are not available&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Note&lt;/span&gt; that &lt;span class=&quot;token class-name&quot;&gt;OracleLobHandler&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;requires&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Oracle&lt;/span&gt; JDBC driver &lt;span class=&quot;token number&quot;&gt;9&lt;/span&gt;i or higher&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; nested exception is java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;lang&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassNotFoundException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; oracle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sql&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;BLOB&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Caused&lt;/span&gt; by&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;lang&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ClassNotFoundException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; oracle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sql&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;BLOB&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This issue is documented on the &lt;a href=&quot;http://www-01.ibm.com/support/docview.wss?uid=swg21633083&quot;&gt;IBM support website&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;configuration&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Configuration&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#configuration&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;configuration&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Configuration&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#configuration&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Proper solution is to configure &lt;code&gt;lob-handler&lt;/code&gt; dependency of the &lt;a href=&quot;http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html&quot;&gt;Job Repository&lt;/a&gt; and inject the &lt;a href=&quot;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/support/lob/OracleLobHandler.html&quot;&gt;OracleLobHandler&lt;/a&gt; bean.&lt;/p&gt;
 &lt;p&gt;In order to support WebSphere &lt;code&gt;lobHandler&lt;/code&gt; bean needs to be instantated with approprate &lt;code&gt;nativeJdbcExtractor&lt;/code&gt; that is supported by WebSphere.&lt;/p&gt;
 &lt;p&gt;The following snippet shows &lt;a href=&quot;http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html&quot;&gt;Job Repository&lt;/a&gt; configuration details&lt;/p&gt;
@@ -861,7 +861,7 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 		<link href="https://myurl.com/step-builder-pattern/"/>
 		<updated>2016-06-09T00:00:00-00:00</updated>
 		<id>https://myurl.com/step-builder-pattern/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: Step builder pattern&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Pros and cons about step builder pattern&quot; href=&quot;#step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
@@ -869,12 +869,12 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 &lt;li&gt;&lt;a title=&quot;Source code&quot; href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Eclipse plug-in&quot; href=&quot;#eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I have recently decided to use Amazon SES API in order to be able to send emails to my &lt;a href=&quot;http://microservicesweekly.com/&quot;&gt;Microservices Weekly&lt;/a&gt; subscribers. What prompted me to use Amazon SES API is its price. It&#39;s really cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a &lt;a href=&quot;https://github.com/svlada/ziggy&quot;&gt;small wrapper&lt;/a&gt; around their API.&lt;/p&gt;
 &lt;p&gt;To make long story short, the main purpose here is to share my experience with a less well-known derivate of Builder pattern - Step Builder pattern.&lt;/p&gt;
 &lt;p&gt;The Step Builder pattern is an object creation software design pattern. It&#39;s not so commonly mentioned in popular readings about design patterns. Honestly, I&#39;ve heard about this pattern only recently from my collegue &lt;a href=&quot;https://twitter.com/mikeladev&quot;&gt;@mikeladev&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The Step Builder pattern offers some neat benefits when you compare it to traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects.&lt;/p&gt;
-&lt;h3 id=&quot;pros-and-cons&quot;&gt;&lt;a name=&quot;step-builder-pattern-pros-and-cons&quot; id=&quot;step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pros-and-cons&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;pros-and-cons&quot;&gt;&lt;a name=&quot;step-builder-pattern-pros-and-cons&quot; id=&quot;step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pros-and-cons&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;User guidance for your API through object creation process step by step.&lt;/li&gt;
@@ -889,7 +889,7 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 &lt;li&gt;Low readability of code needed to implement the pattern itself.&lt;/li&gt;
 &lt;li&gt;No eclipse plugin to help with code generation. (On the other hand, there are plenty of code generators for Builder pattern generator).&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;code-walkthrough&quot;&gt;&lt;a name=&quot;code-walkthrough&quot; id=&quot;code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#code-walkthrough&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;code-walkthrough&quot;&gt;&lt;a name=&quot;code-walkthrough&quot; id=&quot;code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#code-walkthrough&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Since the Step Builder pattern is a creational design pattern, let&#39;s focus on its purpose - creation of objects.&lt;/p&gt;
 &lt;p&gt;Example of API usage is shown below:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Email email = 
@@ -911,7 +911,7 @@ Email.builder().from(EmailAddress.of(&amp;quot;Microservices Weekly &amp;lt;mw@m
 &lt;li&gt;Define one inner static Builder class which implements all of defined steps.&lt;/li&gt;
 &lt;li&gt;Implement step interface methods.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;source-code&quot;&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Complete Example of Step by Step builder pattern:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;public class Email {
 	private EmailAddress from;
@@ -1031,7 +1031,7 @@ Email.builder().from(EmailAddress.of(&amp;quot;Microservices Weekly &amp;lt;mw@m
 	}
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;eclipse-plug-in&quot;&gt;&lt;a name=&quot;eclipse-plugin&quot; id=&quot;eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#eclipse-plug-in&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;eclipse-plug-in&quot;&gt;&lt;a name=&quot;eclipse-plugin&quot; id=&quot;eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#eclipse-plug-in&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;So far, I haven&#39;t found a plug-in for Eclipse that provides Step Builder code generation feature.&lt;/p&gt;
 &lt;p&gt;I have created a github repository with the intention of creating an Eclipse plug-in that will provide support for Step Builder pattern generation: &lt;a href=&quot;https://github.com/svlada/alyx&quot;&gt;https://github.com/svlada/alyx&lt;/a&gt;&lt;/p&gt;
 </content>
@@ -1042,21 +1042,21 @@ Email.builder().from(EmailAddress.of(&amp;quot;Microservices Weekly &amp;lt;mw@m
 		<link href="https://myurl.com/jwt-token-authentication-with-spring-boot/"/>
 		<updated>2016-09-05T00:00:00-00:00</updated>
 		<id>https://myurl.com/jwt-token-authentication-with-spring-boot/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: JWT Token&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;pre-requisites&quot; href=&quot;#pre-requisites&quot;&gt;PRE-requisites&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Spring Security: Ajax authentication&quot; href=&quot;#ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;jwt-authentication&quot; href=&quot;#jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article will guide you on how you can implement JWT authentication with Spring Boot.&lt;/p&gt;
 &lt;p&gt;We will cover the following two scenarios:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Ajax Authentication&lt;/li&gt;
 &lt;li&gt;JWT Token Authentication&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;pre-requisites&quot;&gt;&lt;a name=&quot;pre-requisites&quot; id=&quot;pre-requisites&quot;&gt;PRE-requisites&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pre-requisites&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;pre-requisites&quot;&gt;&lt;a name=&quot;pre-requisites&quot; id=&quot;pre-requisites&quot;&gt;PRE-requisites&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pre-requisites&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Please check out the sample code/project from the following GitHub repository: &lt;a href=&quot;https://github.com/svlada/springboot-security-jwt&quot;&gt;https://github.com/svlada/springboot-security-jwt&lt;/a&gt; before going further reading the article.&lt;/p&gt;
 &lt;p&gt;This project is using H2 in-memory database to store sample user information. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (&lt;code&gt;/jwt-demo/src/main/resources/data.sql&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;Overall project structure is shown below:&lt;/p&gt;
@@ -1086,7 +1086,7 @@ Email.builder().from(EmailAddress.of(&amp;quot;Microservices Weekly &amp;lt;mw@m
 |       +---static
 |       \---templates
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;ajax-authentication&quot;&gt;&lt;a name=&quot;ajax-authentication&quot; id=&quot;ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#ajax-authentication&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;ajax-authentication&quot;&gt;&lt;a name=&quot;ajax-authentication&quot; id=&quot;ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#ajax-authentication&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;When we talk about Ajax authentication we usually refer to process where user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.&lt;/p&gt;
 &lt;p&gt;In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.&lt;/p&gt;
 &lt;p&gt;Following is the list of components that we&#39;ll implement:&lt;/p&gt;
@@ -1187,7 +1187,7 @@ Cache-Control: no-cache
 &lt;p&gt;Signature (base64 encoded)&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;ajaxloginprocessingfilter&quot;&gt;AjaxLoginProcessingFilter &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxloginprocessingfilter&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;ajaxloginprocessingfilter&quot;&gt;AjaxLoginProcessingFilter &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxloginprocessingfilter&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;First step is to extend &lt;code&gt;AbstractAuthenticationProcessingFilter&lt;/code&gt; in order to provide custom processing of Ajax authentication requests.&lt;/p&gt;
 &lt;p&gt;De-serialization and basic validation of the incoming JSON payload is done in the &lt;code&gt;AjaxLoginProcessingFilter#attemptAuthentication&lt;/code&gt; method. Upon successful validation of the JSON payload authentication logic is delegated to AjaxAuthenticationProvider class.&lt;/p&gt;
 &lt;p&gt;In case of a successful authentication &lt;code&gt;AjaxLoginProcessingFilter#successfulAuthentication&lt;/code&gt; method is invoked.&lt;br&gt;
@@ -1243,7 +1243,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;ajaxauthenticationprovider&quot;&gt;AjaxAuthenticationProvider &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxauthenticationprovider&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;ajaxauthenticationprovider&quot;&gt;AjaxAuthenticationProvider &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxauthenticationprovider&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Responsibility of the AjaxAuthenticationProvider class is to:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Verify user credentials against database, LDAP or some other system which holds the user data&lt;/li&gt;
@@ -1292,7 +1292,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;ajaxawareauthenticationsuccesshandler&quot;&gt;AjaxAwareAuthenticationSuccessHandler &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxawareauthenticationsuccesshandler&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;ajaxawareauthenticationsuccesshandler&quot;&gt;AjaxAwareAuthenticationSuccessHandler &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxawareauthenticationsuccesshandler&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;We&#39;ll implement AuthenticationSuccessHandler interface that is called when client has been successfully authenticated.&lt;/p&gt;
 &lt;p&gt;AjaxAwareAuthenticationSuccessHandler class is our custom implementation of AuthenticationSuccessHandler interface. Responsibility of this class is to add JSON payload containing JWT Access and Refresh tokens into the HTTP response body.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@Component
@@ -1415,7 +1415,7 @@ public class JwtTokenFactory {
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Please note that if you are instantiating Claims object outside of &lt;code&gt;Jwts.builder()&lt;/code&gt; make sure to first invoke &lt;code&gt;Jwts.builder()#setClaims(claims)&lt;/code&gt;. Why? Well, if you don&#39;t do that, Jwts.builder will, by default, create empty Claims object. What that means? Well if you call &lt;code&gt;Jwts.builder()#setClaims()&lt;/code&gt; after you have set subject with &lt;code&gt;Jwts.builder()#setSubject()&lt;/code&gt; your subject will be lost. Simply new instance of Claims class will overwrite default one created by Jwts.builder().&lt;/p&gt;
-&lt;h4 id=&quot;ajaxawareauthenticationfailurehandler&quot;&gt;AjaxAwareAuthenticationFailureHandler &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxawareauthenticationfailurehandler&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;ajaxawareauthenticationfailurehandler&quot;&gt;AjaxAwareAuthenticationFailureHandler &lt;a class=&quot;direct-link&quot; href=&quot;#ajaxawareauthenticationfailurehandler&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;AjaxAwareAuthenticationFailureHandler is invoked by &lt;code&gt;AjaxLoginProcessingFilter&lt;/code&gt; in case of authentication failures. You can design specific error messages based on exception type that have occurred during the authentication process.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@Component
 public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -1446,7 +1446,7 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;jwt-authentication&quot;&gt;&lt;a name=&quot;jwt-authentication&quot; id=&quot;jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#jwt-authentication&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;jwt-authentication&quot;&gt;&lt;a name=&quot;jwt-authentication&quot; id=&quot;jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#jwt-authentication&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Token based authentication schema&#39;s became immensely popular in recent times, as they provide important benefits when compared to sessions/cookies:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;CORS&lt;/li&gt;
@@ -1493,7 +1493,7 @@ Cache-Control: no-cache
 &lt;li&gt;BloomFilterTokenVerifier&lt;/li&gt;
 &lt;li&gt;WebSecurityConfig&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id=&quot;jwttokenauthenticationprocessingfilter&quot;&gt;JwtTokenAuthenticationProcessingFilter &lt;a class=&quot;direct-link&quot; href=&quot;#jwttokenauthenticationprocessingfilter&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;jwttokenauthenticationprocessingfilter&quot;&gt;JwtTokenAuthenticationProcessingFilter &lt;a class=&quot;direct-link&quot; href=&quot;#jwttokenauthenticationprocessingfilter&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;JwtTokenAuthenticationProcessingFilter filter is applied to each API (&lt;code&gt;/api/**&lt;/code&gt;) with exception of the refresh token endpoint (&lt;code&gt;/api/auth/token&lt;/code&gt;) and login endpoint (&lt;code&gt;/api/auth/login&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;This filter has the following responsibilities:&lt;/p&gt;
 &lt;ol&gt;
@@ -1538,7 +1538,7 @@ Cache-Control: no-cache
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;jwtheadertokenextractor&quot;&gt;JwtHeaderTokenExtractor &lt;a class=&quot;direct-link&quot; href=&quot;#jwtheadertokenextractor&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;jwtheadertokenextractor&quot;&gt;JwtHeaderTokenExtractor &lt;a class=&quot;direct-link&quot; href=&quot;#jwtheadertokenextractor&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;JwtHeaderTokenExtractor is very simple class used to extract Authorization token from header. You can extend TokenExtractor interface and provide your custom implementation that will for example extract token from URL.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@Component
 public class JwtHeaderTokenExtractor implements TokenExtractor {
@@ -1558,7 +1558,7 @@ public class JwtHeaderTokenExtractor implements TokenExtractor {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;jwtauthenticationprovider&quot;&gt;JwtAuthenticationProvider &lt;a class=&quot;direct-link&quot; href=&quot;#jwtauthenticationprovider&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;jwtauthenticationprovider&quot;&gt;JwtAuthenticationProvider &lt;a class=&quot;direct-link&quot; href=&quot;#jwtauthenticationprovider&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;JwtAuthenticationProvider has the following responsibilities:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Verify the access token&#39;s signature&lt;/li&gt;
@@ -1597,7 +1597,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;skippathrequestmatcher&quot;&gt;SkipPathRequestMatcher &lt;a class=&quot;direct-link&quot; href=&quot;#skippathrequestmatcher&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;skippathrequestmatcher&quot;&gt;SkipPathRequestMatcher &lt;a class=&quot;direct-link&quot; href=&quot;#skippathrequestmatcher&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;JwtTokenAuthenticationProcessingFilter  filter is configured to skip following endpoints: &lt;code&gt;/api/auth/login&lt;/code&gt; and &lt;code&gt;/api/auth/token&lt;/code&gt;. This is achieved with &lt;code&gt;SkipPathRequestMatcher&lt;/code&gt; implementation of &lt;code&gt;RequestMatcher&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;public class SkipPathRequestMatcher implements RequestMatcher {
     private OrRequestMatcher matchers;
@@ -1619,7 +1619,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;websecurityconfig&quot;&gt;WebSecurityConfig &lt;a class=&quot;direct-link&quot; href=&quot;#websecurityconfig&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;websecurityconfig&quot;&gt;WebSecurityConfig &lt;a class=&quot;direct-link&quot; href=&quot;#websecurityconfig&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;WebSecurityConfig class extends WebSecurityConfigurerAdapter to provide custom security configuration.&lt;/p&gt;
 &lt;p&gt;Following beans are configured and instantiated in this class:&lt;/p&gt;
 &lt;ol&gt;
@@ -1706,7 +1706,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;passwordencoderconfig&quot;&gt;PasswordEncoderConfig &lt;a class=&quot;direct-link&quot; href=&quot;#passwordencoderconfig&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;passwordencoderconfig&quot;&gt;PasswordEncoderConfig &lt;a class=&quot;direct-link&quot; href=&quot;#passwordencoderconfig&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;BCrypt encoder that is in AjaxAuthenticationProvider.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@Configuration
 public class PasswordEncoderConfig {
@@ -1716,7 +1716,7 @@ public class PasswordEncoderConfig {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&quot;bloomfiltertokenverifier&quot;&gt;BloomFilterTokenVerifier &lt;a class=&quot;direct-link&quot; href=&quot;#bloomfiltertokenverifier&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;bloomfiltertokenverifier&quot;&gt;BloomFilterTokenVerifier &lt;a class=&quot;direct-link&quot; href=&quot;#bloomfiltertokenverifier&quot;&gt;#&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;This is dummy class. You should ideally implement your own TokenVerifier to check for revoked tokens.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;@Component
 public class BloomFilterTokenVerifier implements TokenVerifier {
@@ -1726,20 +1726,20 @@ public class BloomFilterTokenVerifier implements TokenVerifier {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion &lt;a class=&quot;direct-link&quot; href=&quot;#conclusion&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion &lt;a class=&quot;direct-link&quot; href=&quot;#conclusion&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;I heard people whispering on the web that loosing a JWT token is like loosing your house keys. So be careful.&lt;/p&gt;
-&lt;h2 id=&quot;references&quot;&gt;References &lt;a class=&quot;direct-link&quot; href=&quot;#references&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;h3 id=&quot;i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt&quot;&gt;&lt;a href=&quot;https://www.dinochiesa.net/?p=1388&quot;&gt;I don’t see the point in Revoking or Blacklisting JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;spring-security-architecture---dave-syer&quot;&gt;&lt;a href=&quot;https://github.com/dsyer/spring-security-architecture&quot;&gt;Spring Security Architecture - Dave Syer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#spring-security-architecture---dave-syer&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;invalidating-jwt&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens/36884683#36884683&quot;&gt;Invalidating JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#invalidating-jwt&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;secure-and-stateless-jwt-implementation&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/38557379/secure-and-stateless-jwt-implementation&quot;&gt;Secure and stateless JWT implementation&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#secure-and-stateless-jwt-implementation&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;learn-jwt&quot;&gt;&lt;a href=&quot;https://github.com/dwyl/learn-json-web-tokens&quot;&gt;Learn JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#learn-jwt&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;opaque-access-tokens-and-cloud-foundry&quot;&gt;&lt;a href=&quot;https://www.cloudfoundry.org/opaque-access-tokens-cloud-foundry/&quot;&gt;Opaque access tokens and cloud foundry&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#opaque-access-tokens-and-cloud-foundry&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;the-unspoken-vulnerability-of-jwts&quot;&gt;&lt;a href=&quot;http://by.jtl.xyz/2016/06/the-unspoken-vulnerability-of-jwts.html&quot;&gt;The unspoken vulnerability of JWTS&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#the-unspoken-vulnerability-of-jwts&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;how-to-control-user-identity-within-micro-services&quot;&gt;&lt;a href=&quot;http://nordicapis.com/how-to-control-user-identity-within-microservices/&quot;&gt;How To Control User Identity Within Micro-services&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-control-user-identity-within-micro-services&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;why-does-oauth-v2-have-both-access-and-refresh-tokens%3F&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/3487991/why-does-oauth-v2-have-both-access-and-refresh-tokens/12885823&quot;&gt;Why Does OAuth v2 Have Both Access and Refresh Tokens?&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#why-does-oauth-v2-have-both-access-and-refresh-tokens%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;rfc-6749&quot;&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc6749&quot;&gt;RFC-6749&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#rfc-6749&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;are-breaches-of-jwt-based-servers-more-damaging%3F&quot;&gt;&lt;a href=&quot;https://www.sslvpn.online/are-breaches-of-jwt-based-servers-more-damaging/&quot;&gt;Are breaches of JWT-based servers more damaging?&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#are-breaches-of-jwt-based-servers-more-damaging%3F&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h2 id=&quot;references&quot;&gt;References &lt;a class=&quot;direct-link&quot; href=&quot;#references&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt&quot;&gt;&lt;a href=&quot;https://www.dinochiesa.net/?p=1388&quot;&gt;I don’t see the point in Revoking or Blacklisting JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#i-don%E2%80%99t-see-the-point-in-revoking-or-blacklisting-jwt&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;spring-security-architecture---dave-syer&quot;&gt;&lt;a href=&quot;https://github.com/dsyer/spring-security-architecture&quot;&gt;Spring Security Architecture - Dave Syer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#spring-security-architecture---dave-syer&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;invalidating-jwt&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens/36884683#36884683&quot;&gt;Invalidating JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#invalidating-jwt&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;secure-and-stateless-jwt-implementation&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/38557379/secure-and-stateless-jwt-implementation&quot;&gt;Secure and stateless JWT implementation&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#secure-and-stateless-jwt-implementation&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;learn-jwt&quot;&gt;&lt;a href=&quot;https://github.com/dwyl/learn-json-web-tokens&quot;&gt;Learn JWT&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#learn-jwt&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;opaque-access-tokens-and-cloud-foundry&quot;&gt;&lt;a href=&quot;https://www.cloudfoundry.org/opaque-access-tokens-cloud-foundry/&quot;&gt;Opaque access tokens and cloud foundry&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#opaque-access-tokens-and-cloud-foundry&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;the-unspoken-vulnerability-of-jwts&quot;&gt;&lt;a href=&quot;http://by.jtl.xyz/2016/06/the-unspoken-vulnerability-of-jwts.html&quot;&gt;The unspoken vulnerability of JWTS&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#the-unspoken-vulnerability-of-jwts&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;how-to-control-user-identity-within-micro-services&quot;&gt;&lt;a href=&quot;http://nordicapis.com/how-to-control-user-identity-within-microservices/&quot;&gt;How To Control User Identity Within Micro-services&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-control-user-identity-within-micro-services&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;why-does-oauth-v2-have-both-access-and-refresh-tokens%3F&quot;&gt;&lt;a href=&quot;http://stackoverflow.com/questions/3487991/why-does-oauth-v2-have-both-access-and-refresh-tokens/12885823&quot;&gt;Why Does OAuth v2 Have Both Access and Refresh Tokens?&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#why-does-oauth-v2-have-both-access-and-refresh-tokens%3F&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;rfc-6749&quot;&gt;&lt;a href=&quot;https://tools.ietf.org/html/rfc6749&quot;&gt;RFC-6749&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#rfc-6749&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;are-breaches-of-jwt-based-servers-more-damaging%3F&quot;&gt;&lt;a href=&quot;https://www.sslvpn.online/are-breaches-of-jwt-based-servers-more-damaging/&quot;&gt;Are breaches of JWT-based servers more damaging?&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#are-breaches-of-jwt-based-servers-more-damaging%3F&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 </content>
 	</entry>
 	
@@ -1749,16 +1749,16 @@ public class BloomFilterTokenVerifier implements TokenVerifier {
 		<updated>2018-05-01T00:00:00-00:00</updated>
 		<id>https://myurl.com/spring-session-tutorial/</id>
 		<content type="html">&lt;p&gt;This article will show you how to configure and use &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; to manage session data in your web application. Please checkout the code from the following &lt;a href=&quot;https://github.com/svlada/springsession-jdbc&quot;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: Spring Session&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Project setup using Maven&quot; href=&quot;#project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;CURL&quot; href=&quot;#curl&quot;&gt;Curl&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Before we go into the more details of &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; configuration, I would like to provide my view on recent hype around Stateful vs Stateless session management.&lt;/p&gt;
 &lt;p&gt;Lately, a lot of people started using JSON Web Token (JWT) as an stateless mechanism for handling sessions. A couple years ago I event wrote an &lt;a href=&quot;http://www.svlada.com/jwt-token-authentication-with-spring-boot/&quot;&gt;article on that topic&lt;/a&gt; and honestly didn&#39;t know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let&#39;s see what are the pro&#39;s and cons of stateless and stateful session management approaches.&lt;/p&gt;
-&lt;h3 id=&quot;stateless-on-server-side&quot;&gt;Stateless on server side &lt;a class=&quot;direct-link&quot; href=&quot;#stateless-on-server-side&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;stateless-on-server-side&quot;&gt;Stateless on server side &lt;a class=&quot;direct-link&quot; href=&quot;#stateless-on-server-side&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;No need to scale session data on server side as session is maintained through cryptographically signed JSON Web Token (JWT).&lt;/li&gt;
@@ -1769,7 +1769,7 @@ public class BloomFilterTokenVerifier implements TokenVerifier {
 &lt;li&gt;Potential token explosion as JSON Web Token becomes larger in size.&lt;/li&gt;
 &lt;li&gt;Sending JSON Web Token (JWT) payload on each request can be expensive.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;stateful-on-server-side&quot;&gt;Stateful on server side &lt;a class=&quot;direct-link&quot; href=&quot;#stateful-on-server-side&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;stateful-on-server-side&quot;&gt;Stateful on server side &lt;a class=&quot;direct-link&quot; href=&quot;#stateful-on-server-side&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Ability to log-out user&lt;/li&gt;
@@ -1781,7 +1781,7 @@ public class BloomFilterTokenVerifier implements TokenVerifier {
 &lt;/ol&gt;
 &lt;p&gt;In short, don&#39;t use JSON Web Token to manage session data for your web applications. The most of the web applications will be fine with storing session related data on Redis.&lt;/p&gt;
 &lt;p&gt;If you have microservices architecture, you can use API Gateway as an translation layer that would validate session id and create federated token to be used by the services. That&#39;s one use case where JSON Web Token fits nicely.&lt;/p&gt;
-&lt;h3 id=&quot;project-setup&quot;&gt;&lt;a name=&quot;project-setup&quot; id=&quot;project-setup&quot;&gt;Project setup&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#project-setup&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;project-setup&quot;&gt;&lt;a name=&quot;project-setup&quot; id=&quot;project-setup&quot;&gt;Project setup&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#project-setup&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Include &lt;code&gt;spring-session-core&lt;/code&gt; and &lt;code&gt;spring-session-jdbc&lt;/code&gt; in your &lt;code&gt;pom.xml&lt;/code&gt; file.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Maven dependencies&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
@@ -1852,8 +1852,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 &lt;li&gt;&lt;strong&gt;HttpSessionIdResolver&lt;/strong&gt; - Use &lt;code&gt;HeaderHttpSessionIdResolver&lt;/code&gt; if you want to send authentication token through http headers. Please check the following &lt;a href=&quot;https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f&quot;&gt;git commit&lt;/a&gt; regarding class name changes.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;@EnableJdbcHttpSession&lt;/strong&gt; - This annotation is needed as it exposes &lt;code&gt;SessionRepositoryFilter&lt;/code&gt; that will use database for storing session data.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&quot;curl-command&quot;&gt;&lt;a name=&quot;curl&quot; id=&quot;curl&quot;&gt;Curl command&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#curl-command&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;user-login&quot;&gt;User login &lt;a class=&quot;direct-link&quot; href=&quot;#user-login&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;curl-command&quot;&gt;&lt;a name=&quot;curl&quot; id=&quot;curl&quot;&gt;Curl command&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#curl-command&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;user-login&quot;&gt;User login &lt;a class=&quot;direct-link&quot; href=&quot;#user-login&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Check for the &lt;code&gt;x-auth-token&lt;/code&gt; in response and include it with the subsequent requests.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;curl -X POST \
   http://localhost:1999/login \
@@ -1862,20 +1862,20 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
   -F username=test \
   -F password=test
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;user-logout&quot;&gt;User logout &lt;a class=&quot;direct-link&quot; href=&quot;#user-logout&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;user-logout&quot;&gt;User logout &lt;a class=&quot;direct-link&quot; href=&quot;#user-logout&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;curl -X GET \
   http://localhost:1999/logout \
   -H &#39;cache-control: no-cache&#39; \
   -H &#39;x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc&#39;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&quot;access-to-protected-resource&quot;&gt;Access to protected resource &lt;a class=&quot;direct-link&quot; href=&quot;#access-to-protected-resource&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;access-to-protected-resource&quot;&gt;Access to protected resource &lt;a class=&quot;direct-link&quot; href=&quot;#access-to-protected-resource&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This is an example on how to access protected resource by including access token in the headers:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;curl -X GET \
   http://localhost:1999/api/sample \
   -H &#39;cache-control: no-cache&#39; \
   -H &#39;x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390&#39;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&quot;source-code&quot;&gt;Source code &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;source-code&quot;&gt;Source code &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Session Authentication Success Handler&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;public class SessionAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
@@ -1927,6 +1927,158 @@ public class PasswordEncoderConfig {
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Microservices - Durable request reply</title>
+		<link href="https://myurl.com/microservices-durable-request-reply/"/>
+		<updated>2020-01-29T00:00:00-00:00</updated>
+		<id>https://myurl.com/microservices-durable-request-reply/</id>
+		<content type="html">&lt;p&gt;The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given through the article are based on the Kafka, which is distributed commit log implementation. &lt;a href=&quot;https://www.reactivemanifesto.org/glossary&quot;&gt;Reactive Manifesto&lt;/a&gt; explains the main characteristics of a message-driven architecture.&lt;/p&gt;
+&lt;p&gt;The following system design diagram shows a bird&#39;s-eye view of the exemplary microservice architecture:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://myurl.com/img/microservices-durable-request-reply/microservices.png&quot; alt=&quot;microserices&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Each of the following sections describes the important system components.&lt;/p&gt;
+&lt;h2 id=&quot;api-gateway&quot;&gt;API Gateway &lt;a class=&quot;direct-link&quot; href=&quot;#api-gateway&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The API Gateway is an infrastructural pattern for interfacing external clients with internal services. This component can be implemented using one of the non-blocking frameworks (elixir, spring-reactive, node.js, zuul 2, etc.). Almost every cloud provider like Amazon or Google offers API Gateway as a managed service. The development team should select the appropriate tool based on project budget and architectural decisions.&lt;/p&gt;
+&lt;p&gt;The responsibilities of an API gateway can vary from system to system. The most common ones are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Request routing&lt;/li&gt;
+&lt;li&gt;Rate limit/throttling&lt;/li&gt;
+&lt;li&gt;Security
+&lt;ol&gt;
+&lt;li&gt;SSL termination&lt;/li&gt;
+&lt;li&gt;Token translation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Logging&lt;/li&gt;
+&lt;li&gt;Caching&lt;/li&gt;
+&lt;li&gt;Load balancing&lt;/li&gt;
+&lt;li&gt;API monitoring and analytics&lt;/li&gt;
+&lt;li&gt;Resource aggregation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The important part of the API Gateway to focus on is the Request router. Request router routes API requests to internal services. Introducing the facade layer in front of services improves the isolation of each service. This means that the contract with external clients can remain unchanged while internal services evolve. Services should be configured to communicate through message passing. Messages are commands that are dispatched to services.&lt;/p&gt;
+&lt;h2 id=&quot;request-handling-flow&quot;&gt;Request handling flow &lt;a class=&quot;direct-link&quot; href=&quot;#request-handling-flow&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The overall request handling flow is described as follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Accepting API request&lt;/strong&gt; is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Creating command&lt;/strong&gt;. The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sending command to a service&lt;/strong&gt;. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Command handling&lt;/strong&gt;. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sending Reply command to the originator&lt;/strong&gt;. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Flush Http response&lt;/strong&gt;. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Using a non-blocking approach provides the ability to handle a higher number of Http connections with fewer resources, thus increasing system availability with a benefit of greater system elasticity.&lt;/p&gt;
+&lt;p&gt;The next section describes a durable request/reply mechanism for inter-process communication.&lt;/p&gt;
+&lt;h2 id=&quot;durable-request-reply-flow&quot;&gt;Durable request reply flow &lt;a class=&quot;direct-link&quot; href=&quot;#durable-request-reply-flow&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Internal services can use two types of communication: &lt;strong&gt;synchronous&lt;/strong&gt; or &lt;strong&gt;asynchronous&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The majority of development teams favor synchronous (i.e. Rest) communication between internal and external services. Rest communication between internal services is troublesome as it imposes the following problems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reduces availability.&lt;/li&gt;
+&lt;li&gt;Introduces complexity when joining data owned by different services.&lt;/li&gt;
+&lt;li&gt;Handling cascading failures and Http retries.&lt;/li&gt;
+&lt;li&gt;Tight coupling between services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Reliable message exchange between internal services should be asynchronous, durable and transactional. To fulfill these characteristics the following patterns are used:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Commit log&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Kafka serves as a backplane for durable and asynchronous message exchange.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transactional outbox and log mining&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Solves the problem of sending commands as a part of a business transaction. The common use case is to store data into the local database and emit a command or event to Kafka or to invoke Rest API. Debezium is an excellent tool that can be used for transaction log mining.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To implement a durable request/reply mechanism, one request and reply topic must be created for each of the internal services. Developers should be aware of how many partitions are allocated per service. The number of partitions should be carefully designed, having in mind the scalability needs of each service. The durable request/reply flow is presented with the steps listed below:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Service A (Kafka Producer): Sending command to Service B&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Set the following message headers: reply-topic-id of Service A and correlation-id.&lt;/li&gt;
+&lt;li&gt;Serialize and post a message to request-topic-id of Service B.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Service B (Kafka Consumer): Handle command&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Deserialize message.&lt;/li&gt;
+&lt;li&gt;Process command and send ack/nack back.&lt;/li&gt;
+&lt;li&gt;Send reply command to reply-topic-id of Service A.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Consumer responsibilities: Reply topic&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Extract correlation-id from the Reply command.&lt;/li&gt;
+&lt;li&gt;Use correlation-id to find Http connection handler. Note that the Http connection handler can run on a separate node or be a part of API Gateway.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When solutioning design for inter process communication, it&#39;s advisable to follow all or nothing approach (i.e. atomicity). This pattern is well known and used for decades in database servers. The good definition is the one from wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;All the write operations within a transaction have an all-or-nothing effect, that is, either the transaction succeeds and all writes take effect, or otherwise, the database is  brought to a state that does not include any of the writes of the transaction.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Common use case is a need to commit business transaction against local database and reliably dispatch command to a Kafka broker. Command should be dispatched only if transaction suceeds. The following are possible approaches for tackling this problem:&lt;/p&gt;
+&lt;h3 id=&quot;use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context&quot;&gt;Use KafkaProducer to send command to a broker inside of business logic transactional context &lt;a class=&quot;direct-link&quot; href=&quot;#use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@Transactional
+fun businessTransaction() {
+  saveToDatabase()
+  dispatchCommandToKafka()
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Easy to implement.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Network failures can cause rollback of local transaction.&lt;/li&gt;
+&lt;li&gt;Code is occuping expensive database connection for non-db work accross network.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context&quot;&gt;Use KafkaProducer to send command to a broker outside of business logic transactional context &lt;a class=&quot;direct-link&quot; href=&quot;#use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;@Transactional
+fun businessTransaction() {
+  saveToDatabase()
+}
+
+fun methodA() {
+  saveToDatabase()
+  dispatchCommandToKafka()
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Easy to implement.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Leads to error-prone code needed to check if local transaction succeeded or not.&lt;/li&gt;
+&lt;li&gt;In case of service or Kafka broker failures no way to have a strong guarantee that command will be delivered.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;proper-solution%3A-use-transactional-outbox&quot;&gt;Proper solution: Use transactional outbox &lt;a class=&quot;direct-link&quot; href=&quot;#proper-solution%3A-use-transactional-outbox&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Commands are persisted to outbox table in the same transaction with business logic. Debezium, which is a transaction log miner, picks up the record and pushes it to Kafka.&lt;/p&gt;
+&lt;p&gt;One might argue that we don&#39;t need Debezium and that Kafka Connect can be used to query for commands from the Outbox table. Big drawback of this approach is possibility to skip some commands due to transaction isolation. If you don&#39;t want to lose any commands go with transactional log miner.&lt;/p&gt;
+&lt;p&gt;The following image shows a transactional outbox pattern:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://myurl.com/img/microservices-durable-request-reply/request-reply.png&quot; alt=&quot;microserices&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Atomicity&lt;/li&gt;
+&lt;li&gt;Strong guarantees that if local transaction succeeded command will be eventually delivered to Kafka broker.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Cons&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Another component in system to manage (e.g. Debezium)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;sagas&quot;&gt;Sagas &lt;a class=&quot;direct-link&quot; href=&quot;#sagas&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Handling business transactions that span different services is done through orchestration and usage of the Saga concept defined by Garzia in early 1960. Transactional outbox is a useful pattern used to implement orchestration using Sagas.&lt;/p&gt;
+&lt;p&gt;How to handle and implement distributed transactions using Sagas will be explained in the next article. Stay tuned!&lt;/p&gt;
+&lt;p&gt;References&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://debezium.io/blog/2019/02/19/reliable-microservices-data-exchange-with-the-outbox-pattern/&quot;&gt;Reliable Microservices Data Exchange With the Outbox Pattern&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/confluentinc/kafka-connect-jdbc/issues/172&quot;&gt;Missing Updates with Timestamp+incrementing mode in Postgres&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf&quot;&gt;Sagas&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3435995/&quot;&gt;Request-Reply&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </content>
 	</entry>
 </feed>

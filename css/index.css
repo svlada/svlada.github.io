@@ -37,6 +37,7 @@ img {
 p,
 .tmpl-post li {
   line-height: 1.45;
+  font-size: 1.04rem;
 }
 a[href] {
   color: var(--blue);

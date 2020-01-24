@@ -20,16 +20,16 @@
       <h1>Spring Session Tutorial - JDBC Configuration</h1>
 
 <p>This article will show you how to configure and use <a href="https://projects.spring.io/spring-session/">Spring Session</a> to manage session data in your web application. Please checkout the code from the following <a href="https://github.com/svlada/springsession-jdbc">GitHub repository</a>.</p>
-<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A" aria-hidden="true">#</a></h2>
+<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A">#</a></h2>
 <ol>
 <li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
 <li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
 <li><a title="CURL" href="#curl">Curl</a></li>
 </ol>
-<h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h3>
+<h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction">#</a></h3>
 <p>Before we go into the more details of <a href="https://projects.spring.io/spring-session/">Spring Session</a> configuration, I would like to provide my view on recent hype around Stateful vs Stateless session management.</p>
 <p>Lately, a lot of people started using JSON Web Token (JWT) as an stateless mechanism for handling sessions. A couple years ago I event wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pro's and cons of stateless and stateful session management approaches.</p>
-<h3 id="stateless-on-server-side">Stateless on server side <a class="direct-link" href="#stateless-on-server-side" aria-hidden="true">#</a></h3>
+<h3 id="stateless-on-server-side">Stateless on server side <a class="direct-link" href="#stateless-on-server-side">#</a></h3>
 <p><strong>Pros</strong></p>
 <ol>
 <li>No need to scale session data on server side as session is maintained through cryptographically signed JSON Web Token (JWT).</li>
@@ -40,7 +40,7 @@
 <li>Potential token explosion as JSON Web Token becomes larger in size.</li>
 <li>Sending JSON Web Token (JWT) payload on each request can be expensive.</li>
 </ol>
-<h3 id="stateful-on-server-side">Stateful on server side <a class="direct-link" href="#stateful-on-server-side" aria-hidden="true">#</a></h3>
+<h3 id="stateful-on-server-side">Stateful on server side <a class="direct-link" href="#stateful-on-server-side">#</a></h3>
 <p><strong>Pros</strong></p>
 <ol>
 <li>Ability to log-out user</li>
@@ -52,7 +52,7 @@
 </ol>
 <p>In short, don't use JSON Web Token to manage session data for your web applications. The most of the web applications will be fine with storing session related data on Redis.</p>
 <p>If you have microservices architecture, you can use API Gateway as an translation layer that would validate session id and create federated token to be used by the services. That's one use case where JSON Web Token fits nicely.</p>
-<h3 id="project-setup"><a name="project-setup" id="project-setup">Project setup</a> <a class="direct-link" href="#project-setup" aria-hidden="true">#</a></h3>
+<h3 id="project-setup"><a name="project-setup" id="project-setup">Project setup</a> <a class="direct-link" href="#project-setup">#</a></h3>
 <p>Include <code>spring-session-core</code> and <code>spring-session-jdbc</code> in your <code>pom.xml</code> file.</p>
 <p><strong>Maven dependencies</strong></p>
 <pre><code>&lt;dependency&gt;
@@ -123,8 +123,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 <li><strong>HttpSessionIdResolver</strong> - Use <code>HeaderHttpSessionIdResolver</code> if you want to send authentication token through http headers. Please check the following <a href="https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f">git commit</a> regarding class name changes.</li>
 <li><strong>@EnableJdbcHttpSession</strong> - This annotation is needed as it exposes <code>SessionRepositoryFilter</code> that will use database for storing session data.</li>
 </ol>
-<h3 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command" aria-hidden="true">#</a></h3>
-<h3 id="user-login">User login <a class="direct-link" href="#user-login" aria-hidden="true">#</a></h3>
+<h3 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command">#</a></h3>
+<h3 id="user-login">User login <a class="direct-link" href="#user-login">#</a></h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
 <pre><code>curl -X POST \
   http://localhost:1999/login \
@@ -133,20 +133,20 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
   -F username=test \
   -F password=test
 </code></pre>
-<h3 id="user-logout">User logout <a class="direct-link" href="#user-logout" aria-hidden="true">#</a></h3>
+<h3 id="user-logout">User logout <a class="direct-link" href="#user-logout">#</a></h3>
 <pre><code>curl -X GET \
   http://localhost:1999/logout \
   -H 'cache-control: no-cache' \
   -H 'x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc'
 </code></pre>
-<h3 id="access-to-protected-resource">Access to protected resource <a class="direct-link" href="#access-to-protected-resource" aria-hidden="true">#</a></h3>
+<h3 id="access-to-protected-resource">Access to protected resource <a class="direct-link" href="#access-to-protected-resource">#</a></h3>
 <p>This is an example on how to access protected resource by including access token in the headers:</p>
 <pre><code>curl -X GET \
   http://localhost:1999/api/sample \
   -H 'cache-control: no-cache' \
   -H 'x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390'
 </code></pre>
-<h2 id="source-code">Source code <a class="direct-link" href="#source-code" aria-hidden="true">#</a></h2>
+<h2 id="source-code">Source code <a class="direct-link" href="#source-code">#</a></h2>
 <p><strong>Session Authentication Success Handler</strong></p>
 <pre><code>public class SessionAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
