@@ -1931,6 +1931,32 @@ public class PasswordEncoderConfig {
 	</entry>
 	
 	<entry>
+		<title>Fun times with gcc, musl and Alpine linux v3.8</title>
+		<link href="https://myurl.com/fun-times-with-gcc-musl-alpine-linux/"/>
+		<updated>2019-01-06T00:00:00-00:00</updated>
+		<id>https://myurl.com/fun-times-with-gcc-musl-alpine-linux/</id>
+		<content type="html">&lt;p&gt;This article is a quick start guide on how to debug issues with &lt;a href=&quot;https://github.com/VirgilSecurity/virgil-crypto&quot;&gt;Virgil crypto library&lt;/a&gt;, Alpine linux v3.8 and Open JDK 1.8.&lt;/p&gt;
+&lt;p&gt;Recently, I was testing crypto libraries to see which one might be a best fit for my pet project. One of these libraries was Virgil. After couple of hours of work, I had something that can be tested out. Everything worked fine on macOS and windows dev machines, but things started breaking once I&#39;ve deployed code to Amazon.&lt;/p&gt;
+&lt;p&gt;Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Further analysis showed that Virgil copies precompiled &lt;code&gt;.SO&lt;/code&gt; to tmp directory: &lt;code&gt;/tmp/virgil_crypto_java3134786209685506331.so&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Logical step was to list shared libraries &lt;code&gt;virgl_crypto_java&lt;/code&gt; by executing the following command: &lt;code&gt;ldd /tmp/virgil_crypto_java3134786209685506331.so&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Output of the ldd command:&lt;br&gt;
+&lt;code&gt;ldd (0x7f47776a8000)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;libstdc++.so.6 =&amp;gt; /usr/lib/libstdc++.so.6 (0x7f4776fbc000)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;libm.so.6 =&amp;gt; ldd (0x7f47776a8000)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;libgcc_s.so.1 =&amp;gt; /usr/lib/libgcc_s.so.1 (0x7f4776daa000)&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;libc.so.6 =&amp;gt; ldd (0x7f47776a8000)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Error loading shared library ld-linux-x86-64.so.2: No such file or directory (needed by /tmp/virgil_crypto_java3134786209685506331.so)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Let&#39;s look at the following error message: &lt;code&gt;Error loading shared library ld-linux-x86-64.so.2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We need to figure out where &lt;code&gt;ld-linux-x86-64.so.2&lt;/code&gt; file resides and in order to see that we will use &lt;a href=&quot;https://pkgs.alpinelinux.org/contents?file=ld-linux-x86-64.so.2&amp;amp;path=&amp;amp;name=&amp;amp;branch=&amp;amp;repo=&amp;amp;arch=&quot;&gt;the following website&lt;/a&gt;. We can see that &lt;code&gt;libc6-compat&lt;/code&gt; needs to be installed and we will do that by executing the following command: &lt;code&gt;apk add libc6-compat&lt;/code&gt; or by adding the following command to the docker file: &lt;code&gt;RUN apk add --update --no-cache libc6-compat&lt;/code&gt;. By default &lt;code&gt;libc6-compat&lt;/code&gt; is not installed because Alpine Linux comes with musl compiler by default.&lt;/p&gt;
+&lt;p&gt;So everything should work now? Right? Well, yes, it worked until Alpine Linux &lt;a href=&quot;https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6&quot;&gt;released patch&lt;/a&gt; that broke the code. I&#39;ve decided to check the Alpine linux git repository and stumbled upon the following commit - &lt;a href=&quot;https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6&quot;&gt;click here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The problem with this commit is that previosly &lt;code&gt;/lib64&lt;/code&gt; was just a symlink to &lt;code&gt;lib&lt;/code&gt; directory. With this commit this is no longer true.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ld-linux-x86-64.so.2&lt;/code&gt; is copied to &lt;code&gt;/lib64&lt;/code&gt; and not to &lt;code&gt;lib&lt;/code&gt; thus breaking the code. Quick and dirty solution was to copy &lt;code&gt;ld-linux-x86-64.so.2&lt;/code&gt; to &lt;code&gt;lib&lt;/code&gt; (e.g. &lt;code&gt;cp /lib64/ld-linux-x86-64.so.2 /lib/&lt;/code&gt;).&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
 		<title>Microservices - Durable request reply</title>
 		<link href="https://myurl.com/microservices-durable-request-reply/"/>
 		<updated>2020-01-29T00:00:00-00:00</updated>

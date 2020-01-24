@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun times with gcc, musl and Alpine linux v3.8</title>
+    <meta name="Description" content="Fun times with gcc, musl and Alpine linux v3.8.">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
+    
+    <link href="/css/fonts.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <header>
+      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Articles</a></li><li class="nav-item"><a href="/art/">Art</a></li><li class="nav-item"><a href="/hire-me/">Have a project in mind? Let&#39;s talk!</a></li></ul>
+    </header>
+    <main class="tmpl-post">
+      <h1>Fun times with gcc, musl and Alpine linux v3.8</h1>
+
+<p>This article is a quick start guide on how to debug issues with <a href="https://github.com/VirgilSecurity/virgil-crypto">Virgil crypto library</a>, Alpine linux v3.8 and Open JDK 1.8.</p>
+<p>Recently, I was testing crypto libraries to see which one might be a best fit for my pet project. One of these libraries was Virgil. After couple of hours of work, I had something that can be tested out. Everything worked fine on macOS and windows dev machines, but things started breaking once I've deployed code to Amazon.</p>
+<p>Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):</p>
+<p><code>org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI</code></p>
+<p>Further analysis showed that Virgil copies precompiled <code>.SO</code> to tmp directory: <code>/tmp/virgil_crypto_java3134786209685506331.so</code>.</p>
+<p>Logical step was to list shared libraries <code>virgl_crypto_java</code> by executing the following command: <code>ldd /tmp/virgil_crypto_java3134786209685506331.so</code></p>
+<p>Output of the ldd command:<br>
+<code>ldd (0x7f47776a8000)</code><br>
+<code>libstdc++.so.6 =&gt; /usr/lib/libstdc++.so.6 (0x7f4776fbc000)</code><br>
+<code>libm.so.6 =&gt; ldd (0x7f47776a8000)</code><br>
+<code>libgcc_s.so.1 =&gt; /usr/lib/libgcc_s.so.1 (0x7f4776daa000)</code><br>
+<code>libc.so.6 =&gt; ldd (0x7f47776a8000)</code></p>
+<p><code>Error loading shared library ld-linux-x86-64.so.2: No such file or directory (needed by /tmp/virgil_crypto_java3134786209685506331.so)</code></p>
+<p>Let's look at the following error message: <code>Error loading shared library ld-linux-x86-64.so.2</code>.</p>
+<p>We need to figure out where <code>ld-linux-x86-64.so.2</code> file resides and in order to see that we will use <a href="https://pkgs.alpinelinux.org/contents?file=ld-linux-x86-64.so.2&amp;path=&amp;name=&amp;branch=&amp;repo=&amp;arch=">the following website</a>. We can see that <code>libc6-compat</code> needs to be installed and we will do that by executing the following command: <code>apk add libc6-compat</code> or by adding the following command to the docker file: <code>RUN apk add --update --no-cache libc6-compat</code>. By default <code>libc6-compat</code> is not installed because Alpine Linux comes with musl compiler by default.</p>
+<p>So everything should work now? Right? Well, yes, it worked until Alpine Linux <a href="https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6">released patch</a> that broke the code. I've decided to check the Alpine linux git repository and stumbled upon the following commit - <a href="https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6">click here</a>.</p>
+<p>The problem with this commit is that previosly <code>/lib64</code> was just a symlink to <code>lib</code> directory. With this commit this is no longer true.</p>
+<p><code>ld-linux-x86-64.so.2</code> is copied to <code>/lib64</code> and not to <code>lib</code> thus breaking the code. Quick and dirty solution was to copy <code>ld-linux-x86-64.so.2</code> to <code>lib</code> (e.g. <code>cp /lib64/ld-linux-x86-64.so.2 /lib/</code>).</p>
+
+
+<p><a href="/">← Home</a></p>
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://svlada.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </main>
+    <footer></footer>
+    <!-- Current page: /fun-times-with-gcc-musl-alpine-linux/ -->
+  </body>
+</html>
