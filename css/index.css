@@ -1,6 +1,6 @@
 
 * {
-  font-family: "Computer Modern", serif;
+  
 }
 
 :root {
@@ -36,7 +36,7 @@ img {
 }
 p,
 .tmpl-post li {
-  line-height: 1.45;
+  line-height: 1.55;
   font-size: 1.04rem;
 }
 a[href] {
@@ -71,6 +71,12 @@ pre,
 code {
   font-family: "Computer Modern Typewriter", Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace;
   line-height: 1.5;
+  font-size: 0.90rem;
+  background-color: #f6f6f6;
+}
+
+code {
+  padding: 2px 4px;
 }
 
 pre {
@@ -222,6 +228,17 @@ a[href].tag:visited {
   font-style: normal;
   margin-left: .1em;
 }
+
+.tmpl-post a[href] {
+  border-bottom: 1px solid #222;
+  color: #222;
+  text-decoration: none;
+}
+
+.tmpl-post a.direct-link {
+  border-bottom: none;
+}
+
 a[href].direct-link,
 a[href].direct-link:visited {
   color: transparent;

@@ -6,7 +6,7 @@
     <title>Fun times with gcc, musl and Alpine linux v3.8</title>
     <meta name="Description" content="Fun times with gcc, musl and Alpine linux v3.8.">
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
     
     <link href="/css/fonts.css" rel="stylesheet">
@@ -22,16 +22,14 @@
 <p>This article is a quick start guide on how to debug issues with <a href="https://github.com/VirgilSecurity/virgil-crypto">Virgil crypto library</a>, Alpine linux v3.8 and Open JDK 1.8.</p>
 <p>Recently, I was testing crypto libraries to see which one might be the best fit for my pet project. One of these libraries was Virgil. After a couple of hours of work, I had something that can be tested out. Everything worked fine on macOS and windows dev machines, but things started breaking once I've deployed code to Amazon.</p>
 <p>Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):</p>
-<p><code>org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI</code></p>
+<pre><code>org.springframework.web.util.NestedServletException: Handler dispatch failed; 
+nested exception is java.lang.NoClassDefFoundError: 
+Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI
+</code></pre>
 <p>Further analysis showed that Virgil copies precompiled <code>.SO</code> to tmp directory: <code>/tmp/virgil_crypto_java3134786209685506331.so</code>.</p>
 <p>Logical step was to list shared libraries <code>virgl_crypto_java</code> by executing the following command: <code>ldd /tmp/virgil_crypto_java3134786209685506331.so</code></p>
-<p>Output of the ldd command:<br>
-<code>ldd (0x7f47776a8000)</code><br>
-<code>libstdc++.so.6 =&gt; /usr/lib/libstdc++.so.6 (0x7f4776fbc000)</code><br>
-<code>libm.so.6 =&gt; ldd (0x7f47776a8000)</code><br>
-<code>libgcc_s.so.1 =&gt; /usr/lib/libgcc_s.so.1 (0x7f4776daa000)</code><br>
-<code>libc.so.6 =&gt; ldd (0x7f47776a8000)</code></p>
-<p><code>Error loading shared library ld-linux-x86-64.so.2: No such file or directory (needed by /tmp/virgil_crypto_java3134786209685506331.so)</code></p>
+<p>Output of the ldd command:</p>
+<pre class="language-bash"><code class="language-bash"><span class="highlight-line">ldd <span class="token punctuation">(</span>0x7f47776a8000<span class="token punctuation">)</span></span><br><span class="highlight-line">libstdc++.so.6 <span class="token operator">=</span><span class="token operator">></span> /usr/lib/libstdc++.so.6 <span class="token punctuation">(</span>0x7f4776fbc000<span class="token punctuation">)</span></span><br><span class="highlight-line">libm.so.6 <span class="token operator">=</span><span class="token operator">></span> ldd <span class="token punctuation">(</span>0x7f47776a8000<span class="token punctuation">)</span></span><br><span class="highlight-line">libgcc_s.so.1 <span class="token operator">=</span><span class="token operator">></span> /usr/lib/libgcc_s.so.1 <span class="token punctuation">(</span>0x7f4776daa000<span class="token punctuation">)</span></span><br><span class="highlight-line">libc.so.6 <span class="token operator">=</span><span class="token operator">></span> ldd <span class="token punctuation">(</span>0x7f47776a8000<span class="token punctuation">)</span></span><br><span class="highlight-line">Error loading shared library ld-linux-x86-64.so.2: No such <span class="token function">file</span> or directory <span class="token punctuation">(</span>needed by /tmp/virgil_crypto_java3134786209685506331.so<span class="token punctuation">)</span></span></code></pre>
 <p>Let's look at the following error message: <code>Error loading shared library ld-linux-x86-64.so.2</code>.</p>
 <p>We need to figure out where <code>ld-linux-x86-64.so.2</code> file resides. That can be checked <a href="https://pkgs.alpinelinux.org/contents?file=ld-linux-x86-64.so.2&amp;path=&amp;name=&amp;branch=&amp;repo=&amp;arch=">the following website</a>. We can see that <code>libc6-compat</code> needs to be installed and we will do that by executing the following command: <code>apk add libc6-compat</code> or by adding the following command to the docker file: <code>RUN apk add --update --no-cache libc6-compat</code>. By default <code>libc6-compat</code> is not installed because Alpine Linux comes with musl compiler by default.</p>
 <p>So everything should work now? Right? Well, yes, it worked until Alpine Linux <a href="https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6">released patch</a> that broke the code. I've decided to check the Alpine linux git repository and stumbled upon the following commit - <a href="https://git.alpinelinux.org/aports/commit/?id=7b32fee49798e36cb5a7dfde30183f9717472cf6">click here</a>.</p>

@@ -6,7 +6,7 @@
     <title>Spring Session Tutorial - JDBC Configuration</title>
     <meta name="Description" content="This article will show you how to configure and use Spring Session to manage session data in your web application.">
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/prism-base16-monokai.dark.css">
+    <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
     <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
     
     <link href="/css/fonts.css" rel="stylesheet">
@@ -55,67 +55,10 @@
 <h3 id="project-setup"><a name="project-setup" id="project-setup">Project setup</a> <a class="direct-link" href="#project-setup">#</a></h3>
 <p>Include <code>spring-session-core</code> and <code>spring-session-jdbc</code> in your <code>pom.xml</code> file.</p>
 <p><strong>Maven dependencies</strong></p>
-<pre><code>&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-session-jdbc&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
-  &lt;artifactId&gt;spring-session-core&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>jdbc<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span></span><br><span class="highlight-line"><span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></span><br><span class="highlight-line"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>core<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span></span><br><span class="highlight-line"><span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></span></code></pre>
 <p><strong>Spring security configuration</strong></p>
 <p>The following class shows how to configure REST API security with the Spring Session:</p>
-<pre><code>@Configuration
-@EnableWebSecurity
-@EnableJdbcHttpSession
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
-    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    private final AuthenticationProvider provider;
-
-    @Autowired
-    public WebSecurityConfig(final RestAuthenticationEntryPoint restAuthenticationEntryPoint,
-        final AuthenticationProvider provider) {
-        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
-        this.provider = provider;
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .exceptionHandling()
-            .authenticationEntryPoint(restAuthenticationEntryPoint)
-            .and()
-                .formLogin()
-                .successHandler(new SessionAuthenticationSuccessHandler())
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-            .and()
-                .logout()
-                    .defaultLogoutSuccessHandlerFor(new HttpStatusReturningLogoutSuccessHandler(),
-                        new AntPathRequestMatcher(&quot;/logout&quot;))
-            .and()
-                .authorizeRequests()
-                    .antMatchers(&quot;/login&quot;).permitAll()
-                    .antMatchers(&quot;/h2/**&quot;).permitAll()
-            .and()
-                .authorizeRequests().antMatchers(&quot;/api/**&quot;).hasAnyRole(&quot;ADMIN&quot;)
-            .and()
-                .requestCache()
-                .requestCache(new NullRequestCache());
-    }
-
-    @Bean
-    public HttpSessionIdResolver httpSessionIdResolver() {
-        return new HeaderHttpSessionIdResolver(&quot;X-Auth-Token&quot;);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(provider);
-    }
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Configuration</span></span><br><span class="highlight-line"><span class="token annotation punctuation">@EnableWebSecurity</span></span><br><span class="highlight-line"><span class="token annotation punctuation">@EnableJdbcHttpSession</span></span><br><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebSecurityConfig</span>  <span class="token keyword">extends</span> <span class="token class-name">WebSecurityConfigurerAdapter</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">RestAuthenticationEntryPoint</span> restAuthenticationEntryPoint<span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">AuthenticationProvider</span> provider<span class="token punctuation">;</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Autowired</span></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token class-name">WebSecurityConfig</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name">RestAuthenticationEntryPoint</span> restAuthenticationEntryPoint<span class="token punctuation">,</span></span><br><span class="highlight-line">        <span class="token keyword">final</span> <span class="token class-name">AuthenticationProvider</span> provider<span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        <span class="token keyword">this</span><span class="token punctuation">.</span>restAuthenticationEntryPoint <span class="token operator">=</span> restAuthenticationEntryPoint<span class="token punctuation">;</span></span><br><span class="highlight-line">        <span class="token keyword">this</span><span class="token punctuation">.</span>provider <span class="token operator">=</span> provider<span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Override</span></span><br><span class="highlight-line">    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span><span class="token class-name">HttpSecurity</span> http<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        http</span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">csrf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">disable</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">exceptionHandling</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">authenticationEntryPoint</span><span class="token punctuation">(</span>restAuthenticationEntryPoint<span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">formLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">successHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SessionAuthenticationSuccessHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">failureHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleUrlAuthenticationFailureHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                    <span class="token punctuation">.</span><span class="token function">defaultLogoutSuccessHandlerFor</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HttpStatusReturningLogoutSuccessHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span></span><br><span class="highlight-line">                        <span class="token keyword">new</span> <span class="token class-name">AntPathRequestMatcher</span><span class="token punctuation">(</span><span class="token string">"/logout"</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                    <span class="token punctuation">.</span><span class="token function">antMatchers</span><span class="token punctuation">(</span><span class="token string">"/login"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">permitAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                    <span class="token punctuation">.</span><span class="token function">antMatchers</span><span class="token punctuation">(</span><span class="token string">"/h2/**"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">permitAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">antMatchers</span><span class="token punctuation">(</span><span class="token string">"/api/**"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hasAnyRole</span><span class="token punctuation">(</span><span class="token string">"ADMIN"</span><span class="token punctuation">)</span></span><br><span class="highlight-line">            <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">requestCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">                <span class="token punctuation">.</span><span class="token function">requestCache</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NullRequestCache</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Bean</span></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token class-name">HttpSessionIdResolver</span> <span class="token function">httpSessionIdResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">HeaderHttpSessionIdResolver</span><span class="token punctuation">(</span><span class="token string">"X-Auth-Token"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Override</span></span><br><span class="highlight-line">    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span><span class="token class-name">AuthenticationManagerBuilder</span> auth<span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        auth<span class="token punctuation">.</span><span class="token function">authenticationProvider</span><span class="token punctuation">(</span>provider<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p>The following list describes the WebSecurityConfig elements:</p>
 <ol>
 <li><strong>RestAuthenticationEntryPoint</strong> - The entry point implementation which returns 401 status, indicating that the request requires authentication.</li>
@@ -126,78 +69,21 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 <h3 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command">#</a></h3>
 <h3 id="user-login">User login <a class="direct-link" href="#user-login">#</a></h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
-<pre><code>curl -X POST \
-  http://localhost:1999/login \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
-  -F username=test \
-  -F password=test
-</code></pre>
+<pre class="language-shell"><code class="language-shell"><span class="highlight-line"><span class="token function">curl</span> -X POST <span class="token punctuation">\</span></span><br><span class="highlight-line">  http://localhost:1999/login <span class="token punctuation">\</span></span><br><span class="highlight-line">  -H <span class="token string">'cache-control: no-cache'</span> <span class="token punctuation">\</span></span><br><span class="highlight-line">  -H <span class="token string">'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'</span> <span class="token punctuation">\</span></span><br><span class="highlight-line">  -F <span class="token assign-left variable">username</span><span class="token operator">=</span>test <span class="token punctuation">\</span></span><br><span class="highlight-line">  -F <span class="token assign-left variable">password</span><span class="token operator">=</span>test</span></code></pre>
 <h3 id="user-logout">User logout <a class="direct-link" href="#user-logout">#</a></h3>
-<pre><code>curl -X GET \
-  http://localhost:1999/logout \
-  -H 'cache-control: no-cache' \
-  -H 'x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc'
-</code></pre>
+<pre class="language-shell"><code class="language-shell"><span class="highlight-line"><span class="token function">curl</span> -X GET <span class="token punctuation">\</span></span><br><span class="highlight-line">  http://localhost:1999/logout <span class="token punctuation">\</span></span><br><span class="highlight-line">  -H <span class="token string">'cache-control: no-cache'</span> <span class="token punctuation">\</span></span><br><span class="highlight-line">  -H <span class="token string">'x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc'</span></span></code></pre>
 <h3 id="access-to-protected-resource">Access to protected resource <a class="direct-link" href="#access-to-protected-resource">#</a></h3>
 <p>This is an example on how to access protected resource by including access token in the headers:</p>
-<pre><code>curl -X GET \
-  http://localhost:1999/api/sample \
-  -H 'cache-control: no-cache' \
-  -H 'x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390'
-</code></pre>
+<pre class="language-shell"><code class="language-shell"><span class="highlight-line"><span class="token function">curl</span> -X GET <span class="token punctuation">\</span></span><br><span class="highlight-line">  http://localhost:1999/api/sample <span class="token punctuation">\</span></span><br><span class="highlight-line">  -H <span class="token string">'cache-control: no-cache'</span> <span class="token punctuation">\</span></span><br><span class="highlight-line">  -H <span class="token string">'x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390'</span></span></code></pre>
 <h2 id="source-code">Source code <a class="direct-link" href="#source-code">#</a></h2>
 <p><strong>Session Authentication Success Handler</strong></p>
-<pre><code>public class SessionAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-        Authentication authentication) throws IOException, ServletException {
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SessionAuthenticationSuccessHandler</span> <span class="token keyword">implements</span> <span class="token class-name">AuthenticationSuccessHandler</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Override</span></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onAuthenticationSuccess</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span></span><br><span class="highlight-line">        <span class="token class-name">Authentication</span> authentication<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        response<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">.</span>SC_OK<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>RestAuthenticationEntryPoint</strong></p>
-<pre><code>@Component
-public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    @Override
-    public void commence(HttpServletRequest httpServletRequest,
-        HttpServletResponse httpServletResponse, AuthenticationException e)
-        throws IOException, ServletException {
-
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, &quot;Unauthorized&quot;);
-    }
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Component</span></span><br><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RestAuthenticationEntryPoint</span> <span class="token keyword">implements</span> <span class="token class-name">AuthenticationEntryPoint</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Override</span></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">commence</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> httpServletRequest<span class="token punctuation">,</span></span><br><span class="highlight-line">        <span class="token class-name">HttpServletResponse</span> httpServletResponse<span class="token punctuation">,</span> <span class="token class-name">AuthenticationException</span> e<span class="token punctuation">)</span></span><br><span class="highlight-line">        <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">        httpServletResponse<span class="token punctuation">.</span><span class="token function">sendError</span><span class="token punctuation">(</span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">.</span>SC_UNAUTHORIZED<span class="token punctuation">,</span> <span class="token string">"Unauthorized"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>AuthenticationProviderConfig</strong></p>
-<pre><code>@Configuration
-public class AuthenticationProviderConfig {
-    private final PasswordEncoder passwordEncoder;
-    private final UserDetailsService userDetailsService;
-
-    public AuthenticationProviderConfig(PasswordEncoder passwordEncoder,
-        @Qualifier(&quot;databaseUserDetailsService&quot;) UserDetailsService userDetailsService) {
-        this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
-    }
-
-    @Bean
-    public AuthenticationProvider databaseAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        return daoAuthenticationProvider;
-    }
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Configuration</span></span><br><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AuthenticationProviderConfig</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">PasswordEncoder</span> passwordEncoder<span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">UserDetailsService</span> userDetailsService<span class="token punctuation">;</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token class-name">AuthenticationProviderConfig</span><span class="token punctuation">(</span><span class="token class-name">PasswordEncoder</span> passwordEncoder<span class="token punctuation">,</span></span><br><span class="highlight-line">        <span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"databaseUserDetailsService"</span><span class="token punctuation">)</span> <span class="token class-name">UserDetailsService</span> userDetailsService<span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        <span class="token keyword">this</span><span class="token punctuation">.</span>passwordEncoder <span class="token operator">=</span> passwordEncoder<span class="token punctuation">;</span></span><br><span class="highlight-line">        <span class="token keyword">this</span><span class="token punctuation">.</span>userDetailsService <span class="token operator">=</span> userDetailsService<span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Bean</span></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token class-name">AuthenticationProvider</span> <span class="token function">databaseAuthenticationProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        <span class="token class-name">DaoAuthenticationProvider</span> daoAuthenticationProvider <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DaoAuthenticationProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">        daoAuthenticationProvider<span class="token punctuation">.</span><span class="token function">setUserDetailsService</span><span class="token punctuation">(</span>userDetailsService<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">        daoAuthenticationProvider<span class="token punctuation">.</span><span class="token function">setPasswordEncoder</span><span class="token punctuation">(</span>passwordEncoder<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">        <span class="token keyword">return</span> daoAuthenticationProvider<span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>Password encoder configuration</strong></p>
-<pre><code>@Configuration
-public class PasswordEncoderConfig {
-    @Bean
-    protected PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(11);
-    }
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Configuration</span></span><br><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PasswordEncoderConfig</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Bean</span></span><br><span class="highlight-line">    <span class="token keyword">protected</span> <span class="token class-name">PasswordEncoder</span> <span class="token function">passwordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BCryptPasswordEncoder</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 
 
 <p><a href="/">← Home</a></p>
