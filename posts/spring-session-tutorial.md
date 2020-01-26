@@ -56,7 +56,7 @@ Include ``spring-session-core`` and ``spring-session-jdbc`` in your ``pom.xml`` 
 
 **Maven dependencies**
 
-```
+```java
 <dependency>
   <groupId>org.springframework.session</groupId>
   <artifactId>spring-session-jdbc</artifactId>
@@ -71,7 +71,7 @@ Include ``spring-session-core`` and ``spring-session-jdbc`` in your ``pom.xml`` 
 
 The following class shows how to configure REST API security with the Spring Session:
 
-```
+```java
 @Configuration
 @EnableWebSecurity
 @EnableJdbcHttpSession
@@ -136,7 +136,7 @@ The following list describes the WebSecurityConfig elements:
 
 Check for the ```x-auth-token``` in response and include it with the subsequent requests.
 
-```
+```shell
 curl -X POST \
   http://localhost:1999/login \
   -H 'cache-control: no-cache' \
@@ -147,7 +147,7 @@ curl -X POST \
 
 ### User logout
 
-```
+```shell
 curl -X GET \
   http://localhost:1999/logout \
   -H 'cache-control: no-cache' \
@@ -158,7 +158,7 @@ curl -X GET \
 
 This is an example on how to access protected resource by including access token in the headers:
 
-```
+```shell
 curl -X GET \
   http://localhost:1999/api/sample \
   -H 'cache-control: no-cache' \
@@ -169,7 +169,7 @@ curl -X GET \
 
 **Session Authentication Success Handler**
 
-```
+```java
 public class SessionAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -181,7 +181,7 @@ public class SessionAuthenticationSuccessHandler implements AuthenticationSucces
 
 **RestAuthenticationEntryPoint**
 
-```
+```java
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
@@ -195,7 +195,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 ```
 
 **AuthenticationProviderConfig**
-```
+
+```java
 @Configuration
 public class AuthenticationProviderConfig {
     private final PasswordEncoder passwordEncoder;
@@ -219,7 +220,7 @@ public class AuthenticationProviderConfig {
 
 **Password encoder configuration**
 
-```
+```java
 @Configuration
 public class PasswordEncoderConfig {
     @Bean

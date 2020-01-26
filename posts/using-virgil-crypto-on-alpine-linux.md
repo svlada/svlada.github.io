@@ -17,20 +17,26 @@ Recently, I was testing crypto libraries to see which one might be the best fit 
 
 Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):
 
-`org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI`
+```
+org.springframework.web.util.NestedServletException: Handler dispatch failed; 
+nested exception is java.lang.NoClassDefFoundError: 
+Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI
+```
 
 Further analysis showed that Virgil copies precompiled `.SO` to tmp directory: `/tmp/virgil_crypto_java3134786209685506331.so`. 
 
 Logical step was to list shared libraries `virgl_crypto_java` by executing the following command: `ldd /tmp/virgil_crypto_java3134786209685506331.so`
 
 Output of the ldd command:
-`ldd (0x7f47776a8000)`
-`libstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x7f4776fbc000)`
-`libm.so.6 => ldd (0x7f47776a8000)`
-`libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x7f4776daa000)`
-`libc.so.6 => ldd (0x7f47776a8000)`
 
-`Error loading shared library ld-linux-x86-64.so.2: No such file or directory (needed by /tmp/virgil_crypto_java3134786209685506331.so)`
+```bash
+ldd (0x7f47776a8000)
+libstdc++.so.6 => /usr/lib/libstdc++.so.6 (0x7f4776fbc000)
+libm.so.6 => ldd (0x7f47776a8000)
+libgcc_s.so.1 => /usr/lib/libgcc_s.so.1 (0x7f4776daa000)
+libc.so.6 => ldd (0x7f47776a8000)
+Error loading shared library ld-linux-x86-64.so.2: No such file or directory (needed by /tmp/virgil_crypto_java3134786209685506331.so)
+```
 
 Let's look at the following error message: `Error loading shared library ld-linux-x86-64.so.2`. 
 

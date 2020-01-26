@@ -17,7 +17,7 @@ permalink: "step-builder-pattern/index.html"
 5. <a title="Eclipse plug-in" href="#eclipse-plugin">Eclipse plug-in</a>
 
 ### <a name="introduction" id="introduction">Introduction</a>
-I have recently decided to use Amazon SES API in order to be able to send emails to my [Microservices Weekly](http://microservicesweekly.com) subscribers. What prompted me to use Amazon SES API is its price. It's really cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a [small wrapper](https://github.com/svlada/ziggy) around their API.
+I've recently decided to use Amazon SES API in order to send emails to my [Microservices Weekly](http://microservicesweekly.com) subscribers. What prompted me to use Amazon SES API is its price. It's really cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a [small wrapper](https://github.com/svlada/ziggy) around their API.
 
 To make long story short, the main purpose here is to share my experience with a less well-known derivate of Builder pattern - Step Builder pattern.
 
@@ -46,9 +46,8 @@ Since the Step Builder pattern is a creational design pattern, let's focus on it
 
 Example of API usage is shown below:
 
-```
-Email email = 
-Email.builder().from(EmailAddress.of("Microservices Weekly <mw@microservicesweekly.com>"))
+```java
+Email email = Email.builder().from(EmailAddress.of("Microservices Weekly <mw@microservicesweekly.com>"))
 	.to(EmailAddress.of("svlada@gmail.com"))
 	.subject(Subject.of("Subject"))
 	.content(Content.of("Test email"))
@@ -72,7 +71,7 @@ Rules of thumb for implementation:
 ### <a name="source-code" id="source-code">Source code</a>
 Complete Example of Step by Step builder pattern:
 
-```
+```java
 public class Email {
 	private EmailAddress from;
 	private List<EmailAddress> to;
@@ -196,4 +195,4 @@ public class Email {
 
 So far, I haven't found a plug-in for Eclipse that provides Step Builder code generation feature.
 
-I have created a github repository with the intention of creating an Eclipse plug-in that will provide support for Step Builder pattern generation: https://github.com/svlada/alyx
+I've created a github repository with the intention of creating an Eclipse plug-in that will provide support for Step Builder pattern generation: https://github.com/svlada/alyx
