@@ -1,23 +1,36 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microservices - Durable request reply</title>
-    <meta name="Description" content="Interprocess communication in distributed systems using Kafka.">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
-    <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
-    
-    <link href="/css/fonts.css" rel="stylesheet">
 
-  </head>
-  <body>
-    <header>
-      <ul class="nav"><li class="nav-item"><a href="/">Home</a></li><li class="nav-item"><a href="/posts/">Articles</a></li><li class="nav-item"><a href="/art/">Art</a></li><li class="nav-item"><a href="/hire-me/">Have a project in mind? Let&#39;s talk!</a></li></ul>
-    </header>
-    <main class="tmpl-post">
-      <h1>Microservices - Durable request reply</h1>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microservices - Durable request reply</title>
+  <meta name="Description" content="Interprocess communication in distributed systems using Kafka.">
+  <link href="/css/fonts.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
+  <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28773758-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-28773758-1');
+  </script>
+</head>
+
+<body>
+  <header>
+    <ul class="nav"><li class="nav-item"><a
+          href="/">Home</a></li><li class="nav-item"><a
+          href="/posts/">Articles</a></li><li class="nav-item"><a
+          href="/art/">Art</a></li><li class="nav-item"><a
+          href="/hire-me/">Have a project in mind? Let&#39;s talk!</a></li></ul>
+  </header>
+  <main class="tmpl-post" >
+    <h1>Microservices - Durable request reply</h1>
 
 <p>The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given through the article are based on the Kafka, which is distributed commit log implementation. <a href="https://www.reactivemanifesto.org/glossary">Reactive Manifesto</a> explains the main characteristics of a message-driven architecture.</p>
 <p>The following system design diagram shows a bird's-eye view of the exemplary microservice architecture:</p>
@@ -191,5 +204,5 @@ s.setAttribute('data-timestamp', +new Date());
     </main>
     <footer></footer>
     <!-- Current page: /microservices-durable-request-reply/ -->
-  </body>
+</body>
 </html>
