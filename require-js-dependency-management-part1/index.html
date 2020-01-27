@@ -37,8 +37,7 @@
 <h3 id="basic-structure"><a name="t1" id="t1">Basic structure</a> <a class="direct-link" href="#basic-structure">#</a></h3>
 <p><strong>STEP 1 - How to structure RequireJS project</strong></p>
 <p>This is our sample RequireJS project structure.</p>
-<pre>
- |-[wepapp]
+<pre><code> |-[wepapp]
  |--- [build]
  |----- r.js
  |----- build.js
@@ -51,37 +50,25 @@
  |----- app-built.js*
  |-index.html
  |-readme.md
-</pre>
+</code></pre>
 <p>Build scripts and RequireJS optimization tool r.js are inside <code>[build]</code> directory.</p>
 <p>Application code reside in <code>[webapp/js/app]</code> directory. This is place where you should place all of your /Model/View/Router/Template code.</p>
 <p>Libraries like jQuery, Backbone, Handlebars and others are inside <code>[webapp/js/lib]</code> directory.</p>
 <p>Application config and main entry point is <code>[webapp/js/app.js]</code></p>
 <h4 id="step-2---how-to-include-requirejs">STEP 2 - How to include RequireJS <a class="direct-link" href="#step-2---how-to-include-requirejs">#</a></h4>
 <p>Your <code>[webapp/index.html]</code> should look like this:</p>
-<pre><code> &lt;html&gt;
- &lt;head&gt;&lt;/head&gt;
- &lt;body&gt;
- &lt;div id=&quot;test&quot;&gt;Some sample content&lt;/div&gt;
- &lt;script data-main=&quot;js/app.js&quot; src=&quot;js/lib/require.js&quot;&gt;&lt;/script&gt;
- &lt;/body&gt;
- &lt;/html&gt;
+<pre><code>&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+	&lt;div id=&quot;test&quot;&gt;Some sample content&lt;/div&gt;
+ 	&lt;script data-main=&quot;js/app.js&quot; src=&quot;js/lib/require.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <p>Attribute <code>[data-main=&quot;js/app.js&quot;]</code> is entry point of our application. This means that RequireJS will first load <code>[js/app.js]</code> after initialization.</p>
 <p><strong>STEP 3 - How to configure RequireJS</strong></p>
 <p>Open your <code>[webapp/js/app.js]</code> file.</p>
-<pre><code> requirejs.config({
- 	baseUrl: 'js/lib',
- 	paths: {
- 		app: '../app',
- 		jquery: 'jquery'
- 	}
- 
- });
- 
- requirejs(['jquery'], function($) {
- 	console.log($('#test'));
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> requirejs<span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">{</span></span><br><span class="highlight-line"> 	baseUrl<span class="token operator">:</span> <span class="token string">'js/lib'</span><span class="token punctuation">,</span></span><br><span class="highlight-line"> 	paths<span class="token operator">:</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		app<span class="token operator">:</span> <span class="token string">'../app'</span><span class="token punctuation">,</span></span><br><span class="highlight-line"> 		jquery<span class="token operator">:</span> <span class="token string">'jquery'</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">requirejs</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'jquery'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">$</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#test'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p><code>[baseUrl: 'js/lib']</code> - RequireJS loads code realative to directory specified in baseUrl. By default baseUrl is set to the same directory as data-main. If you dont specify data-main attribute and baseUrl property is not present in RequireJS config, than default path is directory that contains html page which include RequireJS library.<br>
 <a href="http://requirejs.org/docs/api.html#config-baseUrl">base url</a></p>
 <p>Attribute <code>[paths]</code> <a href="http://requirejs.org/docs/api.html#config-paths">paths config</a></p>
@@ -89,27 +76,15 @@
 <p>require() and define() are most important concepts in RequireJS.</p>
 <p><strong>define()</strong> - Used for module definition.<br>
 Consists of module wrapper, dependency list and definition function.</p>
-<pre><code>define(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
- 	var Module = function(value) {
- 		this.property = value;
- 	}
- 	return (Module);
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"><span class="token function">define</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dependency1'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'dependency2'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'dependency3'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">dependency1<span class="token punctuation">,</span> dependency2<span class="token punctuation">,</span> dependency3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">Module</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>property <span class="token operator">=</span> value<span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>Module<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p><strong>require()</strong> - Used for dependency loading<br>
 Consists of public api, dependency list, callback function</p>
-<pre><code> requirejs(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
- 	// You can use your imported module here
- 	var instance = dependency1;
- 	var constructorFunction = new dependency2();
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token function">requirejs</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dependency1'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'dependency2'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'dependency3'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">dependency1<span class="token punctuation">,</span> dependency2<span class="token punctuation">,</span> dependency3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 	<span class="token comment">// You can use your imported module here</span></span><br><span class="highlight-line"> 	<span class="token keyword">var</span> instance <span class="token operator">=</span> dependency1<span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token keyword">var</span> constructorFunction <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">dependency2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <h3 id="prototypal-inheritance-and-require.js"><a name="t2" id="t2">Prototypal inheritance and Require.js</a> <a class="direct-link" href="#prototypal-inheritance-and-require.js">#</a></h3>
 <p>Skip to <a href="#source">complete source code</a>.</p>
 <p>With RequireJS you can organize your modules in separate files with ease.</p>
 <p>Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.</p>
-<pre>
- |-[wepapp]
+<pre><code> |-[wepapp]
  |--- [build]
  |----- r.js
  |----- build.js
@@ -126,152 +101,26 @@ Consists of public api, dependency list, callback function</p>
  |----- app-built.js*
  |-index.html
  |-readme.md
-</pre>
+</code></pre>
 <p>With RequireJS you can provide function or object in return statement. We are going to use this feature to retrieve constructor functions for our object.</p>
 <p>With RequireJS you can import and use external dependencies inside your module. We are going to use this feature to achieve prototypal inheritance in RequireJS.</p>
 <p>Category is collection of our Items. <code>[webapp/js/app/category/category.js]</code></p>
-<pre><code> &quot;use strict&quot;;
- 
- define(function() {
- 	
- 	var Category = function() {
- 		this.name = 'Default name';
- 		this.category = 'Default category';
- 		this.items = [];		
- 	}
- 
- 	Category.prototype.showItems = function() {
- 		for (var i = 0, len = this.items.length; i &lt; len; i++) {
- 			console.log(this.items[i]);
- 		}
- 	}
- 
- 	Category.prototype.addItem = function(item) {
- 		this.items.push(item);
- 	}
- 
- 	return (Category);
- 
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token string">"use strict"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">define</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 	</span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">Category</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Default name'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>category <span class="token operator">=</span> <span class="token string">'Default category'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>		</span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">Category</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">showItems</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> len <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 			console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token punctuation">}</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">Category</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">addItem</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>Category<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p>Item is base object. <code>[webapp/js/app/category/item.js]</code></p>
-<pre><code> &quot;use strict&quot;;
- 
- define(function() {
- 
- 	var Item = function(itemName) {
- 		this.name = itemName;
- 	}
- 
- 	Item.prototype.getItemName = function() {
- 		return this.name;
- 	}
- 
- 	return (Item);
- 
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token string">"use strict"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">define</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">Item</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">itemName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> itemName<span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">Item</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getItemName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>Item<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p><strong>[webapp/js/app/category/specialItem.js]</strong></p>
 <p>SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency<strong>['./item'].</strong><br>
 Now Item object is available for use in our new SpecialItem module.</p>
-<pre><code> &quot;use strict&quot;;
- 
- define(['./item'], function(Item) {
- 
- 	var SpecialItem = function(itemName) {
- 		this.color = 'Default color';
- 		this.weigth = 'Default weigth';
- 		Item.call(this, itemName);
- 	}
- 
- 	SpecialItem.prototype = new Item;
- 	SpecialItem.prototype.constructor = SpecialItem;
- 
- 	return (SpecialItem);
- 
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token string">"use strict"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">define</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'./item'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">Item</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">SpecialItem</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">itemName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token string">'Default color'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>weigth <span class="token operator">=</span> <span class="token string">'Default weigth'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token function">Item</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> itemName<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> SpecialItem<span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>SpecialItem<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
  <h1><a name="source" id="source">Source code listing</a></h1>
 <p>[webapp/js/app.js]</p>
-<pre><code> requirejs.config({
- 	baseUrl: 'js/lib',
- 	paths: {
- 		app: '../app',
- 		jquery: 'jquery'
- 	}
- });
- 
- requirejs(['jquery', 'app/category/category', 'app/category/item', 'app/category/specialItem'],
- function($, Category, Item, SpecialItem) {
- 	var c1 = new Category();
- 	c1.items.push(new Item('RequireJS in Action'));
- 	c1.items.push(new Item('Javascript Good parts'));
- 	c1.items.push(new Item('Some book'));
- 	c1.items.push(new SpecialItem('Special promotion book'));
- 	c1.showItems();
- 	console.log(c1);
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> requirejs<span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">{</span></span><br><span class="highlight-line"> 	baseUrl<span class="token operator">:</span> <span class="token string">'js/lib'</span><span class="token punctuation">,</span></span><br><span class="highlight-line"> 	paths<span class="token operator">:</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		app<span class="token operator">:</span> <span class="token string">'../app'</span><span class="token punctuation">,</span></span><br><span class="highlight-line"> 		jquery<span class="token operator">:</span> <span class="token string">'jquery'</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">requirejs</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'jquery'</span><span class="token punctuation">,</span> <span class="token string">'app/category/category'</span><span class="token punctuation">,</span> <span class="token string">'app/category/item'</span><span class="token punctuation">,</span> <span class="token string">'app/category/specialItem'</span><span class="token punctuation">]</span><span class="token punctuation">,</span></span><br><span class="highlight-line"> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">$<span class="token punctuation">,</span> Category<span class="token punctuation">,</span> Item<span class="token punctuation">,</span> SpecialItem</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 	<span class="token keyword">var</span> c1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	c1<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token string">'RequireJS in Action'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	c1<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token string">'Javascript Good parts'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	c1<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token string">'Some book'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	c1<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">(</span><span class="token string">'Special promotion book'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	c1<span class="token punctuation">.</span><span class="token function">showItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p>[webapp/js/app/category/category.js]</p>
-<pre><code> &quot;use strict&quot;;
- 
- define(function() {
- 	
- 	var Category = function() {
- 		this.name = 'Default name';
- 		this.category = 'Default category';
- 		this.items = [];		
- 	}
- 
- 	Category.prototype.showItems = function() {
- 		for (var i = 0, len = this.items.length; i &lt; len; i++) {
- 			console.log(this.items[i]);
- 		}
- 	}
- 
- 	Category.prototype.addItem = function(item) {
- 		this.items.push(item);
- 	}
- 
- 	return (Category);
- 
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token string">"use strict"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">define</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 	</span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">Category</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Default name'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>category <span class="token operator">=</span> <span class="token string">'Default category'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>		</span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">Category</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">showItems</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> len <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 			console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token punctuation">}</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">Category</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">addItem</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>Category<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p>[webapp/js/app/category/item.js]</p>
-<pre><code> &quot;use strict&quot;;
- 
- define(function() {
- 
- 	var Item = function(itemName) {
- 		this.name = itemName;
- 	}
- 
- 	Item.prototype.getItemName = function() {
- 		return this.name;
- 	}
- 
- 	return (Item);
- 
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token string">"use strict"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">define</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">Item</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">itemName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> itemName<span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">Item</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getItemName</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>Item<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p>[webapp/js/app/category/specialItem.js]</p>
-<pre><code> &quot;use strict&quot;;
- 
- define(['./item'], function(Item) {
- 
- 	var SpecialItem = function(itemName) {
- 		this.color = 'Default color';
- 		this.weigth = 'Default weigth';
- 		Item.call(this, itemName);
- 	}
- 
- 	SpecialItem.prototype = new Item;
- 	SpecialItem.prototype.constructor = SpecialItem;
- 
- 	return (SpecialItem);
- 
- });
-</code></pre>
+<pre class="language-js"><code class="language-js"><span class="highlight-line"> <span class="token string">"use strict"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token function">define</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'./item'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">Item</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">var</span> <span class="token function-variable function">SpecialItem</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">itemName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token string">'Default color'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token keyword">this</span><span class="token punctuation">.</span>weigth <span class="token operator">=</span> <span class="token string">'Default weigth'</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 		<span class="token function">Item</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> itemName<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token punctuation">}</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> 	<span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> SpecialItem<span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> 	<span class="token keyword">return</span> <span class="token punctuation">(</span>SpecialItem<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"> </span><br><span class="highlight-line"> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span></code></pre>
 <p>In next part of Require.js series I will talk about r.js RequireJS optimization and build tool.</p>
 <p><a href="https://twitter.com/#!/svlada">Follow me on Twitter</a></p>
 <p><strong>References</strong></p>
