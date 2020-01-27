@@ -20,16 +20,16 @@ It doesn't have to be that way. Working with a small team of skilled engineers i
 **Services**
 
 - Designing software solutions for small-mid size business.
-- Maintainace of legacy systems and handling technical debt.
+- Maintainance of legacy systems and handling technical debt.
 - Development of custom HIPAA compliant web applications.
 
 **Technological Expertise**
 
-- Designing infrastracture and deployment processes on AWS.
+- Designing infrastructure and deployment processes on AWS.
 - Development of business logic using JVM languages: Kotlin and Java.
 - Development of business logic using Elixir. 
-- Designing well optimized relational model on Postgres database.
-- Building user interface using React.
+- Designing well-optimized relational model on the Postgres database.
+- Building a user interface using React.
 
 **Currently available for hire**
 
