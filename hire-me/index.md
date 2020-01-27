@@ -11,11 +11,11 @@ date: 2015-01-01
 
 Need a custom software solution for your business? Please send me an [email](mailto:svlada@gmail.com) to discuss your project needs.
 
-I can help you get started and build simple and well tested solution that work, together, with your team.
+I can help you get started on the road of building simple and well-tested working solution, together, with your team.
 
-The main pain point when outsourcing project is finding appropriate agency. Well established agencies are backed with sales and marketing people. Usually, you get overcharged for undelivered promises. Technical excellence is only part of the equation. Leading customer from point A to point B requires a team to be fully invested and dedicated to understanding the project needs.
+The main pain point when outsourcing a project is finding an appropriate agency. Well established agencies are backed with sales and marketing people. Usually, you get overcharged for undelivered promises. Technical excellence is only part of the equation. Leading customers from point A to point B requires a fully dedicated team with an understanding of core domain logic.
 
-It doesn't have to be that way. Working with the small team of skilled engineers is completely different experience. Transparent, honest and open process can get your poject carefully designed and delivered.
+It doesn't have to be that way. Working with a small team of skilled engineers is a completely different experience. The transparent, honest and open process can get your project carefully designed and delivered.
 
 **Services**
 
