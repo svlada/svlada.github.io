@@ -36,7 +36,8 @@ RequireJS is well defined and standardized. While we wait ES-Harmony to knock on
 **STEP 1 - How to structure RequireJS project**
 
 This is our sample RequireJS project structure.
-<pre>
+
+```
  |-[wepapp]
  |--- [build]
  |----- r.js
@@ -50,7 +51,7 @@ This is our sample RequireJS project structure.
  |----- app-built.js*
  |-index.html
  |-readme.md
-</pre>
+```
 
 Build scripts and RequireJS optimization tool r.js are inside `[build]` directory.
  
@@ -65,13 +66,13 @@ Application config and main entry point is `[webapp/js/app.js]`
 Your `[webapp/index.html]` should look like this:
  
 ```
- <html>
- <head></head>
- <body>
- <div id="test">Some sample content</div>
- <script data-main="js/app.js" src="js/lib/require.js"></script>
- </body>
- </html>
+<html>
+<head></head>
+<body>
+	<div id="test">Some sample content</div>
+ 	<script data-main="js/app.js" src="js/lib/require.js"></script>
+</body>
+</html>
 ```
  
 Attribute `[data-main="js/app.js"]` is entry point of our application. This means that RequireJS will first load `[js/app.js]` after initialization.
@@ -80,7 +81,7 @@ Attribute `[data-main="js/app.js"]` is entry point of our application. This mean
 
 Open your `[webapp/js/app.js]` file.
  
-```
+```js
  requirejs.config({
  	baseUrl: 'js/lib',
  	paths: {
@@ -107,7 +108,7 @@ require() and define() are most important concepts in RequireJS.
 **define()** - Used for module definition.
 Consists of module wrapper, dependency list and definition function.
  
-```
+```js
 define(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
  	var Module = function(value) {
  		this.property = value;
@@ -119,7 +120,7 @@ define(['dependency1', ['dependency2', ['dependency3'], function(dependency1, de
 **require()** - Used for dependency loading
 Consists of public api, dependency list, callback function
  
-```
+```js
  requirejs(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
  	// You can use your imported module here
  	var instance = dependency1;
@@ -135,7 +136,7 @@ With RequireJS you can organize your modules in separate files with ease.
  
 Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.
 
-<pre>
+```
  |-[wepapp]
  |--- [build]
  |----- r.js
@@ -153,7 +154,7 @@ Now we are going to add 3 object definitions to our project: Category, Item and 
  |----- app-built.js*
  |-index.html
  |-readme.md
-</pre>
+```
 
 With RequireJS you can provide function or object in return statement. We are going to use this feature to retrieve constructor functions for our object.
  
@@ -161,7 +162,7 @@ With RequireJS you can import and use external dependencies inside your module. 
  
 Category is collection of our Items. `[webapp/js/app/category/category.js]`
  
-```
+```js
  "use strict";
  
  define(function() {
@@ -189,7 +190,7 @@ Category is collection of our Items. `[webapp/js/app/category/category.js]`
   
 Item is base object. `[webapp/js/app/category/item.js]`
  
-```
+```js
  "use strict";
  
  define(function() {
@@ -212,7 +213,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency<strong>['./item'].</strong>
  Now Item object is available for use in our new SpecialItem module.
  
-```
+```js
  "use strict";
  
  define(['./item'], function(Item) {
@@ -235,7 +236,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  
  [webapp/js/app.js]
  
-```
+```js
  requirejs.config({
  	baseUrl: 'js/lib',
  	paths: {
@@ -258,7 +259,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  
  [webapp/js/app/category/category.js]
  
-```
+```js
  "use strict";
  
  define(function() {
@@ -286,7 +287,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  
  [webapp/js/app/category/item.js]
  
-```
+```js
  "use strict";
  
  define(function() {
@@ -306,7 +307,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  
  [webapp/js/app/category/specialItem.js]
  
-```
+```js
  "use strict";
  
  define(['./item'], function(Item) {
