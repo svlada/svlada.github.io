@@ -87,7 +87,12 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-batch/</loc>
+    <loc>https://myurl.com/tags/require-js/</loc>
+    <lastmod>2020-01-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/java/</loc>
     <lastmod>2020-01-27</lastmod>
   </url>
   
@@ -137,12 +142,12 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
+    <loc>https://myurl.com/tags/spring/</loc>
     <lastmod>2020-01-27</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/java/</loc>
+    <loc>https://myurl.com/tags/spring-batch/</loc>
     <lastmod>2020-01-27</lastmod>
   </url>
   
@@ -192,12 +197,12 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring/</loc>
-    <lastmod>2020-01-27</lastmod>
+    <loc>https://myurl.com/microservices-durable-request-reply/</loc>
+    <lastmod>2020-01-29</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/microservices-durable-request-reply/</loc>
-    <lastmod>2020-01-29</lastmod>
+    <loc>https://myurl.com/how-to-build-lightweight-api-with-kotlin-and-springboot/</loc>
+    <lastmod>2020-02-02</lastmod>
   </url>
 </urlset>

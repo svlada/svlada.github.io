@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>draft</title>
+  <meta name="Description" content="From zero to hero - How to build lightweight API infrastructure">
+  <link href="/css/fonts.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
+  <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28773758-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-28773758-1');
+  </script>
+</head>
+
+<body>
+  <header>
+    <ul class="nav"><li class="nav-item"><a
+          href="/">Home</a></li><li class="nav-item"><a
+          href="/posts/">Articles</a></li><li class="nav-item"><a
+          href="/art/">Art</a></li><li class="nav-item"><a
+          href="/hire-me/">Have a project in mind? Let&#39;s talk!</a></li></ul>
+  </header>
+  <main class="tmpl-post" >
+    <h1>draft</h1>
+
+<h2 id="introduction">Introduction <a class="direct-link" href="#introduction">#</a></h2>
+<p><strong>Target audience</strong> <em>for these series are junior developers that are fresh out of college. In my experience they are often lost in the beginning and don't know how to start. I hope that these series of posts will help them along the way</em>.</p>
+<p>This article is an opinionated guide for building lightweight APIs using Spring Boot and Kotlin. This is the first part of the series. Upcoming posts will include implementation details and working samples on Github.</p>
+<p>The API development on JVM is marketed as a heavyweight, dreadful process. Often, development using Java is compared to operating an armored fighting vehicle. In some cases, this is a correct statement. Big enterprises are using deprecated libraries, heavy-weight servers, and frameworks (e.g. IBM Websphere or IBM Portal). The decision to go with an enterprisey stack is job security. Hey, nobody got fired for choosing IBM.</p>
+<p>The reality is different. Many lightweight servers and frameworks are developed on top of JVM stack, enabling a team to develop busines features at a high pace. Unmatched security and performance benefits given by state-of-the-art JVM platform are hard to find in other ecosystems (e.g. Rails or Django).</p>
+<p>The following components are basic building blocks for any API:</p>
+<ol>
+<li>Web framework</li>
+<li>Centralized Logging</li>
+<li>Performance metrics and monitoring</li>
+<li>Error handling</li>
+<li>Resource design</li>
+<li>Documentation</li>
+<li>CI/CD</li>
+<li>Code versioning</li>
+<li>Semantic versioning</li>
+<li>Persistence layer</li>
+</ol>
+<p>The developer should try to keep code clean and simple by following by introducing:</p>
+<ol>
+<li>SOLID principles</li>
+<li>Clean architecture and modular application design</li>
+<li>Exception handling</li>
+</ol>
+<p>The following concepts are equaly important if you are into building microservices:</p>
+<ol>
+<li>API Gateway</li>
+<li>Service registration and discovery</li>
+<li>Dynamic routing and load balancing</li>
+<li>Circuit Breaker: Fault tolerance and resilience</li>
+<li>Distributed tracing</li>
+<li>Dynamic Configuration</li>
+<li>Inter-process communication</li>
+<li>Security</li>
+<li>Distributed Transactions</li>
+<li>Centralized logging</li>
+<li>Centralized metrics &amp; monitoring</li>
+</ol>
+<h2 id="basic-building-blocks">Basic building blocks <a class="direct-link" href="#basic-building-blocks">#</a></h2>
+<p>This section presents high-level overview of critical API components.</p>
+<h3 id="web-frameworks">Web frameworks <a class="direct-link" href="#web-frameworks">#</a></h3>
+<p>This sections shows only frameworks that are stable and ready for production use.</p>
+<p>The following is the list of battle tested JVM web frameworks. These ones can be used for critical production apps:</p>
+<ol>
+<li><strong>Spring boot</strong> - The most robust JVM framework available to date.</li>
+<li><strong>Dropwizard</strong> - Excellent lightweight stack for skilled teams. You'll need to implement a decend amount of &quot;glue&quot; code.</li>
+<li><strong>Micronaut</strong> - Good for serverless applications.</li>
+<li><strong>Vert.x</strong> - Event-driven framework with similar concepts found in NodeJS.</li>
+</ol>
+<p>For pet projects, you can test out a couple of pure kotlin that are yet to be proven in wild:</p>
+<ol>
+<li>http4k</li>
+<li>ktor</li>
+</ol>
+<p>Focus in these series is on Spring Boot as it's inevitable framework that's used by majority of companies.</p>
+<h3 id="code-versioning">Code versioning <a class="direct-link" href="#code-versioning">#</a></h3>
+<h3 id="resource-design">Resource design <a class="direct-link" href="#resource-design">#</a></h3>
+<h3 id="error-handling">Error handling <a class="direct-link" href="#error-handling">#</a></h3>
+<h3 id="centralized-logging">Centralized Logging <a class="direct-link" href="#centralized-logging">#</a></h3>
+<h3 id="performance-metrics-and-monitoring">Performance metrics and monitoring <a class="direct-link" href="#performance-metrics-and-monitoring">#</a></h3>
+<h3 id="persistence-layer">Persistence layer <a class="direct-link" href="#persistence-layer">#</a></h3>
+<h3 id="documentation">Documentation <a class="direct-link" href="#documentation">#</a></h3>
+<h3 id="ci%2Fcd">CI/CD <a class="direct-link" href="#ci%2Fcd">#</a></h3>
+<h3 id="semantic-versioning">Semantic versioning <a class="direct-link" href="#semantic-versioning">#</a></h3>
+<h2 id="code-guidelines">Code guidelines <a class="direct-link" href="#code-guidelines">#</a></h2>
+
+
+<p><a href="/">← Home</a></p>
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://svlada.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </main>
+    <footer></footer>
+    <!-- Current page: /how-to-build-lightweight-api-with-kotlin-and-springboot/ -->
+</body>
+</html>
