@@ -13,9 +13,9 @@ Need a custom software solution for your business? Please send me an [email](mai
 
 I can help you get started on the road of building simple and well-tested working solution, together, with your team.
 
-The major pain point of outsourcing a software project is finding an appropriate agency. Well established agencies are backed with sales and marketing people. Usually, you get overcharged for undelivered promises. Technical excellence is only part of the equation. Leading customers from point A to point B requires a dedicated team with an understanding of core domain logic.
+The major pain point of outsourcing a software project is finding an appropriate agency. Well established agencies are backed with sales and marketing people. Usually, you get overcharged for undelivered promises.
 
-It doesn't have to be that way. Working with a small team of skilled engineers is a completely different experience. When combined with careful and thoughtful design, transparent, honest and open communication is key for project success.
+It doesn't have to be that way. Working with a small team of skilled engineers is a completely different experience. Technical excellence is only part of the equation. Leading customers from point A to point B requires a dedicated team with an understanding of core domain logic. When combined with careful and thoughtful design, transparent, honest and open communication is key for project success.
 
 **Services**
 
