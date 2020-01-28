@@ -6,9 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Microservices - Durable request reply</title>
   <meta name="Description" content="Interprocess communication in distributed systems using Kafka.">
+  
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
   <link href="/css/fonts.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
+  <link rel="stylesheet" href="/css/index.css">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
   
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -117,12 +120,7 @@
 </blockquote>
 <p>Common use case is a need to commit business transaction against local database and reliably dispatch command to a Kafka broker. Command should be dispatched only if transaction suceeds. The following are possible approaches for tackling this problem:</p>
 <h3 id="use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context">Use KafkaProducer to send command to a broker inside of business logic transactional context <a class="direct-link" href="#use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context">#</a></h3>
-<pre><code>@Transactional
-fun businessTransaction() {
-  saveToDatabase()
-  dispatchCommandToKafka()
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Transactional</span></span><br><span class="highlight-line">fun <span class="token function">businessTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">saveToDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">  <span class="token function">dispatchCommandToKafka</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>Pros</strong></p>
 <ol>
 <li>Easy to implement.</li>
@@ -133,16 +131,7 @@ fun businessTransaction() {
 <li>Code is occuping expensive database connection for non-db work accross network.</li>
 </ol>
 <h3 id="use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context">Use KafkaProducer to send command to a broker outside of business logic transactional context <a class="direct-link" href="#use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context">#</a></h3>
-<pre><code>@Transactional
-fun businessTransaction() {
-  saveToDatabase()
-}
-
-fun methodA() {
-  saveToDatabase()
-  dispatchCommandToKafka()
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Transactional</span></span><br><span class="highlight-line">fun <span class="token function">businessTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">saveToDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">fun <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">saveToDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">  <span class="token function">dispatchCommandToKafka</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>Pros</strong></p>
 <ol>
 <li>Easy to implement.</li>

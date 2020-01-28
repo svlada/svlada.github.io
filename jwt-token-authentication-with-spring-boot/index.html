@@ -6,9 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JWT Authentication Tutorial - An example using Spring Boot</title>
   <meta name="Description" content="This article will guide you on how you can implement JWT authentication with Spring Boot.">
+  
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
   <link href="/css/fonts.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
+  <link rel="stylesheet" href="/css/index.css">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
   
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -41,79 +44,40 @@
 </ol>
 <h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction">#</a></h3>
 <p>This article will guide you on how you can implement JWT authentication with Spring Boot.</p>
-<p>We will cover the following two scenarios:</p>
+<p>The following are basic flows for implementing API security:</p>
 <ol>
 <li>Ajax Authentication</li>
 <li>JWT Token Authentication</li>
 </ol>
 <h3 id="pre-requisites"><a name="pre-requisites" id="pre-requisites">PRE-requisites</a> <a class="direct-link" href="#pre-requisites">#</a></h3>
 <p>Please check out the sample code/project from the following GitHub repository: <a href="https://github.com/svlada/springboot-security-jwt">https://github.com/svlada/springboot-security-jwt</a> before going further reading the article.</p>
-<p>This project is using H2 in-memory database to store sample user information. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (<code>/jwt-demo/src/main/resources/data.sql</code>).</p>
+<p>This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (<code>/jwt-demo/src/main/resources/data.sql</code>).</p>
 <p>Overall project structure is shown below:</p>
-<pre><code>+---main
-|   +---java
-|   |   \---com
-|   |       \---svlada
-|   |           +---common
-|   |           +---entity
-|   |           +---profile
-|   |           |   \---endpoint
-|   |           +---security
-|   |           |   +---auth
-|   |           |   |   +---ajax
-|   |           |   |   \---jwt
-|   |           |   |       +---extractor
-|   |           |   |       \---verifier
-|   |           |   +---config
-|   |           |   +---endpoint
-|   |           |   +---exceptions
-|   |           |   \---model
-|   |           |       \---token
-|   |           \---user
-|   |               +---repository
-|   |               \---service
-|   \---resources
-|       +---static
-|       \---templates
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>main</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>java</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>com</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>svlada</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>common</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>entity</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>profile</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>endpoint</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>security</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>auth</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>ajax</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>jwt</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>       <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>extractor</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>verifier</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>config</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>endpoint</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>exceptions</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>model</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>token</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           \<span class="token operator">--</span><span class="token operator">-</span>user</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>               <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>repository</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>               \<span class="token operator">--</span><span class="token operator">-</span>service</span><br><span class="highlight-line"><span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>resources</span><br><span class="highlight-line"><span class="token operator">|</span>       <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span><span class="token keyword">static</span></span><br><span class="highlight-line"><span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>templates</span></code></pre>
 <h3 id="ajax-authentication"><a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a> <a class="direct-link" href="#ajax-authentication">#</a></h3>
 <p>When we talk about Ajax authentication we usually refer to process where user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.</p>
 <p>In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.</p>
 <p>Following is the list of components that we'll implement:</p>
 <ol>
-<li><code>AjaxLoginProcessingFilter</code></li>
-<li><code>AjaxAuthenticationProvider</code></li>
-<li><code>AjaxAwareAuthenticationSuccessHandler</code></li>
-<li><code>AjaxAwareAuthenticationFailureHandler</code></li>
-<li><code>RestAuthenticationEntryPoint</code></li>
-<li><code>WebSecurityConfig</code></li>
+<li>AjaxLoginProcessingFilter</li>
+<li>AjaxAuthenticationProvider</li>
+<li>AjaxAwareAuthenticationSuccessHandler</li>
+<li>AjaxAwareAuthenticationFailureHandler</li>
+<li>RestAuthenticationEntryPoint</li>
+<li>WebSecurityConfig</li>
 </ol>
 <p>Before we get to the details of the implementation, let's look at the request/response authentication flow.</p>
 <p><strong>Ajax authentication request example</strong></p>
-<p>The Authentication API allows user to pass in credentials in order to receive authentication token.</p>
+<p>The Authentication API allows user to provide credentials to exchange for authentication token.</p>
 <p>In our example, client initiates authentication process by invoking Authentication API endpoint (<code>/api/auth/login</code>).</p>
 <p>Raw HTTP request:</p>
-<pre><code>POST /api/auth/login HTTP/1.1
-Host: localhost:9966
-X-Requested-With: XMLHttpRequest
-Content-Type: application/json
-Cache-Control: no-cache
-
-{
-    &quot;username&quot;: &quot;svlada@gmail.com&quot;,
-    &quot;password&quot;: &quot;test1234&quot;
-}
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">POST <span class="token operator">/</span>api<span class="token operator">/</span>auth<span class="token operator">/</span>login HTTP<span class="token operator">/</span><span class="token number">1.1</span></span><br><span class="highlight-line"><span class="token class-name">Host</span><span class="token operator">:</span> localhost<span class="token operator">:</span><span class="token number">9966</span></span><br><span class="highlight-line"><span class="token class-name">X</span><span class="token operator">-</span><span class="token class-name">Requested</span><span class="token operator">-</span><span class="token class-name">With</span><span class="token operator">:</span> <span class="token class-name">XMLHttpRequest</span></span><br><span class="highlight-line"><span class="token class-name">Content</span><span class="token operator">-</span><span class="token class-name">Type</span><span class="token operator">:</span> application<span class="token operator">/</span>json</span><br><span class="highlight-line"><span class="token class-name">Cache</span><span class="token operator">-</span><span class="token class-name">Control</span><span class="token operator">:</span> no<span class="token operator">-</span>cache</span><br><span class="highlight-line"></span><br><span class="highlight-line"><span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token string">"username"</span><span class="token operator">:</span> <span class="token string">"svlada@gmail.com"</span><span class="token punctuation">,</span></span><br><span class="highlight-line">    <span class="token string">"password"</span><span class="token operator">:</span> <span class="token string">"test1234"</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p>CURL:</p>
-<pre><code>curl -X POST -H &quot;X-Requested-With: XMLHttpRequest&quot; -H &quot;Content-Type: application/json&quot; -H &quot;Cache-Control: no-cache&quot; -d '{
-    &quot;username&quot;: &quot;svlada@gmail.com&quot;,
-    &quot;password&quot;: &quot;test1234&quot;
-}' &quot;http://localhost:9966/api/auth/login&quot;
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> POST <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">"X-Requested-With: XMLHttpRequest"</span> <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">"Cache-Control: no-cache"</span> <span class="token operator">-</span>d '<span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token string">"username"</span><span class="token operator">:</span> <span class="token string">"svlada@gmail.com"</span><span class="token punctuation">,</span></span><br><span class="highlight-line">    <span class="token string">"password"</span><span class="token operator">:</span> <span class="token string">"test1234"</span></span><br><span class="highlight-line"><span class="token punctuation">}</span>' <span class="token string">"http://localhost:9966/api/auth/login"</span></span></code></pre>
 <p><strong>Ajax authentication response example</strong></p>
 <p>If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:</p>
 <ol>
-<li>HTTP status &quot;200 OK&quot;</li>
+<li>HTTP status <em>200 OK</em></li>
 <li>Signed JWT Access and Refresh tokens are included in the response body</li>
 </ol>
 <p><strong>JWT Access token</strong> - used to authenticate against protected API resources. It must be set in <code>X-Authorization</code> header.</p>
@@ -132,7 +96,7 @@ Cache-Control: no-cache
 <p>Claims</p>
 <pre class="language-json"><code class="language-json"><span class="highlight-line"><span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token property">"sub"</span><span class="token operator">:</span> <span class="token string">"svlada@gmail.com"</span><span class="token punctuation">,</span></span><br><span class="highlight-line">  <span class="token property">"scopes"</span><span class="token operator">:</span> <span class="token punctuation">[</span></span><br><span class="highlight-line">    <span class="token string">"ROLE_ADMIN"</span><span class="token punctuation">,</span></span><br><span class="highlight-line">    <span class="token string">"ROLE_PREMIUM_MEMBER"</span></span><br><span class="highlight-line">  <span class="token punctuation">]</span><span class="token punctuation">,</span></span><br><span class="highlight-line">  <span class="token property">"iss"</span><span class="token operator">:</span> <span class="token string">"http://svlada.com"</span><span class="token punctuation">,</span></span><br><span class="highlight-line">  <span class="token property">"iat"</span><span class="token operator">:</span> <span class="token number">1472033308</span><span class="token punctuation">,</span></span><br><span class="highlight-line">  <span class="token property">"exp"</span><span class="token operator">:</span> <span class="token number">1472034208</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p>Signature (base64 encoded)</p>
-<pre class="language-bash"><code class="language-bash"><span class="highlight-line">41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ</span></code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token number">41</span>rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3<span class="token operator">-</span>rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ</span></code></pre>
 <p><strong>JWT Refresh Token</strong></p>
 <p>Refresh token is long-lived token used to request new Access tokens. It's expiration time is greater than expiration time of Access token.</p>
 <p>In this tutorial we'll use <code>jti</code> claim to maintain list of blacklisted or revoked tokens. JWT ID(<code>jti</code>) claim is defined by <a href="https://tools.ietf.org/html/rfc7519#section-4.1.7">RFC7519</a> with purpose to uniquely identify individual Refresh token.</p>
@@ -201,17 +165,12 @@ In case of failure authentication  <code>AjaxLoginProcessingFilter#unsuccessfulA
 <p>It's important to note that authorization claims will be included with the Access token. Why is this important? Well, let's say that authorization claims (e.g user privileges in the database) are changed during the life time of Access token. Those changes will not become effective until new Access token is issued. In most cases this is not big issue, because Access tokens are short-lived. Otherwise go with the opaque token pattern.</p>
 <p>Before we get to the details of the implementation, let's look the sample request to protected API resource.</p>
 <p><strong>Signed request to protected API resource</strong></p>
-<p>Following pattern should be used when sending access tokens: <code>&lt;header-name&gt; Bearer &lt;access_token&gt;</code>.</p>
+<p>The following pattern is used for access tokens: <code>&lt;header-name&gt; Bearer &lt;access_token&gt;</code>.</p>
 <p>In our example for header name (<code>&lt;header-name&gt;</code>) we are using <code>X-Authorization</code>.</p>
 <p>Raw HTTP request:</p>
-<pre><code>GET /api/me HTTP/1.1
-Host: localhost:9966
-X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w
-Cache-Control: no-cache
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">GET <span class="token operator">/</span>api<span class="token operator">/</span>me HTTP<span class="token operator">/</span><span class="token number">1.1</span></span><br><span class="highlight-line"><span class="token class-name">Host</span><span class="token operator">:</span> localhost<span class="token operator">:</span><span class="token number">9966</span></span><br><span class="highlight-line"><span class="token class-name">X</span><span class="token operator">-</span><span class="token class-name">Authorization</span><span class="token operator">:</span> <span class="token class-name">Bearer</span> eyJhbGciOiJIUzUxMiJ9<span class="token punctuation">.</span>eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9<span class="token punctuation">.</span><span class="token class-name">Y9BR7q3f1npsSEYubz</span><span class="token operator">-</span>u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w</span><br><span class="highlight-line"><span class="token class-name">Cache</span><span class="token operator">-</span><span class="token class-name">Control</span><span class="token operator">:</span> no<span class="token operator">-</span>cache</span></code></pre>
 <p>CURL:</p>
-<pre><code>curl -X GET -H &quot;X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w&quot; -H &quot;Cache-Control: no-cache&quot; &quot;http://localhost:9966/api/me&quot;
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> GET <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">"X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w"</span> <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">"Cache-Control: no-cache"</span> <span class="token string">"http://localhost:9966/api/me"</span></span></code></pre>
 <p>Let's see the implementation details. Following are components we need to implement JWT Authentication:</p>
 <ol>
 <li>JwtTokenAuthenticationProcessingFilter</li>

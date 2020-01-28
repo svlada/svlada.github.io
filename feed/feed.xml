@@ -346,33 +346,32 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
 		<link href="https://myurl.com/require-js-dependency-management-part1/"/>
 		<updated>2013-12-23T00:00:00-00:00</updated>
 		<id>https://myurl.com/require-js-dependency-management-part1/</id>
-		<content type="html">&lt;p&gt;In this article I will explain, how to make cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
-&lt;p&gt;Jump to the &lt;a href=&quot;#source-code&quot;&gt;#source-code&lt;/a&gt; and skip following errata on how to proxy Ajax requests.&lt;/p&gt;
+		<content type="html">&lt;p&gt;This article provide information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
+&lt;p&gt;Jump to the &lt;a href=&quot;#source-code&quot;&gt;#source-code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Usual scenario looks like this:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Client send ajax request to server&lt;/li&gt;
+&lt;li&gt;The client sends ajax request to the server&lt;/li&gt;
 &lt;li&gt;Your server forwards request to external/remote server&lt;/li&gt;
-&lt;li&gt;Waiting on response from remote server&lt;/li&gt;
+&lt;li&gt;Waiting on response from a remote server&lt;/li&gt;
 &lt;li&gt;Parse and process response from remote server&lt;/li&gt;
-&lt;li&gt;Send response back to client&lt;/li&gt;
+&lt;li&gt;Send response back tothe  lient&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;First we shall check if client request is XmlHttpRequest using Symfony 2 built in method&lt;/p&gt;
+&lt;p&gt;First, check if client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; $request-&amp;gt;isXmlHttpRequest()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;step-1%3A-client-code&quot;&gt;STEP 1: Client code &lt;a class=&quot;direct-link&quot; href=&quot;#step-1%3A-client-code&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;Client code is quite simple.&lt;/p&gt;
-&lt;p&gt;You need to craft Ajax request in following way.&lt;/p&gt;
+&lt;p&gt;The following are the steps for creating Ajax request.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Specify rest url on your server for handling cross-domain ajax requests.&lt;code&gt;url: &amp;quot;&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Specify rest url on server for handling cross-domain ajax requests.&lt;code&gt;url: &amp;quot;&amp;quot;&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Wrap request data&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;We need some data in order to create curl request on server-side.&lt;/p&gt;
 &lt;p&gt;For this example you need to send object with following properties to your server.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;     restUrl: &amp;quot;external-api-url&amp;quot;, // Your target url on remote server
-     method: &amp;quot;POST&amp;quot;, // Type of request you want to issue to remote server
-     params: { 
-         action: &amp;quot;getFriendsList&amp;quot; // Parameters you are sending to remote server
-     }
+&lt;pre&gt;&lt;code&gt;    restUrl: &amp;quot;external-api-url&amp;quot;, // Your target url on remote server
+    method: &amp;quot;POST&amp;quot;, // Type of request you want to issue to remote server
+    params: { 
+        action: &amp;quot;getFriendsList&amp;quot; // Parameters you are sending to remote server
+    }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;step-2%3A-forward-request-to-remote-server&quot;&gt;STEP 2: Forward request to remote server &lt;a class=&quot;direct-link&quot; href=&quot;#step-2%3A-forward-request-to-remote-server&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This step is bit tricky.&lt;/p&gt;
@@ -385,32 +384,29 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
  $contentType = $request-&amp;gt;request-&amp;gt;get(&#39;contentType&#39;); // Content-type
  ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You need to create curl request and set parameters you have recieved from client.&lt;/p&gt;
+&lt;p&gt;Create curl request and set parameters that you&#39;ve got from thes client.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt; &amp;lt;?php
-     // Initialize curl handle
-     $ch = curl_init(); 
-     
-     // Set request url
-     curl_setopt($ch, CURLOPT_URL, $restUrl); 
-     
-     // TRUE to include the header in the output.
-     curl_setopt($ch, CURLOPT_HEADER, true); 
-     
-     // A custom request method to use instead of &amp;quot;GET&amp;quot; or &amp;quot;HEAD&amp;quot; when doing a HTTP request.  
-     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); 
-     if ($params != null) {
-         // The full data to post in a HTTP &amp;quot;POST&amp;quot; operation.
-         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-     }
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    // Initialize curl handle
+    $ch = curl_init();  
+    // Set request url
+    curl_setopt($ch, CURLOPT_URL, $restUrl); 
+    // TRUE to include the header in the output.
+    curl_setopt($ch, CURLOPT_HEADER, true);  
+    // A custom request method to use instead of &amp;quot;GET&amp;quot; or &amp;quot;HEAD&amp;quot; when doing a HTTP request.  
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); 
+    if ($params != null) {
+        // The full data to post in a HTTP &amp;quot;POST&amp;quot; operation.
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+    }
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
  ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I strongly suggest to read php manual in order to get familiar with the curl configuration: &lt;a href=&quot;http://php.net/manual/en/function.curl-setopt.php&quot;&gt;http://php.net/manual/en/function.curl-setopt.php&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;You have enough data to send request to remote server. After executing curl handle, response from remote server is stored in $response variable.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
-     $response = curl_exec($ch);
-     curl_close($ch);
+    $response = curl_exec($ch);
+    curl_close($ch);
  ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You have basic setup. Now we are going to add cookie support to our ajax proxy.&lt;/p&gt;
@@ -422,49 +418,48 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
 &lt;h3 id=&quot;how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot;&gt;How to get cookies from Symfony2 request and set mutplie cookies to Curl? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-from-symfony2-request-and-set-mutplie-cookies-to-curl%3F&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;We need to extract multiple cookies from Symfony 2 request object and set them to curl handle.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
-     // Get all cookies from Symfony request object
-     $requestCookies = $request-&amp;gt;cookies-&amp;gt;all(); 
-     
-     // Prepare and set multiple cookies to curl handle
-     $cookieArray = array();
-     foreach ($requestCookies as $cookieName =&amp;gt; $cookieValue) {
-         $cookieArray[] = &amp;quot;{$cookieName}={$cookieValue}&amp;quot;;
-     }
- 
-     // Be sure to set whitespace after &#39;; &#39; when creating cookie string
-     $cookie_string = implode(&#39;; &#39;, $cookieArray);
-     curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
+    // Get all cookies from Symfony request object
+    $requestCookies = $request-&amp;gt;cookies-&amp;gt;all(); 
+    // Prepare and set multiple cookies to curl handle
+    $cookieArray = array();
+    foreach ($requestCookies as $cookieName =&amp;gt; $cookieValue) {
+        $cookieArray[] = &amp;quot;{$cookieName}={$cookieValue}&amp;quot;;
+    }
+    // Be sure to set whitespace after &#39;; &#39; when creating cookie string
+    $cookie_string = implode(&#39;; &#39;, $cookieArray);
+    curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
 ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot;&gt;How to get cookies Curl response and set multiple cookies to Symfony response? &lt;a class=&quot;direct-link&quot; href=&quot;#how-to-get-cookies-curl-response-and-set-multiple-cookies-to-symfony-response%3F&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Remmember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl http response.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php    
-     // Get header and response data from curl response
-     list($headers, $response) = explode(&amp;quot;\r\n\r\n&amp;quot;,$response,2);
-     // We are using regex to parse cookies from curl response
-     preg_match_all(&#39;/Set-Cookie: (.*)\b/&#39;, $headers, $cookies);
-     // Store cookies
-     $cookies = $cookies[1];
+    // Get header and response data from curl response
+    list($headers, $response) = explode(&amp;quot;\r\n\r\n&amp;quot;,$response,2);
+    // We are using regex to parse cookies from curl response
+    preg_match_all(&#39;/Set-Cookie: (.*)\b/&#39;, $headers, $cookies);
+    // Store cookies
+    $cookies = $cookies[1];
 ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Raw cookies are parsed and stored in cookie array. Then each cookie need to be converted to Symfony Cookie object and injected to Symfony response headers.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
-     foreach($cookies as $rawCookie) {
-         $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
-         $value = $cookie-&amp;gt;getValue();
-         if (!empty($value)) {
-             $value = str_replace(&#39; &#39;, &#39;+&#39;, $value);
-         }
-         $customCookie = new Cookie($cookie-&amp;gt;getName(), $value, $cookie-&amp;gt;getExpiresTime()==null?0:$cookie-&amp;gt;getExpiresTime(), $cookie-&amp;gt;getPath());
-         $response-&amp;gt;headers-&amp;gt;setCookie($customCookie);
+    foreach($cookies as $rawCookie) {
+        $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
+        $value = $cookie-&amp;gt;getValue();
+            if (!empty($value)) {
+                $value = str_replace(&#39; &#39;, &#39;+&#39;, $value);
+            }
+        $customCookie = new Cookie($cookie-&amp;gt;getName(), $value, 
+            $cookie-&amp;gt;getExpiresTime()==null?0:$cookie-&amp;gt;getExpiresTime(), $cookie-&amp;gt;getPath());
+        $response-&amp;gt;headers-&amp;gt;setCookie($customCookie);
      }
  ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;FINAL NOTICE:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Close and store session data before initializing curl handle or you can run into deadlock.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
-     session_write_close();
-     $ch = curl_init();
+    session_write_close();
+    $ch = curl_init();
 ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;What could happen if you forgot to close session?&lt;/p&gt;
@@ -472,24 +467,7 @@ Now Item object is available for use in our new SpecialItem module.&lt;/p&gt;
 &lt;p&gt;PHP script S1 create/sends curl POST request to script S2 on same Apache server/PHP Enviorment. If page S1 and S2 share same session, script S2 will not start executing until end of script S1 lifetime. But script S1 is waiting on response from script S2. This is point where deadlock happen. The default session handler locks the session file for the duration of the page request.&lt;/p&gt;
 &lt;p&gt;&lt;a id=&quot;source-code&quot; name=&quot;source-code&quot;&gt;Complete source code listing for ajax proxy&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Client sample code&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; function sendAjaxRequest(){
-     $.ajax({
-         type: &amp;quot;POST&amp;quot;,
-         dataType: &#39;json&#39;,
-         url: &amp;quot;&amp;quot;,
-         data: {
-         	restUrl : &amp;quot;/external-api-url/&amp;quot;,
-         	method: &#39;POST&#39;,
-             params: {
-             	action: &amp;quot;getFriendList&amp;quot;
-             }
-         },
-         success: function(data, textStatus, jqXHR) {
-             ...
- 		}
- 	});
- }
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sendAjaxRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;     $&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;ajax&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         type&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         dataType&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;json&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         url&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         data&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         	restUrl &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/external-api-url/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         	method&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;POST&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;             params&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;             	action&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;getFriendList&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;             &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;         &lt;span class=&quot;token function-variable function&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;data&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; textStatus&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; jqXHR&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;             &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt; 		&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt; 	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Server proxy code&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 namespace Proxy\Bundle\ProxyBundle\Controller;
@@ -777,79 +755,40 @@ namespace Proxy\Bundle\ProxyBundle\Controller;
 &lt;/ol&gt;
 &lt;h3 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article will guide you on how you can implement JWT authentication with Spring Boot.&lt;/p&gt;
-&lt;p&gt;We will cover the following two scenarios:&lt;/p&gt;
+&lt;p&gt;The following are basic flows for implementing API security:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Ajax Authentication&lt;/li&gt;
 &lt;li&gt;JWT Token Authentication&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;pre-requisites&quot;&gt;&lt;a name=&quot;pre-requisites&quot; id=&quot;pre-requisites&quot;&gt;PRE-requisites&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#pre-requisites&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Please check out the sample code/project from the following GitHub repository: &lt;a href=&quot;https://github.com/svlada/springboot-security-jwt&quot;&gt;https://github.com/svlada/springboot-security-jwt&lt;/a&gt; before going further reading the article.&lt;/p&gt;
-&lt;p&gt;This project is using H2 in-memory database to store sample user information. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (&lt;code&gt;/jwt-demo/src/main/resources/data.sql&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (&lt;code&gt;/jwt-demo/src/main/resources/data.sql&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;Overall project structure is shown below:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;+---main
-|   +---java
-|   |   \---com
-|   |       \---svlada
-|   |           +---common
-|   |           +---entity
-|   |           +---profile
-|   |           |   \---endpoint
-|   |           +---security
-|   |           |   +---auth
-|   |           |   |   +---ajax
-|   |           |   |   \---jwt
-|   |           |   |       +---extractor
-|   |           |   |       \---verifier
-|   |           |   +---config
-|   |           |   +---endpoint
-|   |           |   +---exceptions
-|   |           |   \---model
-|   |           |       \---token
-|   |           \---user
-|   |               +---repository
-|   |               \---service
-|   \---resources
-|       +---static
-|       \---templates
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;main&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;svlada&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;common&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;entity&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;profile&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;endpoint&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;security&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;auth&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ajax&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;jwt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;extractor&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;verifier&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;config&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;endpoint&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;exceptions&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;model&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;token&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;user&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;               &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;repository&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;               \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;service&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;resources&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;templates&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;ajax-authentication&quot;&gt;&lt;a name=&quot;ajax-authentication&quot; id=&quot;ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#ajax-authentication&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;When we talk about Ajax authentication we usually refer to process where user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.&lt;/p&gt;
 &lt;p&gt;In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.&lt;/p&gt;
 &lt;p&gt;Following is the list of components that we&#39;ll implement:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;AjaxLoginProcessingFilter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;AjaxAuthenticationProvider&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;AjaxAwareAuthenticationSuccessHandler&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;AjaxAwareAuthenticationFailureHandler&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;RestAuthenticationEntryPoint&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;WebSecurityConfig&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;AjaxLoginProcessingFilter&lt;/li&gt;
+&lt;li&gt;AjaxAuthenticationProvider&lt;/li&gt;
+&lt;li&gt;AjaxAwareAuthenticationSuccessHandler&lt;/li&gt;
+&lt;li&gt;AjaxAwareAuthenticationFailureHandler&lt;/li&gt;
+&lt;li&gt;RestAuthenticationEntryPoint&lt;/li&gt;
+&lt;li&gt;WebSecurityConfig&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Before we get to the details of the implementation, let&#39;s look at the request/response authentication flow.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Ajax authentication request example&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;The Authentication API allows user to pass in credentials in order to receive authentication token.&lt;/p&gt;
+&lt;p&gt;The Authentication API allows user to provide credentials to exchange for authentication token.&lt;/p&gt;
 &lt;p&gt;In our example, client initiates authentication process by invoking Authentication API endpoint (&lt;code&gt;/api/auth/login&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;Raw HTTP request:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;POST /api/auth/login HTTP/1.1
-Host: localhost:9966
-X-Requested-With: XMLHttpRequest
-Content-Type: application/json
-Cache-Control: no-cache
-
-{
-    &amp;quot;username&amp;quot;: &amp;quot;svlada@gmail.com&amp;quot;,
-    &amp;quot;password&amp;quot;: &amp;quot;test1234&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;POST &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;api&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;auth&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;login HTTP&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1.1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; localhost&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;9966&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Requested&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;With&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;XMLHttpRequest&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; application&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;json&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Cache&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Control&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; no&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;cache&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token string&quot;&gt;&quot;username&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;svlada@gmail.com&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token string&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;test1234&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;CURL:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;curl -X POST -H &amp;quot;X-Requested-With: XMLHttpRequest&amp;quot; -H &amp;quot;Content-Type: application/json&amp;quot; -H &amp;quot;Cache-Control: no-cache&amp;quot; -d &#39;{
-    &amp;quot;username&amp;quot;: &amp;quot;svlada@gmail.com&amp;quot;,
-    &amp;quot;password&amp;quot;: &amp;quot;test1234&amp;quot;
-}&#39; &amp;quot;http://localhost:9966/api/auth/login&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;curl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt; POST &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;X-Requested-With: XMLHttpRequest&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Content-Type: application/json&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Cache-Control: no-cache&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;d &#39;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token string&quot;&gt;&quot;username&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;svlada@gmail.com&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token string&quot;&gt;&quot;password&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;test1234&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&#39; &lt;span class=&quot;token string&quot;&gt;&quot;http://localhost:9966/api/auth/login&quot;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Ajax authentication response example&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;HTTP status &amp;quot;200 OK&amp;quot;&lt;/li&gt;
+&lt;li&gt;HTTP status &lt;em&gt;200 OK&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;Signed JWT Access and Refresh tokens are included in the response body&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;JWT Access token&lt;/strong&gt; - used to authenticate against protected API resources. It must be set in &lt;code&gt;X-Authorization&lt;/code&gt; header.&lt;/p&gt;
@@ -868,7 +807,7 @@ Cache-Control: no-cache
 &lt;p&gt;Claims&lt;/p&gt;
 &lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token property&quot;&gt;&quot;sub&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;svlada@gmail.com&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token property&quot;&gt;&quot;scopes&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token string&quot;&gt;&quot;ROLE_ADMIN&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token string&quot;&gt;&quot;ROLE_PREMIUM_MEMBER&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token property&quot;&gt;&quot;iss&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://svlada.com&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token property&quot;&gt;&quot;iat&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1472033308&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token property&quot;&gt;&quot;exp&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1472034208&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Signature (base64 encoded)&lt;/p&gt;
-&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token number&quot;&gt;41&lt;/span&gt;rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;JWT Refresh Token&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Refresh token is long-lived token used to request new Access tokens. It&#39;s expiration time is greater than expiration time of Access token.&lt;/p&gt;
 &lt;p&gt;In this tutorial we&#39;ll use &lt;code&gt;jti&lt;/code&gt; claim to maintain list of blacklisted or revoked tokens. JWT ID(&lt;code&gt;jti&lt;/code&gt;) claim is defined by &lt;a href=&quot;https://tools.ietf.org/html/rfc7519#section-4.1.7&quot;&gt;RFC7519&lt;/a&gt; with purpose to uniquely identify individual Refresh token.&lt;/p&gt;
@@ -937,17 +876,12 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;p&gt;It&#39;s important to note that authorization claims will be included with the Access token. Why is this important? Well, let&#39;s say that authorization claims (e.g user privileges in the database) are changed during the life time of Access token. Those changes will not become effective until new Access token is issued. In most cases this is not big issue, because Access tokens are short-lived. Otherwise go with the opaque token pattern.&lt;/p&gt;
 &lt;p&gt;Before we get to the details of the implementation, let&#39;s look the sample request to protected API resource.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Signed request to protected API resource&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Following pattern should be used when sending access tokens: &lt;code&gt;&amp;lt;header-name&amp;gt; Bearer &amp;lt;access_token&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The following pattern is used for access tokens: &lt;code&gt;&amp;lt;header-name&amp;gt; Bearer &amp;lt;access_token&amp;gt;&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;In our example for header name (&lt;code&gt;&amp;lt;header-name&amp;gt;&lt;/code&gt;) we are using &lt;code&gt;X-Authorization&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Raw HTTP request:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;GET /api/me HTTP/1.1
-Host: localhost:9966
-X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w
-Cache-Control: no-cache
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;GET &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;api&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;me HTTP&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1.1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Host&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; localhost&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;9966&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Authorization&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Bearer&lt;/span&gt; eyJhbGciOiJIUzUxMiJ9&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Y9BR7q3f1npsSEYubz&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Cache&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Control&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; no&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;cache&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;CURL:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;curl -X GET -H &amp;quot;X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w&amp;quot; -H &amp;quot;Cache-Control: no-cache&amp;quot; &amp;quot;http://localhost:9966/api/me&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;curl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt; GET &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Cache-Control: no-cache&quot;&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;http://localhost:9966/api/me&quot;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Let&#39;s see the implementation details. Following are components we need to implement JWT Authentication:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;JwtTokenAuthenticationProcessingFilter&lt;/li&gt;
@@ -1069,26 +1003,12 @@ Cache-Control: no-cache
 &lt;h3 id=&quot;curl-command&quot;&gt;&lt;a name=&quot;curl&quot; id=&quot;curl&quot;&gt;Curl command&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#curl-command&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;h3 id=&quot;user-login&quot;&gt;User login &lt;a class=&quot;direct-link&quot; href=&quot;#user-login&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Check for the &lt;code&gt;x-auth-token&lt;/code&gt; in response and include it with the subsequent requests.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;curl -X POST \
-  http://localhost:1999/login \
-  -H &#39;cache-control: no-cache&#39; \
-  -H &#39;content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW&#39; \
-  -F username=test \
-  -F password=test
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;curl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt; POST \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  http&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;localhost&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1999&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;login \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;cache-control: no-cache&#39;&lt;/span&gt; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW&#39;&lt;/span&gt; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;F&lt;/span&gt; username&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;test \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;F&lt;/span&gt; password&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;test&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;user-logout&quot;&gt;User logout &lt;a class=&quot;direct-link&quot; href=&quot;#user-logout&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;curl -X GET \
-  http://localhost:1999/logout \
-  -H &#39;cache-control: no-cache&#39; \
-  -H &#39;x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc&#39;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;curl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt; GET \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  http&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;localhost&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1999&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;logout \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;cache-control: no-cache&#39;&lt;/span&gt; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc&#39;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;access-to-protected-resource&quot;&gt;Access to protected resource &lt;a class=&quot;direct-link&quot; href=&quot;#access-to-protected-resource&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This is an example on how to access protected resource by including access token in the headers:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;curl -X GET \
-  http://localhost:1999/api/sample \
-  -H &#39;cache-control: no-cache&#39; \
-  -H &#39;x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390&#39;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;curl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt; GET \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  http&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;localhost&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1999&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;api&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;sample \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;cache-control: no-cache&#39;&lt;/span&gt; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;H&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390&#39;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;source-code&quot;&gt;Source code &lt;a class=&quot;direct-link&quot; href=&quot;#source-code&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Session Authentication Success Handler&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SessionAuthenticationSuccessHandler&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;AuthenticationSuccessHandler&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token annotation punctuation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;onAuthenticationSuccess&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;HttpServletRequest&lt;/span&gt; request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;HttpServletResponse&lt;/span&gt; response&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        &lt;span class=&quot;token class-name&quot;&gt;Authentication&lt;/span&gt; authentication&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;IOException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ServletException&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;        response&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setStatus&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;HttpServletResponse&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SC_OK&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -1109,10 +1029,7 @@ Cache-Control: no-cache
 		<content type="html">&lt;p&gt;This article is a quick start guide on how to debug issues with &lt;a href=&quot;https://github.com/VirgilSecurity/virgil-crypto&quot;&gt;Virgil crypto library&lt;/a&gt;, Alpine linux v3.8 and Open JDK 1.8.&lt;/p&gt;
 &lt;p&gt;Recently, I was testing crypto libraries to see which one might be the best fit for my pet project. One of these libraries was Virgil. After a couple of hours of work, I had something that can be tested out. Everything worked fine on macOS and windows dev machines, but things started breaking once I&#39;ve deployed code to Amazon.&lt;/p&gt;
 &lt;p&gt;Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;org.springframework.web.util.NestedServletException: Handler dispatch failed; 
-nested exception is java.lang.NoClassDefFoundError: 
-Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;springframework&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;web&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;NestedServletException&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Handler&lt;/span&gt; dispatch failed&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;nested exception is java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;lang&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;NoClassDefFoundError&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Could&lt;/span&gt; not initialize &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;virgilsecurity&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;crypto&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;virgilcryptojavaJNI&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Further analysis showed that Virgil copies precompiled &lt;code&gt;.SO&lt;/code&gt; to tmp directory: &lt;code&gt;/tmp/virgil_crypto_java3134786209685506331.so&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Logical step was to list shared libraries &lt;code&gt;virgl_crypto_java&lt;/code&gt; by executing the following command: &lt;code&gt;ldd /tmp/virgil_crypto_java3134786209685506331.so&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Output of the ldd command:&lt;/p&gt;
@@ -1215,12 +1132,7 @@ Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI
 &lt;/blockquote&gt;
 &lt;p&gt;Common use case is a need to commit business transaction against local database and reliably dispatch command to a Kafka broker. Command should be dispatched only if transaction suceeds. The following are possible approaches for tackling this problem:&lt;/p&gt;
 &lt;h3 id=&quot;use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context&quot;&gt;Use KafkaProducer to send command to a broker inside of business logic transactional context &lt;a class=&quot;direct-link&quot; href=&quot;#use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;@Transactional
-fun businessTransaction() {
-  saveToDatabase()
-  dispatchCommandToKafka()
-}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Transactional&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;fun &lt;span class=&quot;token function&quot;&gt;businessTransaction&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token function&quot;&gt;saveToDatabase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token function&quot;&gt;dispatchCommandToKafka&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Easy to implement.&lt;/li&gt;
@@ -1231,16 +1143,7 @@ fun businessTransaction() {
 &lt;li&gt;Code is occuping expensive database connection for non-db work accross network.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context&quot;&gt;Use KafkaProducer to send command to a broker outside of business logic transactional context &lt;a class=&quot;direct-link&quot; href=&quot;#use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;@Transactional
-fun businessTransaction() {
-  saveToDatabase()
-}
-
-fun methodA() {
-  saveToDatabase()
-  dispatchCommandToKafka()
-}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token annotation punctuation&quot;&gt;@Transactional&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;fun &lt;span class=&quot;token function&quot;&gt;businessTransaction&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token function&quot;&gt;saveToDatabase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;fun &lt;span class=&quot;token function&quot;&gt;methodA&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token function&quot;&gt;saveToDatabase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;  &lt;span class=&quot;token function&quot;&gt;dispatchCommandToKafka&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Easy to implement.&lt;/li&gt;

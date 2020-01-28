@@ -6,9 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spring Session Tutorial - JDBC Configuration</title>
   <meta name="Description" content="This article will show you how to configure and use Spring Session to manage session data in your web application.">
+  
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
   <link href="/css/fonts.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
+  <link rel="stylesheet" href="/css/index.css">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
   
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -82,26 +85,12 @@
 <h3 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command">#</a></h3>
 <h3 id="user-login">User login <a class="direct-link" href="#user-login">#</a></h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
-<pre><code>curl -X POST \
-  http://localhost:1999/login \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
-  -F username=test \
-  -F password=test
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> POST \</span><br><span class="highlight-line">  http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>login \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'cache-control: no-cache'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">F</span> username<span class="token operator">=</span>test \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">F</span> password<span class="token operator">=</span>test</span></code></pre>
 <h3 id="user-logout">User logout <a class="direct-link" href="#user-logout">#</a></h3>
-<pre><code>curl -X GET \
-  http://localhost:1999/logout \
-  -H 'cache-control: no-cache' \
-  -H 'x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc'
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> GET \</span><br><span class="highlight-line">  http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>logout \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'cache-control: no-cache'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'x-auth-token: 2eabcc45-0bb5-40f7-8d48-8aec0fdf0bbc'</span></span></code></pre>
 <h3 id="access-to-protected-resource">Access to protected resource <a class="direct-link" href="#access-to-protected-resource">#</a></h3>
 <p>This is an example on how to access protected resource by including access token in the headers:</p>
-<pre><code>curl -X GET \
-  http://localhost:1999/api/sample \
-  -H 'cache-control: no-cache' \
-  -H 'x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390'
-</code></pre>
+<pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> GET \</span><br><span class="highlight-line">  http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>api<span class="token operator">/</span>sample \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'cache-control: no-cache'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'x-auth-token: 30ab6295-7b63-4172-9fb3-3514d5e46390'</span></span></code></pre>
 <h2 id="source-code">Source code <a class="direct-link" href="#source-code">#</a></h2>
 <p><strong>Session Authentication Success Handler</strong></p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SessionAuthenticationSuccessHandler</span> <span class="token keyword">implements</span> <span class="token class-name">AuthenticationSuccessHandler</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Override</span></span><br><span class="highlight-line">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onAuthenticationSuccess</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span></span><br><span class="highlight-line">        <span class="token class-name">Authentication</span> authentication<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span><span class="token punctuation">,</span> <span class="token class-name">ServletException</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        response<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">.</span>SC_OK<span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
