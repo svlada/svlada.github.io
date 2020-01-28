@@ -88,10 +88,10 @@
     color:  #cb4b16;
  }
 
+ /*.token.number,*/
  .token.entity,
  .token.url,
  .token.symbol,
- .token.number,
  .token.boolean,
  .token.variable,
  .token.constant,

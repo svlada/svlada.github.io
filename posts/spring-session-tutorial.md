@@ -136,7 +136,7 @@ The following list describes the WebSecurityConfig elements:
 
 Check for the ```x-auth-token``` in response and include it with the subsequent requests.
 
-```
+```java
 curl -X POST \
   http://localhost:1999/login \
   -H 'cache-control: no-cache' \
@@ -147,7 +147,7 @@ curl -X POST \
 
 ### User logout
 
-```
+```java
 curl -X GET \
   http://localhost:1999/logout \
   -H 'cache-control: no-cache' \
@@ -158,7 +158,7 @@ curl -X GET \
 
 This is an example on how to access protected resource by including access token in the headers:
 
-```
+```java
 curl -X GET \
   http://localhost:1999/api/sample \
   -H 'cache-control: no-cache' \

@@ -8,19 +8,19 @@ tags:
 layout: layouts/post.njk
 permalink: "require-js-dependency-management-part1/index.html"
 ---
-In this article I will explain, how to make cross-domain requests through the proxy using Curl and Symfony 2.
+This article provide information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.
  
-Jump to the [#source-code](#source-code) and skip following errata on how to proxy Ajax requests.
+Jump to the [#source-code](#source-code).
  
- Usual scenario looks like this:
+Usual scenario looks like this:
  
- 1. Client send ajax request to server
+ 1. The client sends ajax request to the server
  2. Your server forwards request to external/remote server
- 3. Waiting on response from remote server
+ 3. Waiting on response from a remote server
  4. Parse and process response from remote server
- 5. Send response back to client
+ 5. Send response back tothe  lient
  
-First we shall check if client request is XmlHttpRequest using Symfony 2 built in method
+First, check if client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:
  
 ```
  $request->isXmlHttpRequest()
@@ -28,11 +28,9 @@ First we shall check if client request is XmlHttpRequest using Symfony 2 built i
  
 ### STEP 1: Client code
  
-Client code is quite simple. 
+The following are the steps for creating Ajax request.
  
-You need to craft Ajax request in following way.
- 
-1. Specify rest url on your server for handling cross-domain ajax requests.`
+1. Specify rest url on server for handling cross-domain ajax requests.`
  url: "{{ path('_ajaxProxy') }}"`
 2. Wrap request data
  
@@ -41,11 +39,11 @@ We need some data in order to create curl request on server-side.
 For this example you need to send object with following properties to your server.
  
 ```
-     restUrl: "external-api-url", // Your target url on remote server
-     method: "POST", // Type of request you want to issue to remote server
-     params: { 
-         action: "getFriendsList" // Parameters you are sending to remote server
-     }
+    restUrl: "external-api-url", // Your target url on remote server
+    method: "POST", // Type of request you want to issue to remote server
+    params: { 
+        action: "getFriendsList" // Parameters you are sending to remote server
+    }
 ```
  
 ### STEP 2: Forward request to remote server
@@ -65,27 +63,24 @@ To repeat once more ... you'll need the following data on server:
  ?>
 ```
  
-You need to create curl request and set parameters you have recieved from client.
+Create curl request and set parameters that you've got from thes client.
 
 ```
  <?php
-     // Initialize curl handle
-     $ch = curl_init(); 
-     
-     // Set request url
-     curl_setopt($ch, CURLOPT_URL, $restUrl); 
-     
-     // TRUE to include the header in the output.
-     curl_setopt($ch, CURLOPT_HEADER, true); 
-     
-     // A custom request method to use instead of "GET" or "HEAD" when doing a HTTP request.  
-     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); 
-     if ($params != null) {
-         // The full data to post in a HTTP "POST" operation.
-         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-     }
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    // Initialize curl handle
+    $ch = curl_init();  
+    // Set request url
+    curl_setopt($ch, CURLOPT_URL, $restUrl); 
+    // TRUE to include the header in the output.
+    curl_setopt($ch, CURLOPT_HEADER, true);  
+    // A custom request method to use instead of "GET" or "HEAD" when doing a HTTP request.  
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); 
+    if ($params != null) {
+        // The full data to post in a HTTP "POST" operation.
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+    }
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
  ?>
 ```
  
@@ -95,8 +90,8 @@ You have enough data to send request to remote server. After executing curl hand
  
 ```
 <?php
-     $response = curl_exec($ch);
-     curl_close($ch);
+    $response = curl_exec($ch);
+    curl_close($ch);
  ?>
 ```
  
@@ -118,18 +113,16 @@ Application written in Symfony 2 need to consume some protected backend function
  
 ```
 <?php
-     // Get all cookies from Symfony request object
-     $requestCookies = $request->cookies->all(); 
-     
-     // Prepare and set multiple cookies to curl handle
-     $cookieArray = array();
-     foreach ($requestCookies as $cookieName => $cookieValue) {
-         $cookieArray[] = "{$cookieName}={$cookieValue}";
-     }
- 
-     // Be sure to set whitespace after '; ' when creating cookie string
-     $cookie_string = implode('; ', $cookieArray);
-     curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
+    // Get all cookies from Symfony request object
+    $requestCookies = $request->cookies->all(); 
+    // Prepare and set multiple cookies to curl handle
+    $cookieArray = array();
+    foreach ($requestCookies as $cookieName => $cookieValue) {
+        $cookieArray[] = "{$cookieName}={$cookieValue}";
+    }
+    // Be sure to set whitespace after '; ' when creating cookie string
+    $cookie_string = implode('; ', $cookieArray);
+    curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
 ?>
 ```
  
@@ -139,12 +132,12 @@ Remmember when we configured curl with CURLOPT_HEADER=true? Now we are going to 
  
 ```
 <?php    
-     // Get header and response data from curl response
-     list($headers, $response) = explode("\r\n\r\n",$response,2);
-     // We are using regex to parse cookies from curl response
-     preg_match_all('/Set-Cookie: (.*)\b/', $headers, $cookies);
-     // Store cookies
-     $cookies = $cookies[1];
+    // Get header and response data from curl response
+    list($headers, $response) = explode("\r\n\r\n",$response,2);
+    // We are using regex to parse cookies from curl response
+    preg_match_all('/Set-Cookie: (.*)\b/', $headers, $cookies);
+    // Store cookies
+    $cookies = $cookies[1];
 ?>
 ```
  
@@ -152,14 +145,15 @@ Raw cookies are parsed and stored in cookie array. Then each cookie need to be c
  
 ```
 <?php
-     foreach($cookies as $rawCookie) {
-         $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
-         $value = $cookie->getValue();
-         if (!empty($value)) {
-             $value = str_replace(' ', '+', $value);
-         }
-         $customCookie = new Cookie($cookie->getName(), $value, $cookie->getExpiresTime()==null?0:$cookie->getExpiresTime(), $cookie->getPath());
-         $response->headers->setCookie($customCookie);
+    foreach($cookies as $rawCookie) {
+        $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
+        $value = $cookie->getValue();
+            if (!empty($value)) {
+                $value = str_replace(' ', '+', $value);
+            }
+        $customCookie = new Cookie($cookie->getName(), $value, 
+            $cookie->getExpiresTime()==null?0:$cookie->getExpiresTime(), $cookie->getPath());
+        $response->headers->setCookie($customCookie);
      }
  ?>
 ```
@@ -170,8 +164,8 @@ Raw cookies are parsed and stored in cookie array. Then each cookie need to be c
  
 ```
 <?php
-     session_write_close();
-     $ch = curl_init();
+    session_write_close();
+    $ch = curl_init();
 ?>
 ```
  
@@ -184,7 +178,7 @@ PHP script S1 create/sends curl POST request to script S2 on same Apache server/
  <a id="source-code" name="source-code">Complete source code listing for ajax proxy</a>
  
  **Client sample code**
-```
+```js
  function sendAjaxRequest(){
      $.ajax({
          type: "POST",

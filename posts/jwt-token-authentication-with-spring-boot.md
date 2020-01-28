@@ -21,7 +21,7 @@ permalink: "jwt-token-authentication-with-spring-boot/index.html"
 
 This article will guide you on how you can implement JWT authentication with Spring Boot.
 
-We will cover the following two scenarios:
+The following are basic flows for implementing API security:
 
 1. Ajax Authentication
 2. JWT Token Authentication
@@ -30,11 +30,11 @@ We will cover the following two scenarios:
 
 Please check out the sample code/project from the following GitHub repository: https://github.com/svlada/springboot-security-jwt before going further reading the article.
 
-This project is using H2 in-memory database to store sample user information. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (```/jwt-demo/src/main/resources/data.sql```).
+This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (```/jwt-demo/src/main/resources/data.sql```).
 
 Overall project structure is shown below:
 
-```
+```java
 +---main
 |   +---java
 |   |   \---com
@@ -70,24 +70,24 @@ In the first part of this tutorial Ajax authentication is implemented by followi
 
 Following is the list of components that we'll implement:
 
-1. ```AjaxLoginProcessingFilter```
-2. ```AjaxAuthenticationProvider```
-3. ```AjaxAwareAuthenticationSuccessHandler```
-4. ```AjaxAwareAuthenticationFailureHandler```
-5. ```RestAuthenticationEntryPoint```
-6. ```WebSecurityConfig```
+1. AjaxLoginProcessingFilter
+2. AjaxAuthenticationProvider
+3. AjaxAwareAuthenticationSuccessHandler
+4. AjaxAwareAuthenticationFailureHandler
+5. RestAuthenticationEntryPoint
+6. WebSecurityConfig
 
 Before we get to the details of the implementation, let's look at the request/response authentication flow.
 
 **Ajax authentication request example**
 
-The Authentication API allows user to pass in credentials in order to receive authentication token.
+The Authentication API allows user to provide credentials to exchange for authentication token.
 
 In our example, client initiates authentication process by invoking Authentication API endpoint (```/api/auth/login```).
 
 Raw HTTP request:
 
-```
+```java
 POST /api/auth/login HTTP/1.1
 Host: localhost:9966
 X-Requested-With: XMLHttpRequest
@@ -102,7 +102,7 @@ Cache-Control: no-cache
 
 CURL:
 
-```
+```java
 curl -X POST -H "X-Requested-With: XMLHttpRequest" -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{
     "username": "svlada@gmail.com",
     "password": "test1234"
@@ -113,7 +113,7 @@ curl -X POST -H "X-Requested-With: XMLHttpRequest" -H "Content-Type: application
 
 If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:
 
-1. HTTP status "200 OK"
+1. HTTP status _200 OK_
 2. Signed JWT Access and Refresh tokens are included in the response body
 
 **JWT Access token** - used to authenticate against protected API resources. It must be set in ```X-Authorization``` header.
@@ -162,7 +162,8 @@ Claims
 ```
 
 Signature (base64 encoded)
-```bash
+
+```java
 41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ
 ```
 
@@ -520,12 +521,12 @@ Before we get to the details of the implementation, let's look the sample reques
 
 **Signed request to protected API resource**
 
-Following pattern should be used when sending access tokens: ```<header-name> Bearer <access_token>```.
+The following pattern is used for access tokens: ```<header-name> Bearer <access_token>```.
 
 In our example for header name (```<header-name>```) we are using ```X-Authorization```.
 
 Raw HTTP request:
-```
+```java
 GET /api/me HTTP/1.1
 Host: localhost:9966
 X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w
@@ -533,7 +534,7 @@ Cache-Control: no-cache
 ```
 
 CURL:
-```
+```java
 curl -X GET -H "X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w" -H "Cache-Control: no-cache" "http://localhost:9966/api/me"
 ```
 

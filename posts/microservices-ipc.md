@@ -89,7 +89,7 @@ Common use case is a need to commit business transaction against local database 
 
 ### Use KafkaProducer to send command to a broker inside of business logic transactional context
 
-```
+```java
 @Transactional
 fun businessTransaction() {
   saveToDatabase()
@@ -108,7 +108,7 @@ fun businessTransaction() {
 
 ### Use KafkaProducer to send command to a broker outside of business logic transactional context
 
-```
+```java
 @Transactional
 fun businessTransaction() {
   saveToDatabase()

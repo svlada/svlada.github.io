@@ -17,7 +17,7 @@ Recently, I was testing crypto libraries to see which one might be the best fit 
 
 Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):
 
-```
+```java
 org.springframework.web.util.NestedServletException: Handler dispatch failed; 
 nested exception is java.lang.NoClassDefFoundError: 
 Could not initialize class com.virgilsecurity.crypto.virgilcryptojavaJNI
