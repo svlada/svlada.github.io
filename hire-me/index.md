@@ -1,5 +1,5 @@
 ---
-layout: layouts/post.njk
+layout: layouts/home.njk
 title: Have a project in mind? Let's talk!
 tags:
   - nav
@@ -8,6 +8,8 @@ templateClass: tmpl-post
 permalink: "hire-me/index.html"
 date: 2015-01-01
 ---
+
+<h1>Have a project in mind? Let's talk!</h1>
 
 Need a custom software solution for your business? Please send me an [email](mailto:svlada@gmail.com) to discuss your project needs.
 
