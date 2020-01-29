@@ -7,7 +7,14 @@
   --navy: #17050F;
   --blue: #082840;
   --white: #fff;
+  --back: #FAF9F6;
 }
+
+/* .center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+} */
 
 * {
   box-sizing: border-box;
@@ -16,6 +23,8 @@
 h1 {
   font-family: 'IBM Plex Sans', sans-serif;
 }
+
+h4 { font-size: 16px; }
 
 html,
 body {
@@ -27,7 +36,7 @@ body {
   font-size: 13px;
   /* 'Libre Baskerville', serif;'IBM Plex Sans', sans-serif;  "Computer Modern", sans-serif; */
   color: var(--darkgray);
-  background-color: var(--white);
+  background-color: var(--back);
 }
 p:last-child {
   margin-bottom: 0;
@@ -165,6 +174,7 @@ pre {
 .nav-item {
   display: inline-block;
   margin-right: 16px;
+  font-size: 14px;
 }
 .nav-item a[href]:not(:hover) {
   text-decoration: none;
