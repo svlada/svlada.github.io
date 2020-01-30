@@ -13,7 +13,7 @@ permalink: "how-to-build-lightweight-api-with-kotlin-and-springboot/index.html"
 
 ## Introduction
 
-**Target audience** _for these series are junior developers that are fresh out of college. In my experience they are often lost in the beginning and don't know how to start. I hope that these series of posts will help them along the way_. 
+**Target audience** _Junior developers that are fresh out of college. I hope that these series of posts will help them along the way_. 
 
 This article is an opinionated guide for building lightweight APIs using Spring Boot and Kotlin. This is the first part of the series. Upcoming posts will include implementation details and working samples on Github. 
 
@@ -74,9 +74,11 @@ For pet projects, you can test out a couple of pure kotlin that are yet to be pr
 1. http4k
 2. ktor
 
-Focus in these series is on Spring Boot as it's inevitable framework that's used by majority of companies.
+The focus here is on Spring Boot as it's inevitable framework that you will encounter in the wild.
 
 ### Code versioning
+
+
 
 ### Resource design
 
