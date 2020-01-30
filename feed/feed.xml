@@ -1183,7 +1183,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 		<updated>2020-02-02T00:00:00-00:00</updated>
 		<id>https://myurl.com/how-to-build-lightweight-api-with-kotlin-and-springboot/</id>
 		<content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Target audience&lt;/strong&gt; &lt;em&gt;for these series are junior developers that are fresh out of college. In my experience they are often lost in the beginning and don&#39;t know how to start. I hope that these series of posts will help them along the way&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Target audience&lt;/strong&gt; &lt;em&gt;Junior developers that are fresh out of college. I hope that these series of posts will help them along the way&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;This article is an opinionated guide for building lightweight APIs using Spring Boot and Kotlin. This is the first part of the series. Upcoming posts will include implementation details and working samples on Github.&lt;/p&gt;
 &lt;p&gt;The API development on JVM is marketed as a heavyweight, dreadful process. Often, development using Java is compared to operating an armored fighting vehicle. In some cases, this is a correct statement. Big enterprises are using deprecated libraries, heavy-weight servers, and frameworks (e.g. IBM Websphere or IBM Portal). The decision to go with an enterprisey stack is job security. Hey, nobody got fired for choosing IBM.&lt;/p&gt;
 &lt;p&gt;The reality is different. Many lightweight servers and frameworks are developed on top of JVM stack, enabling a team to develop busines features at a high pace. Unmatched security and performance benefits given by state-of-the-art JVM platform are hard to find in other ecosystems (e.g. Rails or Django).&lt;/p&gt;
@@ -1236,7 +1236,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;li&gt;http4k&lt;/li&gt;
 &lt;li&gt;ktor&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Focus in these series is on Spring Boot as it&#39;s inevitable framework that&#39;s used by majority of companies.&lt;/p&gt;
+&lt;p&gt;The focus here is on Spring Boot as it&#39;s inevitable framework that you will encounter in the wild.&lt;/p&gt;
 &lt;h3 id=&quot;code-versioning&quot;&gt;Code versioning &lt;a class=&quot;direct-link&quot; href=&quot;#code-versioning&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;h3 id=&quot;resource-design&quot;&gt;Resource design &lt;a class=&quot;direct-link&quot; href=&quot;#resource-design&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;h3 id=&quot;error-handling&quot;&gt;Error handling &lt;a class=&quot;direct-link&quot; href=&quot;#error-handling&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
