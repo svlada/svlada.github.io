@@ -68,6 +68,7 @@ p,
   line-height: 1.55;
   line-height: 1.75;
   font-size: 1.14rem;
+  padding-bottom: 3px;
 }
 a[href] {
   color: var(--blue);
