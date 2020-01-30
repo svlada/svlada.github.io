@@ -19,13 +19,7 @@ This article describes problem with using default Spring Batch Job Repository co
 
 ```java
 org.springframework.dao.DataAccessResourceFailureException: Could not create Oracle LOB
-```
-
-```java
 Caused by: org.springframework.dao.InvalidDataAccessApiUsageException: Couldn't initialize OracleLobHandler because Oracle driver classes are not available. Note that OracleLobHandler requires Oracle JDBC driver 9i or higher!; nested exception is java.lang.ClassNotFoundException: oracle.sql.BLOB
-```
-
-```java
 Caused by: java.lang.ClassNotFoundException: oracle.sql.BLOB
 ```
 
@@ -53,8 +47,6 @@ The following snippet shows [Job Repository](http://docs.spring.io/spring-batch/
 <bean id="nativeJdbcExtractor"
     class="org.springframework.jdbc.support.nativejdbc.WebSphereNativeJdbcExtractor" />
 ```
-
-Following are additional configuration details:
 
 **Data source configuration**
 ```java
