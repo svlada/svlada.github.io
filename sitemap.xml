@@ -162,26 +162,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/alpine-linux/</loc>
-    <lastmod>2020-01-30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/gcc/</loc>
-    <lastmod>2020-01-30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/musl/</loc>
-    <lastmod>2020-01-30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/crypto/</loc>
-    <lastmod>2020-01-30</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/voxxed-days/</loc>
     <lastmod>2020-01-30</lastmod>
   </url>
@@ -198,6 +178,26 @@
   
   <url>
     <loc>https://myurl.com/tags/spring/</loc>
+    <lastmod>2020-01-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/alpine-linux/</loc>
+    <lastmod>2020-01-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/gcc/</loc>
+    <lastmod>2020-01-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/musl/</loc>
+    <lastmod>2020-01-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/crypto/</loc>
     <lastmod>2020-01-30</lastmod>
   </url>
   
