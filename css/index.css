@@ -10,11 +10,11 @@
   --back: #FAF9F6;
 }
 
-/* .center {
+.center {
   margin: auto;
   width: 50%;
   padding: 10px;
-} */
+}
 
 * {
   box-sizing: border-box;
@@ -196,7 +196,7 @@ ul li.nav-item-active a {
 }
 
 .postlist-date {
-  font-size: 0.8125em; /* 13px /16 */
+  font-size: 0.9em; /* 13px /16 */
   color: var(--darkgray);
 }
 .postlist-date {
@@ -210,7 +210,7 @@ ul li.nav-item-active a {
   font-weight: bold;
 }
 .tmpl-home .postlist-link {
-  font-size: 1em; /* 19px /16 */
+  font-size: 1.1em; /* 19px /16 */
   font-weight: 700;
 }
 
