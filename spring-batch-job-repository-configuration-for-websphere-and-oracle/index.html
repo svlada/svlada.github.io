@@ -52,6 +52,7 @@
   </header>
   <main class="tmpl-post" >
     <h1>Spring batch job repository configuration for WebSphere and Oracle</h1>
+
 <div class="post-line"></div>
 <h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A">#</a></h2>
 <ol>
@@ -72,9 +73,8 @@
 <p><strong>Transaction manager configuration</strong></p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token operator">&lt;</span>bean id<span class="token operator">=</span><span class="token string">"transactionManager"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"org.springframework.orm.jpa.JpaTransactionManager"</span> primary<span class="token operator">=</span><span class="token string">"true"</span><span class="token operator">></span></span><br><span class="highlight-line">    <span class="token operator">&lt;</span>property name<span class="token operator">=</span><span class="token string">"entityManagerFactory"</span> ref<span class="token operator">=</span><span class="token string">"entityManagerFactory"</span><span class="token operator">/</span><span class="token operator">></span></span><br><span class="highlight-line"><span class="token operator">&lt;</span><span class="token operator">/</span>bean<span class="token operator">></span></span></code></pre>
 
-
 <p><a href="/">← Home</a></p>
-
+<code>Date: 02 Dec 2015</code>
 <div id="disqus_thread"></div>
 <script>
 
