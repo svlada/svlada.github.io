@@ -112,6 +112,10 @@ pre > code[class*="language-"] {
 
 code {
   padding: 2px 4px;
+  background-color: #eaeaea;
+  padding: 1px 6px;
+  margin: 0 2px;
+  border-radius: 5px;
 }
 
 pre {
@@ -294,3 +298,27 @@ a[href].direct-link:focus:visited,
 }
 
 .disqus_thread { padding: 15px }
+
+.blinking {
+  display: inline-block;
+  width: 10px;
+  height: 1rem;
+  background: #bd93f9;
+  margin-left: 5px;
+  border-radius: 1px;
+  animation: cursor 1s infinite;
+}
+
+@keyframes cursor {
+  0% {
+      opacity:0
+  }
+
+  50% {
+      opacity:1
+  }
+
+  100% {
+      opacity:0
+  }
+}

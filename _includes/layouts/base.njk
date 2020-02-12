@@ -12,6 +12,7 @@
   <meta name="author" content="Vlada Stankovic">
 
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400i|IBM+Plex+Sans&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="{{ '/css/prism-base16-ateliersulphurpool.light.css' | url }}">
   <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
@@ -44,6 +45,7 @@
 
 <body class="center">
   <header>
+
     <ul class="nav">
       {%- for nav in collections.nav | reverse -%}
       <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}"><a
