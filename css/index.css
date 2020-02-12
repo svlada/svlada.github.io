@@ -8,6 +8,7 @@
   --blue: #082840;
   --white: #fff;
   --back: #FAF9F6;
+  --coolblue: #007aff;
 }
 
 @media only screen and (min-width: 768px) {
@@ -24,6 +25,7 @@
     margin: auto;
     width: 50%;
     padding: 10px;
+    width: 58%;
   }
   .postlist-date { display: inline-block; }
 }
@@ -211,6 +213,7 @@ ul li.nav-item-active a {
 }
 .postlist-item {
   counter-increment: start-from -1;
+  line-height: 2rem;
 }
 
 .postlist-date {
@@ -230,6 +233,7 @@ ul li.nav-item-active a {
 .tmpl-home .postlist-link {
   font-size: 1.2rem; /* 19px /16 */
   font-weight: 700;
+  display: inline;
 }
 
 
@@ -269,8 +273,8 @@ a[href].tag:visited {
 }
 
 .tmpl-post a[href] {
-  border-bottom: 1px solid #007aff;
-  color: #007aff;
+  border-bottom: 1px solid var(--coolblue);
+  color: var(--coolblue);
   text-decoration: none;
 }
 
