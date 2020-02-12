@@ -27,7 +27,7 @@
 }
 
 .post-line {
-  border-top: .4rem solid #353535;
+  border-top: .4rem solid var(--darkgray);
   display: block;
   width: 4rem;
   margin-bottom: 20px;
@@ -267,8 +267,8 @@ a[href].tag:visited {
 }
 
 .tmpl-post a[href] {
-  border-bottom: 1px solid #222;
-  color: #222;
+  border-bottom: 1px solid #007aff;
+  color: #007aff;
   text-decoration: none;
 }
 
