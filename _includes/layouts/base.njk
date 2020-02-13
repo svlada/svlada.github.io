@@ -45,7 +45,6 @@
 
 <body class="center">
   <header>
-
     <ul class="nav">
       {%- for nav in collections.nav | reverse -%}
       <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}"><a
@@ -59,5 +58,4 @@
     <footer></footer>
     <!-- Current page: {{ page.url | url }} -->
 </body>
-
 </html>
