@@ -9,6 +9,7 @@
   --white: #fff;
   --back: #FAF9F6;
   --coolblue: #007aff;
+  --src-code: rgba(0,0,0, 0.07);
 }
 
 @media only screen and (min-device-width: 414px) {
@@ -107,8 +108,7 @@ code {
   font-family: 'IBM Plex Mono', monospace;
   line-height: 1.5;
   font-size: 1rem;
-  /* background-color: #f6f6f6; */
-  background-color: rgba(0,0,0, 0.07);
+  background-color: var(--src-code);
 }
 
 pre > code[class*="language-"] {
@@ -116,7 +116,7 @@ pre > code[class*="language-"] {
 }
 
 code {
-  background-color: #eaeaea;
+  background-color: var(--src-code);
   padding: 2px 6px;
   margin: 0 2px;
   border-radius: 5px;
@@ -314,15 +314,12 @@ a[href].direct-link:focus:visited,
 }
 
 @keyframes cursor {
-  0% {
-      opacity:0
-  }
+  0% { opacity:0 }
+  50% { opacity:1 }
+  100% { opacity:0 }
+}
 
-  50% {
-      opacity:1
-  }
-
-  100% {
-      opacity:0
-  }
+/* toc */
+ol .toc {
+  margin-bottom: 0;
 }
