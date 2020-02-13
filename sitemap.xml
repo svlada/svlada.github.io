@@ -97,17 +97,12 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
+    <loc>https://myurl.com/tags/spring-batch/</loc>
     <lastmod>2020-02-13</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/java/</loc>
-    <lastmod>2020-02-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/jwt/</loc>
     <lastmod>2020-02-13</lastmod>
   </url>
   
@@ -147,17 +142,22 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
+    <loc>https://myurl.com/tags/require-js/</loc>
     <lastmod>2020-02-13</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-batch/</loc>
+    <loc>https://myurl.com/tags/spring-boot/</loc>
     <lastmod>2020-02-13</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/ssh/</loc>
+    <lastmod>2020-02-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2020-02-13</lastmod>
   </url>
   
@@ -202,7 +202,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-boot/</loc>
+    <loc>https://myurl.com/tags/jwt/</loc>
     <lastmod>2020-02-13</lastmod>
   </url>
 </urlset>
