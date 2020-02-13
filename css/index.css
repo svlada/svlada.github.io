@@ -280,13 +280,13 @@ a[href].tag:visited {
   margin-left: .1em;
 }
 
-.tmpl-post a[href] {
+.tmpl-post a[href], .social a[href] {
   border-bottom: 1px solid var(--coolblue);
   color: var(--coolblue);
   text-decoration: none;
 }
 
-.tmpl-post a.direct-link {
+.tmpl-post a.direct-link, .social a.direct-link {
   border-bottom: none;
 }
 
