@@ -11,13 +11,17 @@
   --coolblue: #007aff;
 }
 
+@media only screen and (min-device-width: 414px) {
+  .postlist-date { display: none; }
+}
+
 @media only screen and (min-width: 768px) {
   .center {
     margin: auto;
     width: 80%;
     padding: 10px;
   }
-  .postlist-date { display: none; }
+  
 }
 
 @media only screen and (min-width: 960px) {
