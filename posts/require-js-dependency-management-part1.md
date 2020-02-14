@@ -37,7 +37,7 @@ RequireJS is well defined and standardized. While we wait ES-Harmony to knock on
 
 This is our sample RequireJS project structure.
 
-```
+```js
  |-[wepapp]
  |--- [build]
  |----- r.js
@@ -65,7 +65,7 @@ Application config and main entry point is `[webapp/js/app.js]`
 
 Your `[webapp/index.html]` should look like this:
  
-```
+```js
 <html>
 <head></head>
 <body>
@@ -136,7 +136,7 @@ With RequireJS you can organize your modules in separate files with ease.
  
 Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.
 
-```
+```js
  |-[wepapp]
  |--- [build]
  |----- r.js
@@ -160,7 +160,7 @@ With RequireJS you can provide function or object in return statement. We are go
  
 With RequireJS you can import and use external dependencies inside your module. We are going to use this feature to achieve prototypal inheritance in RequireJS.
  
-Category is collection of our Items. `[webapp/js/app/category/category.js]`
+Category is collection of our Items: `[webapp/js/app/category/category.js]`.
  
 ```js
  "use strict";
@@ -188,7 +188,7 @@ Category is collection of our Items. `[webapp/js/app/category/category.js]`
  });
 ```
   
-Item is base object. `[webapp/js/app/category/item.js]`
+Item is base object: `[webapp/js/app/category/item.js]`.
  
 ```js
  "use strict";
@@ -208,10 +208,8 @@ Item is base object. `[webapp/js/app/category/item.js]`
  });
 ```
  
- <strong>[webapp/js/app/category/specialItem.js]</strong>
- 
- SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency<strong>['./item'].</strong>
- Now Item object is available for use in our new SpecialItem module.
+SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency<strong>['./item'].</strong>
+Now Item object is available for use in our new SpecialItem module: `[webapp/js/app/category/specialItem.js]`.
  
 ```js
  "use strict";
@@ -234,7 +232,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  
  <h1><a name="source" id="source">Source code listing</a></h1>
  
- [webapp/js/app.js]
+ `[webapp/js/app.js]`
  
 ```js
  requirejs.config({
@@ -257,7 +255,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  });
 ```
  
- [webapp/js/app/category/category.js]
+ `[webapp/js/app/category/category.js]`
  
 ```js
  "use strict";
@@ -285,7 +283,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  });
 ```
  
- [webapp/js/app/category/item.js]
+`[webapp/js/app/category/item.js]`
  
 ```js
  "use strict";
@@ -305,7 +303,7 @@ Item is base object. `[webapp/js/app/category/item.js]`
  });
 ```
  
- [webapp/js/app/category/specialItem.js]
+`[webapp/js/app/category/specialItem.js]`
  
 ```js
  "use strict";

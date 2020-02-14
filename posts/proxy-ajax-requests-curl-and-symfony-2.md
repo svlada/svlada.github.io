@@ -6,13 +6,13 @@ tags:
   - symfony
   - curl
 layout: layouts/post.njk
-permalink: "require-js-dependency-management-part1/index.html"
+permalink: "proxy-ajax-requests-curl-and-symfony-2/index.html"
 ---
 This article provide information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.
  
 Jump to the [#source-code](#source-code).
  
-Usual scenario looks like this:
+The usual scenario looks like this:
  
  1. The client sends ajax request to the server
  2. Your server forwards request to external/remote server
@@ -20,25 +20,25 @@ Usual scenario looks like this:
  4. Parse and process response from remote server
  5. Send response back tothe  lient
  
-First, check if client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:
+First, check if the client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:
  
-```
+```php
  $request->isXmlHttpRequest()
 ```
  
 ### STEP 1: Client code
  
-The following are the steps for creating Ajax request.
+The following are the steps for creating an Ajax request.
  
-1. Specify rest url on server for handling cross-domain ajax requests.`
+1. Specify rest URL on the server for handling cross-domain ajax requests.`
  url: "{{ path('_ajaxProxy') }}"`
 2. Wrap request data
  
-We need some data in order to create curl request on server-side.
+We need some data to create a curl request on the server-side.
 
-For this example you need to send object with following properties to your server.
+For this example, you need to send an object with the following properties to your server.
  
-```
+```js
     restUrl: "external-api-url", // Your target url on remote server
     method: "POST", // Type of request you want to issue to remote server
     params: { 
@@ -48,25 +48,22 @@ For this example you need to send object with following properties to your serve
  
 ### STEP 2: Forward request to remote server
  
-This step is bit tricky. 
+This step is a bit tricky. 
  
-Client request is arrived to your server-side code. First you need to parse and validate request data.
+The client request arrives to your server-side code. First, you need to parse and validate request data.
  
 To repeat once more ... you'll need the following data on server:
  
-```
-<?php
+```php
  $restUrl = $request->request->get('restUrl'); // Your target url on remote server
  $method = $request->request->get('method'); // Type of request you want to issue to remote server
  $params = $request->request->get('params'); // Parameters you are sending to remote server
  $contentType = $request->request->get('contentType'); // Content-type
- ?>
 ```
  
-Create curl request and set parameters that you've got from thes client.
+Create curl request and set parameters that you've got from the client.
 
-```
- <?php
+```php
     // Initialize curl handle
     $ch = curl_init();  
     // Set request url
@@ -81,38 +78,34 @@ Create curl request and set parameters that you've got from thes client.
     }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
- ?>
 ```
  
-I strongly suggest to read php manual in order to get familiar with the curl configuration: http://php.net/manual/en/function.curl-setopt.php
+I strongly suggest reading the PHP manual to get familiar with the curl configuration: http://php.net/manual/en/function.curl-setopt.php
  
-You have enough data to send request to remote server. After executing curl handle, response from remote server is stored in $response variable.
+You have enough data to send a request to the remote server. After executing the curl handle, the response from the remote server is stored in $response variable.
  
-```
-<?php
+```php
     $response = curl_exec($ch);
     curl_close($ch);
- ?>
 ```
  
-You have basic setup. Now we are going to add cookie support to our ajax proxy.
+You have a basic setup. Now we are going to add cookie support to our ajax proxy.
  
 Why do we need cookies? 
  
-Recently I needed to integrate symfony 2 application with wordpress portal. Authentication is done on Wordpress side, and symfony application is using wordpress cookies to authorize users for accessing protected features.
+Recently I needed to integrate Symfony 2 application with WordPress portal. Authentication is done on the Wordpress side, and Symfony application is using WordPress cookies to authorize users for accessing protected features.
  
-In production both applications share same domain, but in test enviorment there is a lot of mess (different domains, ports etc).
+In production, both applications share the same domain, but in the test environment, there is a lot of mess (different domains, ports, etc).
  
-Where is problem? 
+Where is the problem? 
  
-Application written in Symfony 2 need to consume some protected backend functionalities on Wordpress side. There is a lot personalized data that is fetched via ajax calls, and this is reason why we need cookies.
+An application written in Symfony 2 needs to consume some protected backend functionalities on the Wordpress side. There is a lot of personalized data that is fetched via ajax calls, and this is the reason why we need cookies.
  
-### How to get cookies from Symfony2 request and set mutplie cookies to Curl?
+### How to get cookies from Symfony2 request and set multiple cookies to Curl?
  
- We need to extract multiple cookies from Symfony 2 request object and set them to curl handle.
+ We need to extract multiple cookies from Symfony 2 request objects and set them to curl handle.
  
-```
-<?php
+```php
     // Get all cookies from Symfony request object
     $requestCookies = $request->cookies->all(); 
     // Prepare and set multiple cookies to curl handle
@@ -123,28 +116,24 @@ Application written in Symfony 2 need to consume some protected backend function
     // Be sure to set whitespace after '; ' when creating cookie string
     $cookie_string = implode('; ', $cookieArray);
     curl_setopt($ch, CURLOPT_COOKIE, $cookie_string);
-?>
 ```
  
 ### How to get cookies Curl response and set multiple cookies to Symfony response?
  
-Remmember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl http response.
+Remember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl Http response.
  
-```
-<?php    
+```php
     // Get header and response data from curl response
     list($headers, $response) = explode("\r\n\r\n",$response,2);
     // We are using regex to parse cookies from curl response
     preg_match_all('/Set-Cookie: (.*)\b/', $headers, $cookies);
     // Store cookies
     $cookies = $cookies[1];
-?>
 ```
+
+Raw cookies are parsed and stored in cookie array. Then each cookie needs to be converted to Symfony Cookie object and injected to Symfony response headers.
  
-Raw cookies are parsed and stored in cookie array. Then each cookie need to be converted to Symfony Cookie object and injected to Symfony response headers. 
- 
-```
-<?php
+```php
     foreach($cookies as $rawCookie) {
         $cookie = \Symfony\Component\BrowserKit\Cookie::fromString($rawCookie);
         $value = $cookie->getValue();
@@ -155,25 +144,23 @@ Raw cookies are parsed and stored in cookie array. Then each cookie need to be c
             $cookie->getExpiresTime()==null?0:$cookie->getExpiresTime(), $cookie->getPath());
         $response->headers->setCookie($customCookie);
      }
- ?>
 ```
  
 **FINAL NOTICE:**
  
- Close and store session data before initializing curl handle or you can run into deadlock.
+Close and store session data before initializing curl handle or you can run into a deadlock.
+
  
-```
-<?php
+```php
     session_write_close();
     $ch = curl_init();
-?>
 ```
  
-What could happen if you forgot to close session?
+What could happen if you forgot to close the session?
  
 Here is one scenario:
 
-PHP script S1 create/sends curl POST request to script S2 on same Apache server/PHP Enviorment. If page S1 and S2 share same session, script S2 will not start executing until end of script S1 lifetime. But script S1 is waiting on response from script S2. This is point where deadlock happen. The default session handler locks the session file for the duration of the page request.
+PHP script S1 creates/sends a curl POST request to script S2 on the same Apache server/PHP Environment. If pages S1 and S2 share the same session, script S2 will not start executing until the end of script S1 lifetime. But script S1 is waiting on a response from script S2. This is the point where deadlock happens. The default session handler locks the session file for the duration of the page request.
 
  <a id="source-code" name="source-code">Complete source code listing for ajax proxy</a>
  
@@ -200,8 +187,7 @@ PHP script S1 create/sends curl POST request to script S2 on same Apache server/
  
 **Server proxy code**
 
-```
-<?php
+```php
 namespace Proxy\Bundle\ProxyBundle\Controller;
  
  use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

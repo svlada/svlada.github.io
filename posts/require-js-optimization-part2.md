@@ -28,8 +28,7 @@ James Burke [recommends](http://requirejs.org/docs/optimization.html) using node
 
 Create your build script file on following location `[webapp/build/build.js]`
 
-<pre> 
- [cc lang="javascript"]
+```js
  |-[wepapp]
  |--- [build]
  |----- r.js
@@ -43,12 +42,11 @@ Create your build script file on following location `[webapp/build/build.js]`
  |----- app-built.js*
  |-index.html
  |-readme.md
- [/cc]
- </pre>
+```
  
 Build your application with node.js and r.js executing the following command
  
-```
+```js
  node r.js -o build.js
 ```
  
@@ -60,7 +58,7 @@ Main module app.js has many dependencies and we want to bundle all that dependen
  
 Paste the following code to your build.js file.
  
-```
+```js
  {
      baseUrl: "js/lib",
      appDir: "..",
@@ -82,7 +80,7 @@ Paste the following code to your build.js file.
  
  Console output of build.js
  
-```
+```js
  Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
  Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/category.js
  Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/item.js
@@ -105,7 +103,7 @@ All `[webapp/js/app.js]` dependencies are now minified with Uglify.js and concat
  
  Optimized module:
  
-```
+```js
  define(["./item"], function (Item) {
      var SpecialItem = function (itemName) {
              this.color = "Default color", this.weigth = "Default weigth", Item.call(this, itemName)
@@ -120,7 +118,7 @@ In this example we will add `[webapp/js/app/category/specialItem.js]` to modules
  
 Paste following code to your build.js file.
  
-```
+```js
  {
      baseUrl: "js/lib",
      appDir: "..",
@@ -140,7 +138,7 @@ Paste following code to your build.js file.
  
  Console output of build.js
  
-```
+```js
  Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
  Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/category.js
  Uglifying file: C:/vlada/practice/require/webapp/build/dist/js/app/category/item.js
@@ -168,7 +166,7 @@ Now `[js/app/category/item.js]` is bundled with `[js/app/category/specialItem.js
  
  Optimized module: 
  
-```
+```js
  define("app/category/item", [], function () {
      var Item = function (itemName) {
              this.name = itemName
@@ -188,7 +186,7 @@ Now `[js/app/category/item.js]` is bundled with `[js/app/category/specialItem.js
 
 Paste the following code to your `build.single.js` file.
  
-```
+```js
  {
      baseUrl: "../js/lib",
      name: "../app",
@@ -206,7 +204,7 @@ Paste the following code to your `build.single.js` file.
  
  Console output of build.single.js:
  
-```
+```js
  Tracing dependencies for: ../app
  Uglifying file: C:/vlada/practice/require/webapp/build/app-built.js
  
@@ -224,7 +222,7 @@ All of our modules are now glued together into single `[webapp/build/app-built.j
 ### <a name="source" id="source">Source code listing</a>
  
  build.js
-```
+```js
  {
      baseUrl: "js/lib",
      appDir: "..",
@@ -243,7 +241,7 @@ All of our modules are now glued together into single `[webapp/build/app-built.j
 ```
  
  build.single.js
-```
+```js
  {
      baseUrl: "../js/lib",
      name: "../app",
