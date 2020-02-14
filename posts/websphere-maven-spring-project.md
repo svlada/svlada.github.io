@@ -17,7 +17,7 @@ permalink: "websphere-maven-spring-project/index.html"
  
 ### <a name="introduction" id="introduction">Introduction</a>
 
-This article describes how to create Spring web application that can be deployed on WebSphere application server. The goal is to to create maven project that can be used to  generate EAR file.
+This article describes how to create a Spring web application that can be deployed on the WebSphere application server. The goal is to create a maven project that can be used to generate an EAR file.
 
 ### <a name="maven-project-structure" id="maven-project-structure">Maven project structure</a>
 
@@ -34,13 +34,13 @@ The following list shows the multi-module maven project directory structure:
 |- pom.xml
 ```
 
-The project consists of one parent / aggregator module and two sub/child modules. For more information on multi-module please go to [maven documentation website](http://maven.apache.org/pom.html#Aggregation).
+The project consists of one parent/aggregator module and two sub/child modules. For more information on multi-module please go to [maven documentation website](http://maven.apache.org/pom.html#Aggregation).
 
 **Aggregator module**
 
-Aggregator is a top-level module used to join multiple modules.
+The aggregator is a top-level module used to join multiple modules.
 
-The following is an excerpt from aggregator pom.xml:
+The following is an excerpt from aggregator `pom.xml`:
 
 ```java
   <modelVersion>4.0.0</modelVersion>
@@ -58,7 +58,7 @@ The following is an excerpt from aggregator pom.xml:
 
 **Sub-modules**
 
-Both sub-modules (app-ear and app-webapp) must include reference to the parent module as follows:
+Both sub-modules (`app-ear` and `app-webapp`) must include reference to the parent module as follows:
 
 ```java
 <parent>
@@ -70,7 +70,7 @@ Both sub-modules (app-ear and app-webapp) must include reference to the parent m
 
 **Sub-module: app-ear** 
 
-WAR module (app-webapp) needs to be included in the list of EAR dependencies.
+WAR module (`app-webapp`) needs to be included in the list of EAR dependencies.
 
 ```java
 <dependencies>

@@ -13,7 +13,7 @@ date: 2015-01-01
 
 Need a custom software solution for your business? Please send me an [email](mailto:svlada@gmail.com) to discuss your project needs.
 
-I can help you get started on the road of building simple and well-tested working solution, together, with your team.
+I can help you get started on the road of building a simple and well-tested working solution, together, with your team.
 
 The major pain point of outsourcing a software project is finding an appropriate agency. Well established agencies are backed with sales and marketing people. Usually, you get overcharged for undelivered promises.
 
