@@ -15,7 +15,7 @@ permalink: "spring-batch-job-repository-configuration-for-websphere-and-oracle/i
 
 ### <a name="introduction" id="introduction">Introduction</a>
 
-This article describes problem with using default Spring Batch Job Repository configuration deployed on the WebSphere application server backed by Oracle database. The following is the exception you may encounter:
+This article describes a problem with using the default Spring Batch Job Repository configuration deployed on the WebSphere application server backed by the Oracle database. The following is the exception you may encounter:
 
 ```java
 org.springframework.dao.DataAccessResourceFailureException: Could not create Oracle LOB
@@ -29,7 +29,7 @@ This issue is documented on the [IBM support website](http://www-01.ibm.com/supp
 
 Proper solution is to configure ```lob-handler``` dependency of the [Job Repository](http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html) and inject the [OracleLobHandler](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/support/lob/OracleLobHandler.html) bean.
 
-In order to support WebSphere ```lobHandler``` bean needs to be instantated with approprate ```nativeJdbcExtractor``` that is supported by WebSphere.
+To support WebSphere ```lobHandler``` bean needs to be instantiated with appropriate ```nativeJdbcExtractor``` that is supported by WebSphere.
 
 The following snippet shows [Job Repository](http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html) configuration details
 
