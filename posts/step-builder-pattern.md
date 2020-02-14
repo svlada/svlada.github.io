@@ -17,21 +17,21 @@ permalink: "step-builder-pattern/index.html"
 5. <a title="Eclipse plug-in" href="#eclipse-plugin">Eclipse plug-in</a>
 
 ### <a name="introduction" id="introduction">Introduction</a>
-I've recently decided to use Amazon SES API in order to send emails to my [Microservices Weekly](http://microservicesweekly.com) subscribers. What prompted me to use Amazon SES API is its price. It's really cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a [small wrapper](https://github.com/svlada/ziggy) around their API.
+I've recently decided to use the Amazon SES API to send emails to my [Microservices Weekly](http://microservicesweekly.com) subscribers. What prompted me to use Amazon SES API is its price. It's cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a [small wrapper](https://github.com/svlada/ziggy) around their API.
 
-To make long story short, the main purpose here is to share my experience with a less well-known derivate of Builder pattern - Step Builder pattern.
+To make a long story short, the main purpose here is to share my experience with a less well-known derivate of the Builder pattern - Step Builder pattern.
 
-The Step Builder pattern is an object creation software design pattern. It's not so commonly mentioned in popular readings about design patterns. Honestly, I've heard about this pattern only recently from my collegue [@mikeladev](https://twitter.com/mikeladev).
+The Step Builder pattern is an object creation software design pattern. It's not so commonly mentioned in popular readings about design patterns. Honestly, I've heard about this pattern only recently from my colleague [@mikeladev](https://twitter.com/mikeladev).
 
-The Step Builder pattern offers some neat benefits when you compare it to traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects. 
+The Step Builder pattern offers some neat benefits when you compare it to a traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects. 
 
 ### <a name="step-builder-pattern-pros-and-cons" id="step-builder-pattern-pros-and-cons">Pros and cons</a>
 
 **Pros**
 
-1. User guidance for your API through object creation process step by step.
-2. API User can call builder's build() method once the object is in the consistent state.
-3. Reduced opportunity for creation of inconsistent object instances.
+1. User guidance for your API through the object creation process step by step.
+2. API User can call the builder's build() method once the object is in a consistent state.
+3. Reduced opportunity for the creation of inconsistent object instances.
 4. Sequencing initialization of mandatory fields.
 5. Fluent API.
 6. No need for providing validate() method for field validation.
@@ -42,7 +42,7 @@ The Step Builder pattern offers some neat benefits when you compare it to tradit
 2. No eclipse plugin to help with code generation. (On the other hand, there are plenty of code generators for Builder pattern generator).
 
 ### <a name="code-walkthrough" id="code-walkthrough">Code-walkthrough</a>
-Since the Step Builder pattern is a creational design pattern, let's focus on its purpose - creation of objects.
+Since the Step Builder pattern is a creational design pattern, let's focus on its purpose - the creation of objects.
 
 Example of API usage is shown below:
 
@@ -54,18 +54,18 @@ Email email = Email.builder().from(EmailAddress.of("Microservices Weekly <mw@mic
 	.build();
 ```
 
-Now, let's see how API is enforcing initialiation of object in the pre-defined order.
+Now, let's see how API is enforcing the initialization of an object in the pre-defined order.
 
 The following image is the graphical representation of the state machine for constructing Email object with the Step Builder pattern (mandatory values are marked purple and optional values are yellow):
 ![Builder pattern](/img/step-builder/step-builder.png)
 
 Rules of thumb for implementation:
 
-1. Add dependencies to your class. It's recommended to add private modifier to class attributes.
+1. Add dependencies to your class. It's recommended to add a private modifier to class attributes.
 2. Define creational steps as inner interfaces in your base class. 
-3. Each creational step should return next step (interface) in chain.
-4. Final step should be interface called "Build" which will provide build() method.
-5. Define one inner static Builder class which implements all of defined steps.
+3. Each creational step should return the next step (interface) in the chain.
+4. The final step should be an interface called "Build" which will provide build() method.
+5. Define one inner static Builder class that implements all of the defined steps.
 6. Implement step interface methods.
 
 ### <a name="source-code" id="source-code">Source code</a>
@@ -195,4 +195,4 @@ public class Email {
 
 So far, I haven't found a plug-in for Eclipse that provides Step Builder code generation feature.
 
-I've created a github repository with the intention of creating an Eclipse plug-in that will provide support for Step Builder pattern generation: https://github.com/svlada/alyx
+I've created a GitHub repository to create an Eclipse plug-in that will provide support for Step Builder pattern generation: https://github.com/svlada/alyx
