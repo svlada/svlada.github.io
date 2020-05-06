@@ -1,9 +1,7 @@
 ---
 layout: layouts/home.njk
 title: Have a project in mind? Let's talk!
-tags:
-  - nav
-navtitle: Have a project in mind? Let's talk!
+navtitle: Hire me
 templateClass: tmpl-post
 permalink: "hire-me/index.html"
 date: 2015-01-01
