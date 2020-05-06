@@ -162,6 +162,11 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/design-patterns/</loc>
+    <lastmod>2020-05-06</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/alpine-linux/</loc>
     <lastmod>2020-05-06</lastmod>
   </url>
@@ -198,11 +203,6 @@
   
   <url>
     <loc>https://myurl.com/tags/spring/</loc>
-    <lastmod>2020-05-06</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2020-05-06</lastmod>
   </url>
   
