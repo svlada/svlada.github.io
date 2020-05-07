@@ -4,7 +4,7 @@
 	<subtitle>Sit down, relax, mix yourself a drink and enjoy the show.</subtitle>
 	<link href="https://myurl.com/feed/feed.xml" rel="self"/>
 	<link href="https://myurl.com/"/>
-	<updated>2020-02-02T00:00:00-00:00</updated>
+	<updated>2020-01-29T00:00:00-00:00</updated>
 	<id>https://myurl.com/</id>
 	<author>
 		<name>Vladimir Stankovic</name>
@@ -838,79 +838,6 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;li&gt;&lt;a href=&quot;http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf&quot;&gt;Sagas&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3435995/&quot;&gt;Request-Reply&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>draft</title>
-		<link href="https://myurl.com/how-to-build-lightweight-api-with-kotlin-and-springboot/"/>
-		<updated>2020-02-02T00:00:00-00:00</updated>
-		<id>https://myurl.com/how-to-build-lightweight-api-with-kotlin-and-springboot/</id>
-		<content type="html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Target audience&lt;/strong&gt; &lt;em&gt;Junior developers that are fresh out of college. I hope that these series of posts will help them along the way&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;This article is an opinionated guide for building lightweight APIs using Spring Boot and Kotlin. This is the first part of the series. Upcoming posts will include implementation details and working samples on Github.&lt;/p&gt;
-&lt;p&gt;The API development on JVM is marketed as a heavyweight, dreadful process. Often, development using Java is compared to operating an armored fighting vehicle. In some cases, this is a correct statement. Big enterprises are using deprecated libraries, heavy-weight servers, and frameworks (e.g. IBM Websphere or IBM Portal). The decision to go with an enterprisey stack is job security. Hey, nobody got fired for choosing IBM.&lt;/p&gt;
-&lt;p&gt;The reality is different. Many lightweight servers and frameworks are developed on top of JVM stack, enabling a team to develop busines features at a high pace. Unmatched security and performance benefits given by state-of-the-art JVM platform are hard to find in other ecosystems (e.g. Rails or Django).&lt;/p&gt;
-&lt;p&gt;The following components are basic building blocks for any API:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Web framework&lt;/li&gt;
-&lt;li&gt;Centralized Logging&lt;/li&gt;
-&lt;li&gt;Performance metrics and monitoring&lt;/li&gt;
-&lt;li&gt;Error handling&lt;/li&gt;
-&lt;li&gt;Resource design&lt;/li&gt;
-&lt;li&gt;Documentation&lt;/li&gt;
-&lt;li&gt;CI/CD&lt;/li&gt;
-&lt;li&gt;Code versioning&lt;/li&gt;
-&lt;li&gt;Semantic versioning&lt;/li&gt;
-&lt;li&gt;Persistence layer&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The developer should try to keep code clean and simple by following by introducing:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;SOLID principles&lt;/li&gt;
-&lt;li&gt;Clean architecture and modular application design&lt;/li&gt;
-&lt;li&gt;Exception handling&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The following concepts are equaly important if you are into building microservices:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;API Gateway&lt;/li&gt;
-&lt;li&gt;Service registration and discovery&lt;/li&gt;
-&lt;li&gt;Dynamic routing and load balancing&lt;/li&gt;
-&lt;li&gt;Circuit Breaker: Fault tolerance and resilience&lt;/li&gt;
-&lt;li&gt;Distributed tracing&lt;/li&gt;
-&lt;li&gt;Dynamic Configuration&lt;/li&gt;
-&lt;li&gt;Inter-process communication&lt;/li&gt;
-&lt;li&gt;Security&lt;/li&gt;
-&lt;li&gt;Distributed Transactions&lt;/li&gt;
-&lt;li&gt;Centralized logging&lt;/li&gt;
-&lt;li&gt;Centralized metrics &amp;amp; monitoring&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;basic-building-blocks&quot;&gt;Basic building blocks &lt;a class=&quot;direct-link&quot; href=&quot;#basic-building-blocks&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;This section presents high-level overview of critical API components.&lt;/p&gt;
-&lt;h3 id=&quot;web-frameworks&quot;&gt;Web frameworks &lt;a class=&quot;direct-link&quot; href=&quot;#web-frameworks&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;This sections shows only frameworks that are stable and ready for production use.&lt;/p&gt;
-&lt;p&gt;The following is the list of battle tested JVM web frameworks. These ones can be used for critical production apps:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Spring boot&lt;/strong&gt; - The most robust JVM framework available to date.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Dropwizard&lt;/strong&gt; - Excellent lightweight stack for skilled teams. You&#39;ll need to implement a decend amount of &amp;quot;glue&amp;quot; code.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Micronaut&lt;/strong&gt; - Good for serverless applications.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Vert.x&lt;/strong&gt; - Event-driven framework with similar concepts found in NodeJS.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;For pet projects, you can test out a couple of pure kotlin that are yet to be proven in wild:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;http4k&lt;/li&gt;
-&lt;li&gt;ktor&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The focus here is on Spring Boot as it&#39;s inevitable framework that you will encounter in the wild.&lt;/p&gt;
-&lt;h3 id=&quot;code-versioning&quot;&gt;Code versioning &lt;a class=&quot;direct-link&quot; href=&quot;#code-versioning&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;resource-design&quot;&gt;Resource design &lt;a class=&quot;direct-link&quot; href=&quot;#resource-design&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;error-handling&quot;&gt;Error handling &lt;a class=&quot;direct-link&quot; href=&quot;#error-handling&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;centralized-logging&quot;&gt;Centralized Logging &lt;a class=&quot;direct-link&quot; href=&quot;#centralized-logging&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;performance-metrics-and-monitoring&quot;&gt;Performance metrics and monitoring &lt;a class=&quot;direct-link&quot; href=&quot;#performance-metrics-and-monitoring&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;persistence-layer&quot;&gt;Persistence layer &lt;a class=&quot;direct-link&quot; href=&quot;#persistence-layer&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;documentation&quot;&gt;Documentation &lt;a class=&quot;direct-link&quot; href=&quot;#documentation&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;ci%2Fcd&quot;&gt;CI/CD &lt;a class=&quot;direct-link&quot; href=&quot;#ci%2Fcd&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h3 id=&quot;semantic-versioning&quot;&gt;Semantic versioning &lt;a class=&quot;direct-link&quot; href=&quot;#semantic-versioning&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;h2 id=&quot;code-guidelines&quot;&gt;Code guidelines &lt;a class=&quot;direct-link&quot; href=&quot;#code-guidelines&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 </content>
 	</entry>
 </feed>
