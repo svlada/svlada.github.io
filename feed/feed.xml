@@ -341,7 +341,7 @@ Now Item object is available for use in our new SpecialItem module: &lt;code&gt;
 	</entry>
 	
 	<entry>
-		<title>Design patterns - Step builder</title>
+		<title>Step builder pattern</title>
 		<link href="https://myurl.com/step-builder-pattern/"/>
 		<updated>2016-06-09T00:00:00-00:00</updated>
 		<id>https://myurl.com/step-builder-pattern/</id>
@@ -399,7 +399,7 @@ Now Item object is available for use in our new SpecialItem module: &lt;code&gt;
 	</entry>
 	
 	<entry>
-		<title>JWT Authentication Tutorial - An example using Spring Boot</title>
+		<title>JWT Authentication Tutorial</title>
 		<link href="https://myurl.com/jwt-token-authentication-with-spring-boot/"/>
 		<updated>2016-09-05T00:00:00-00:00</updated>
 		<id>https://myurl.com/jwt-token-authentication-with-spring-boot/</id>
@@ -606,7 +606,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 	</entry>
 	
 	<entry>
-		<title>Spring Session Tutorial - JDBC Configuration</title>
+		<title>Spring Session JDBC Configuration</title>
 		<link href="https://myurl.com/spring-session-tutorial/"/>
 		<updated>2018-05-01T00:00:00-00:00</updated>
 		<id>https://myurl.com/spring-session-tutorial/</id>
@@ -679,7 +679,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 	</entry>
 	
 	<entry>
-		<title>Fun times with gcc, musl and Alpine linux v3.8</title>
+		<title>Virgil crypto on Alpine linux v3.8</title>
 		<link href="https://myurl.com/fun-times-with-gcc-musl-alpine-linux/"/>
 		<updated>2019-01-06T00:00:00-00:00</updated>
 		<id>https://myurl.com/fun-times-with-gcc-musl-alpine-linux/</id>
@@ -700,7 +700,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 	</entry>
 	
 	<entry>
-		<title>Microservices - Durable request reply</title>
+		<title>Durable request reply</title>
 		<link href="https://myurl.com/microservices-durable-request-reply/"/>
 		<updated>2020-01-29T00:00:00-00:00</updated>
 		<id>https://myurl.com/microservices-durable-request-reply/</id>
