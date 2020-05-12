@@ -1,5 +1,5 @@
 ---
-title: Maven project for creating Spring web applications deployable on Websphere
+title: Multi-module Websphere web application
 description: This article describes how to create Spring web application that can be deployed on WebSphere application server. The goal is to to create maven project that can be used to generate EAR file.
 date: 2015-09-10
 tags:
