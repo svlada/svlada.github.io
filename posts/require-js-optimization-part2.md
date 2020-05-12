@@ -1,5 +1,5 @@
 ---
-title: Require.js Dependency management - part2
+title: Require.js optimizer
 description: This is RequireJS optimizer tutorial, second one in the RequireJs series.
 date: 2013-11-25
 tags:
@@ -8,19 +8,16 @@ tags:
 layout: layouts/post.njk
 permalink: "require-js-optimization-part2/index.html"
 ---
-Jump to complete source code [source code](#source).
+
+This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in [part 1](/require-js-dependency-management-part1/) of the series.
  
-This is RequireJS optimizer tutorial, second one in the RequireJs series([part 1](/require-js-dependency-management-part1/),[part 2](/require-js-optimization-part2/). Reading material about r.js and RequireJS is in references section of article.
- 
-## Table of contents:
+## Table of contents
 
 1. <a href="#t0">Introduction</a>
 2. <a href="#t1">Require.js optimizer</a>
 3. <a href="#t2">Require.js optimizer dump dependencies to single file</a>
  
 ### <a name="t0" id="t0">Introduction</a>
-
-This is short article in which I will explain you how to build and optimize your javascript code with ReqireJS optimization tool r.js.
  
 James Burke [recommends](http://requirejs.org/docs/optimization.html) using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from [here](http://nodejs.org/#download).
  
@@ -50,7 +47,7 @@ Build your application with node.js and r.js executing the following command
 node r.js -o build.js
 ```
  
-For demonstration purposes I have made 3 examples of building application with RequireJS.
+The following are examples of how to build an application with RequireJS.
  
 **Example 1: Optimize modules**
 
@@ -199,7 +196,7 @@ Paste the following code to your `build.single.js` file.
 }
 ```
 
-**name** - Location of module you want to export as a single file with all dependencies.<br/>
+**name** - Location of module to be exported as a single file with all dependencies.<br/>
 **out** - File `app-built.js` is created.
  
  Console output of `build.single.js`:

@@ -1,5 +1,5 @@
 ---
-title: Require.js Dependency management - part1
+title: Require.js dependency management
 description: This is introductory RequireJS tutorial in RequireJs series.
 date: 2013-11-23
 tags:
@@ -8,9 +8,8 @@ tags:
 layout: layouts/post.njk
 permalink: "require-js-dependency-management-part1/index.html"
 ---
-Jump to complete source code <a href="#source">source code</a>.
 
-This is introductory RequireJS tutorial in RequireJs series(<a target="_blank" href="/require-js-dependency-management-part1/">part1</a>, <a target="_blank"  href="/require-js-optimization-part2/">part2</a>). Reading material about AMD and RequireJS is in references section of article.
+This is an introductory RequireJS tutorial in the series (<a target="_blank" href="/require-js-dependency-management-part1/">part1</a>, <a target="_blank"  href="/require-js-optimization-part2/">part2</a>).
  
 ## Table of contents:
 1. <a href="#t0">Introduction</a>
@@ -19,17 +18,15 @@ This is introductory RequireJS tutorial in RequireJs series(<a target="_blank" h
  
 ### <a name="t0" id="t0">Introduction</a>
 
-Before or after reading this article I strongly recommend to read documentation on [RequireJS website](http://requirejs.org/docs/start.html). James Burke did great job here.
-
-RequireJS is a Javascript file and module loader which allows for asynchronous JavaScript loading and dependency management(can be used to load more than just Javascript files).
+Before or after reading this article I strongly recommend reading the documentation on [RequireJS website](http://requirejs.org/docs/start.html). James Burke did a great job here.
  
-Require.js is a dependency management and asynchronous script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.
+Require.js is a dependency management and async script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.
  
 RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.
  
-RequireJS is built around Module pattern. Modern web applications tend to have fairly complex front-ends. Module pattern should improve maintability of our bloated javascript code. Remmember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures. 
+RequireJS is built around the Module pattern. Modern web applications tend to have fairly complex frontends. Module pattern should improve the maintainability of our bloated javascript code. Remember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures. 
  
-RequireJS is well defined and standardized. While we wait ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint how we should structure our applications. Require.js works in current browsers.
+RequireJS is well defined and standardized. While we wait for ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint on how we should structure our applications. Require.js works in current browsers.
  
 ### <a name="t1" id="t1">Basic structure</a>
  
