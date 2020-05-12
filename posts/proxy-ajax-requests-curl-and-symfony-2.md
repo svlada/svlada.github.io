@@ -1,6 +1,6 @@
 ---
-title: Proxy Ajax requests, Curl and Symfony 2
-description: This is introductory RequireJS tutorial in RequireJs series.
+title: Proxying cross-domain requests using Symfony 2
+description: Proxy Ajax requests, Curl and Symfony 2
 date: 2013-12-23
 tags:
   - symfony
@@ -8,7 +8,7 @@ tags:
 layout: layouts/post.njk
 permalink: "proxy-ajax-requests-curl-and-symfony-2/index.html"
 ---
-This article provide information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.
+This article provides information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.
  
 Jump to the [#source-code](#source-code).
  
@@ -18,7 +18,7 @@ The usual scenario looks like this:
  2. Your server forwards request to external/remote server
  3. Waiting on response from a remote server
  4. Parse and process response from remote server
- 5. Send response back tothe  lient
+ 5. Send response back to the client
  
 First, check if the client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:
  
