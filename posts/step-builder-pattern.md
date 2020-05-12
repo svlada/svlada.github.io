@@ -1,5 +1,5 @@
 ---
-title: Design patterns - Step builder
+title: Step builder pattern
 description: The Step Builder pattern is an object creation software design pattern.
 date: 2016-06-09
 tags:

@@ -1,5 +1,5 @@
 ---
-title: JWT Authentication Tutorial - An example using Spring Boot
+title: JWT Authentication Tutorial
 description: This article will guide you on how you can implement JWT authentication with Spring Boot.
 date: 2016-09-05
 tags:

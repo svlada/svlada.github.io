@@ -1,5 +1,5 @@
 ---
-title: 'Fun times with gcc, musl and Alpine linux v3.8'
+title: 'Virgil crypto on Alpine linux v3.8'
 description: Fun times with gcc, musl and Alpine linux v3.8.
 date: 2019-01-06
 tags:

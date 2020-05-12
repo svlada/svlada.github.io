@@ -1,5 +1,5 @@
 ---
-title: 'Microservices - Durable request reply'
+title: 'Durable request reply'
 description: Interprocess communication in distributed systems using Kafka.
 date: 2020-01-29
 tags:

@@ -1,5 +1,5 @@
 ---
-title: Spring Session Tutorial - JDBC Configuration
+title: Spring Session JDBC Configuration
 description: This article will show you how to configure and use Spring Session to manage session data in your web application.
 date: 2018-05-01
 tags:
