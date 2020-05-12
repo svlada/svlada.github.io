@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Require.js Dependency management - part1">
+  <meta property="og:title" content="Require.js dependency management">
   <meta property="og:site_name" content="Freelance Software Architect in Healthcare">
-  <title>Require.js Dependency management - part1</title>
+  <title>Require.js dependency management</title>
   <meta name="description" content="This is introductory RequireJS tutorial in RequireJs series.">
   <meta name="author" content="Vlada Stankovic">
 
@@ -53,10 +53,9 @@
           href="/about/">About</a></li></ul>
   </header>
   <main class="tmpl-post" >
-    <h1>Require.js Dependency management - part1</h1>
+    <h1>Require.js dependency management</h1>
 
-<p>Jump to complete source code <a href="#source">source code</a>.</p>
-<p>This is introductory RequireJS tutorial in RequireJs series(<a target="_blank" href="/require-js-dependency-management-part1/">part1</a>, <a target="_blank"  href="/require-js-optimization-part2/">part2</a>). Reading material about AMD and RequireJS is in references section of article.</p>
+<p>This is an introductory RequireJS tutorial in the series (<a target="_blank" href="/require-js-dependency-management-part1/">part1</a>, <a target="_blank"  href="/require-js-optimization-part2/">part2</a>).</p>
 <h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A">#</a></h2>
 <ol>
 <li><a href="#t0">Introduction</a></li>
@@ -64,12 +63,11 @@
 <li><a href="#t2">Prototypal inheritance and Require.js</a></li>
 </ol>
 <h3 id="introduction"><a name="t0" id="t0">Introduction</a> <a class="direct-link" href="#introduction">#</a></h3>
-<p>Before or after reading this article I strongly recommend to read documentation on <a href="http://requirejs.org/docs/start.html">RequireJS website</a>. James Burke did great job here.</p>
-<p>RequireJS is a Javascript file and module loader which allows for asynchronous JavaScript loading and dependency management(can be used to load more than just Javascript files).</p>
-<p>Require.js is a dependency management and asynchronous script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.</p>
+<p>Before or after reading this article I strongly recommend reading the documentation on <a href="http://requirejs.org/docs/start.html">RequireJS website</a>. James Burke did a great job here.</p>
+<p>Require.js is a dependency management and async script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.</p>
 <p>RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.</p>
-<p>RequireJS is built around Module pattern. Modern web applications tend to have fairly complex front-ends. Module pattern should improve maintability of our bloated javascript code. Remmember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures.</p>
-<p>RequireJS is well defined and standardized. While we wait ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint how we should structure our applications. Require.js works in current browsers.</p>
+<p>RequireJS is built around the Module pattern. Modern web applications tend to have fairly complex frontends. Module pattern should improve the maintainability of our bloated javascript code. Remember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures.</p>
+<p>RequireJS is well defined and standardized. While we wait for ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint on how we should structure our applications. Require.js works in current browsers.</p>
 <h3 id="basic-structure"><a name="t1" id="t1">Basic structure</a> <a class="direct-link" href="#basic-structure">#</a></h3>
 <p><strong>STEP 1 - How to structure RequireJS project</strong></p>
 <p>This is our sample RequireJS project structure.</p>
