@@ -244,7 +244,7 @@ Now Item object is available for use in our new SpecialItem module: &lt;code&gt;
 	</entry>
 	
 	<entry>
-		<title>Maven project for creating Spring web applications deployable on Websphere</title>
+		<title>Multi-module Websphere web application</title>
 		<link href="https://myurl.com/websphere-maven-spring-project/"/>
 		<updated>2015-09-10T00:00:00-00:00</updated>
 		<id>https://myurl.com/websphere-maven-spring-project/</id>
