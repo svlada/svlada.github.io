@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Proxy Ajax requests, Curl and Symfony 2">
+  <meta property="og:title" content="Proxying cross-domain requests using Symfony 2">
   <meta property="og:site_name" content="Freelance Software Architect in Healthcare">
-  <title>Proxy Ajax requests, Curl and Symfony 2</title>
-  <meta name="description" content="This is introductory RequireJS tutorial in RequireJs series.">
+  <title>Proxying cross-domain requests using Symfony 2</title>
+  <meta name="description" content="Proxy Ajax requests, Curl and Symfony 2">
   <meta name="author" content="Vlada Stankovic">
 
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans&display=swap" rel="stylesheet">
@@ -53,9 +53,9 @@
           href="/about/">About</a></li></ul>
   </header>
   <main class="tmpl-post" >
-    <h1>Proxy Ajax requests, Curl and Symfony 2</h1>
+    <h1>Proxying cross-domain requests using Symfony 2</h1>
 
-<p>This article provide information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.</p>
+<p>This article provides information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.</p>
 <p>Jump to the <a href="#source-code">#source-code</a>.</p>
 <p>The usual scenario looks like this:</p>
 <ol>
@@ -63,7 +63,7 @@
 <li>Your server forwards request to external/remote server</li>
 <li>Waiting on response from a remote server</li>
 <li>Parse and process response from remote server</li>
-<li>Send response back tothe  lient</li>
+<li>Send response back to the client</li>
 </ol>
 <p>First, check if the client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:</p>
 <pre class="language-php"><code class="language-php"><span class="highlight-line"> <span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">isXmlHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span></code></pre>

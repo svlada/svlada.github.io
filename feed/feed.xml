@@ -153,11 +153,11 @@ Now Item object is available for use in our new SpecialItem module: &lt;code&gt;
 	</entry>
 	
 	<entry>
-		<title>Proxy Ajax requests, Curl and Symfony 2</title>
+		<title>Proxying cross-domain requests using Symfony 2</title>
 		<link href="https://myurl.com/proxy-ajax-requests-curl-and-symfony-2/"/>
 		<updated>2013-12-23T00:00:00-00:00</updated>
 		<id>https://myurl.com/proxy-ajax-requests-curl-and-symfony-2/</id>
-		<content type="html">&lt;p&gt;This article provide information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
+		<content type="html">&lt;p&gt;This article provides information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
 &lt;p&gt;Jump to the &lt;a href=&quot;#source-code&quot;&gt;#source-code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The usual scenario looks like this:&lt;/p&gt;
 &lt;ol&gt;
@@ -165,7 +165,7 @@ Now Item object is available for use in our new SpecialItem module: &lt;code&gt;
 &lt;li&gt;Your server forwards request to external/remote server&lt;/li&gt;
 &lt;li&gt;Waiting on response from a remote server&lt;/li&gt;
 &lt;li&gt;Parse and process response from remote server&lt;/li&gt;
-&lt;li&gt;Send response back tothe  lient&lt;/li&gt;
+&lt;li&gt;Send response back to the client&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;First, check if the client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;isXmlHttpRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;

@@ -112,6 +112,16 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/symfony/</loc>
+    <lastmod>2020-05-12</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2020-05-12</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/software%20architecture/</loc>
     <lastmod>2020-05-12</lastmod>
   </url>
@@ -123,16 +133,6 @@
   
   <url>
     <loc>https://myurl.com/tags/kafka/</loc>
-    <lastmod>2020-05-12</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2020-05-12</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/curl/</loc>
     <lastmod>2020-05-12</lastmod>
   </url>
   
