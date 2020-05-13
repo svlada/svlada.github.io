@@ -61,7 +61,7 @@
 <ol>
 <li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
 <li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
-<li><a title="CURL" href="#curl">Curl</a></li>
+<li><a title="Test" href="#test">Test</a></li>
 </ol>
 <h2 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction">#</a></h2>
 <p>Before going into the more details of <a href="https://projects.spring.io/spring-session/">Spring Session</a> configuration, I will share my view on the hype around Stateful vs Stateless session management.</p>
@@ -103,7 +103,7 @@
 <li><strong>HttpSessionIdResolver</strong> - Use <code>HeaderHttpSessionIdResolver</code> if you want to send authentication token through Http headers. Please check the following <a href="https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f">git commit</a> regarding class name changes.</li>
 <li><strong>@EnableJdbcHttpSession</strong> - This annotation is needed as it exposes <code>SessionRepositoryFilter</code> that will use the database for storing session data.</li>
 </ol>
-<h2 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command">#</a></h2>
+<h2 id="test"><a name="test" id="test">Test</a> <a class="direct-link" href="#test">#</a></h2>
 <h3 id="user-login">User login <a class="direct-link" href="#user-login">#</a></h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> POST \</span><br><span class="highlight-line">  http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>login \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'cache-control: no-cache'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">F</span> username<span class="token operator">=</span>test \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">F</span> password<span class="token operator">=</span>test</span></code></pre>
