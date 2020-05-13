@@ -12,17 +12,17 @@ permalink: "spring-session-tutorial/index.html"
 
 This article will show you how to configure and use [Spring Session](https://projects.spring.io/spring-session/) to manage session data in your web application. Please check out the code from the following [GitHub repository](https://github.com/svlada/springsession-jdbc).
 
-## Table of contents:
+## Table of contents
 1. <a title="Introduction: Spring Session" href="#introduction">Introduction</a>
 2. <a title="Project setup using Maven" href="#project-setup">Project setup</a>
 2. <a title="CURL" href="#curl">Curl</a>
 
-### <a name="introduction" id="introduction">Introduction</a>
+## <a name="introduction" id="introduction">Introduction</a>
 Before we go into the more details of [Spring Session](https://projects.spring.io/spring-session/) configuration, I would like to provide my view on recent hype around Stateful vs Stateless session management.
 
 Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechanism for handling sessions. A couple of years ago I even wrote an [article on that topic](http://www.svlada.com/jwt-token-authentication-with-spring-boot/) and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.
 
-### Stateless on the  server-side
+### Stateless
 
 **Pros**
 
@@ -34,7 +34,7 @@ Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechan
 2. Potential token explosion as JSON Web Token becomes larger.
 3. Sending JSON Web Token (JWT) payload on each request can be expensive.
 
-### Stateful on server side
+### Stateful
 
 **Pros**
 
@@ -49,7 +49,7 @@ In short, don't use JSON Web Token to manage session data for your web applicati
 
 If you have microservices architecture, you can use API Gateway as a translation layer that would validate session-id and create a federated token to be used by the services. That's one use case where JSON Web Token fits nicely. 
 
-### <a name="project-setup" id="project-setup">Project setup</a>
+## <a name="project-setup" id="project-setup">Project setup</a>
 
 Include ``spring-session-core`` and ``spring-session-jdbc`` in your ``pom.xml`` file. 
 
@@ -129,7 +129,7 @@ The following list describes the WebSecurityConfig elements:
 3. **HttpSessionIdResolver** - Use ``HeaderHttpSessionIdResolver`` if you want to send authentication token through Http headers. Please check the following [git commit](https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f) regarding class name changes.
 4. **@EnableJdbcHttpSession** - This annotation is needed as it exposes ``SessionRepositoryFilter`` that will use the database for storing session data.
 
-### <a name="curl" id="curl">Curl command</a>
+## <a name="curl" id="curl">Curl command</a>
 
 ### User login
 
