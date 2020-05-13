@@ -17,11 +17,11 @@ This article will help you understand the RequireJS optimizer. An introductory a
 2. <a href="#t1">Require.js optimizer</a>
 3. <a href="#t2">Require.js optimizer dump dependencies to single file</a>
  
-### <a name="t0" id="t0">Introduction</a>
+## <a name="t0" id="t0">Introduction</a>
  
 James Burke [recommends](http://requirejs.org/docs/optimization.html) using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from [here](http://nodejs.org/#download).
  
-### <a name="t1" id="t0">Require.js optimizer</a>
+## <a name="t1" id="t0">Require.js optimizer</a>
 
 Create your build script file on following location `[webapp/build/build.js]`
 
@@ -179,7 +179,7 @@ define("app/category/item", [], function () {
 })
 ```
  
-### <a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a>
+## <a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a>
 
 Paste the following code to your `build.single.js` file.
  

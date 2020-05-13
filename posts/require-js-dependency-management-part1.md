@@ -9,30 +9,30 @@ layout: layouts/post.njk
 permalink: "require-js-dependency-management-part1/index.html"
 ---
 
-This is an introductory RequireJS tutorial in the series (<a target="_blank" href="/require-js-dependency-management-part1/">part1</a>, <a target="_blank"  href="/require-js-optimization-part2/">part2</a>).
+This is the first part of two parts series, about RequireJS dependency management. In the second part, we'll dive in into the <a target="_blank"  href="/require-js-optimization-part2/">RequireJS optimizer tool</a>.
  
-## Table of contents:
+## Table of contents
 1. <a href="#t0">Introduction</a>
 2. <a href="#t1">Basic structure</a>
 3. <a href="#t2">Prototypal inheritance and Require.js</a>
  
-### <a name="t0" id="t0">Introduction</a>
+## <a name="t0" id="t0">Introduction</a>
 
 Before or after reading this article I strongly recommend reading the documentation on [RequireJS website](http://requirejs.org/docs/start.html). James Burke did a great job here.
  
-Require.js is a dependency management and async script loading tool(AMD library). What that means? AMD stands for Asynchronous Module Definition.
+RequireJS is a dependency management and async script loading tool(AMD library). What does that mean? AMD stands for Asynchronous Module Definition.
  
 RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.
  
-RequireJS is built around the Module pattern. Modern web applications tend to have fairly complex frontends. Module pattern should improve the maintainability of our bloated javascript code. Remember those giant javascript files and svn merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures. 
+RequireJS is built around the Module pattern. Modern web applications tend to have fairly complex frontends. Module pattern should improve the maintainability of bloated javascript code. Remember those giant javascript files and merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures. 
  
-RequireJS is well defined and standardized. While we wait for ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint on how we should structure our applications. Require.js works in current browsers.
- 
-### <a name="t1" id="t1">Basic structure</a>
+RequireJS is well defined and standardized. While we wait for ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint on how we should structure our applications.
+
+## <a name="t1" id="t1">Basic structure</a>
  
 **STEP 1 - How to structure RequireJS project**
 
-This is our sample RequireJS project structure.
+The following is an exemplary project structure:
 
 ```js
  |-[wepapp]
@@ -52,11 +52,11 @@ This is our sample RequireJS project structure.
 
 Build scripts and RequireJS optimization tool r.js are inside `[build]` directory.
  
-Application code reside in `[webapp/js/app]` directory. This is place where you should place all of your /Model/View/Router/Template code.
+Application code resides in `[webapp/js/app]` directory. This is the place where you should place all of your /Model/View/Router/Template code.
  
-Libraries like jQuery, Backbone, Handlebars and others are inside `[webapp/js/lib]` directory.
+Libraries like jQuery, Backbone, Handlebars, and others are inside `[webapp/js/lib]` directory.
  
-Application config and main entry point is `[webapp/js/app.js]`
+Application config and the main entry point is `[webapp/js/app.js]`
  
 #### STEP 2 - How to include RequireJS
 
@@ -93,17 +93,17 @@ Open your `[webapp/js/app.js]` file.
  });
 ```
  
-`[baseUrl: 'js/lib']` - RequireJS loads code realative to directory specified in baseUrl. By default baseUrl is set to the same directory as data-main. If you dont specify data-main attribute and baseUrl property is not present in RequireJS config, than default path is directory that contains html page which include RequireJS library. 
+`[baseUrl: 'js/lib']` - RequireJS loads code relative to the directory specified in baseUrl. By default, baseUrl is set to the same directory as data-main. If you don't specify data-main attribute and baseUrl property is not present in RequireJS config, then the default path is the directory that contains the HTML page which includes the RequireJS library. 
 [base url](http://requirejs.org/docs/api.html#config-baseUrl)
  
 Attribute `[paths]` [paths config](http://requirejs.org/docs/api.html#config-paths)
  
 **STEP 4 - How to use requre() and define() in RequireJS**
 
-require() and define() are most important concepts in RequireJS.
+`require()` and `define()` are the most important concepts in RequireJS.
  
 **define()** - Used for module definition.
-Consists of module wrapper, dependency list and definition function.
+Consists of module wrapper, dependency list, and definition function.
  
 ```js
 define(['dependency1', ['dependency2', ['dependency3'], function(dependency1, dependency2, dependency3) {
@@ -125,11 +125,11 @@ Consists of public api, dependency list, callback function
  });
 ```
  
-### <a name="t2" id="t2">Prototypal inheritance and Require.js</a>
+## <a name="t2" id="t2">Prototypal inheritance and Require.js</a>
  
 Skip to <a href="#source">complete source code</a>.
- 
-With RequireJS you can organize your modules in separate files with ease.
+
+It's recommended to keep modules in separate files on disk. Each module should return a function or object that will be used for object construction. 
  
 Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.
 
@@ -152,12 +152,8 @@ Now we are going to add 3 object definitions to our project: Category, Item and 
  |-index.html
  |-readme.md
 ```
-
-With RequireJS you can provide function or object in return statement. We are going to use this feature to retrieve constructor functions for our object.
  
-With RequireJS you can import and use external dependencies inside your module. We are going to use this feature to achieve prototypal inheritance in RequireJS.
- 
-Category is collection of our Items: `[webapp/js/app/category/category.js]`.
+Category is collection of Items: `[webapp/js/app/category/category.js]`.
  
 ```js
  "use strict";
@@ -185,7 +181,7 @@ Category is collection of our Items: `[webapp/js/app/category/category.js]`.
  });
 ```
   
-Item is base object: `[webapp/js/app/category/item.js]`.
+Item is the base object: `[webapp/js/app/category/item.js]`.
  
 ```js
  "use strict";
@@ -205,8 +201,8 @@ Item is base object: `[webapp/js/app/category/item.js]`.
  });
 ```
  
-SpecialItem is object that extends Item. In order to extend Item object, we must import Item as a dependency<strong>['./item'].</strong>
-Now Item object is available for use in our new SpecialItem module: `[webapp/js/app/category/specialItem.js]`.
+SpecialItem is object that extends Item. To extend Item object, we must import the Item as a dependency <strong>['./item'].</strong>
+Now Item object is available for use in new SpecialItem module: `[webapp/js/app/category/specialItem.js]`.
  
 ```js
  "use strict";
@@ -320,8 +316,8 @@ Now Item object is available for use in our new SpecialItem module: `[webapp/js/
  
  });
 ```
- 
-In next part of Require.js series I will talk about r.js RequireJS optimization and build tool.
+
+<a target="_blank"  href="/require-js-optimization-part2/">The next part</a> of the RequireJS post series provides more information about r.js tool.
  
 [Follow me on Twitter](https://twitter.com/#!/svlada)
  
