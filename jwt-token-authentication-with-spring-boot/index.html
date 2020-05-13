@@ -99,16 +99,16 @@
 <p>If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:</p>
 <ol>
 <li>HTTP status <em>200 OK</em></li>
-<li>Signed JWT Access and Refresh tokens are included in the response body</li>
+<li>Signed JWT Access and Refresh tokens included in the response body</li>
 </ol>
 <p><strong>JWT Access token</strong> - used to authenticate against protected API resources. It must be set in <code>X-Authorization</code> header.</p>
 <p><strong>JWT Refresh token</strong> - used to acquire new Access Token. Token refresh is handled by the following API endpoint: <code>/api/auth/token</code>.</p>
 <p>Raw HTTP Response:</p>
 <pre class="language-json"><code class="language-json"><span class="highlight-line"><span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token property">"token"</span><span class="token operator">:</span> <span class="token string">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMDMzMzA4LCJleHAiOjE0NzIwMzQyMDh9.41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ"</span><span class="token punctuation">,</span></span><br><span class="highlight-line">  </span><br><span class="highlight-line">  <span class="token property">"refreshToken"</span><span class="token operator">:</span> <span class="token string">"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfUkVGUkVTSF9UT0tFTiJdLCJpc3MiOiJodHRwOi8vc3ZsYWRhLmNvbSIsImp0aSI6IjkwYWZlNzhjLTFkMmUtNDg2OS1hNzdlLTFkNzU0YjYwZTBjZSIsImlhdCI6MTQ3MjAzMzMwOCwiZXhwIjoxNDcyMDM2OTA4fQ.SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg"</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>JWT Access Token</strong></p>
-<p>JWT Access token can be used for authentication and authorization:</p>
+<p>JWT Access token is used for both, authentication and authorization:</p>
 <ol>
-<li>Authentication is performed by verifying JWT Access Token signature. If signature proves to be valid, access to requested API resource is granted.</li>
+<li>Authentication is performed by verifying the JWT Access Token signature. If the signature proves to be valid, access to the requested API resource is granted.</li>
 <li>Authorization is done by looking up privileges in the <strong>scope</strong> attribute of JWT Access token.</li>
 </ol>
 <p>Decoded JWT Access token has three parts: Header, Claims and Signature as shown below:</p>
