@@ -56,16 +56,16 @@
     <h1>Spring Session JDBC Configuration</h1>
 
 <p>This article will show you how to configure and use <a href="https://projects.spring.io/spring-session/">Spring Session</a> to manage session data in your web application. Please check out the code from the following <a href="https://github.com/svlada/springsession-jdbc">GitHub repository</a>.</p>
-<h2 id="table-of-contents%3A">Table of contents: <a class="direct-link" href="#table-of-contents%3A">#</a></h2>
+<h2 id="table-of-contents">Table of contents <a class="direct-link" href="#table-of-contents">#</a></h2>
 <ol>
 <li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
 <li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
 <li><a title="CURL" href="#curl">Curl</a></li>
 </ol>
-<h3 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction">#</a></h3>
+<h2 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction">#</a></h2>
 <p>Before we go into the more details of <a href="https://projects.spring.io/spring-session/">Spring Session</a> configuration, I would like to provide my view on recent hype around Stateful vs Stateless session management.</p>
 <p>Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechanism for handling sessions. A couple of years ago I even wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.</p>
-<h3 id="stateless-on-the-server-side">Stateless on the  server-side <a class="direct-link" href="#stateless-on-the-server-side">#</a></h3>
+<h3 id="stateless">Stateless <a class="direct-link" href="#stateless">#</a></h3>
 <p><strong>Pros</strong></p>
 <ol>
 <li>No need to scale session data on the server-side as the session is maintained through cryptographically signed JSON Web Token (JWT).</li>
@@ -76,7 +76,7 @@
 <li>Potential token explosion as JSON Web Token becomes larger.</li>
 <li>Sending JSON Web Token (JWT) payload on each request can be expensive.</li>
 </ol>
-<h3 id="stateful-on-server-side">Stateful on server side <a class="direct-link" href="#stateful-on-server-side">#</a></h3>
+<h3 id="stateful">Stateful <a class="direct-link" href="#stateful">#</a></h3>
 <p><strong>Pros</strong></p>
 <ol>
 <li>Ability to log-out user</li>
@@ -88,7 +88,7 @@
 </ol>
 <p>In short, don't use JSON Web Token to manage session data for your web applications. Most of the web applications will be fine with storing session-related data on Redis.</p>
 <p>If you have microservices architecture, you can use API Gateway as a translation layer that would validate session-id and create a federated token to be used by the services. That's one use case where JSON Web Token fits nicely.</p>
-<h3 id="project-setup"><a name="project-setup" id="project-setup">Project setup</a> <a class="direct-link" href="#project-setup">#</a></h3>
+<h2 id="project-setup"><a name="project-setup" id="project-setup">Project setup</a> <a class="direct-link" href="#project-setup">#</a></h2>
 <p>Include <code>spring-session-core</code> and <code>spring-session-jdbc</code> in your <code>pom.xml</code> file.</p>
 <p><strong>Maven dependencies</strong></p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>jdbc<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span></span><br><span class="highlight-line"><span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></span><br><span class="highlight-line"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span></span><br><span class="highlight-line">  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>core<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span></span><br><span class="highlight-line"><span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></span></code></pre>
@@ -102,7 +102,7 @@
 <li><strong>HttpSessionIdResolver</strong> - Use <code>HeaderHttpSessionIdResolver</code> if you want to send authentication token through Http headers. Please check the following <a href="https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f">git commit</a> regarding class name changes.</li>
 <li><strong>@EnableJdbcHttpSession</strong> - This annotation is needed as it exposes <code>SessionRepositoryFilter</code> that will use the database for storing session data.</li>
 </ol>
-<h3 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command">#</a></h3>
+<h2 id="curl-command"><a name="curl" id="curl">Curl command</a> <a class="direct-link" href="#curl-command">#</a></h2>
 <h3 id="user-login">User login <a class="direct-link" href="#user-login">#</a></h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line">curl <span class="token operator">-</span><span class="token class-name">X</span> POST \</span><br><span class="highlight-line">  http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>login \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'cache-control: no-cache'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">H</span> <span class="token string">'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'</span> \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">F</span> username<span class="token operator">=</span>test \</span><br><span class="highlight-line">  <span class="token operator">-</span><span class="token class-name">F</span> password<span class="token operator">=</span>test</span></code></pre>

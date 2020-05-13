@@ -102,27 +102,27 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/java/</loc>
-    <lastmod>2020-05-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring-security/</loc>
-    <lastmod>2020-05-13</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/software%20architecture/</loc>
     <lastmod>2020-05-13</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/microservices/</loc>
+    <loc>https://myurl.com/tags/java/</loc>
     <lastmod>2020-05-13</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/kafka/</loc>
+    <loc>https://myurl.com/tags/spring-boot/</loc>
+    <lastmod>2020-05-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/jwt/</loc>
+    <lastmod>2020-05-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring-security/</loc>
     <lastmod>2020-05-13</lastmod>
   </url>
   
@@ -147,7 +147,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-boot/</loc>
+    <loc>https://myurl.com/tags/microservices/</loc>
     <lastmod>2020-05-13</lastmod>
   </url>
   
@@ -202,7 +202,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/jwt/</loc>
+    <loc>https://myurl.com/tags/kafka/</loc>
     <lastmod>2020-05-13</lastmod>
   </url>
 </urlset>
