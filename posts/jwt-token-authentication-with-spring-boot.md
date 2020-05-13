@@ -11,28 +11,30 @@ layout: layouts/post.njk
 permalink: "jwt-token-authentication-with-spring-boot/index.html"
 ---
 
-## Table of contents:
+## Table of contents
 1. <a title="Introduction: JWT Token" href="#introduction">Introduction</a>
-2. <a title="pre-requisites" href="#pre-requisites">PRE-requisites</a>
+2. <a title="pre-requisites" href="#pre-requisites">Prerequisite</a>
 3. <a title="Spring Security: Ajax authentication" href="#ajax-authentication">Ajax authentication</a>
 4. <a title="jwt-authentication" href="#jwt-authentication">JWT Authentication</a>
 
-### <a name="introduction" id="introduction">Introduction</a>
+## <a name="introduction" id="introduction">Introduction</a>
 
-This article will guide you on how you can implement JWT authentication with Spring Boot.
+This article is a guide on implementing JWT authentication with Spring Boot.
+
+At the minimum client needs to exchange username and password for JWT to be used for sending authenticated requests.
 
 The following are basic flows for implementing API security:
 
-1. Ajax Authentication
+1. Ajax Login Authentication
 2. JWT Token Authentication
 
-### <a name="pre-requisites" id="pre-requisites">PRE-requisites</a>
+## <a name="pre-requisites" id="pre-requisites">Prerequisite</a>
 
-Please check out the sample code/project from the following GitHub repository: https://github.com/svlada/springboot-security-jwt before going further reading the article.
+Please checkout the sample code/project from the following GitHub [repository](https://github.com/svlada/springboot-security-jwt).
 
 This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (```/jwt-demo/src/main/resources/data.sql```).
 
-Overall project structure is shown below:
+The overall project structure is shown below:
 
 ```java
 +---main
@@ -62,9 +64,9 @@ Overall project structure is shown below:
 |       \---templates
 ```
 
-### <a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a>
+## <a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a>
 
-When we talk about Ajax authentication we usually refer to process where user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.
+When we talk about Ajax authentication we usually refer to a process where a user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.
 
 In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.
 
@@ -81,9 +83,9 @@ Before we get to the details of the implementation, let's look at the request/re
 
 **Ajax authentication request example**
 
-The Authentication API allows user to provide credentials to exchange for authentication token.
+The Authentication API allows users to exchange credentials for an authentication token.
 
-In our example, client initiates authentication process by invoking Authentication API endpoint (```/api/auth/login```).
+In this example, the client initiates the authentication process by invoking Authentication API endpoint (```/api/auth/login```).
 
 Raw HTTP request:
 
@@ -489,7 +491,7 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
 
 ```
 
-### <a name="jwt-authentication" id="jwt-authentication">JWT Authentication</a>
+## <a name="jwt-authentication" id="jwt-authentication">JWT Authentication</a>
 
 Token based authentication schema's became immensely popular in recent times, as they provide important benefits when compared to sessions/cookies:
 
