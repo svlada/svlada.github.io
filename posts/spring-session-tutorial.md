@@ -17,7 +17,7 @@ Please checkout the code from the following GitHub [repository](https://github.c
 ## Table of contents
 1. <a title="Introduction: Spring Session" href="#introduction">Introduction</a>
 2. <a title="Project setup using Maven" href="#project-setup">Project setup</a>
-2. <a title="CURL" href="#curl">Curl</a>
+2. <a title="Test" href="#test">Test</a>
 
 ## <a name="introduction" id="introduction">Introduction</a>
 Before going into the more details of [Spring Session](https://projects.spring.io/spring-session/) configuration, I will share my view on the hype around Stateful vs Stateless session management.
@@ -131,7 +131,7 @@ The following list describes the WebSecurityConfig elements:
 3. **HttpSessionIdResolver** - Use ``HeaderHttpSessionIdResolver`` if you want to send authentication token through Http headers. Please check the following [git commit](https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f) regarding class name changes.
 4. **@EnableJdbcHttpSession** - This annotation is needed as it exposes ``SessionRepositoryFilter`` that will use the database for storing session data.
 
-## <a name="curl" id="curl">Curl command</a>
+## <a name="test" id="test">Test</a>
 
 ### User login
 
