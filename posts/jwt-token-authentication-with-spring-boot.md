@@ -116,7 +116,7 @@ curl -X POST -H "X-Requested-With: XMLHttpRequest" -H "Content-Type: application
 If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:
 
 1. HTTP status _200 OK_
-2. Signed JWT Access and Refresh tokens are included in the response body
+2. Signed JWT Access and Refresh tokens included in the response body
 
 **JWT Access token** - used to authenticate against protected API resources. It must be set in ```X-Authorization``` header.
 
@@ -134,9 +134,9 @@ Raw HTTP Response:
 
 **JWT Access Token**
 
-JWT Access token can be used for authentication and authorization:
+JWT Access token is used for both, authentication and authorization:
 
-1. Authentication is performed by verifying JWT Access Token signature. If signature proves to be valid, access to requested API resource is granted.
+1. Authentication is performed by verifying the JWT Access Token signature. If the signature proves to be valid, access to the requested API resource is granted.
 2. Authorization is done by looking up privileges in the **scope** attribute of JWT Access token.
 
 Decoded JWT Access token has three parts: Header, Claims and Signature as shown below:
