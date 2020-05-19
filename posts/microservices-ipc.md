@@ -10,7 +10,7 @@ layout: layouts/post.njk
 permalink: "microservices-durable-request-reply/index.html"
 ---
 
-The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given through the article are based on the Kafka, which is distributed commit log implementation. [Reactive Manifesto](https://www.reactivemanifesto.org/glossary) explains the main characteristics of a message-driven architecture.
+The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given are based on the Kafka, which is distributed commit log implementation. [Reactive Manifesto](https://www.reactivemanifesto.org/glossary) explains the main characteristics of a message-driven architecture.
 
 The following system design diagram shows a bird's-eye view of the exemplary microservice architecture:
 
