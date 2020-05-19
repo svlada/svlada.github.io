@@ -704,7 +704,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 		<link href="https://myurl.com/microservices-durable-request-reply/"/>
 		<updated>2020-01-29T00:00:00-00:00</updated>
 		<id>https://myurl.com/microservices-durable-request-reply/</id>
-		<content type="html">&lt;p&gt;The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given through the article are based on the Kafka, which is distributed commit log implementation. &lt;a href=&quot;https://www.reactivemanifesto.org/glossary&quot;&gt;Reactive Manifesto&lt;/a&gt; explains the main characteristics of a message-driven architecture.&lt;/p&gt;
+		<content type="html">&lt;p&gt;The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given are based on the Kafka, which is distributed commit log implementation. &lt;a href=&quot;https://www.reactivemanifesto.org/glossary&quot;&gt;Reactive Manifesto&lt;/a&gt; explains the main characteristics of a message-driven architecture.&lt;/p&gt;
 &lt;p&gt;The following system design diagram shows a bird&#39;s-eye view of the exemplary microservice architecture:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://myurl.com/img/microservices-durable-request-reply/microservices.png&quot; alt=&quot;microserices&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Each of the following sections describes the important system components.&lt;/p&gt;
