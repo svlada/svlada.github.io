@@ -16,7 +16,7 @@
 
 
   <link rel="stylesheet" href="{{ '/css/prism-base16-ateliersulphurpool.light.css' | url }}">
-  <link rel="stylesheet" href="{{ '/css/index.css' | url }}?v=1.1.1">
+  <link rel="stylesheet" href="{{ '/css/index.css' | url }}?v=1.1.2">
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -49,9 +49,17 @@
   <header>
     <ul class="nav">
       {%- for nav in collections.nav | reverse -%}
-      <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}"><a
-          href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a></li>
+        {% if nav.url == '/' %}
+        <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
+          <a href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
+        </li>
+        {% elseif nav.url == '/about/' %}
+        <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
+          <a href="{{ nav.url | url }}">svlada</a>
+        </li>
+        {% endif %}
       {%- endfor -%}
+
     </ul>
   </header>
   <main{% if templateClass %} class="{{ templateClass }}" {% endif %}>
