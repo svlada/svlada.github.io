@@ -21,7 +21,7 @@ I've recently decided to use the Amazon SES API to send emails to my [Microservi
 
 To make a long story short, the main purpose here is to share my experience with a less well-known derivate of the Builder pattern - Step Builder pattern.
 
-The Step Builder pattern is an object creation software design pattern. It's not so commonly mentioned in popular readings about design patterns. Honestly, I've heard about this pattern only recently from my colleague [@mikeladev](https://twitter.com/mikeladev).
+The Step Builder pattern is an object creation software design pattern. It's not so commonly mentioned in popular readings about design patterns.
 
 The Step Builder pattern offers some neat benefits when you compare it to a traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects. 
 
