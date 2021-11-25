@@ -64,7 +64,7 @@
 <p>The following system design diagram shows a bird's-eye view of the exemplary microservice architecture:</p>
 <p><img src="/img/microservices-durable-request-reply/microservices.png" alt="microserices"></p>
 <p>Each of the following sections describes the important system components.</p>
-<h2 id="api-gateway">API Gateway <a class="direct-link" href="#api-gateway">#</a></h2>
+<h2 id="api-gateway">API Gateway <a class="direct-link" href="#api-gateway" aria-hidden="true">#</a></h2>
 <p>The API Gateway is an infrastructural pattern for interfacing external clients with internal services. This component can be implemented using one of the non-blocking frameworks (elixir, spring-reactive, node.js, zuul 2, etc.). Almost every cloud provider like Amazon or Google offers API Gateway as a managed service. The development team should select the appropriate tool based on project budget and architectural decisions.</p>
 <p>The responsibilities of an API gateway can vary from system to system. The most common ones are:</p>
 <ol>
@@ -83,7 +83,7 @@
 <li>Resource aggregation</li>
 </ol>
 <p>The important part of the API Gateway to focus on is the Request router. Request router routes API requests to internal services. Introducing the facade layer in front of services improves the isolation of each service. This means that the contract with external clients can remain unchanged while internal services evolve. Services should be configured to communicate through message passing. Messages are commands that are dispatched to services.</p>
-<h2 id="request-handling-flow">Request handling flow <a class="direct-link" href="#request-handling-flow">#</a></h2>
+<h2 id="request-handling-flow">Request handling flow <a class="direct-link" href="#request-handling-flow" aria-hidden="true">#</a></h2>
 <p>The overall request handling flow is described as follows:</p>
 <ol>
 <li><strong>Accepting API request</strong> is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.</li>
@@ -95,7 +95,7 @@
 </ol>
 <p>Using a non-blocking approach provides the ability to handle a higher number of Http connections with fewer resources, thus increasing system availability with a benefit of greater system elasticity.</p>
 <p>The next section describes a durable request/reply mechanism for inter-process communication.</p>
-<h2 id="durable-request-reply-flow">Durable request reply flow <a class="direct-link" href="#durable-request-reply-flow">#</a></h2>
+<h2 id="durable-request-reply-flow">Durable request reply flow <a class="direct-link" href="#durable-request-reply-flow" aria-hidden="true">#</a></h2>
 <p>Internal services can use two types of communication: <strong>synchronous</strong> or <strong>asynchronous</strong>.</p>
 <p>The majority of development teams favor synchronous (i.e. Rest) communication between internal and external services. Rest communication between internal services is troublesome as it imposes the following problems:</p>
 <ul>
@@ -144,7 +144,7 @@
 <p><em>All the write operations within a transaction have an all-or-nothing effect, that is, either the transaction succeeds and all writes take effect, or otherwise, the database is  brought to a state that does not include any of the writes of the transaction.</em></p>
 </blockquote>
 <p>Common use case is a need to commit business transaction against local database and reliably dispatch command to a Kafka broker. Command should be dispatched only if transaction suceeds. The following are possible approaches for tackling this problem:</p>
-<h3 id="use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context">Use KafkaProducer to send command to a broker inside of business logic transactional context <a class="direct-link" href="#use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context">#</a></h3>
+<h3 id="use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context">Use KafkaProducer to send command to a broker inside of business logic transactional context <a class="direct-link" href="#use-kafkaproducer-to-send-command-to-a-broker-inside-of-business-logic-transactional-context" aria-hidden="true">#</a></h3>
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Transactional</span></span><br><span class="highlight-line">fun <span class="token function">businessTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">saveToDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">  <span class="token function">dispatchCommandToKafka</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>Pros</strong></p>
 <ol>
@@ -155,7 +155,7 @@
 <li>Network failures can cause rollback of local transaction.</li>
 <li>Code is occuping expensive database connection for non-db work accross network.</li>
 </ol>
-<h3 id="use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context">Use KafkaProducer to send command to a broker outside of business logic transactional context <a class="direct-link" href="#use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context">#</a></h3>
+<h3 id="use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context">Use KafkaProducer to send command to a broker outside of business logic transactional context <a class="direct-link" href="#use-kafkaproducer-to-send-command-to-a-broker-outside-of-business-logic-transactional-context" aria-hidden="true">#</a></h3>
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Transactional</span></span><br><span class="highlight-line">fun <span class="token function">businessTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">saveToDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span><br><span class="highlight-line"></span><br><span class="highlight-line">fun <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">saveToDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line">  <span class="token function">dispatchCommandToKafka</span><span class="token punctuation">(</span><span class="token punctuation">)</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 <p><strong>Pros</strong></p>
 <ol>
@@ -166,7 +166,7 @@
 <li>Leads to error-prone code needed to check if local transaction succeeded or not.</li>
 <li>In case of service or Kafka broker failures no way to have a strong guarantee that command will be delivered.</li>
 </ol>
-<h3 id="proper-solution%3A-use-transactional-outbox">Proper solution: Use transactional outbox <a class="direct-link" href="#proper-solution%3A-use-transactional-outbox">#</a></h3>
+<h3 id="proper-solution%3A-use-transactional-outbox">Proper solution: Use transactional outbox <a class="direct-link" href="#proper-solution%3A-use-transactional-outbox" aria-hidden="true">#</a></h3>
 <p>Commands are persisted to outbox table in the same transaction with business logic. Debezium, which is a transaction log miner, picks up the record and pushes it to Kafka.</p>
 <p>One might argue that we don't need Debezium and that Kafka Connect can be used to query for commands from the Outbox table. Big drawback of this approach is possibility to skip some commands due to transaction isolation. If you don't want to lose any commands go with transactional log miner.</p>
 <p>The following image shows a transactional outbox pattern:</p>
@@ -180,7 +180,7 @@
 <ol>
 <li>Another component in system to manage (e.g. Debezium)</li>
 </ol>
-<h2 id="sagas">Sagas <a class="direct-link" href="#sagas">#</a></h2>
+<h2 id="sagas">Sagas <a class="direct-link" href="#sagas" aria-hidden="true">#</a></h2>
 <p>Handling business transactions that span different services is done through orchestration and usage of the Saga concept defined by Garzia in early 1960. Transactional outbox is a useful pattern used to implement orchestration using Sagas.</p>
 <p>How to handle and implement distributed transactions using Sagas will be explained in the next article. Stay tuned!</p>
 <p>References</p>
