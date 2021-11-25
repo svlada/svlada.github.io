@@ -7,24 +7,26 @@ date: 2020-01-01
 ---
 {% set postslist = collections.posts %}
 
-<p>Look behind you, a three-headed monkey.</p>
+<!-- <p>Look behind you, a three-headed monkey.</p> -->
 
-<h1>Writting</h1>
+<a class="purple-text font-extra-bold " href="/about" target="_self">Now.</a>
+
+
+<h2>Writting</h2>
 <ul class="postlist">
   {% for post in postslist | reverse %}
     {% if post.data.title != "draft" %}
     <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-       <a href="{{ post.url | url }}" class="postlist-link">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+       <a href="{{ post.url | url }}" class="postlist-link"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+       <i style="font-weight:300!important">{{ post.data.date | readableDate() }}</i>
     </li>
     {% endif %}
   {% endfor %}
 </ul>
 
-<h1>Chicken Scratches</h1>
+
+
+<!--<h1>Chicken Scratches</h1>
 <ul class="postlist">
   <li class="postlist-item"><a href="/art" class="postlist-link">Reveal the unknown</a></li>
-</ul>
-
-
-
-
+</ul>-->
