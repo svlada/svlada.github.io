@@ -3,11 +3,11 @@ layout: layouts/home.njk
 tags:
   - nav
 navtitle: "Writting"
-date: 2020-02-01
+date: 2017-02-01
 ---
 {% set postslist = collections.posts %}
 
-<h2>Writting</h2>
+
 <ul class="postlist">
   {% for post in postslist | reverse %}
     {% if post.data.title != "draft" %}

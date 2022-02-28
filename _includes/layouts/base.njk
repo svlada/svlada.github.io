@@ -54,15 +54,14 @@
       {%- for nav in collections.nav | reverse -%}
         {% if nav.url == '/' %}
         <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
-          <a href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
+          <a class="purple-text font-extra-bold" href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
         </li>
-        {% elseif nav.url == '/about/' %}
+        {% elseif nav.url == '/writting/' %}
         <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
-          <a href="{{ nav.url | url }}">svlada</a>
+          <a class="purple-text font-extra-bold" href="{{ nav.url | url }}">posts  </a>
         </li>
-        {% endif %}
+        {% endif %} 
       {%- endfor -%}
-
     </ul>
     
   </header>
