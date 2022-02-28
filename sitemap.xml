@@ -102,31 +102,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/software%20architecture/</loc>
-    <lastmod>2022-02-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/microservices/</loc>
-    <lastmod>2022-02-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/kafka/</loc>
-    <lastmod>2022-02-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/javascript/</loc>
-    <lastmod>2022-02-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
-    <lastmod>2022-02-28</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/java/</loc>
     <lastmod>2022-02-28</lastmod>
   </url>
@@ -147,12 +122,37 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/software%20architecture/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/microservices/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/kafka/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/symfony/</loc>
     <lastmod>2022-02-28</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/javascript/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/require-js/</loc>
     <lastmod>2022-02-28</lastmod>
   </url>
   
