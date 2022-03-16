@@ -50,14 +50,14 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Merriweather Sans', sans-serif !important;
+  font-family: sans-serif !important;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   color: var(--font);
   background-color: var(--bg);
 }
 
-h1, h2, h3, h4 { font-family: "Alegreya"; }
+h1, h2, h3, h4 { font-family: "Rubik", sans-serif; }
 
 h1 {
   font-weight: 400;
@@ -65,7 +65,7 @@ h1 {
 }
 
 h2 {
-  font-weight: 400;
+  font-weight: 600;
 }
 
 h4 { font-size: 16px; }
@@ -356,5 +356,16 @@ ol .toc { margin-bottom: 0; }
 }
 
 .font-extra-bold {font-weight: 800; }
-.purple-text { color: #5E6AD2 !important; }
+.purple-text { color: #5500ff !important; color: #007aff !important; }
 .contact-me { border: 1px solid; padding: 8px; border-radius: 4px; font-style: normal; text-decoration: none; }
+h2.hl {
+  /* color: #333; */
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  font-size: .9rem;
+  margin-bottom: 0;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.pt-30 { padding-top: 30px; }

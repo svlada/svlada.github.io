@@ -9,44 +9,47 @@ date: 2020-01-01
 
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
 
-<p><strong>Hey. I am Vlada, a software engineer with more than 10 years professional experience, based in Serbia.</strong></p>
-<i>Are you looking for help? I'm open for contract work.</i>
-<h2>Experience</h2>
+<h2>Hey &#128075;. I am Vlada.</h2>
+<p><strong>Software engineer focused on Java, Go, React; and PostgreSQL.</strong></p>
 
-<p>Solid understanding of designing systems for healthcare, including HIPAA compliance and FHIR APIs. Over the years, I've built such systems for US startups and enterprises.</p>
+<h2 class="hl">Contract work</h2>
 
 <p>Helping non-technical founders to plan, design, and build digital products.</p>
 
+<p>Solid understanding of designing systems for healthcare, including HIPAA compliance and FHIR APIs. Over the years, I've built such systems for US startups and enterprises.</p>
+
+<p>If I can help you out, <a class="purple-text" href="mailto:svlada@gmail.com">please get in touch</a>!</p>
 <!-- <p>Currently working for <a href="http://www.codereflect.io" target="_blank">Reflect</a>, a software company, as a principal engineering manager.</p> -->
 
-<h2>Skills</h2>
-<ul>
-  <li>Java / Kotlin / Golang</li>
-  <li>Postgres</li>
-  <li>Kafka</li>
-</ul>
 
-<p>These are the principles I consider important:</p>
+
+<!-- <p>These are the principles I consider important:</p>
 <ul>
   <li>Time gained now is time lost later</li>
   <li>Technical debt can never be settled</li>
   <li>Simple, intention revealing, clean code</li>
   <li>Rewrite, don't refactor</li>
-</ul>
+</ul> -->
 
-<h2>Social</h2>
-<ul>
-  <li><a href="https://github.com/svlada" target="_blank">GitHub</a> </li>
-  <li><a href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a> </li>
-  <li><a href="https://twitter.com/svlada" target="_blank">Twitter</a> </li>
-  <li><a href="https://t.me/svlada1" target="_blank">Telegram</a> </li>
-  <li><a href="https://keybase.io/svlada" target="_blank">Keybase</a></li>
-</ul>
-
-
-
-
+<h2 class="hl">Social</h2>
+<p>
+You can find me on <a class="purple-text" href="https://github.com/svlada" target="_blank">GitHub</a>, <a class="purple-text" href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a> and <a class="purple-text" href="https://twitter.com/svlada" target="_blank">Twitter</a>.
+</p>
 <!--<h1>Chicken Scratches</h1>
 <ul class="postlist">
   <li class="postlist-item"><a href="/art" class="postlist-link">Reveal the unknown</a></li>
 </ul>-->
+{% set postslist = collections.posts %}
+
+<h2 class="pt-30">Archive</h2>
+
+<ul class="postlist">
+  {% for post in postslist | reverse %}
+    {% if post.data.title != "draft" %}
+    <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
+       <a href="{{ post.url | url }}" class="postlist-link purple-text"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+       <i style="font-weight:300!important">{{ post.data.date | readableDate() }}</i>
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
