@@ -242,7 +242,8 @@ pre {
 }
 .nav-item {
   display: inline-block;
-  font-size: 1.45rem;
+  font-size: 1rem;
+  /* padding-right: 20px; */
 }
 .nav-item a:hover {
   background-color: #fffb99;
@@ -260,18 +261,17 @@ ul li.nav-item-active a {
 }
 
 .nav-item a {
-  font-family: "Alegreya";
   line-height: 1.75;
-  font-size: 1.45rem;
+  font-size: 1rem;
 }
 
-.nav li + li::before {
+/* .nav li + li::before {
   content: " / ";
   margin-right: 0px;
-  font-family: "Alegreya";
-  line-height: 1.75;
-  font-size: 1.45rem;
-} 
+
+  line-height: 1;
+  font-size: 1rem;
+}  */
 
 /* Posts list */
 .postlist {

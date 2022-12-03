@@ -52,11 +52,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/writting/</loc>
-    <lastmod>2017-02-01</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/about/</loc>
     <lastmod>2018-01-01</lastmod>
   </url>
@@ -72,7 +67,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/posts/</loc>
+    <loc>https://myurl.com/archive/</loc>
     <lastmod>2019-01-01</lastmod>
   </url>
   
@@ -122,6 +117,16 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/symfony/</loc>
+    <lastmod>2022-12-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2022-12-03</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/software%20architecture/</loc>
     <lastmod>2022-12-03</lastmod>
   </url>
@@ -133,16 +138,6 @@
   
   <url>
     <loc>https://myurl.com/tags/kafka/</loc>
-    <lastmod>2022-12-03</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2022-12-03</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/curl/</loc>
     <lastmod>2022-12-03</lastmod>
   </url>
   
