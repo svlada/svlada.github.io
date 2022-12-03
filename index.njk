@@ -2,24 +2,16 @@
 layout: layouts/home.njk
 tags:
   - nav
-navtitle: "~"
+navtitle: "Blog"
 date: 2020-01-01
 ---
 {% set postslist = collections.posts %}
 
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
 
-<div class="text-center hp">
-<img src="/img/avatar.new.4x6.jpg" alt="" style="border-radius: 9999px; width: 9rem; height: 9rem">
-
-<h1 class="pt-30">Vlada Stankovic</h1>
-<h2 class="sub">Software engineer / Consultant</strong></h2>
-<p><a class="purple-text" href="https://github.com/svlada" target="_blank">GitHub</a>, <a class="purple-text" href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a>,  <a class="purple-text" href="https://twitter.com/svlada" target="_blank">Twitter</a>, <a class="purple-text" href="mailto:svlada@gmail.com">Email</a></p>
-
-</div>
 {% set postslist = collections.posts %}
 
-<h2 class="pt-30">Blog</h2>
+
 
 <ul class="postlist">
   {% for post in postslist | reverse %}
