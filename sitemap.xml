@@ -117,16 +117,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2022-12-03</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/curl/</loc>
-    <lastmod>2022-12-03</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/software%20architecture/</loc>
     <lastmod>2022-12-03</lastmod>
   </url>
@@ -138,6 +128,16 @@
   
   <url>
     <loc>https://myurl.com/tags/kafka/</loc>
+    <lastmod>2022-12-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/symfony/</loc>
+    <lastmod>2022-12-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/curl/</loc>
     <lastmod>2022-12-03</lastmod>
   </url>
   
@@ -167,6 +167,16 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/voxxed-days/</loc>
+    <lastmod>2022-12-03</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <lastmod>2022-12-03</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/alpine-linux/</loc>
     <lastmod>2022-12-03</lastmod>
   </url>
@@ -183,16 +193,6 @@
   
   <url>
     <loc>https://myurl.com/tags/crypto/</loc>
-    <lastmod>2022-12-03</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/voxxed-days/</loc>
-    <lastmod>2022-12-03</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/m-m-challange/</loc>
     <lastmod>2022-12-03</lastmod>
   </url>
   
