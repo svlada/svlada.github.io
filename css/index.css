@@ -112,11 +112,11 @@ img {
   max-width: none;
 }
 
-p,
-.tmpl-post li {
+p, .tmpl-post li {
   line-height: 1.55;
   line-height: 1.75;
   padding-bottom: 3px;
+  font-weight: 500;
 }
 
 a[href] {
