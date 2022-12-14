@@ -46,21 +46,25 @@
   <header>
   
     <ul class="nav">
-      <li class="nav-item" style="padding-right: 20px"><strong style="color: #10395b !important">Vladimir Stankovic</strong></li>
+      <li class="nav-item" style="padding-right: 20px"><strong>
+        <a class="purple-text" style="color: #10395b !important" href="/">Vladimir Stankovic</a>
+      </strong></li>
+      
       {%- for nav in collections.nav | reverse -%}
         {% if nav.url == '/' %}
         <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}" >
-          <a class="purple-text font-extra-bold" href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
+          <a class="purple-text " href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
         </li>
         {% else %}
         <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
-          <a class="purple-text font-extra-bold" href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
+          <a class="purple-text " href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
         </li>
         {% endif %} 
       {%- endfor -%}
     </ul>
-    
+   
   </header>
+  
   <main{% if templateClass %} class="{{ templateClass }}" {% endif %}>
     {{ content | safe }}
     </main>
