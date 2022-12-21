@@ -8,17 +8,22 @@ date: 2020-01-01
 {% set postslist = collections.posts %}
 
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
+<p>Hi! My name is Vladimir. I work with businesses big and small to develop software using web and cloud technologies.</p>
 
+
+<p>By day I'm an engineering manager at <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">Reflect</a> where I work on core plaftorm APIs, and spend a lot of time designing event driven systems.
+  </p>
+  
+<p>I used to work in healthcare, where I built APIs, set up HIPAA-compliant environments, and made apps that make it easier for healthcare providers to share data.</p>
 {% set postslist = collections.posts %}
-
 
 
 <ul class="postlist">
   {% for post in postslist | reverse %}
     {% if post.data.title != "draft" %}
     <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-       <a href="{{ post.url | url }}" class="postlist-link purple-text"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
-       <i style="font-weight:300!important">{{ post.data.date | readableDate() }}</i>
+      <i style="font-weight:300!important">{{ post.data.date | readableDate() }}</i>
+      <a href="{{ post.url | url }}" class="postlist-link purple-text"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a> 
     </li>
     {% endif %}
   {% endfor %}

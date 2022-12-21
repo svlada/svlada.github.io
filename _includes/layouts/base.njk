@@ -11,7 +11,6 @@
   <meta name="description" content="{{ renderData.description or description or metadata.description }}">
   <meta name="author" content="Vlada Stankovic">
 
-
   <link rel="stylesheet" href="{{ '/css/prism-base16-ateliersulphurpool.light.css' | url }}">
   <link rel="stylesheet" href="{{ '/css/index.css' | url }}?v=1.1.5">
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
@@ -44,25 +43,29 @@
 
 <body class="center">
   <header>
+    <img src="/img/avatar.new.4x6.jpg" alt="" style="border-radius: 12px; width: 3rem; height: 3rem; float: left; margin-right: 20px">
+    <div style="float: left">
+      <ul class="nav">
+        <li class="nav-item" style="padding-right: 20px"><strong>
+          <a class="purple-text" href="/">Vladimir Stankovic</a>
+        </strong></li>
+        
+        <!-- {%- for nav in collections.nav | reverse -%}
+          {% if nav.url == '/' %}
+          <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}" >
+            <a class="purple-text " href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
+          </li>
+          {% else %}
+          <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
+            <a class="purple-text " href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
+          </li>
+          {% endif %} 
+        {%- endfor -%} -->
+      </ul>
   
-    <ul class="nav">
-      <li class="nav-item" style="padding-right: 20px"><strong>
-        <a class="purple-text" style="color: #10395b !important" href="/">Vladimir Stankovic</a>
-      </strong></li>
-      
-      {%- for nav in collections.nav | reverse -%}
-        {% if nav.url == '/' %}
-        <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}" >
-          <a class="purple-text " href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
-        </li>
-        {% else %}
-        <li class="nav-item{% if nav.url == page.url %} nav-item-active{% endif %}">
-          <a class="purple-text " href="{{ nav.url | url }}">{{ nav.data.navtitle }}</a>
-        </li>
-        {% endif %} 
-      {%- endfor -%}
-    </ul>
-   
+      <p style="width: 100%; float: left; margin: 0; font-size:12px"><a class="purple-text" href="https://github.com/svlada" target="_blank">GitHub</a>, <a class="purple-text" href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a>,  <a class="purple-text" href="https://twitter.com/svlada" target="_blank">Twitter</a>, <a class="purple-text" href="mailto:svlada@gmail.com">Email</a></p>
+    </div>
+    
   </header>
   
   <main{% if templateClass %} class="{{ templateClass }}" {% endif %}>
