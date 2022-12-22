@@ -12,7 +12,7 @@
   <meta name="author" content="Vlada Stankovic">
 
   <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css">
-  <link rel="stylesheet" href="/css/index.css?v=1.1.5">
+  <link rel="stylesheet" href="/css/index.css?v=1.1.6">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -87,8 +87,9 @@
 <p>The problem with this commit is that previosly <code>/lib64</code> was just a symlink to <code>lib</code> directory. With this commit this is no longer true.</p>
 <p><code>ld-linux-x86-64.so.2</code> is copied to <code>/lib64</code> and not to <code>lib</code> thus breaking the code. Quick and dirty solution was to copy <code>ld-linux-x86-64.so.2</code> to <code>lib</code> (e.g. <code>cp /lib64/ld-linux-x86-64.so.2 /lib/</code>).</p>
 
+
 <p><a href="/">← Home</a></p>
-<code>Date: 2019 </code>
+
 <div id="disqus_thread"></div>
 <script>
 
