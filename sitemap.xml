@@ -97,26 +97,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/java/</loc>
-    <lastmod>2023-01-11</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring-boot/</loc>
-    <lastmod>2023-01-11</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/jwt/</loc>
-    <lastmod>2023-01-11</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring-security/</loc>
-    <lastmod>2023-01-11</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/software%20architecture/</loc>
     <lastmod>2023-01-11</lastmod>
   </url>
@@ -152,7 +132,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-batch/</loc>
+    <loc>https://myurl.com/tags/java/</loc>
     <lastmod>2023-01-11</lastmod>
   </url>
   
@@ -187,12 +167,32 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/spring-boot/</loc>
+    <lastmod>2023-01-11</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/jwt/</loc>
+    <lastmod>2023-01-11</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring-security/</loc>
+    <lastmod>2023-01-11</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/voxxed-days/</loc>
     <lastmod>2023-01-11</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <lastmod>2023-01-11</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring-batch/</loc>
     <lastmod>2023-01-11</lastmod>
   </url>
   
