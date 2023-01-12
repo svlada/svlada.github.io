@@ -286,7 +286,7 @@ ul li.nav-item-active a {
 }
 .postlist-item {
   counter-increment: start-from -1;
-  line-height: 2rem;
+  line-height: 1.1rem;
 }
 
 .postlist-date {
