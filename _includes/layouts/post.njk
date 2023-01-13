@@ -4,6 +4,8 @@ templateClass: tmpl-post
 ---
 <h1>{{ title }}</h1>
 
+<p><strong>{{ date | full_date() }}</strong></p>
+
 {{ content | safe }}
 
 <p><a href="{{ '/' | url }}">← Home</a></p>

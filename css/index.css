@@ -11,7 +11,7 @@
   --back: #FAF9F6;
   --coolblue: #007aff;
   --src-code: rgba(0,0,0, 0.07);
-  --bg: #fff;
+  --bg: #fcfcfc;
   --font-: #000;
   --link: #060cff;
 }
@@ -72,7 +72,8 @@ strong {
 
 h1 {
   font-weight: 800;
- 
+  padding-top: 16px;
+  font-size: 24px;
 }
 
 h2 {
@@ -114,8 +115,7 @@ img {
 }
 
 p, .tmpl-post li {
-  line-height: 1.55;
-  line-height: 1.75;
+  line-height: normal;
   padding-bottom: 3px;
   font-weight: 500;
 }
@@ -133,7 +133,7 @@ main {
 }
 
 main :first-child {
-  margin-top: 0;
+  
 }
 
 header {
@@ -286,7 +286,7 @@ ul li.nav-item-active a {
 }
 .postlist-item {
   counter-increment: start-from -1;
-  line-height: 1.1rem;
+  line-height: 1.2rem;
 }
 
 .postlist-date {
