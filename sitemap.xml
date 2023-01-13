@@ -97,31 +97,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/software%20architecture/</loc>
-    <lastmod>2023-01-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/microservices/</loc>
-    <lastmod>2023-01-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/kafka/</loc>
-    <lastmod>2023-01-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2023-01-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/curl/</loc>
-    <lastmod>2023-01-13</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/java/</loc>
     <lastmod>2023-01-13</lastmod>
   </url>
@@ -138,6 +113,31 @@
   
   <url>
     <loc>https://myurl.com/tags/spring-security/</loc>
+    <lastmod>2023-01-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/symfony/</loc>
+    <lastmod>2023-01-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2023-01-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/software%20architecture/</loc>
+    <lastmod>2023-01-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/microservices/</loc>
+    <lastmod>2023-01-13</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/kafka/</loc>
     <lastmod>2023-01-13</lastmod>
   </url>
   
