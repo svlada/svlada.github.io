@@ -229,6 +229,10 @@ pre {
   text-decoration: none;
 }
 
+.postlist-item {
+  margin: 5px 0;
+}
+
 .home {
   padding: 0 1rem;
   margin: 1rem 0; 
