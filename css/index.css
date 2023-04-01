@@ -115,7 +115,7 @@ img {
 }
 
 p, .tmpl-post li {
-  line-height: normal;
+  line-height: 1.5;
   padding-bottom: 3px;
   font-weight: 500;
 }
