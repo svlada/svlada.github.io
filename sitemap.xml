@@ -187,22 +187,22 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/websphere/</loc>
-    <lastmod>2023-04-01</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring/</loc>
-    <lastmod>2023-04-01</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/voxxed-days/</loc>
     <lastmod>2023-04-01</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <lastmod>2023-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/websphere/</loc>
+    <lastmod>2023-04-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring/</loc>
     <lastmod>2023-04-01</lastmod>
   </url>
 </urlset>
