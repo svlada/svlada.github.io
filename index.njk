@@ -20,8 +20,7 @@ date: 2020-01-01
   {% for post in postslist | reverse %}
     {% if post.data.title != "draft" %}
     <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-      {{ post.data.date | readableDate() }}
-      <a href="{{ post.url | url }}" class="postlist-link purple-text"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a> 
+      <a href="{{ post.url | url }}" class="postlist-link purple-text"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a> {{ post.data.date | readableDate() }}
     </li>
     {% endif %}
   {% endfor %}
