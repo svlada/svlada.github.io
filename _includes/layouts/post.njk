@@ -4,7 +4,7 @@ templateClass: tmpl-post
 ---
 <h1>{{ title }}</h1>
 
-<p><strong>{{ date | full_date() }}</strong></p>
+<div class="dt-published" datetime="{{ date }}">{{ date | full_date() }}</div>
 
 {{ content | safe }}
 
