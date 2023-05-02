@@ -430,5 +430,36 @@ h2.hl {
   width: 4rem;
 }
 
+.glow:before, .glow:after {
+  height: 6px;
+/*  -webkit-filter: blur(5px);*/
+  border-radius: 5px;
+}
+.glow:before {
+  background: linear-gradient(to right, lightgray, lightgray);
+}
+.glow:after {
+  background: linear-gradient(to left, lightgray, lightgray);
+}
+
+.divider {
+  display: flex;
+  font-size: 12px;
+}
+.divider:before, .divider:after {
+  content: "";
+  flex: 1;
+}
+
+.line {
+  align-items: center;
+  margin: 1em -1em;
+}
+.line:before, .line:after {
+  height: 1px;
+  margin: 0 1em;
+}
+
+
 
 
