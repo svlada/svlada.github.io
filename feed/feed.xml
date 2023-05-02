@@ -401,7 +401,8 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/jwt-token-authentication-with-spring-boot/"/>
 		<updated>2016-09-05T00:00:00+00:00</updated>
 		<id>https://myurl.com/jwt-token-authentication-with-spring-boot/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;p&gt;&lt;/p&gt;
+&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: JWT Token&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;pre-requisites&quot; href=&quot;#pre-requisites&quot;&gt;Prerequisite&lt;/a&gt;&lt;/li&gt;
