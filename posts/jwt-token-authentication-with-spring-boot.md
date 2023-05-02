@@ -11,6 +11,8 @@ layout: layouts/post.njk
 permalink: "jwt-token-authentication-with-spring-boot/index.html"
 ---
 
+<p></p>
+
 ## Table of contents
 1. <a title="Introduction: JWT Token" href="#introduction">Introduction</a>
 2. <a title="pre-requisites" href="#pre-requisites">Prerequisite</a>
