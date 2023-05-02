@@ -12,8 +12,6 @@ permalink: "notes/index.html"
 <hr/>
 <div class="dt-published small-text" datetime="02 May, 2023">02 May, 2023</div>
 <p>
-I first thought about creating algorithm to find pidgions in video stream. After identifying it as a pidgion, the toy rocket launcher fires a missile that destroys the bird. Don't those rats that fly deserve a worse fate? I've chosen to follow a different path until I can get my hands on a missile launcher.
-
 First idea was to create an algorithm to detect pidgions in video stream. Upon pidgion detection toy rocket launcher would fire missle and destroy that ball of feathers. Those flying rats doesnt deserve anything better than that, right? However, I've opted-in for another strategy, until i find missle launcher on the black market.
 </p>
 
