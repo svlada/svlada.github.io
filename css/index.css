@@ -280,6 +280,11 @@ pre {
   margin: 0;
   width: 100%;
 }
+
+li.nav-item {
+  margin-top: 0px ;
+}
+
 .nav-item {
   display: inline-block;
   font-size: 1rem;
