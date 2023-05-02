@@ -37,6 +37,10 @@
   .postlist-date { display: inline-block; }
 }
 
+pre {
+  border-radius: 12px;
+}
+
 .post-line {
   border-top: .4rem solid var(--darkgray);
   display: block;
@@ -183,6 +187,13 @@ table td,
 table th {
   padding-right: 1em;
 }
+
+/*pre[class*="language-" ],
+code[class*="language-"] {
+    white-space: normal;
+    overflow: auto;
+    word-break: break-word;
+}*/
 
 pre,
 code {
