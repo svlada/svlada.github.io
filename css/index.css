@@ -9,7 +9,7 @@
   --blue: #082840;
   --white: #fff;
   --back: #FAF9F6;
-  --coolblue: #007aff;
+  --coolblue: #180cef;/*#007aff;*/ 
   --src-code: rgba(0,0,0, 0.07);
   --bg: rgb(255 251 235); /* rgb(246, 245, 233); */
   --font-: #000;
@@ -53,14 +53,34 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 /*  background-color: var(--bg);*/
-  background-color: rgb(246, 245, 233);
+/*   background-color: rgb(246, 245, 233);
   background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
-/*  background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));*/
+ background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
+color: rgb(63, 63, 70);
+ */
+  
+background-color:  #f7f6dd;
+ color: #0d0e2f;
 
-  color: rgb(63, 63, 70);
+  
   display: block;
   font-family: -apple-system,BlinkMacSystemFont,segoe ui,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
   font-size: 1rem;
+}
+
+.purple-text { 
+  /*color: #5500ff !important; color: #007aff !important; */
+  color: #180cef !important;
+ }
+.small-text {
+  font-size: 12px !important;
+}
+
+.dt-published {
+  color: rgb(115 115 115);
+  color: #777777;
+  font-size: 12px;
+  padding-top: 10px;
 }
 
 h1, h2, h3, h4 { 
@@ -96,10 +116,7 @@ h2.sub {
 
 h4 { font-size: 16px; }
 
-.dt-published {
-  color: rgb(115 115 115);
-  padding-top: 10px;
-}
+
 
 time {
   
@@ -412,7 +429,7 @@ ol .toc { margin-bottom: 0; }
 }
 
 .font-extra-bold {font-weight: 800; }
-.purple-text { color: #5500ff !important; color: #007aff !important; }
+
 .contact-me { border: 1px solid; padding: 8px; border-radius: 4px; font-style: normal; text-decoration: none; }
 h2.hl {
   /* color: #333; */
@@ -439,10 +456,10 @@ h2.hl {
   border-radius: 5px;
 }
 .glow:before {
-  background: linear-gradient(to right, lightgray, lightgray);
+  background: linear-gradient(to right, #0d0e2f, #0d0e2f);
 }
 .glow:after {
-  background: linear-gradient(to left, lightgray, lightgray);
+  background: linear-gradient(to left, #0d0e2f, #0d0e2f);
 }
 
 .divider {
