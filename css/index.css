@@ -64,6 +64,9 @@ color: rgb(63, 63, 70);
  */
   
 background-color:  #f7f6dd;
+
+ background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
+color: rgb(63, 63, 70);
  color: #0d0e2f;
 
   
@@ -497,6 +500,25 @@ h2.hl {
   margin: 0 1em;
 }
 
+.text-large {
+  font-size: 4rem !important;
+}
 
+.tmpl-notes ul {
+  list-style-type: disc;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0px;
+}
 
+.tmpl-notes li {
+  padding-left: 1em;
+  margin-bottom: .5em;
+  margin-top: .5em;
+  list-style-position: inside;
+}
 
+.tmpl-notes ul li::before {
+
+  color: var(--coolblue);
+}

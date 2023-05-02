@@ -87,12 +87,27 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/notes/</loc>
+    <lastmod>2023-05-02</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/page-list/</loc>
     <lastmod>2023-05-02</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/</loc>
+    <lastmod>2023-05-02</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/notes/</loc>
+    <lastmod>2023-05-02</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/software-engineering/</loc>
     <lastmod>2023-05-02</lastmod>
   </url>
   
@@ -162,11 +177,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
-    <lastmod>2023-05-02</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/alpine-linux/</loc>
     <lastmod>2023-05-02</lastmod>
   </url>
@@ -203,6 +213,11 @@
   
   <url>
     <loc>https://myurl.com/tags/spring/</loc>
+    <lastmod>2023-05-02</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2023-05-02</lastmod>
   </url>
 </urlset>
