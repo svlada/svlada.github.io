@@ -85,35 +85,7 @@ I got to create an algorithm to detect pidgions in video stream. Upon pidgion de
 Domain/business logic code must be separated from technology. It matters. 
 <p>I'm not even mentioning the intriguing ability to swap technos quickly. No. Separate domain and infra-tech code. It’s important.</p>
 <p><strong>Project structure</strong></p>
-<pre><code>- **Application/Core**
-  + Defines
-    + UseCase interface 
-    + UseCase implementation 
-      + Repository interfaces specified by the **Domain**
-    + Command objects are self-validating 
-  + References
-    + Domain project
-- **Domain**
-  + Entities
-    + Self-validating
-  + SPI
-    + **Output Port** - Repository interface
-- **Infrastructure**
-  +  Adapters
-    +  Rest
-      +  Includes application module
-      +  Spring Controllers
-        +  DTO Validation
-        +  Create command and invoke use case
-    +  Persistence
-      +  Includes domain module
-      +  Implement repository using JDBI
-- **Bootstrap**
-  +  SpringBootApplication launcher
-  +  Maven project includes modules
-  +  Load Application/Domain services into the 
-  Spring context by scanning @DomainService annotations.
-</code></pre>
+<pre class="language-markdown"><code class="language-markdown"><span class="highlight-line"><span class="token list punctuation">-</span> <span class="token bold"><span class="token punctuation">**</span>Application/Core<span class="token punctuation">**</span></span></span><br><span class="highlight-line">  <span class="token list punctuation">+</span> Defines</span><br><span class="highlight-line"><span class="token code keyword">    + UseCase interface </span></span><br><span class="highlight-line"><span class="token code keyword">    + UseCase implementation </span></span><br><span class="highlight-line"><span class="token code keyword">      + Repository interfaces specified by the **Domain**</span></span><br><span class="highlight-line"><span class="token code keyword">    + Command objects are self-validating </span></span><br><span class="highlight-line">  <span class="token list punctuation">+</span> References</span><br><span class="highlight-line"><span class="token code keyword">    + Domain project</span></span><br><span class="highlight-line"><span class="token list punctuation">-</span> <span class="token bold"><span class="token punctuation">**</span>Domain<span class="token punctuation">**</span></span></span><br><span class="highlight-line">  <span class="token list punctuation">+</span> Entities</span><br><span class="highlight-line"><span class="token code keyword">    + Self-validating</span></span><br><span class="highlight-line">  <span class="token list punctuation">+</span> SPI</span><br><span class="highlight-line"><span class="token code keyword">    + **Output Port** - Repository interface</span></span><br><span class="highlight-line"><span class="token list punctuation">-</span> <span class="token bold"><span class="token punctuation">**</span>Infrastructure<span class="token punctuation">**</span></span></span><br><span class="highlight-line">  <span class="token list punctuation">+</span>  Adapters</span><br><span class="highlight-line"><span class="token code keyword">    +  Rest</span></span><br><span class="highlight-line"><span class="token code keyword">      +  Includes application module</span></span><br><span class="highlight-line"><span class="token code keyword">      +  Spring Controllers</span></span><br><span class="highlight-line"><span class="token code keyword">        +  DTO Validation</span></span><br><span class="highlight-line"><span class="token code keyword">        +  Create command and invoke use case</span></span><br><span class="highlight-line"><span class="token code keyword">    +  Persistence</span></span><br><span class="highlight-line"><span class="token code keyword">      +  Includes domain module</span></span><br><span class="highlight-line"><span class="token code keyword">      +  Implement repository using JDBI</span></span><br><span class="highlight-line"><span class="token list punctuation">-</span> <span class="token bold"><span class="token punctuation">**</span>Bootstrap<span class="token punctuation">**</span></span></span><br><span class="highlight-line">  <span class="token list punctuation">+</span>  SpringBootApplication launcher</span><br><span class="highlight-line">  <span class="token list punctuation">+</span>  Maven project includes modules</span><br><span class="highlight-line">  <span class="token list punctuation">+</span>  Load Application/Domain services into the </span><br><span class="highlight-line">  Spring context by scanning @DomainService annotations.</span></code></pre>
 </p>
 <hr/>
 
