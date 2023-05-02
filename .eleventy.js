@@ -10,6 +10,10 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
 
+    eleventyConfig.addFilter("currentDateDisplay", dateObj => {
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("MMM dd, yyyy ");
+  });
+
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("MMM dd, yyyy ");
   });
