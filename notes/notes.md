@@ -27,7 +27,7 @@ I'm not even mentioning the intriguing ability to swap technos quickly. No. Sepa
 
 <strong>Project structure</strong>
 
-```Markdown
+```shell
 - **Application/Core**
   + Defines
     + UseCase interface 
