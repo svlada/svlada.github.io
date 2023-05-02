@@ -282,7 +282,7 @@ pre {
 }
 
 li.nav-item {
-  margin-top: 0px ;
+  margin-top: 0px;
 }
 
 .nav-item {
@@ -344,7 +344,7 @@ ul li.nav-item-active a {
 }
 
 .tmpl-home {
-  padding: 3em 0;
+  padding: 3em 10px;
 }
 
 .tmpl-home .postlist-link {
