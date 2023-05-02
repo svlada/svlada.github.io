@@ -49,7 +49,7 @@
 html,
 body {
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 /*  background-color: var(--bg);*/
@@ -116,8 +116,6 @@ h2.sub {
 }
 
 h4 { font-size: 16px; }
-
-
 
 time {
   
