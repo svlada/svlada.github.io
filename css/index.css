@@ -11,7 +11,7 @@
   --back: #FAF9F6;
   --coolblue: #007aff;
   --src-code: rgba(0,0,0, 0.07);
-  --bg: rgb(250, 251, 255);
+  --bg: rgb(255 251 235); /* rgb(246, 245, 233); */
   --font-: #000;
   --link: #060cff;
 }
@@ -52,7 +52,10 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  background-color: var(--bg);
+/*  background-color: var(--bg);*/
+  background-color: rgb(246, 245, 233);
+  background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
+/*  background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));*/
 
   color: rgb(63, 63, 70);
   display: block;
@@ -73,11 +76,11 @@ strong {
 h1 {
   font-weight: 800;
   padding-top: 16px;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 800;
 }
 
