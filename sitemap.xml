@@ -147,16 +147,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/javascript/</loc>
-    <lastmod>2023-06-09</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
-    <lastmod>2023-06-09</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/symfony/</loc>
     <lastmod>2023-06-09</lastmod>
   </url>
@@ -167,17 +157,27 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/javascript/</loc>
+    <lastmod>2023-06-09</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/require-js/</loc>
+    <lastmod>2023-06-09</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring-batch/</loc>
+    <lastmod>2023-06-09</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/ssh/</loc>
     <lastmod>2023-06-09</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/design-patterns/</loc>
-    <lastmod>2023-06-09</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring-batch/</loc>
     <lastmod>2023-06-09</lastmod>
   </url>
   
