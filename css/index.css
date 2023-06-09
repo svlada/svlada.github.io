@@ -9,11 +9,13 @@
   --blue: #082840;
   --white: #fff;
   --back: #FAF9F6;
-  --coolblue: #180cef;/*#007aff;*/ 
+  /* --coolblue: ; #180cef */
+  --coolblue: #007d9c;
   --src-code: rgba(0,0,0, 0.07);
-  --bg: rgb(255 251 235); /* rgb(246, 245, 233); */
-  --font-: #000;
+  --bg: #F2F2F2; 
+  --font: #000;
   --link: #060cff;
+  --text: #000; /* rgb(32, 34, 36) */
 }
 
 @media only screen and (min-device-width: 414px) {
@@ -37,10 +39,6 @@
   .postlist-date { display: inline-block; }
 }
 
-pre {
-  border-radius: 12px;
-}
-
 .post-line {
   border-top: .4rem solid var(--darkgray);
   display: block;
@@ -50,66 +48,60 @@ pre {
 
 * { box-sizing: border-box; }
 
-html,
-body {
+html, body {
   padding: 0;
   margin: 0 auto;
-  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-/*  background-color: var(--bg);*/
-/*   background-color: rgb(246, 245, 233);
-  background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
- background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
-color: rgb(63, 63, 70);
- */
-  
-background-color:  #f7f6dd;
-
- background-image: linear-gradient(to right bottom, rgb(246, 245, 233), rgb(250, 248, 250));
-color: rgb(63, 63, 70);
- color: #0d0e2f;
-
-  
+  background-color:  var(--bg);
+  color: var(--text);
   display: block;
-  font-family: -apple-system,BlinkMacSystemFont,segoe ui,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   font-size: 1rem;
 }
 
-.purple-text { 
-  /*color: #5500ff !important; color: #007aff !important; */
-  color: #180cef !important;
- }
-.small-text {
-  font-size: 12px !important;
-}
-
-.dt-published {
-  color: rgb(115 115 115);
-  color: #777777;
-  font-size: 12px;
-  padding-top: 10px;
-}
-
 h1, h2, h3, h4 { 
-  font-family: -apple-system,BlinkMacSystemFont,segoe ui,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   margin: 0;
   color: rgb(24, 24, 27);
+}
+
+p, .tmpl-post li {
+  line-height: 1.5;
+  padding-bottom: 3px;
 }
 
 strong {
   color: rgb(24, 24, 27);
 }
 
+pre {
+  font-size: 12px !important;
+}
+
+.purple-text { 
+  color: #180cef !important;
+  color: #007d9c !important;
+ }
+
+.small-text {
+  font-size: 0.875rem !important;
+}
+
+.dt-published {
+  color: #6e7072;
+  font-size: 0.875rem;
+  padding-top: 10px;
+}
+
 h1 {
-  font-weight: 800;
   padding-top: 16px;
-  font-size: 24px;
+  font-size: 2.25rem;
 }
 
 h2 {
   font-size: 18px;
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1.4rem;
+  
 }
 
 h2.sub {
@@ -117,8 +109,6 @@ h2.sub {
   font-size: 1.25rem;
   line-height: 1.75rem;
   color: rgb(113, 113, 122);
-  /* margin-bottom: 36px; */
-  /* margin-bottom: 24px; */
   margin-top: 24px;
 }
 
@@ -132,29 +122,16 @@ ul li {
   margin-top: 0.6em
 }
 
-p {
-  line-height: 1.625;
-}
-
 p:last-child {
   margin-bottom: 0;
 }
 
-p,
-.tmpl-post li,
-img {
+p, .tmpl-post li, img {
   max-width: 42em; 
-  /* 600px /16 */
 }
 
 .hp p {
   max-width: none;
-}
-
-p, .tmpl-post li {
-  line-height: 1.5;
-  padding-bottom: 3px;
-  font-weight: 500;
 }
 
 a[href] {
@@ -167,10 +144,6 @@ a[href]:visited {
 
 main {
   padding: 10px;
-}
-
-main :first-child {
-  
 }
 
 header {
@@ -191,47 +164,9 @@ table th {
   padding-right: 1em;
 }
 
-/*pre[class*="language-" ],
-code[class*="language-"] {
-    white-space: normal;
-    overflow: auto;
-    word-break: break-word;
-}*/
-
-pre,
-code {
-  font-family: monospace;
-  line-height: 1.5;
-  font-size: 1rem;
-  background-color: var(--src-code);
-}
-
-/* pre > code[class*="language-"] {
-  font-size: 1rem;
-} */
 
 code {
   padding: 2px 6px;
-  border-radius: 5px;
-}
-
-pre {
-  font-size: 14px;
-  line-height: 1.375;
-  direction: ltr;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  -moz-tab-size: 2;
-  -o-tab-size: 2;
-  tab-size: 2;
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-  padding: 1em;
-  background-color: #f6f6f6;
 }
 
 .text-center { text-align: center; }
@@ -448,7 +383,7 @@ ol .toc { margin-bottom: 0; }
   -webkit-box-decoration-break: clone !important; box-decoration-break: clone !important; color: transparent !important; 
 }
 
-.font-extra-bold {font-weight: 800; }
+.font-extra-bold {font-weight: 500; }
 
 .contact-me { border: 1px solid; padding: 8px; border-radius: 4px; font-style: normal; text-decoration: none; }
 h2.hl {
