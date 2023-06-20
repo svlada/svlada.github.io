@@ -26,11 +26,11 @@ Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechan
 
 ### Stateless
 
-**Pros**
+Pros
 
 1. No need to scale session data on the server-side as the session is maintained through cryptographically signed JSON Web Token (JWT). 
 
-**Cons**
+Cons
 
 1. No <strong>log-out</strong> feature without introducing state on server side.
 2. Potential token explosion as JSON Web Token becomes larger.
@@ -38,12 +38,12 @@ Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechan
 
 ### Stateful
 
-**Pros**
+Pros
 
 1. Ability to log-out user
 2. Out-of-box sliding session 
 
-**Cons**
+Cons
 
 1. /
 

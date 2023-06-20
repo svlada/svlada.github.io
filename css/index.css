@@ -91,18 +91,35 @@ pre {
   color: #6e7072;
   font-size: 0.875rem;
   padding-top: 10px;
+
+  color: #222222;
 }
 
 h1 {
   padding-top: 16px;
-  font-size: 2.25rem;
+  font-size: 1.25rem;
 }
+
+/* h1::before {
+  content: '* ';
+} */
 
 h2 {
   font-size: 18px;
-  font-size: 1.4rem;
-  
+  font-size: 1.1rem;
 }
+
+/* h2::before {
+  content: '** ';
+} */
+
+h3 {
+  font-size: 1.1rem;
+}
+
+/* h3::before {
+  content: '*** ';
+} */
 
 h2.sub {
   font-weight: 500;
@@ -164,6 +181,9 @@ table th {
   padding-right: 1em;
 }
 
+pre[class*=language-] {
+  padding: 0px;
+}
 
 code {
   padding: 2px 6px;

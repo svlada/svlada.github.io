@@ -7,10 +7,9 @@ tags:
 layout: layouts/notes.njk
 permalink: "notes/index.html"
 ---
-<p></p>
 
 
-<hr/>
+
 <div class="dt-published small-text" datetime="01 May, 2023">01 May, 2023</div>
 <p>
 Domain/business logic code must be separated from technology. It matters. 
