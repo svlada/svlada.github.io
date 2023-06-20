@@ -11,8 +11,8 @@
   <meta name="description" content="This article will show you how to configure and use Spring Session to manage session data in your web application.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.0">
-  <link rel="stylesheet" href="/css/index.css?v=1.4.3">
+  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.1">
+  <link rel="stylesheet" href="/css/index.css?v=1.4.4">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -87,23 +87,23 @@
 <p>Before going into the more details of <a href="https://projects.spring.io/spring-session/">Spring Session</a> configuration, I will share my view on the hype around Stateful vs Stateless session management.</p>
 <p>Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechanism for handling sessions. A couple of years ago I wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.</p>
 <h3 id="stateless">Stateless <a class="direct-link" href="#stateless" aria-hidden="true">#</a></h3>
-<p><strong>Pros</strong></p>
+<p>Pros</p>
 <ol>
 <li>No need to scale session data on the server-side as the session is maintained through cryptographically signed JSON Web Token (JWT).</li>
 </ol>
-<p><strong>Cons</strong></p>
+<p>Cons</p>
 <ol>
 <li>No <strong>log-out</strong> feature without introducing state on server side.</li>
 <li>Potential token explosion as JSON Web Token becomes larger.</li>
 <li>Sending JSON Web Token (JWT) payload on each request can be expensive.</li>
 </ol>
 <h3 id="stateful">Stateful <a class="direct-link" href="#stateful" aria-hidden="true">#</a></h3>
-<p><strong>Pros</strong></p>
+<p>Pros</p>
 <ol>
 <li>Ability to log-out user</li>
 <li>Out-of-box sliding session</li>
 </ol>
-<p><strong>Cons</strong></p>
+<p>Cons</p>
 <ol>
 <li>/</li>
 </ol>
