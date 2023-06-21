@@ -152,16 +152,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/microservices/</loc>
-    <lastmod>2023-06-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/kafka/</loc>
-    <lastmod>2023-06-21</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/symfony/</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
@@ -182,17 +172,22 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/microservices/</loc>
+    <lastmod>2023-06-21</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/kafka/</loc>
+    <lastmod>2023-06-21</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/spring-batch/</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/ssh/</loc>
-    <lastmod>2023-06-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
   
@@ -223,6 +218,11 @@
   
   <url>
     <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <lastmod>2023-06-21</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
   

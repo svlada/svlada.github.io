@@ -12,7 +12,7 @@
   /* --coolblue: ; #180cef */
   --coolblue: #007d9c;
   --src-code: rgba(0,0,0, 0.07);
-  --bg: #F2F2F2; 
+  --bg: #fff; 
   --font: #000;
   --link: #060cff;
   --text: #000; /* rgb(32, 34, 36) */
@@ -65,8 +65,13 @@ h1, h2, h3, h4 {
   color: rgb(24, 24, 27);
 }
 
-p, .tmpl-post li {
+p {
+  line-height: 1.4211;
+  margin: 1.1em 0;
+}
 
+.tmpl-post li {
+  line-height: 1.4211;
 }
 
 strong {
@@ -75,6 +80,7 @@ strong {
 
 pre {
   font-size: 12px !important;
+  background: #f8f8f8 !important;
 }
 
 .purple-text { 
@@ -180,13 +186,7 @@ table th {
   padding-right: 1em;
 }
 
-pre[class*=language-] {
-  padding: 0px;
-}
 
-code {
-  padding: 2px 6px;
-}
 
 .text-center { text-align: center; }
 
@@ -312,7 +312,7 @@ ul li.nav-item-active a {
 }
 
 .tmpl-home {
-  padding: 3em 10px;
+  padding: 3em 20px;
 }
 
 .tmpl-home .postlist-link {
