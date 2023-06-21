@@ -4,7 +4,7 @@
 	<subtitle>Sit down, relax, mix yourself a drink and enjoy the show.</subtitle>
 	<link href="https://myurl.com/feed/feed.xml" rel="self"/>
 	<link href="https://myurl.com/"/>
-	<updated>2020-01-29T00:00:00+00:00</updated>
+	<updated>2023-06-21T00:00:00+00:00</updated>
 	<id>https://myurl.com/</id>
 	<author>
 		<name>Vladimir Stankovic</name>
@@ -834,6 +834,32 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;li&gt;&lt;a href=&quot;https://github.com/confluentinc/kafka-connect-jdbc/issues/172&quot;&gt;Missing Updates with Timestamp+incrementing mode in Postgres&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf&quot;&gt;Sagas&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3435995/&quot;&gt;Request-Reply&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Education plan for 2023 Q3 and Q4</title>
+		<link href="https://myurl.com/education-plan-2023-Q3-Q4/"/>
+		<updated>2023-06-21T00:00:00+00:00</updated>
+		<id>https://myurl.com/education-plan-2023-Q3-Q4/</id>
+		<content type="html">&lt;p&gt;Six months of learning, Goals set to stay on focus, Finish what I start.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create UUID library using Go&lt;/li&gt;
+&lt;li&gt;Go + Echo + SQLC
+&lt;ul&gt;
+&lt;li&gt;Set up a boilerplate project&lt;/li&gt;
+&lt;li&gt;Integrate Kubernetes into the application&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Refresh understanding of Arduino and Electronics
+&lt;ul&gt;
+&lt;li&gt;Take a Tech Explorations course&lt;/li&gt;
+&lt;li&gt;Build washing machine toy for kids&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Design of the Bookmarking App&lt;/li&gt;
+&lt;li&gt;Formulate a plan for implementing a database engine&lt;/li&gt;
 &lt;/ul&gt;
 </content>
 	</entry>
