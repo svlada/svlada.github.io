@@ -1,6 +1,6 @@
 ---
-title: 'Education plan for 2023 Q3 and Q4'
-description: Education plan for 2023 Q3 and Q4
+title: '2023 Q3/Q4 Challenge list'
+description: 2023 Q3/Q4 Challenge list 
 date: 2023-06-21
 tags:
   - software architecture
@@ -12,6 +12,7 @@ permalink: "education-plan-2023-Q3-Q4/index.html"
 
 Six months of learning, Goals set to stay on focus, Finish what I start. 
 
+```markdown
 - Create UUID library using Go
 - Go + Echo + SQLC 
 	- Set up a boilerplate project
@@ -21,4 +22,4 @@ Six months of learning, Goals set to stay on focus, Finish what I start.
 	- Build washing machine toy for kids
 - Design of the Bookmarking App
 - Formulate a plan for implementing a database engine
-
+```
