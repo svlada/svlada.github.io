@@ -6,6 +6,7 @@ tags:
   - software architecture
   - golang
   - arduino
+  - lab
 layout: layouts/post.njk
 permalink: "education-plan-2023-Q3-Q4/index.html"
 ---

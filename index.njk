@@ -14,11 +14,7 @@ date: 2020-01-01
   
 <p>Previously, I worked as a developer in the US healthcare industry, where I was involved in the creation of HIPAA-compliant environments and the development of applications for startups and enterprises.</p>
 
-{% set postslist = collections.posts %}
-
 <p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address. To get new posts, please use my <a class="purple-text font-extra-bold" href="{{ metadata.feed.path | url }}" type="application/atom+xml">RSS feed</a>.</p>
-
-
 
 <h2>Posts</h2>
 
@@ -34,6 +30,18 @@ date: 2020-01-01
   {% endfor %}
 </ul>
 
+{% set lablist = collections.lab %}
+
 <h2>Sketchbook</h2>
 
 <p>Experiments and playthings.</p>
+
+<ul class="postlist">
+  {% for lab in lablist | reverse %}
+    {% if lab.data.title != "draft" %}
+    <li class="postlist-item{% if lab.url == url %} postlist-item-active{% endif %}">
+      <a href="{{ lab.url | url }}" class="postlist-link purple-text"> {% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a> <i class="small-text">{{ lab.data.date | readableDate() }}</i>
+    </li>
+    {% endif %}
+  {% endfor %}
+</ul>
