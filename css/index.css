@@ -312,7 +312,7 @@ ul li.nav-item-active a {
 }
 
 .tmpl-home {
-  padding: 3em 20px;
+  padding: 3em 0px 3em 0px;
 }
 
 .tmpl-home .postlist-link {
