@@ -9,7 +9,6 @@ layout: layouts/post.njk
 permalink: "ssh-public-key-authentication/index.html"
 ---
 
-## Table of contents:
 1. <a href="#introduction">Introduction</a>
 2. <a href="#generate-key-pair">Generate Key Pair</a>
 3. <a href="#copy-public-key-to-remote-host">Copy public key to remote host</a>

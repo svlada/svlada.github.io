@@ -9,7 +9,6 @@ layout: layouts/post.njk
 permalink: "step-builder-pattern/index.html"
 ---
 
-## Table of contents
 1. <a title="Introduction: Step builder pattern" href="#introduction">Introduction</a>
 2. <a title="Pros and cons about step builder pattern" href="#step-builder-pattern-pros-and-cons">Pros and cons</a>
 3. <a title="Code walkthrough" href="#code-walkthrough">Code-walkthrough</a>

@@ -9,7 +9,6 @@ layout: layouts/post.njk
 permalink: "spring-batch-job-repository-configuration-for-websphere-and-oracle/index.html"
 ---
 
-## Table of contents:
 1. <a href="#introduction">Introduction</a>
 2. <a href="#job-repository-configuration">Job Repository configuration</a>
 

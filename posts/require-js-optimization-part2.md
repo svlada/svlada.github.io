@@ -9,14 +9,12 @@ layout: layouts/post.njk
 permalink: "require-js-optimization-part2/index.html"
 ---
 
-This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in [part 1](/require-js-dependency-management-part1/) of the series.
- 
-## Table of contents
-
 1. <a href="#t0">Introduction</a>
 2. <a href="#t1">Require.js optimizer</a>
 3. <a href="#t2">Require.js optimizer dump dependencies to single file</a>
- 
+
+This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in [part 1](/require-js-dependency-management-part1/) of the series.
+
 ## <a name="t0" id="t0">Introduction</a>
  
 James Burke [recommends](http://requirejs.org/docs/optimization.html) using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from [here](http://nodejs.org/#download).

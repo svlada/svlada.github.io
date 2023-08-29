@@ -10,7 +10,6 @@ layout: layouts/post.njk
 permalink: "websphere-maven-spring-project/index.html"
 ---
 
-## Table of contents:
 1. <a href="#introduction">Introduction</a>
 2. <a href="#maven-project-structure">Maven project structure</a>
 4. <a href="#source-code">Source code</a>

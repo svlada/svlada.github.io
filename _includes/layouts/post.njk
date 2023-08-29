@@ -4,13 +4,14 @@ templateClass: tmpl-post
 ---
 <h1>{{ title }}</h1>
 
-<div class="dt-published small-text" datetime="{{ date }}">{{ date | full_date() }}</div>
+<div datetime="{{ date }}">Published on {{ date | full_date() }}</div>
 
 {{ content | safe }}
 
 <p></p>
 <h2>Feedback</h2>
 <p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
+<div datetime="{{ date }}">Published on {{ date | full_date() }}</div>
 <div id="disqus_thread"></div>
 <script>
 

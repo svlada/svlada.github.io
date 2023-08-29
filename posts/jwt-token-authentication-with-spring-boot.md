@@ -11,9 +11,6 @@ layout: layouts/post.njk
 permalink: "jwt-token-authentication-with-spring-boot/index.html"
 ---
 
-<p></p>
-
-## Table of contents
 1. <a title="Introduction: JWT Token" href="#introduction">Introduction</a>
 2. <a title="pre-requisites" href="#pre-requisites">Prerequisite</a>
 3. <a title="Spring Security: Ajax authentication" href="#ajax-authentication">Ajax authentication</a>
@@ -23,16 +20,17 @@ permalink: "jwt-token-authentication-with-spring-boot/index.html"
 
 This article is a guide on implementing JWT authentication with Spring Boot.
 
-At the minimum client needs to exchange username and password for JWT to be used for sending authenticated requests.
 
-The following are basic flows for implementing API security:
+At a bare minimum, the client is required to exchange a username and password in order to obtain a JWT, which will be used for subsequent authenticated API calls.
+
+Below are the core workflows for implementing API security:
 
 1. Ajax Login Authentication
 2. JWT Token Authentication
 
 ## <a name="pre-requisites" id="pre-requisites">Prerequisite</a>
 
-Please checkout the sample code/project from the following GitHub [repository](https://github.com/svlada/springboot-security-jwt).
+See the linked GitHub [repo](https://github.com/svlada/springboot-security-jwt) for code.
 
 This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (```/jwt-demo/src/main/resources/data.sql```).
 
@@ -68,11 +66,9 @@ The overall project structure is shown below:
 
 ## <a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a>
 
-When we talk about Ajax authentication we usually refer to a process where a user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.
+In the context of Ajax authentication, we typically mean a scenario where the user provides credentials via a JSON payload, which is transmitted as part of an XMLHttpRequest.
 
-In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.
-
-Following is the list of components that we'll implement:
+In the first part of this tutorial, Ajax authentication is implemented following standard patterns outlined in the Spring Security framework. The subsequent list outlines the components to be implemented:
 
 1. AjaxLoginProcessingFilter
 2. AjaxAuthenticationProvider
@@ -81,7 +77,7 @@ Following is the list of components that we'll implement:
 5. RestAuthenticationEntryPoint
 6. WebSecurityConfig
 
-Before we get to the details of the implementation, let's look at the request/response authentication flow.
+Before going into the implementation details, let's look at the request/response authentication flow.
 
 **Ajax authentication request example**
 

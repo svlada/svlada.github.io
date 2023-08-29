@@ -40,12 +40,12 @@ The important part of the API Gateway to focus on is the Request router. Request
 ## Request handling flow
 
 The overall request handling flow is described as follows:
-1. **Accepting API request** is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.
-2. **Creating command**. The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).
-3. **Sending command to a service**. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.
-4. **Command handling**. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.
-5. **Sending Reply command to the originator**. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).
-6. **Flush Http response**. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.
+1. <p><strong>Accepting API request</strong> is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.</p>
+2. <p><strong>Creating command</strong> The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).</p>
+3. <p><strong>Sending command to a service</strong>. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.</p>
+4. <p><strong>Command handling</strong>. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.</p>
+5. <p><strong>Sending Reply command to the originator</strong>. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).</p>
+6. <p><strong>Flush Http response</strong>. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.</p>
 
 Using a non-blocking approach provides the ability to handle a higher number of Http connections with fewer resources, thus increasing system availability with a benefit of greater system elasticity.
 

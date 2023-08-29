@@ -9,13 +9,12 @@ layout: layouts/post.njk
 permalink: "require-js-dependency-management-part1/index.html"
 ---
 
-This is the first part of two parts series, about RequireJS dependency management. In the second part, we'll dive in into the <a target="_blank"  href="/require-js-optimization-part2/">RequireJS optimizer tool</a>.
- 
-## Table of contents
 1. <a href="#t0">Introduction</a>
 2. <a href="#t1">Basic structure</a>
 3. <a href="#t2">Prototypal inheritance and Require.js</a>
- 
+
+This is the first part of two parts series, about RequireJS dependency management. In the second part, we'll dive in into the <a target="_blank"  href="/require-js-optimization-part2/">RequireJS optimizer tool</a>.
+
 ## <a name="t0" id="t0">Introduction</a>
 
 Before or after reading this article I strongly recommend reading the documentation on [RequireJS website](http://requirejs.org/docs/start.html). James Burke did a great job here.
