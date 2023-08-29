@@ -73,7 +73,7 @@
   <main class="tmpl-post" >
     <h1>Durable request reply</h1>
 
-<div class="dt-published small-text" datetime="Wed Jan 29 2020 00:00:00 GMT+0000 (Coordinated Universal Time)">Wednesday, January 29, 2020</div>
+<div datetime="Wed Jan 29 2020 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Wednesday, January 29, 2020</div>
 
 <p>The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given are based on the Kafka, which is distributed commit log implementation. <a href="https://www.reactivemanifesto.org/glossary">Reactive Manifesto</a> explains the main characteristics of a message-driven architecture.</p>
 <p>The following system design diagram shows a bird's-eye view of the exemplary microservice architecture:</p>
@@ -101,12 +101,24 @@
 <h2 id="request-handling-flow">Request handling flow <a class="direct-link" href="#request-handling-flow" aria-hidden="true">#</a></h2>
 <p>The overall request handling flow is described as follows:</p>
 <ol>
-<li><strong>Accepting API request</strong> is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.</li>
-<li><strong>Creating command</strong>. The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).</li>
-<li><strong>Sending command to a service</strong>. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.</li>
-<li><strong>Command handling</strong>. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.</li>
-<li><strong>Sending Reply command to the originator</strong>. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).</li>
-<li><strong>Flush Http response</strong>. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.</li>
+<li>
+<p><strong>Accepting API request</strong> is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.</p>
+</li>
+<li>
+<p><strong>Creating command</strong> The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).</p>
+</li>
+<li>
+<p><strong>Sending command to a service</strong>. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.</p>
+</li>
+<li>
+<p><strong>Command handling</strong>. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.</p>
+</li>
+<li>
+<p><strong>Sending Reply command to the originator</strong>. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).</p>
+</li>
+<li>
+<p><strong>Flush Http response</strong>. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.</p>
+</li>
 </ol>
 <p>Using a non-blocking approach provides the ability to handle a higher number of Http connections with fewer resources, thus increasing system availability with a benefit of greater system elasticity.</p>
 <p>The next section describes a durable request/reply mechanism for inter-process communication.</p>
@@ -210,6 +222,7 @@
 <p></p>
 <h2>Feedback</h2>
 <p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
+<div datetime="Wed Jan 29 2020 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Wednesday, January 29, 2020</div>
 <div id="disqus_thread"></div>
 <script>
 

@@ -73,10 +73,8 @@
   <main class="tmpl-post" >
     <h1>JWT Authentication Tutorial</h1>
 
-<div class="dt-published small-text" datetime="Mon Sep 05 2016 00:00:00 GMT+0000 (Coordinated Universal Time)">Monday, September 5, 2016</div>
+<div datetime="Mon Sep 05 2016 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Monday, September 5, 2016</div>
 
-<p></p>
-<h2 id="table-of-contents">Table of contents <a class="direct-link" href="#table-of-contents" aria-hidden="true">#</a></h2>
 <ol>
 <li><a title="Introduction: JWT Token" href="#introduction">Introduction</a></li>
 <li><a title="pre-requisites" href="#pre-requisites">Prerequisite</a></li>
@@ -85,21 +83,20 @@
 </ol>
 <h2 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h2>
 <p>This article is a guide on implementing JWT authentication with Spring Boot.</p>
-<p>At the minimum client needs to exchange username and password for JWT to be used for sending authenticated requests.</p>
-<p>The following are basic flows for implementing API security:</p>
+<p>At a bare minimum, the client is required to exchange a username and password in order to obtain a JWT, which will be used for subsequent authenticated API calls.</p>
+<p>Below are the core workflows for implementing API security:</p>
 <ol>
 <li>Ajax Login Authentication</li>
 <li>JWT Token Authentication</li>
 </ol>
 <h2 id="prerequisite"><a name="pre-requisites" id="pre-requisites">Prerequisite</a> <a class="direct-link" href="#prerequisite" aria-hidden="true">#</a></h2>
-<p>Please checkout the sample code/project from the following GitHub <a href="https://github.com/svlada/springboot-security-jwt">repository</a>.</p>
+<p>See the linked GitHub <a href="https://github.com/svlada/springboot-security-jwt">repo</a> for code.</p>
 <p>This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (<code>/jwt-demo/src/main/resources/data.sql</code>).</p>
 <p>The overall project structure is shown below:</p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>main</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>java</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>com</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>svlada</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>common</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>entity</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>profile</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>endpoint</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>security</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>auth</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>ajax</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>jwt</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>       <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>extractor</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>verifier</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>config</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>endpoint</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>exceptions</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>model</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>token</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>           \<span class="token operator">--</span><span class="token operator">-</span>user</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>               <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>repository</span><br><span class="highlight-line"><span class="token operator">|</span>   <span class="token operator">|</span>               \<span class="token operator">--</span><span class="token operator">-</span>service</span><br><span class="highlight-line"><span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>resources</span><br><span class="highlight-line"><span class="token operator">|</span>       <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span><span class="token keyword">static</span></span><br><span class="highlight-line"><span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>templates</span></code></pre>
 <h2 id="ajax-authentication"><a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a> <a class="direct-link" href="#ajax-authentication" aria-hidden="true">#</a></h2>
-<p>When we talk about Ajax authentication we usually refer to a process where a user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.</p>
-<p>In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.</p>
-<p>Following is the list of components that we'll implement:</p>
+<p>In the context of Ajax authentication, we typically mean a scenario where the user provides credentials via a JSON payload, which is transmitted as part of an XMLHttpRequest.</p>
+<p>In the first part of this tutorial, Ajax authentication is implemented following standard patterns outlined in the Spring Security framework. The subsequent list outlines the components to be implemented:</p>
 <ol>
 <li>AjaxLoginProcessingFilter</li>
 <li>AjaxAuthenticationProvider</li>
@@ -108,7 +105,7 @@
 <li>RestAuthenticationEntryPoint</li>
 <li>WebSecurityConfig</li>
 </ol>
-<p>Before we get to the details of the implementation, let's look at the request/response authentication flow.</p>
+<p>Before going into the implementation details, let's look at the request/response authentication flow.</p>
 <p><strong>Ajax authentication request example</strong></p>
 <p>The Authentication API allows users to exchange credentials for an authentication token.</p>
 <p>In this example, the client initiates the authentication process by invoking Authentication API endpoint (<code>/api/auth/login</code>).</p>
@@ -281,6 +278,7 @@ In case of failure authentication  <code>AjaxLoginProcessingFilter#unsuccessfulA
 <p></p>
 <h2>Feedback</h2>
 <p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
+<div datetime="Mon Sep 05 2016 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Monday, September 5, 2016</div>
 <div id="disqus_thread"></div>
 <script>
 

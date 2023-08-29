@@ -73,19 +73,18 @@
   <main class="tmpl-post" >
     <h1>Spring Session JDBC Configuration</h1>
 
-<div class="dt-published small-text" datetime="Tue May 01 2018 00:00:00 GMT+0000 (Coordinated Universal Time)">Tuesday, May 1, 2018</div>
+<div datetime="Tue May 01 2018 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Tuesday, May 1, 2018</div>
 
-<p>This article shows how to configure <a href="https://projects.spring.io/spring-session/">Spring Session</a> to use database for session storage.</p>
-<p>Please checkout the code from the following GitHub <a href="https://github.com/svlada/springsession-jdbc">repository</a>.</p>
-<h2 id="table-of-contents">Table of contents <a class="direct-link" href="#table-of-contents" aria-hidden="true">#</a></h2>
 <ol>
 <li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
 <li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
 <li><a title="Test" href="#test">Test</a></li>
 </ol>
 <h2 id="introduction"><a name="introduction" id="introduction">Introduction</a> <a class="direct-link" href="#introduction" aria-hidden="true">#</a></h2>
-<p>Before going into the more details of <a href="https://projects.spring.io/spring-session/">Spring Session</a> configuration, I will share my view on the hype around Stateful vs Stateless session management.</p>
-<p>Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechanism for handling sessions. A couple of years ago I wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.</p>
+<p>This guide explains setting up <a href="https://projects.spring.io/spring-session/">Spring Session</a> for database storage.</p>
+<p>See the linked GitHub <a href="https://github.com/svlada/springsession-jdbc">repo</a> for code.</p>
+<p>Before we get into how to set up <a href="https://projects.spring.io/spring-session/">Spring Session</a>, I will share my thoughts on the Stateful vs. Stateless session debate.</p>
+<p>Recently, many people started using JSON Web Token (JWT) for stateless session management. A couple of years ago I wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.</p>
 <h3 id="stateless">Stateless <a class="direct-link" href="#stateless" aria-hidden="true">#</a></h3>
 <p>Pros</p>
 <ol>
@@ -146,6 +145,7 @@
 <p></p>
 <h2>Feedback</h2>
 <p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
+<div datetime="Tue May 01 2018 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Tuesday, May 1, 2018</div>
 <div id="disqus_thread"></div>
 <script>
 

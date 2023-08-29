@@ -15,7 +15,7 @@
   --bg: #fff; 
   --font: #000;
   --link: #060cff;
-  --text: #000; /* rgb(32, 34, 36) */
+  --text: rgb(32, 34, 36); /* rgb(32, 34, 36) */
 }
 
 @media only screen and (min-device-width: 414px) {
@@ -55,23 +55,26 @@ html, body {
   background-color:  var(--bg);
   color: var(--text);
   display: block;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-family: sans-serif;
   font-size: 1rem;
 }
 
 h1, h2, h3, h4 { 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-family: sans-serif;
   margin: 0;
   color: rgb(24, 24, 27);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
 }
 
 p {
-  line-height: 1.4211;
-  margin: 1.1em 0;
+  line-height: 24px;
+  margin: 18px 0px 18px 0px;
 }
 
 .tmpl-post li {
-  line-height: 1.4211;
+  line-height: 24px;
 }
 
 strong {
@@ -101,8 +104,7 @@ pre {
 }
 
 h1 {
-  padding-top: 16px;
-  font-size: 1.25rem;
+  font-size: 26px;
 }
 
 /* h1::before {
@@ -110,8 +112,7 @@ h1 {
 } */
 
 h2 {
-  font-size: 18px;
-  font-size: 1.1rem;
+  font-size: 22px;
 }
 
 /* h2::before {
@@ -119,7 +120,7 @@ h2 {
 } */
 
 h3 {
-  font-size: 1.1rem;
+  font-size: 18px;
 }
 
 /* h3::before {
@@ -138,10 +139,6 @@ h4 { font-size: 16px; }
 
 time {
   
-}
-
-ul li { 
-  margin-top: 0.6em
 }
 
 p:last-child {

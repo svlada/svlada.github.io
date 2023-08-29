@@ -16,13 +16,12 @@
 		<link href="https://myurl.com/require-js-dependency-management-part1/"/>
 		<updated>2013-11-23T00:00:00+00:00</updated>
 		<id>https://myurl.com/require-js-dependency-management-part1/</id>
-		<content type="html">&lt;p&gt;This is the first part of two parts series, about RequireJS dependency management. In the second part, we&#39;ll dive in into the &lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;RequireJS optimizer tool&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;This is the first part of two parts series, about RequireJS dependency management. In the second part, we&#39;ll dive in into the &lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;RequireJS optimizer tool&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Before or after reading this article I strongly recommend reading the documentation on &lt;a href=&quot;http://requirejs.org/docs/start.html&quot;&gt;RequireJS website&lt;/a&gt;. James Burke did a great job here.&lt;/p&gt;
 &lt;p&gt;RequireJS is a dependency management and async script loading tool(AMD library). What does that mean? AMD stands for Asynchronous Module Definition.&lt;/p&gt;
@@ -93,13 +92,12 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/require-js-optimization-part2/"/>
 		<updated>2013-11-25T00:00:00+00:00</updated>
 		<id>https://myurl.com/require-js-optimization-part2/</id>
-		<content type="html">&lt;p&gt;This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in &lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt; of the series.&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t1&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#t2&quot;&gt;Require.js optimizer dump dependencies to single file&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in &lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt; of the series.&lt;/p&gt;
 &lt;h2 id=&quot;introduction&quot;&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;James Burke &lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;recommends&lt;/a&gt; using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from &lt;a href=&quot;http://nodejs.org/#download&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;require.js-optimizer&quot;&gt;&lt;a name=&quot;t1&quot; id=&quot;t0&quot;&gt;Require.js optimizer&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#require.js-optimizer&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
@@ -242,8 +240,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/websphere-maven-spring-project/"/>
 		<updated>2015-09-10T00:00:00+00:00</updated>
 		<id>https://myurl.com/websphere-maven-spring-project/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
@@ -278,8 +275,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/ssh-public-key-authentication/"/>
 		<updated>2015-11-23T00:00:00+00:00</updated>
 		<id>https://myurl.com/ssh-public-key-authentication/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#copy-public-key-to-remote-host&quot;&gt;Copy public key to remote host&lt;/a&gt;&lt;/li&gt;
@@ -317,8 +313,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/"/>
 		<updated>2015-12-02T00:00:00+00:00</updated>
 		<id>https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents%3A&quot;&gt;Table of contents: &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents%3A&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#job-repository-configuration&quot;&gt;Job Repository configuration&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
@@ -343,8 +338,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/step-builder-pattern/"/>
 		<updated>2016-06-09T00:00:00+00:00</updated>
 		<id>https://myurl.com/step-builder-pattern/</id>
-		<content type="html">&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: Step builder pattern&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Pros and cons about step builder pattern&quot; href=&quot;#step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Code walkthrough&quot; href=&quot;#code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt;&lt;/li&gt;
@@ -401,9 +395,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://myurl.com/jwt-token-authentication-with-spring-boot/"/>
 		<updated>2016-09-05T00:00:00+00:00</updated>
 		<id>https://myurl.com/jwt-token-authentication-with-spring-boot/</id>
-		<content type="html">&lt;p&gt;&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: JWT Token&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;pre-requisites&quot; href=&quot;#pre-requisites&quot;&gt;Prerequisite&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Spring Security: Ajax authentication&quot; href=&quot;#ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt;&lt;/li&gt;
@@ -411,21 +403,20 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 &lt;/ol&gt;
 &lt;h2 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This article is a guide on implementing JWT authentication with Spring Boot.&lt;/p&gt;
-&lt;p&gt;At the minimum client needs to exchange username and password for JWT to be used for sending authenticated requests.&lt;/p&gt;
-&lt;p&gt;The following are basic flows for implementing API security:&lt;/p&gt;
+&lt;p&gt;At a bare minimum, the client is required to exchange a username and password in order to obtain a JWT, which will be used for subsequent authenticated API calls.&lt;/p&gt;
+&lt;p&gt;Below are the core workflows for implementing API security:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Ajax Login Authentication&lt;/li&gt;
 &lt;li&gt;JWT Token Authentication&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;prerequisite&quot;&gt;&lt;a name=&quot;pre-requisites&quot; id=&quot;pre-requisites&quot;&gt;Prerequisite&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#prerequisite&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Please checkout the sample code/project from the following GitHub &lt;a href=&quot;https://github.com/svlada/springboot-security-jwt&quot;&gt;repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;See the linked GitHub &lt;a href=&quot;https://github.com/svlada/springboot-security-jwt&quot;&gt;repo&lt;/a&gt; for code.&lt;/p&gt;
 &lt;p&gt;This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (&lt;code&gt;/jwt-demo/src/main/resources/data.sql&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;The overall project structure is shown below:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;main&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;java&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;com&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;svlada&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;common&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;entity&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;profile&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;endpoint&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;security&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;auth&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ajax&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;jwt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;extractor&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;verifier&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;config&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;endpoint&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;exceptions&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;model&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;token&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;           \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;user&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;               &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;repository&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;               \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;service&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;   \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;resources&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;highlight-line&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;       \&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;templates&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;ajax-authentication&quot;&gt;&lt;a name=&quot;ajax-authentication&quot; id=&quot;ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#ajax-authentication&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;When we talk about Ajax authentication we usually refer to a process where a user is supplying credentials through JSON payload that is sent as a part of XMLHttpRequest.&lt;/p&gt;
-&lt;p&gt;In the first part of this tutorial Ajax authentication is implemented by following standard patterns found in the Spring Security framework.&lt;/p&gt;
-&lt;p&gt;Following is the list of components that we&#39;ll implement:&lt;/p&gt;
+&lt;p&gt;In the context of Ajax authentication, we typically mean a scenario where the user provides credentials via a JSON payload, which is transmitted as part of an XMLHttpRequest.&lt;/p&gt;
+&lt;p&gt;In the first part of this tutorial, Ajax authentication is implemented following standard patterns outlined in the Spring Security framework. The subsequent list outlines the components to be implemented:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;AjaxLoginProcessingFilter&lt;/li&gt;
 &lt;li&gt;AjaxAuthenticationProvider&lt;/li&gt;
@@ -434,7 +425,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 &lt;li&gt;RestAuthenticationEntryPoint&lt;/li&gt;
 &lt;li&gt;WebSecurityConfig&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Before we get to the details of the implementation, let&#39;s look at the request/response authentication flow.&lt;/p&gt;
+&lt;p&gt;Before going into the implementation details, let&#39;s look at the request/response authentication flow.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Ajax authentication request example&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The Authentication API allows users to exchange credentials for an authentication token.&lt;/p&gt;
 &lt;p&gt;In this example, the client initiates the authentication process by invoking Authentication API endpoint (&lt;code&gt;/api/auth/login&lt;/code&gt;).&lt;/p&gt;
@@ -610,17 +601,16 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 		<link href="https://myurl.com/spring-session-tutorial/"/>
 		<updated>2018-05-01T00:00:00+00:00</updated>
 		<id>https://myurl.com/spring-session-tutorial/</id>
-		<content type="html">&lt;p&gt;This article shows how to configure &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; to use database for session storage.&lt;/p&gt;
-&lt;p&gt;Please checkout the code from the following GitHub &lt;a href=&quot;https://github.com/svlada/springsession-jdbc&quot;&gt;repository&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents &lt;a class=&quot;direct-link&quot; href=&quot;#table-of-contents&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ol&gt;
+		<content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;a title=&quot;Introduction: Spring Session&quot; href=&quot;#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Project setup using Maven&quot; href=&quot;#project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a title=&quot;Test&quot; href=&quot;#test&quot;&gt;Test&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;introduction&quot;&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt; &lt;a class=&quot;direct-link&quot; href=&quot;#introduction&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Before going into the more details of &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; configuration, I will share my view on the hype around Stateful vs Stateless session management.&lt;/p&gt;
-&lt;p&gt;Lately, a lot of people started using JSON Web Token (JWT) as a stateless mechanism for handling sessions. A couple of years ago I wrote an &lt;a href=&quot;http://www.svlada.com/jwt-token-authentication-with-spring-boot/&quot;&gt;article on that topic&lt;/a&gt; and honestly didn&#39;t know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let&#39;s see what are the pros and cons of stateless and stateful session management approaches.&lt;/p&gt;
+&lt;p&gt;This guide explains setting up &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; for database storage.&lt;/p&gt;
+&lt;p&gt;See the linked GitHub &lt;a href=&quot;https://github.com/svlada/springsession-jdbc&quot;&gt;repo&lt;/a&gt; for code.&lt;/p&gt;
+&lt;p&gt;Before we get into how to set up &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt;, I will share my thoughts on the Stateful vs. Stateless session debate.&lt;/p&gt;
+&lt;p&gt;Recently, many people started using JSON Web Token (JWT) for stateless session management. A couple of years ago I wrote an &lt;a href=&quot;http://www.svlada.com/jwt-token-authentication-with-spring-boot/&quot;&gt;article on that topic&lt;/a&gt; and honestly didn&#39;t know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let&#39;s see what are the pros and cons of stateless and stateful session management approaches.&lt;/p&gt;
 &lt;h3 id=&quot;stateless&quot;&gt;Stateless &lt;a class=&quot;direct-link&quot; href=&quot;#stateless&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;Pros&lt;/p&gt;
 &lt;ol&gt;
@@ -731,12 +721,24 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;h2 id=&quot;request-handling-flow&quot;&gt;Request handling flow &lt;a class=&quot;direct-link&quot; href=&quot;#request-handling-flow&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The overall request handling flow is described as follows:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Accepting API request&lt;/strong&gt; is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Creating command&lt;/strong&gt;. The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Sending command to a service&lt;/strong&gt;. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Command handling&lt;/strong&gt;. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Sending Reply command to the originator&lt;/strong&gt;. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Flush Http response&lt;/strong&gt;. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Accepting API request&lt;/strong&gt; is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Creating command&lt;/strong&gt; The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Sending command to a service&lt;/strong&gt;. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Command handling&lt;/strong&gt;. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Sending Reply command to the originator&lt;/strong&gt;. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Flush Http response&lt;/strong&gt;. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Using a non-blocking approach provides the ability to handle a higher number of Http connections with fewer resources, thus increasing system availability with a benefit of greater system elasticity.&lt;/p&gt;
 &lt;p&gt;The next section describes a durable request/reply mechanism for inter-process communication.&lt;/p&gt;
