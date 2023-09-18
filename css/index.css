@@ -55,21 +55,24 @@ html, body {
   background-color:  var(--bg);
   color: var(--text);
   display: block;
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, Oxygen, Ubuntu, Cantarell, "open sans", "helvetica neue", sans-serif;;
   font-size: 1rem;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4 { 
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, Oxygen, Ubuntu, Cantarell, "open sans", "helvetica neue", sans-serif;;
   margin: 0;
   color: rgb(24, 24, 27);
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-weight: normal;
+  line-height: 1.2;
 }
 
 p {
-  line-height: 24px;
+
   margin: 18px 0px 18px 0px;
 }
 
@@ -100,6 +103,7 @@ pre {
   height: 200px;
   width: 200px;
   margin-right: 15px;
+  border-radius: 8px;
 }
 
 .dt-published {
@@ -110,8 +114,14 @@ pre {
   color: #222222;
 }
 
+.fp {
+  font-size: 24px !important;
+}
+
 h1 {
-  font-size: 26px;
+  font-size: 2.3529411765rem;
+  font-weight:700;
+  margin-bottom: 2px !important;
 }
 
 /* h1::before {
@@ -119,7 +129,8 @@ h1 {
 } */
 
 h2 {
-  font-size: 22px;
+  font-size: 1.8823529412rem;
+  font-weight: 700;
 }
 
 /* h2::before {
@@ -189,8 +200,6 @@ table td,
 table th {
   padding-right: 1em;
 }
-
-
 
 .text-center { text-align: center; }
 

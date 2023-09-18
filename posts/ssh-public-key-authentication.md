@@ -9,13 +9,13 @@ layout: layouts/post.njk
 permalink: "ssh-public-key-authentication/index.html"
 ---
 
-1. <a href="#introduction">Introduction</a>
+1. <a href="#introduction">Intro</a>
 2. <a href="#generate-key-pair">Generate Key Pair</a>
 3. <a href="#copy-public-key-to-remote-host">Copy public key to remote host</a>
 4. <a href="#java-code">Connect to remote host from java</a> 
 5. <a href="#source-code">Source code</a>
 
-### <a name="introduction" id="introduction">Introduction</a>
+## <a name="introduction" id="introduction">Intro</a>
 
 This article shows how to securely connect (i.e. establish ssh connection) to the remote host from java application. Also, configuration details for enabling public key authentication and protecting ssh keys will be provided.
 
@@ -23,7 +23,7 @@ Public key authentication enables users to establish an SSH connection without p
 
 The private key should be stored in the ssh keychain and protected with the encryption passphrase.
 
-### <a name="generate-key-pair" id="generate-key-pair">Generate Key Pair</a>
+## <a name="generate-key-pair" id="generate-key-pair">Generate Key Pair</a>
 
 The first step is to generate a private/public key on the server where your java application will be running.
 
@@ -47,7 +47,7 @@ Your public key has been saved in /home/vladimir.stankovic/.ssh/id_rsa.pub.
 
 Private key is identified as ```id_rsa``` and public key as a ```id_rsa.pub```. 
 
-### <a name="copy-public-key-to-remote-host" id="">Copy public key to remote host</a>
+## <a name="copy-public-key-to-remote-host" id="">Copy public key to remote host</a>
 
 The ```ssh-copy-id``` copies the public key of your default identity (use -i identity_file for other identities) to the remote host.
 
@@ -63,7 +63,7 @@ Now try logging into the machine, with:   "ssh 'root@www.svlada.com'"
 and check to make sure that only the key(s) you wanted were added.
 ```
 
-### <a name="java-code" id="java-code">Connect to remote host from java</a>
+## <a name="java-code" id="java-code">Connect to remote host from java</a>
 
 I have used [JSch library](http://www.jcraft.com/jsch/) to establish SSH connection.
 
@@ -103,5 +103,5 @@ The next step is to connect to the remote host and execute an arbitrary command 
     }
 ```
 
-### <a name="source-code" id="source-code">Source code</a> 
+## <a name="source-code" id="source-code">Source code</a> 
 For a full example, you can check out code from the following [git repository](https://github.com/svlada/ssh-public-key-authentication).
