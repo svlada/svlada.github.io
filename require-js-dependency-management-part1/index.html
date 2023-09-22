@@ -12,7 +12,11 @@
   <meta name="author" content="Vlada Stankovic">
 
   <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-  <link rel="stylesheet" href="/css/index.css?v=1.6.0">
+
+  <!-- <link rel="stylesheet" href="/css/index.css?v=1.6.0"> -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>  
+  
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -41,38 +45,19 @@
   </script>
 </head>
 
-<body class="center">
+<body class="w-100 sans-serif center mw7">
   <header>
-    <div style="float: left">
-      <ul class="nav">
-        <li class="nav-item" style="padding-right: 20px"><strong>
-          <a class="purple-text" href="/">Vladimir Stankovic</a>
-        </strong></li>
-        
-        <!--
-          <li class="nav-item" >
-            <a class="purple-text " href="/">Blog</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="purple-text " href="/art/"></a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="purple-text " href="/about/">About</a>
-          </li>
-          -->
-      </ul>
-  
-      <p style="width: 100%; float: left; margin: 0; font-size:12px"><a class="purple-text" href="https://github.com/svlada" target="_blank">GitHub</a>, <a class="purple-text" href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a>,  <a class="purple-text" href="https://twitter.com/svlada" target="_blank">Twitter</a>, <a class="purple-text" href="mailto:svlada@gmail.com">Email</a> | <a class="purple-text" href="/notes">Notes</a> </p>
-    </div>
-    
+    <nav class="pt4 pl4 pr4 pb0">
+      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">Vlada Stankovic</a>
+      <!-- <a class="link dim gray    f4 f4-ns dib mr3" href="#" title="Home">Posts</a>
+      <a class="link dim gray    f4 f4-ns dib mr3" href="/about" title="About">About</a> -->
+    </nav>
   </header>
-  
-  <main class="tmpl-post" >
-    <h1>Require.js dependency management</h1>
+  <main class="">
+    <article class="pa4 pa4-ns">
+<h1>Require.js dependency management</h1>
 
-<div class="small-text" datetime="Sat Nov 23 2013 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Saturday, November 23, 2013</div>
+<div class="f6 gray " datetime="Sat Nov 23 2013 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Saturday, November 23, 2013</div>
 
 <ol>
 <li><a href="#t0">Introduction</a></li>
@@ -146,8 +131,9 @@ Now Item object is available for use in new SpecialItem module: <code>[webapp/js
 
 <p></p>
 <h2>Feedback</h2>
-<p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
-<div datetime="Sat Nov 23 2013 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Saturday, November 23, 2013</div>
+<p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
+
+</article>
 <div id="disqus_thread"></div>
 <script>
 
@@ -169,8 +155,7 @@ s.setAttribute('data-timestamp', +new Date());
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-    </main>
-    <footer></footer>
-    <!-- Current page: /require-js-dependency-management-part1/ -->
+  </main>
 </body>
-</html>
+
+
