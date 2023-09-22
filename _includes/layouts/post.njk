@@ -2,16 +2,18 @@
 layout: layouts/base.njk
 templateClass: tmpl-post
 ---
+<article class="pa4 pa4-ns">
 <h1>{{ title }}</h1>
 
-<div class="small-text" datetime="{{ date }}">Published on {{ date | full_date() }}</div>
+<div class="f6 gray " datetime="{{ date }}">Published on {{ date | full_date() }}</div>
 
 {{ content | safe }}
 
 <p></p>
 <h2>Feedback</h2>
-<p>If you have any comments, questions, or suggestions, please send them to my personal <a class="purple-text font-extra-bold" href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
-<div datetime="{{ date }}">Published on {{ date | full_date() }}</div>
+<p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
+
+</article>
 <div id="disqus_thread"></div>
 <script>
 
