@@ -48,18 +48,20 @@
 <body class="w-100 sans-serif center mw7">
   <header>
     <nav class="pt4 pl4 pr4 pb0">
-      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">Vlada Stankovic</a>
+      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
+      <a class="link dim black f4 f4-ns dib mr3" href="/about" title="About">About</a>
       <!-- <a class="link dim gray    f4 f4-ns dib mr3" href="#" title="Home">Posts</a>
       <a class="link dim gray    f4 f4-ns dib mr3" href="/about" title="About">About</a> -->
     </nav>
   </header>
   <main class="">
-    <article class="pa4 pa4-ns">
-<h1>Virgil crypto on Alpine linux v3.8</h1>
+    <section class="pa3 pa4-ns">
+<article class="">
+    <h1>Virgil crypto on Alpine linux v3.8</h1>
 
-<div class="f6 gray " datetime="Sun Jan 06 2019 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Sunday, January 6, 2019</div>
+    <div class="f6 gray " datetime="Sun Jan 06 2019 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Sunday, January 6, 2019</div>
 
-<p>This article is a quick start guide on how to debug issues with <a href="https://github.com/VirgilSecurity/virgil-crypto">Virgil crypto library</a>, Alpine linux v3.8 and Open JDK 1.8.</p>
+    <p>This article is a quick start guide on how to debug issues with <a href="https://github.com/VirgilSecurity/virgil-crypto">Virgil crypto library</a>, Alpine linux v3.8 and Open JDK 1.8.</p>
 <p>Recently, I was testing crypto libraries to see which one might be the best fit for my pet project. One of these libraries was Virgil. After a couple of hours of work, I had something that can be tested out. Everything worked fine on macOS and windows dev machines, but things started breaking once I've deployed code to Amazon.</p>
 <p>Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):</p>
 <pre class="language-java"><code class="language-java"><span class="highlight-line">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>web<span class="token punctuation">.</span>util<span class="token punctuation">.</span><span class="token class-name">NestedServletException</span><span class="token operator">:</span> <span class="token class-name">Handler</span> dispatch failed<span class="token punctuation">;</span> </span><br><span class="highlight-line">nested exception is java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span><span class="token class-name">NoClassDefFoundError</span><span class="token operator">:</span> </span><br><span class="highlight-line"><span class="token class-name">Could</span> not initialize <span class="token keyword">class</span> com<span class="token punctuation">.</span>virgilsecurity<span class="token punctuation">.</span>crypto<span class="token punctuation">.</span>virgilcryptojavaJNI</span></code></pre>
@@ -74,11 +76,12 @@
 <p><code>ld-linux-x86-64.so.2</code> is copied to <code>/lib64</code> and not to <code>lib</code> thus breaking the code. Quick and dirty solution was to copy <code>ld-linux-x86-64.so.2</code> to <code>lib</code> (e.g. <code>cp /lib64/ld-linux-x86-64.so.2 /lib/</code>).</p>
 
 
-<p></p>
-<h2>Feedback</h2>
-<p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
-
+    <p></p>
+    <h2>Feedback</h2>
+    <p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
 </article>
+
+</section>
 <div id="disqus_thread"></div>
 <script>
 

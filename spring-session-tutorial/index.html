@@ -48,18 +48,20 @@
 <body class="w-100 sans-serif center mw7">
   <header>
     <nav class="pt4 pl4 pr4 pb0">
-      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">Vlada Stankovic</a>
+      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
+      <a class="link dim black f4 f4-ns dib mr3" href="/about" title="About">About</a>
       <!-- <a class="link dim gray    f4 f4-ns dib mr3" href="#" title="Home">Posts</a>
       <a class="link dim gray    f4 f4-ns dib mr3" href="/about" title="About">About</a> -->
     </nav>
   </header>
   <main class="">
-    <article class="pa4 pa4-ns">
-<h1>Spring Session JDBC Configuration</h1>
+    <section class="pa3 pa4-ns">
+<article class="">
+    <h1>Spring Session JDBC Configuration</h1>
 
-<div class="f6 gray " datetime="Tue May 01 2018 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Tuesday, May 1, 2018</div>
+    <div class="f6 gray " datetime="Tue May 01 2018 00:00:00 GMT+0000 (Coordinated Universal Time)">Published on Tuesday, May 1, 2018</div>
 
-<ol>
+    <ol>
 <li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
 <li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
 <li><a title="Test" href="#test">Test</a></li>
@@ -126,11 +128,12 @@
 <pre class="language-java"><code class="language-java"><span class="highlight-line"><span class="token annotation punctuation">@Configuration</span></span><br><span class="highlight-line"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PasswordEncoderConfig</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token annotation punctuation">@Bean</span></span><br><span class="highlight-line">    <span class="token keyword">protected</span> <span class="token class-name">PasswordEncoder</span> <span class="token function">passwordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BCryptPasswordEncoder</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line">    <span class="token punctuation">}</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
 
 
-<p></p>
-<h2>Feedback</h2>
-<p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
-
+    <p></p>
+    <h2>Feedback</h2>
+    <p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
 </article>
+
+</section>
 <div id="disqus_thread"></div>
 <script>
 
