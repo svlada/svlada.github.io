@@ -13,7 +13,7 @@ permalink: "education-plan-2023-Q3-Q4/index.html"
 
 Six months of learning, Goals set to stay on focus, Finish what I start. 
 
-```markdown
+
 - Create UUID library using Go
 - Go + Echo + SQLC 
 	- Set up a boilerplate project
@@ -23,4 +23,4 @@ Six months of learning, Goals set to stay on focus, Finish what I start.
 	- Build washing machine toy for kids
 - Design of the Bookmarking App
 - Formulate a plan for implementing a database engine
-```
+
