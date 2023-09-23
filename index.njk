@@ -79,7 +79,7 @@ date: 2020-01-01
       <ul class="list pl0">
         {% for lab in lablist | reverse %}
           {% if lab.data.title != "draft" %}
-            <li class="pa3 pl0 bb b--black-10">
+            <li class="pb2 pl0 bb b--black-10">
               <b class="">  <a href="{{ lab.url | url }}" 
                 class="f4 fw6 db near-black link dim"> {% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
               </b>
