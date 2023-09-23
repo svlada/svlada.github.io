@@ -167,22 +167,22 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/javascript/</loc>
-    <lastmod>2023-09-23</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
-    <lastmod>2023-09-23</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/symfony/</loc>
     <lastmod>2023-09-23</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2023-09-23</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/javascript/</loc>
+    <lastmod>2023-09-23</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/require-js/</loc>
     <lastmod>2023-09-23</lastmod>
   </url>
   
