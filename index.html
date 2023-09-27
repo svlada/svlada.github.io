@@ -16,7 +16,9 @@
   <!-- <link rel="stylesheet" href="/css/index.css?v=1.6.0"> -->
   
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>  
-  
+  <style>
+    h1, h2, h3, h4, h5, h6, h7 { color: #5e2ca5; }
+  </style>
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -45,11 +47,11 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7">
+<body class="w-100 sans-serif center mw7 bg-washed-gray black">
   <header>
-    <nav class="pt4 pl4 pr4 pb0">
-      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link dim black f4 f4-ns dib mr3" href="/about" title="About">About</a>
+    <nav class="pt4 pl4 pr4 pb0 purple">
+      <a class="link dim purple b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
+      <a class="link dim purple f5 f5-ns dib mr3" href="/about" title="About">About</a>
       <!-- <a class="link dim gray    f4 f4-ns dib mr3" href="#" title="Home">Posts</a>
       <a class="link dim gray    f4 f4-ns dib mr3" href="/about" title="About">About</a> -->
     </nav>
@@ -64,14 +66,13 @@
     <!-- <img src="/img/avatar.new.4x6.jpg" style="max-width: 100px; border-radius: 90px;"> -->
 
 
-    <div class="pt4">
-      <div class="dtc v-top">
+    <div class="pt4   ">
+      <div class="dtc v-mid">
         <img src="/img/dithered-avatar.png" class="br-100 pa1 ba b--black-10 h3 w3" alt="avatar">
       </div>
-      <div class="dtc v-top pl3">
+      <div class="dtc v-mid pl3">
         <p class="lh-copy f6 fw4 black-70">A blog about building software<br/>By <a href="/about">Vladimir Stankovic</a></p>
         <p class="lh-copy f6 fw4 navy"></p>
-        
       </div>
     </div>
 
@@ -105,15 +106,15 @@
   </article>
 
 
-  <article class="pt3">
-    <h2 class="f5 f3-ns fw8" >Sometimes, I write</h2>
+  <article class="pt3 ">
+    <h2 class="f5 f4-ns fw8 center purple" >Sometimes, I write</h2>
 
-    <ul class="list pl0">
+    <ul class="list pl0 ">
       
         
           <li class="pb2">
               <a href="/microservices-durable-request-reply/" 
-              class="f4 fw6 db near-black link dim"> Durable request reply</a>
+              class="link dim"> Durable request reply</a>
 
             <time class="f6  gray pt2 ">Jan 29, 2020 </time>
             
@@ -123,7 +124,7 @@
         
           <li class="pb2">
               <a href="/fun-times-with-gcc-musl-alpine-linux/" 
-              class="f4 fw6 db near-black link dim"> Virgil crypto on Alpine linux v3.8</a>
+              class="link dim"> Virgil crypto on Alpine linux v3.8</a>
 
             <time class="f6  gray pt2 ">Jan 06, 2019 </time>
             
@@ -133,7 +134,7 @@
         
           <li class="pb2">
               <a href="/spring-session-tutorial/" 
-              class="f4 fw6 db near-black link dim"> Spring Session JDBC Configuration</a>
+              class="link dim"> Spring Session JDBC Configuration</a>
 
             <time class="f6  gray pt2 ">May 01, 2018 </time>
             
@@ -143,7 +144,7 @@
         
           <li class="pb2">
               <a href="/jwt-token-authentication-with-spring-boot/" 
-              class="f4 fw6 db near-black link dim"> JWT Authentication Tutorial</a>
+              class="link dim"> JWT Authentication Tutorial</a>
 
             <time class="f6  gray pt2 ">Sep 05, 2016 </time>
             
@@ -153,7 +154,7 @@
         
           <li class="pb2">
               <a href="/step-builder-pattern/" 
-              class="f4 fw6 db near-black link dim"> Step builder pattern</a>
+              class="link dim"> Step builder pattern</a>
 
             <time class="f6  gray pt2 ">Jun 09, 2016 </time>
             
@@ -163,7 +164,7 @@
         
           <li class="pb2">
               <a href="/spring-batch-job-repository-configuration-for-websphere-and-oracle/" 
-              class="f4 fw6 db near-black link dim"> Spring batch job repository configuration for WebSphere and Oracle</a>
+              class="link dim"> Spring batch job repository configuration for WebSphere and Oracle</a>
 
             <time class="f6  gray pt2 ">Dec 02, 2015 </time>
             
@@ -173,7 +174,7 @@
         
           <li class="pb2">
               <a href="/ssh-public-key-authentication/" 
-              class="f4 fw6 db near-black link dim"> Public key authentication with Java over SSH</a>
+              class="link dim"> Public key authentication with Java over SSH</a>
 
             <time class="f6  gray pt2 ">Nov 23, 2015 </time>
             
@@ -183,7 +184,7 @@
         
           <li class="pb2">
               <a href="/websphere-maven-spring-project/" 
-              class="f4 fw6 db near-black link dim"> Multi-module Websphere web application</a>
+              class="link dim"> Multi-module Websphere web application</a>
 
             <time class="f6  gray pt2 ">Sep 10, 2015 </time>
             
@@ -193,7 +194,7 @@
         
           <li class="pb2">
               <a href="/voxxed-days-m-m-challange/" 
-              class="f4 fw6 db near-black link dim"> Voxxed Days Belgrade - M&amp;M Challange</a>
+              class="link dim"> Voxxed Days Belgrade - M&amp;M Challange</a>
 
             <time class="f6  gray pt2 ">May 25, 2015 </time>
             
@@ -203,7 +204,7 @@
         
           <li class="pb2">
               <a href="/proxy-ajax-requests-curl-and-symfony-2/" 
-              class="f4 fw6 db near-black link dim"> Proxying cross-domain requests using Symfony 2</a>
+              class="link dim"> Proxying cross-domain requests using Symfony 2</a>
 
             <time class="f6  gray pt2 ">Dec 23, 2013 </time>
             
@@ -213,7 +214,7 @@
         
           <li class="pb2">
               <a href="/require-js-optimization-part2/" 
-              class="f4 fw6 db near-black link dim"> Require.js optimizer</a>
+              class="link dim"> Require.js optimizer</a>
 
             <time class="f6  gray pt2 ">Nov 25, 2013 </time>
             
@@ -223,7 +224,7 @@
         
           <li class="pb2">
               <a href="/require-js-dependency-management-part1/" 
-              class="f4 fw6 db near-black link dim"> Require.js dependency management</a>
+              class="link dim"> Require.js dependency management</a>
 
             <time class="f6  gray pt2 ">Nov 23, 2013 </time>
             
@@ -235,14 +236,14 @@
 
       
 
-      <h2 class="f5 f3-ns fw8" >Experiments and playthings</h2>
+      <h2 class="f5 f4-ns fw8 purple" >Experiments and playthings</h2>
       <ul class="list pl0">
         
           
-            <li class="pb2 pl0 bb b--black-10">
-              <b class="">  <a href="/education-plan-2023-Q3-Q4/" 
-                class="f4 fw6 db near-black link dim"> 2023 Q3/Q4 Challenge list</a>
-              </b>
+            <li class="pb2 ">
+              <a href="/education-plan-2023-Q3-Q4/" 
+                class="link dim"> 2023 Q3/Q4 Challenge list</a>
+            
               <time class="f6 db gray pt2">Jun 21, 2023 </time>
             </li>
           
