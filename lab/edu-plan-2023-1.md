@@ -11,8 +11,7 @@ layout: layouts/post.njk
 permalink: "education-plan-2023-Q3-Q4/index.html"
 ---
 
-Six months of learning, Goals set to stay on focus, Finish what I start. 
-
+In the next six months, it’s all about setting concrete goals and executing. I’m zeroing in on a couple of personal projects, with a clear timeline to turn plans into tangible outcomes. Every goal is a commitment - the aim isn’t just to start, but to deliver.
 
 - Create UUID library using Go
 - Go + Echo + SQLC 
