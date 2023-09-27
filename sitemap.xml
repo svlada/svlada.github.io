@@ -157,6 +157,16 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/microservices/</loc>
+    <lastmod>2023-09-27</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/kafka/</loc>
+    <lastmod>2023-09-27</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/symfony/</loc>
     <lastmod>2023-09-27</lastmod>
   </url>
@@ -173,16 +183,6 @@
   
   <url>
     <loc>https://myurl.com/tags/require-js/</loc>
-    <lastmod>2023-09-27</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/microservices/</loc>
-    <lastmod>2023-09-27</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/kafka/</loc>
     <lastmod>2023-09-27</lastmod>
   </url>
   
