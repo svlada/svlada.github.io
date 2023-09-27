@@ -14,14 +14,13 @@ date: 2020-01-01
     <!-- <img src="/img/avatar.new.4x6.jpg" style="max-width: 100px; border-radius: 90px;"> -->
 
 
-    <div class="pt4">
-      <div class="dtc v-top">
+    <div class="pt4   ">
+      <div class="dtc v-mid">
         <img src="/img/dithered-avatar.png" class="br-100 pa1 ba b--black-10 h3 w3" alt="avatar">
       </div>
-      <div class="dtc v-top pl3">
+      <div class="dtc v-mid pl3">
         <p class="lh-copy f6 fw4 black-70">A blog about building software<br/>By <a href="/about">Vladimir Stankovic</a></p>
         <p class="lh-copy f6 fw4 navy"></p>
-        
       </div>
     </div>
 
@@ -55,15 +54,15 @@ date: 2020-01-01
   </article>
 
 
-  <article class="pt3">
-    <h2 class="f5 f3-ns fw8" >Sometimes, I write</h2>
+  <article class="pt3 ">
+    <h2 class="f5 f4-ns fw8 center purple" >Sometimes, I write</h2>
 
-    <ul class="list pl0">
+    <ul class="list pl0 ">
       {% for post in postslist | reverse %}
         {% if post.data.title != "draft" %}
           <li class="pb2">
               <a href="{{ post.url | url }}" 
-              class="f4 fw6 db near-black link dim"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+              class="link dim"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
 
             <time class="f6  gray pt2 ">{{ post.data.date | readableDate() }}</time>
             
@@ -75,14 +74,14 @@ date: 2020-01-01
 
       {% set lablist = collections.lab %}
 
-      <h2 class="f5 f3-ns fw8" >Experiments and playthings</h2>
+      <h2 class="f5 f4-ns fw8 purple" >Experiments and playthings</h2>
       <ul class="list pl0">
         {% for lab in lablist | reverse %}
           {% if lab.data.title != "draft" %}
-            <li class="pb2 pl0 bb b--black-10">
-              <b class="">  <a href="{{ lab.url | url }}" 
-                class="f4 fw6 db near-black link dim"> {% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
-              </b>
+            <li class="pb2 ">
+              <a href="{{ lab.url | url }}" 
+                class="link dim"> {% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
+            
               <time class="f6 db gray pt2">{{ lab.data.date | readableDate() }}</time>
             </li>
           {% endif %}

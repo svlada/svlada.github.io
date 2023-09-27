@@ -16,7 +16,9 @@
   <!-- <link rel="stylesheet" href="{{ '/css/index.css' | url }}?v=1.6.0"> -->
   
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>  
-  
+  <style>
+    h1, h2, h3, h4, h5, h6, h7 { color: #5e2ca5; }
+  </style>
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -45,11 +47,11 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7">
+<body class="w-100 sans-serif center mw7 bg-washed-gray black">
   <header>
-    <nav class="pt4 pl4 pr4 pb0">
-      <a class="link dim black b f4 f4-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link dim black f4 f4-ns dib mr3" href="/about" title="About">About</a>
+    <nav class="pt4 pl4 pr4 pb0 purple">
+      <a class="link dim purple b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
+      <a class="link dim purple f5 f5-ns dib mr3" href="/about" title="About">About</a>
       <!-- <a class="link dim gray    f4 f4-ns dib mr3" href="#" title="Home">Posts</a>
       <a class="link dim gray    f4 f4-ns dib mr3" href="/about" title="About">About</a> -->
     </nav>
