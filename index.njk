@@ -64,7 +64,7 @@ date: 2020-01-01
               <a href="{{ post.url | url }}" 
               class="link dim"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
 
-            <time class="f6  gray pt2 ">{{ post.data.date | readableDate() }}</time>
+            <time class="f6 gray pt2 ">{{ post.data.date | readableDate() }}</time>
             
           </li>
         {% endif %}
@@ -82,7 +82,7 @@ date: 2020-01-01
               <a href="{{ lab.url | url }}" 
                 class="link dim"> {% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
             
-              <time class="f6 db gray pt2">{{ lab.data.date | readableDate() }}</time>
+              <time class="f6 gray pt2">{{ lab.data.date | readableDate() }}</time>
             </li>
           {% endif %}
         {% endfor %}
