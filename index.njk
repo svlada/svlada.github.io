@@ -10,7 +10,7 @@ date: 2020-01-01
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
 
 <section class="pa3 pa4-ns">
-  <article class="tl bt b--black-10 pt2 f5 f4-ns center">
+  <article class="tl pt2 f5 f4-ns center">
     <!-- <img src="/img/avatar.new.4x6.jpg" style="max-width: 100px; border-radius: 90px;"> -->
 
 
@@ -55,7 +55,7 @@ date: 2020-01-01
 
 
   <article class="pt3 ">
-    <h2 class="f5 f4-ns fw8 center purple" >Sometimes, I write</h2>
+    <h4 class="center " >Sometimes, I write</h4>
 
     <ul class="list pl0 ">
       {% for post in postslist | reverse %}
@@ -74,7 +74,7 @@ date: 2020-01-01
 
       {% set lablist = collections.lab %}
 
-      <h2 class="f5 f4-ns fw8 purple" >Experiments and playthings</h2>
+      <h4 class="" >Experiments and playthings</h4>
       <ul class="list pl0">
         {% for lab in lablist | reverse %}
           {% if lab.data.title != "draft" %}
