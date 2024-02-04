@@ -30,8 +30,7 @@ First, check if the client request is XmlHttpRequest. This can be done using Sym
  
 The following are the steps for creating an Ajax request.
  
-1. Specify rest URL on the server for handling cross-domain ajax requests.`
- url: "{{ path('_ajaxProxy') }}"`
+1. Specify rest URL on the server for handling cross-domain ajax requests.`url: "{{ path('_ajaxProxy') }}"`
 2. Wrap request data
  
 We need some data to create a curl request on the server-side.
