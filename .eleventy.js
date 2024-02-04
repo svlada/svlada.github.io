@@ -63,7 +63,6 @@ module.exports = function(eleventyConfig) {
     linkify: true
   };
 
-
   eleventyConfig.setLibrary("md", markdownIt(options));
 
   eleventyConfig.setBrowserSyncConfig({
@@ -94,7 +93,7 @@ module.exports = function(eleventyConfig) {
     // This is only used for URLs (it does not affect your file structure)
     pathPrefix: "/",
 
-    markdownTemplateEngine: "liquid",
+    markdownTemplateEngine: false,
     htmlTemplateEngine: "njk",
     dataTemplateEngine: "njk",
     passthroughFileCopy: true,
