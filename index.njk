@@ -11,9 +11,6 @@ date: 2020-01-01
 
 <section class="pa3 pa4-ns">
   <article class="tl pt2 f5 f4-ns center">
-    <!-- <img src="/img/avatar.new.4x6.jpg" style="max-width: 100px; border-radius: 90px;"> -->
-
-
     <div class="pt4   ">
       <div class="dtc v-mid">
         <img src="/img/dithered-avatar.png" class="br-100 pa1 ba b--black-10 h3 w3" alt="avatar">
@@ -23,49 +20,18 @@ date: 2020-01-01
         <p class="lh-copy f6 fw4 navy"></p>
       </div>
     </div>
-
-    <!-- <div class="tc">
-        <img src="/img/avatar.new.4x6.jpg"  class="br-100 h3 w3 dib ">
-        <p class="measure-narrow pl3 fl f6 v-mid">Java / Go Developer </p>
-        <h3 class="measure lh-copy">
-          &#128075; Hey there, I'm Vlada. 
-        </h3>
-    </div> -->
-
-    <!-- <img src="/img/avatar.new.4x6.jpg"  class="br-100 h3 w3 dib"> -->
-    <!-- <h1 class="f5 f4-ns fw6 mid-gray">Java / Golang Software Engineer</h1>
-    <h2 class="f6 gray fw2 ttu tracked">Remote</h2> -->
-
-    <!-- <h2 class="f6 gray fw2 ttu tracked">Java / Go Software Engineer</h2> -->
-    <!-- <h1 class="f3 f2-m f2-l">Java / Go Software Engineer</h1> -->
-
-    <!-- <p class="measure lh-copy">
-      I'm software engineer working over at <a href="http://codereflect.io" target="_blank">Reflect</a> on building backends for financial services.
-    </p>
-    <p class="measure lh-copy">
-    Previously, I worked as a developer in the US healthcare industry, where I was involved in the creation of HIPAA-compliant environments and the development of applications for startups and enterprises.
-    </p>
-
-    <p class="measure lh-copy">
-      If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address. To get new posts, please use my <a href="{{ metadata.feed.path | url }}" type="application/atom+xml">RSS feed</a>.
-    </p>
-
-    <a class="purple-text" href="https://github.com/svlada" target="_blank">GitHub</a>, <a class="purple-text" href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a>,  <a class="purple-text" href="https://twitter.com/svlada" target="_blank">Twitter</a>, <a class="purple-text" href="mailto:svlada@gmail.com">Email</a> -->
   </article>
 
-
   <article class="pt3 ">
-    <h4 class="center " >Sometimes, I write</h4>
-
     <ul class="list pl0 ">
       {% for post in postslist | reverse %}
         {% if post.data.title != "draft" %}
-          <li class="pb2">
-              <a href="{{ post.url | url }}" 
-              class="link dim"> {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
-
-            <time class="f6 gray pt2 ">{{ post.data.date | readableDate() }}</time>
+          <li class="pb2 ">
             
+            <a href="{{ post.url | url }}" 
+              class="link">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+
+              <time class="f6 gray pt2 pr3 ">{{ post.data.date | readableDate() }}</time>
           </li>
         {% endif %}
       {% endfor %}
@@ -74,15 +40,16 @@ date: 2020-01-01
 
       {% set lablist = collections.lab %}
 
-      <h4 class="" >Experiments and playthings</h4>
+      <p>Experiments and playthings</p>
       <ul class="list pl0">
         {% for lab in lablist | reverse %}
           {% if lab.data.title != "draft" %}
             <li class="pb2 ">
+              
               <a href="{{ lab.url | url }}" 
-                class="link dim"> {% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
+                class="link dim">{% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
             
-              <time class="f6 gray pt2">{{ lab.data.date | readableDate() }}</time>
+              <time class="f6 gray pt2 pr3 ">{{ lab.data.date | readableDate() }}</time>
             </li>
           {% endif %}
         {% endfor %}

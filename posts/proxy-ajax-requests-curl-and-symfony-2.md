@@ -273,6 +273,6 @@ public function proxyAction(Request $request)
 ```
 
 **Read more about this topic:**
-http://developer.yahoo.com/javascript/howto-proxy.html
- 
-[Follow me on Twitter](https://twitter.com/#!/svlada)
+
+- http://developer.yahoo.com/javascript/howto-proxy.html
+- [Follow me on Twitter](https://twitter.com/#!/svlada)

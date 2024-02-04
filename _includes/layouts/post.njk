@@ -3,16 +3,10 @@ layout: layouts/base.njk
 templateClass: tmpl-post
 ---
 <section class="pa3 pa4-ns">
-<article class="">
+<article class="lh-copy">
     <h1>{{ title }}</h1>
-
-    <div class="f6 gray " datetime="{{ date }}">Published on {{ date | full_date() }}</div>
-
     {{ content | safe }}
 
-    <p></p>
-    <h2>Feedback</h2>
-    <p class="measure-narrow lh-copy">If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address.</p>
 </article>
 
 </section>

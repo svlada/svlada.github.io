@@ -815,24 +815,14 @@ I heard people whispering on the web that loosing a JWT token is like loosing yo
 
 ## References
 
-### [I don’t see the point in Revoking or Blacklisting JWT](https://www.dinochiesa.net/?p=1388)
-
-### [Spring Security Architecture - Dave Syer](https://github.com/dsyer/spring-security-architecture)
-
-### [Invalidating JWT](http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens/36884683#36884683)
-
-### [Secure and stateless JWT implementation](http://stackoverflow.com/questions/38557379/secure-and-stateless-jwt-implementation)
-
-### [Learn JWT](https://github.com/dwyl/learn-json-web-tokens)
-
-### [Opaque access tokens and cloud foundry](https://www.cloudfoundry.org/opaque-access-tokens-cloud-foundry/)
-
-### [The unspoken vulnerability of JWTS](http://by.jtl.xyz/2016/06/the-unspoken-vulnerability-of-jwts.html)
-
-### [How To Control User Identity Within Micro-services](http://nordicapis.com/how-to-control-user-identity-within-microservices/)
-
-### [Why Does OAuth v2 Have Both Access and Refresh Tokens?](http://stackoverflow.com/questions/3487991/why-does-oauth-v2-have-both-access-and-refresh-tokens/12885823)
-
-### [RFC-6749](https://tools.ietf.org/html/rfc6749)
-
-### [Are breaches of JWT-based servers more damaging?](https://www.sslvpn.online/are-breaches-of-jwt-based-servers-more-damaging/)
+- [I don’t see the point in Revoking or Blacklisting JWT](https://www.dinochiesa.net/?p=1388)
+- [Spring Security Architecture - Dave Syer](https://github.com/dsyer/spring-security-architecture)
+- [Invalidating JWT](http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens/36884683#36884683)
+- [Secure and stateless JWT implementation](http://stackoverflow.com/questions/38557379/secure-and-stateless-jwt-implementation)
+- [Learn JWT](https://github.com/dwyl/learn-json-web-tokens)
+- [Opaque access tokens and cloud foundry](https://www.cloudfoundry.org/opaque-access-tokens-cloud-foundry/)
+- [The unspoken vulnerability of JWTS](http://by.jtl.xyz/2016/06/the-unspoken-vulnerability-of-jwts.html)
+- [How To Control User Identity Within Micro-services](http://nordicapis.com/how-to-control-user-identity-within-microservices/)
+- [Why Does OAuth v2 Have Both Access and Refresh Tokens?](http://stackoverflow.com/questions/3487991/why-does-oauth-v2-have-both-access-and-refresh-tokens/12885823)
+- [RFC-6749](https://tools.ietf.org/html/rfc6749)
+- [Are breaches of JWT-based servers more damaging?](https://www.sslvpn.online/are-breaches-of-jwt-based-servers-more-damaging/)

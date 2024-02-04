@@ -2,6 +2,7 @@ const { DateTime } = require("luxon");
 const fs = require("fs");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const cheerio = require("cheerio");
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
@@ -10,7 +11,18 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
 
-    eleventyConfig.addFilter("currentDateDisplay", dateObj => {
+  eleventyConfig.addTransform("addH1Classes", function(content, outputPath) {
+    if(outputPath && outputPath.endsWith(".html")) {
+      let $ = cheerio.load(content);
+      $("h1").addClass("f3 lh-copy");
+      $("h2").addClass("f4 lh-copy");
+      $("h3").addClass("f5 lh-copy");
+      return $.html();
+    }
+    return content;
+  });
+
+  eleventyConfig.addFilter("currentDateDisplay", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("MMM dd, yyyy ");
   });
 
