@@ -1,7 +1,4 @@
-<!doctype html>
-<html lang="en">
-
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -13,11 +10,13 @@
 
   <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
 
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.6.0"> -->
+  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
   
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>  
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
   <style>
     h1, h2, h3, h4, h5 { color: rgb(32, 31, 45); }
+    html { background-color: rgb(250, 250, 250); }
+    .direct-link { display: none; }
   </style>
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
@@ -42,10 +41,8 @@
 <body class="w-100 sans-serif center mw7 bg-washed-gray black">
   <header>
     <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link dim purple b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link dim purple f5 f5-ns dib mr3" href="/about" title="About">About</a>
-      <!-- <a class="link dim gray    f4 f4-ns dib mr3" href="#" title="Home">Posts</a>
-      <a class="link dim gray    f4 f4-ns dib mr3" href="/about" title="About">About</a> -->
+      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
+      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
     </nav>
   </header>
   <main class="">
@@ -55,171 +52,125 @@
 
 <section class="pa3 pa4-ns">
   <article class="tl pt2 f5 f4-ns center">
-    <!-- <img src="/img/avatar.new.4x6.jpg" style="max-width: 100px; border-radius: 90px;"> -->
-
-
     <div class="pt4   ">
       <div class="dtc v-mid">
         <img src="/img/dithered-avatar.png" class="br-100 pa1 ba b--black-10 h3 w3" alt="avatar">
       </div>
       <div class="dtc v-mid pl3">
-        <p class="lh-copy f6 fw4 black-70">A blog about building software<br/>By <a href="/about">Vladimir Stankovic</a></p>
+        <p class="lh-copy f6 fw4 black-70">A blog about building software<br>By <a href="/about">Vladimir Stankovic</a></p>
         <p class="lh-copy f6 fw4 navy"></p>
       </div>
     </div>
-
-    <!-- <div class="tc">
-        <img src="/img/avatar.new.4x6.jpg"  class="br-100 h3 w3 dib ">
-        <p class="measure-narrow pl3 fl f6 v-mid">Java / Go Developer </p>
-        <h3 class="measure lh-copy">
-          &#128075; Hey there, I'm Vlada. 
-        </h3>
-    </div> -->
-
-    <!-- <img src="/img/avatar.new.4x6.jpg"  class="br-100 h3 w3 dib"> -->
-    <!-- <h1 class="f5 f4-ns fw6 mid-gray">Java / Golang Software Engineer</h1>
-    <h2 class="f6 gray fw2 ttu tracked">Remote</h2> -->
-
-    <!-- <h2 class="f6 gray fw2 ttu tracked">Java / Go Software Engineer</h2> -->
-    <!-- <h1 class="f3 f2-m f2-l">Java / Go Software Engineer</h1> -->
-
-    <!-- <p class="measure lh-copy">
-      I'm software engineer working over at <a href="http://codereflect.io" target="_blank">Reflect</a> on building backends for financial services.
-    </p>
-    <p class="measure lh-copy">
-    Previously, I worked as a developer in the US healthcare industry, where I was involved in the creation of HIPAA-compliant environments and the development of applications for startups and enterprises.
-    </p>
-
-    <p class="measure lh-copy">
-      If you have any comments, questions, or suggestions, please send them to my personal <a href="mailto:svlada@gmail.com" target="_blank">email</a> address. To get new posts, please use my <a href="/feed/feed.xml" type="application/atom+xml">RSS feed</a>.
-    </p>
-
-    <a class="purple-text" href="https://github.com/svlada" target="_blank">GitHub</a>, <a class="purple-text" href="https://www.linkedin.com/in/svlada" target="_blank">LinkedIn</a>,  <a class="purple-text" href="https://twitter.com/svlada" target="_blank">Twitter</a>, <a class="purple-text" href="mailto:svlada@gmail.com">Email</a> -->
   </article>
 
-
   <article class="pt3 ">
-    <h4 class="center " >Sometimes, I write</h4>
-
     <ul class="list pl0 ">
       
         
-          <li class="pb2">
-              <a href="/microservices-durable-request-reply/" 
-              class="link dim"> Durable request reply</a>
-
-            <time class="f6 gray pt2 ">Jan 29, 2020 </time>
+          <li class="pb2 ">
             
+            <a href="/microservices-durable-request-reply/" class="link">Durable request reply</a>
+
+              <time class="f6 gray pt2 pr3 ">Jan 29, 2020 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/fun-times-with-gcc-musl-alpine-linux/" 
-              class="link dim"> Virgil crypto on Alpine linux v3.8</a>
-
-            <time class="f6 gray pt2 ">Jan 06, 2019 </time>
+          <li class="pb2 ">
             
+            <a href="/fun-times-with-gcc-musl-alpine-linux/" class="link">Virgil crypto on Alpine linux v3.8</a>
+
+              <time class="f6 gray pt2 pr3 ">Jan 06, 2019 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/spring-session-tutorial/" 
-              class="link dim"> Spring Session JDBC Configuration</a>
-
-            <time class="f6 gray pt2 ">May 01, 2018 </time>
+          <li class="pb2 ">
             
+            <a href="/spring-session-tutorial/" class="link">Spring Session JDBC Configuration</a>
+
+              <time class="f6 gray pt2 pr3 ">May 01, 2018 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/jwt-token-authentication-with-spring-boot/" 
-              class="link dim"> JWT Authentication Tutorial</a>
-
-            <time class="f6 gray pt2 ">Sep 05, 2016 </time>
+          <li class="pb2 ">
             
+            <a href="/jwt-token-authentication-with-spring-boot/" class="link">JWT Authentication Tutorial</a>
+
+              <time class="f6 gray pt2 pr3 ">Sep 05, 2016 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/step-builder-pattern/" 
-              class="link dim"> Step builder pattern</a>
-
-            <time class="f6 gray pt2 ">Jun 09, 2016 </time>
+          <li class="pb2 ">
             
+            <a href="/step-builder-pattern/" class="link">Step builder pattern</a>
+
+              <time class="f6 gray pt2 pr3 ">Jun 09, 2016 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/spring-batch-job-repository-configuration-for-websphere-and-oracle/" 
-              class="link dim"> Spring batch job repository configuration for WebSphere and Oracle</a>
-
-            <time class="f6 gray pt2 ">Dec 02, 2015 </time>
+          <li class="pb2 ">
             
+            <a href="/spring-batch-job-repository-configuration-for-websphere-and-oracle/" class="link">Spring batch job repository configuration for WebSphere and Oracle</a>
+
+              <time class="f6 gray pt2 pr3 ">Dec 02, 2015 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/ssh-public-key-authentication/" 
-              class="link dim"> Public key authentication with Java over SSH</a>
-
-            <time class="f6 gray pt2 ">Nov 23, 2015 </time>
+          <li class="pb2 ">
             
+            <a href="/ssh-public-key-authentication/" class="link">Public key authentication with Java over SSH</a>
+
+              <time class="f6 gray pt2 pr3 ">Nov 23, 2015 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/websphere-maven-spring-project/" 
-              class="link dim"> Multi-module Websphere web application</a>
-
-            <time class="f6 gray pt2 ">Sep 10, 2015 </time>
+          <li class="pb2 ">
             
+            <a href="/websphere-maven-spring-project/" class="link">Multi-module Websphere web application</a>
+
+              <time class="f6 gray pt2 pr3 ">Sep 10, 2015 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/voxxed-days-m-m-challange/" 
-              class="link dim"> Voxxed Days Belgrade - M&amp;M Challange</a>
-
-            <time class="f6 gray pt2 ">May 25, 2015 </time>
+          <li class="pb2 ">
             
+            <a href="/voxxed-days-m-m-challange/" class="link">Voxxed Days Belgrade - M&amp;M Challange</a>
+
+              <time class="f6 gray pt2 pr3 ">May 25, 2015 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/proxy-ajax-requests-curl-and-symfony-2/" 
-              class="link dim"> Proxying cross-domain requests using Symfony 2</a>
-
-            <time class="f6 gray pt2 ">Dec 23, 2013 </time>
+          <li class="pb2 ">
             
+            <a href="/proxy-ajax-requests-curl-and-symfony-2/" class="link">Proxying cross-domain requests using Symfony 2</a>
+
+              <time class="f6 gray pt2 pr3 ">Dec 23, 2013 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/require-js-optimization-part2/" 
-              class="link dim"> Require.js optimizer</a>
-
-            <time class="f6 gray pt2 ">Nov 25, 2013 </time>
+          <li class="pb2 ">
             
+            <a href="/require-js-optimization-part2/" class="link">Require.js optimizer</a>
+
+              <time class="f6 gray pt2 pr3 ">Nov 25, 2013 </time>
           </li>
         
       
         
-          <li class="pb2">
-              <a href="/require-js-dependency-management-part1/" 
-              class="link dim"> Require.js dependency management</a>
-
-            <time class="f6 gray pt2 ">Nov 23, 2013 </time>
+          <li class="pb2 ">
             
+            <a href="/require-js-dependency-management-part1/" class="link">Require.js dependency management</a>
+
+              <time class="f6 gray pt2 pr3 ">Nov 23, 2013 </time>
           </li>
         
       
@@ -228,15 +179,15 @@
 
       
 
-      <h4 class="" >Experiments and playthings</h4>
+      <p>Experiments and playthings</p>
       <ul class="list pl0">
         
           
             <li class="pb2 ">
-              <a href="/education-plan-2023-Q3-Q4/" 
-                class="link dim"> 2023 Q3/Q4 Challenge list</a>
+              
+              <a href="/education-plan-2023-Q3-Q4/" class="link dim">2023 Q3/Q4 Challenge list</a>
             
-              <time class="f6 gray pt2">Jun 21, 2023 </time>
+              <time class="f6 gray pt2 pr3 ">Jun 21, 2023 </time>
             </li>
           
         
@@ -246,8 +197,9 @@
 </section>
 
   </main>
-</body>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</html>
 
+<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+</body></html>
