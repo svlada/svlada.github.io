@@ -57,11 +57,14 @@ module.exports = function(eleventyConfig) {
   /* Markdown Plugins */
   let markdownIt = require("markdown-it");
 
- 
+  let options = {
+    html: true,
+    breaks: true,
+    linkify: true
+  };
 
-  eleventyConfig.setLibrary("md", markdownIt(options)
-    
-  );
+
+  eleventyConfig.setLibrary("md", markdownIt(options));
 
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
