@@ -8,45 +8,41 @@ layout: layouts/notes.njk
 permalink: "notes/index.html"
 ---
 
-
-
 <div class="dt-published small-text" datetime="01 May, 2023">01 May, 2023</div>
-<p>
-Domain/business logic code must be separated from technology. It matters. 
 
-I'm not even mentioning the intriguing ability to swap technos quickly. No. Separate domain and infra-tech code. It’s important. 
+# Draft: Ports and Adapters
 
 <strong>Project structure</strong>
 
 ```markdown
 - **Application/Core**
-  + Defines
-    + UseCase interface 
-    + UseCase implementation 
-      + Repository interfaces specified by the **Domain**
-    + Command objects are self-validating 
-  + References
-    + Domain project
+  - Defines
+    - UseCase interface
+    - UseCase implementation
+      - Repository interfaces specified by the **Domain**
+    - Command objects are self-validating
+  - References
+    - Domain project
 - **Domain**
-  + Entities
-    + Self-validating
-  + SPI
-    + **Output Port** - Repository interface
+  - Entities
+    - Self-validating
+  - SPI
+    - **Output Port** - Repository interface
 - **Infrastructure**
-  +  Adapters
-    +  Rest
-      +  Includes application module
-      +  Spring Controllers
-        +  DTO Validation
-        +  Create command and invoke use case
-    +  Persistence
-      +  Includes domain module
-      +  Implement repository using JDBI
+  - Adapters
+  - Rest
+  - Includes application module
+  - Spring Controllers
+  - DTO Validation
+  - Create command and invoke use case
+  - Persistence
+  - Includes domain module
+  - Implement repository using JDBI
 - **Bootstrap**
-  +  SpringBootApplication launcher
-  +  Maven project includes modules
-  +  Load Application/Domain services into the 
-  Spring context by scanning @DomainService annotations.
+  - SpringBootApplication launcher
+  - Maven project includes modules
+  - Load Application/Domain services into the
+    Spring context by scanning @DomainService annotations.
 ```
 
 </p>
