@@ -11,11 +11,8 @@ date: 2020-01-01
 
 <section class="pa3 pa4-ns">
   <article class="tl pt2 f5 f4-ns center">
-    <div class="pt4   ">
+    <div class="pt4">
       <div class="dtc v-mid">
-        <img src="/img/dithered-avatar.png" class="br-100 pa1 ba b--black-10 h3 w3" alt="avatar">
-      </div>
-      <div class="dtc v-mid pl3">
         <p class="lh-copy f6 fw4 black-70">A blog about building software<br/>By <a href="/about">Vladimir Stankovic</a></p>
         <p class="lh-copy f6 fw4 navy"></p>
       </div>
@@ -40,20 +37,20 @@ date: 2020-01-01
 
       {% set lablist = collections.lab %}
 
-      <p>Experiments and playthings</p>
-      <ul class="list pl0">
-        {% for lab in lablist | reverse %}
-          {% if lab.data.title != "draft" %}
-            <li class="pb2 ">
-              
-              <a href="{{ lab.url | url }}" 
-                class="link dim">{% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>
-            
-              <time class="f6 gray pt2 pr3 ">{{ lab.data.date | readableDate() }}</time>
-            </li>
-          {% endif %}
-        {% endfor %}
-      </ul>
+      <!--<p>Experiments and playthings</p>-->
+      <!--<ul class="list pl0">-->
+      <!--  {% for lab in lablist | reverse %}-->
+      <!--    {% if lab.data.title != "draft" %}-->
+      <!--      <li class="pb2 ">-->
+      <!--        -->
+      <!--        <a href="{{ lab.url | url }}" -->
+      <!--          class="link dim">{% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>-->
+      <!--      -->
+      <!--        <time class="f6 gray pt2 pr3 ">{{ lab.data.date | readableDate() }}</time>-->
+      <!--      </li>-->
+      <!--    {% endif %}-->
+      <!--  {% endfor %}-->
+      <!--</ul>-->
     </article>
 
 </section>
