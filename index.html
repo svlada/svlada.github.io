@@ -14,9 +14,12 @@
   
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
   <style>
-    h1, h2, h3, h4, h5 { color: rgb(32, 31, 45); }
-    html { background-color: rgb(250, 250, 250); }
+    h1, h2, h3, h4, h5 { color: #aaf; }
+    html { color: #eee; background-color: #333; }
     .direct-link { display: none; }
+    a { color: #aaf; }
+    /* main a:visited { color: #e8f; } */
+    main article > h2 a:visited { color: #aaf;}
   </style>
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
@@ -38,7 +41,7 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray black">
+<body class="w-100 sans-serif center mw7 bg-washed-gray ">
   <header>
     <nav class="pt4 pl4 pr4 pb0 ">
       <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
@@ -50,16 +53,20 @@
 
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
 
-<section class="pa3 pa4-ns">
-  <article class="tl pt2 f5 f4-ns center">
-    <div class="pt4">
-      <div class="dtc v-mid">
-        <p class="lh-copy f6 fw4 black-70">A blog about building software<br>By <a href="/about">Vladimir Stankovic</a></p>
-        <p class="lh-copy f6 fw4 navy"></p>
-      </div>
-    </div>
-  </article>
+<section class="pa3 pa4-ns lh-copy">
+  <article>
+    <p class="">
+      Hello, my name is Vladimir Stankovic, but I commonly use hande svlada.
+    </p>
 
+    <p class="measure-wide">
+      My current role finds me at
+      <a href="http://codereflect.io" target="_blank">Reflect</a>, where, I
+      build software specifically tailored for businesses and startups in the
+      finance industry. Much of my work focuses on simplifying these systems,
+      which frequently become more complex as they develop over time.
+    </p>
+  </article>
   <article class="pt3 ">
     <ul class="list pl0 ">
       
