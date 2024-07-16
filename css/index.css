@@ -339,3 +339,12 @@ h2.hl {
   height: 1px;
   margin: 0 1em;
 }
+a {
+  color: #aaf;
+}
+main a:visited {
+  color: #e8f;
+}
+main article > h2 a:visited {
+  color: #aaf;
+}
