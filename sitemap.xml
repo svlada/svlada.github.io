@@ -157,16 +157,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2024-08-30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/curl/</loc>
-    <lastmod>2024-08-30</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/javascript/</loc>
     <lastmod>2024-08-30</lastmod>
   </url>
@@ -177,17 +167,22 @@
   </url>
   
   <url>
+    <loc>https://myurl.com/tags/symfony/</loc>
+    <lastmod>2024-08-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/curl/</loc>
+    <lastmod>2024-08-30</lastmod>
+  </url>
+  
+  <url>
     <loc>https://myurl.com/tags/spring-batch/</loc>
     <lastmod>2024-08-30</lastmod>
   </url>
   
   <url>
     <loc>https://myurl.com/tags/ssh/</loc>
-    <lastmod>2024-08-30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2024-08-30</lastmod>
   </url>
   
@@ -212,12 +207,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/websphere/</loc>
-    <lastmod>2024-08-30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/spring/</loc>
+    <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2024-08-30</lastmod>
   </url>
   
@@ -228,6 +218,16 @@
   
   <url>
     <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <lastmod>2024-08-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/websphere/</loc>
+    <lastmod>2024-08-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/spring/</loc>
     <lastmod>2024-08-30</lastmod>
   </url>
   
