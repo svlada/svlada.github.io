@@ -1,0 +1,219 @@
+/* Vim-inspired plain text style */
+
+:root {
+  --bg: #000000;
+  --text: #d0d0d0;
+  --nav-bg: #303030;
+  --nav-hover: #4e4e4e;
+  --link: #80a0ff;
+  --nav-link: #87af87;
+  --date: #808080;
+  --header: #ffffff;
+  --code-bg: #1c1c1c;
+  --border: #303030;
+}
+
+[data-theme="light"] {
+  --bg: #ffffff;
+  --text: #333333;
+  --nav-bg: #f0f0f0;
+  --nav-hover: #e0e0e0;
+  --link: #0066cc;
+  --nav-link: #006600;
+  --date: #666666;
+  --header: #000000;
+  --code-bg: #f5f5f5;
+  --border: #cccccc;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  padding: 20px;
+  max-width: 80ch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga" 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Everything monospace, no styling */
+* {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+/* Headers - just slightly brighter */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--header);
+  margin: 1em 0 0.5em 0;
+}
+
+/* Links - vim style cyan */
+a {
+  color: var(--link);
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Navigation - vim statusline style */
+nav {
+  background: var(--nav-bg);
+  color: var(--text);
+  padding: 2px 5px;
+  margin: -20px -20px 20px -20px;
+  white-space: nowrap;
+  position: relative;
+}
+
+nav a {
+  padding: 0 8px;
+  color: var(--nav-link);
+  display: inline-block;
+}
+
+nav a:hover {
+  background: var(--nav-hover);
+  text-decoration: none;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--nav-link);
+  cursor: pointer;
+  padding: 2px 8px;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.theme-toggle:hover {
+  background: var(--nav-hover);
+}
+
+/* Lists */
+ul, ol {
+  margin: 0.8em 0;
+}
+
+li {
+  margin-left: 2em;
+  margin-bottom: 0.2em;
+}
+
+/* Remove bullets from post list */
+.post-list {
+  list-style: none;
+}
+
+.post-list li {
+  margin-left: 0;
+  margin-bottom: 0.3em;
+}
+
+/* Date in dim gray */
+.post-date {
+  color: var(--date);
+}
+
+/* Paragraphs */
+p {
+  margin: 0.8em 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+}
+
+/* Invert images in dark mode to make diagrams visible */
+:root img {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Don't invert in light mode */
+[data-theme="light"] img {
+  filter: none;
+}
+
+/* Optional: Add a subtle border in light mode */
+[data-theme="light"] img {
+  border: 1px solid var(--border);
+}
+
+/* Code blocks */
+pre, code {
+  background: var(--code-bg);
+  color: var(--text);
+}
+
+code {
+  padding: 0 2px;
+}
+
+pre {
+  padding: 4px;
+  margin: 0.3em 0;
+  overflow-x: auto;
+}
+
+/* Footer - vim style */
+footer {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid var(--border);
+  color: var(--date);
+}
+
+/* Vim line numbers style */
+body::before {
+  content: "  1 ";
+  color: #585858;
+  position: absolute;
+  left: 0;
+  top: 20px;
+}
+
+/* Responsive - keep it simple */
+@media (max-width: 600px) {
+  body {
+    font-size: 12px;
+    padding: 10px;
+  }
+  
+  body::before {
+    display: none;
+  }
+}
+
+/* Print as plain text */
+@media print {
+  body {
+    color: black;
+    background: white;
+  }
+  
+  nav {
+    display: none;
+  }
+}

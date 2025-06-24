@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -8,19 +11,10 @@
   <meta name="description" content="Sit down, relax, mix yourself a drink and enjoy the show.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -41,15 +35,16 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
-    <h1 class="f3 lh-copy">Tagged “alpine-linux”</h1>
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="/feed/feed.xml">:rss</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
+  </nav>
+
+  <main>
+    <h1>Tagged “alpine-linux”</h1>
 
 
 <ul class="postlist">
@@ -68,8 +63,38 @@
 
   </main>
 
+  <footer>
+"~svlada" [Modified] 2025                                                     100%
+  </footer>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update button emoji
+  const button = document.querySelector('.theme-toggle');
+  button.textContent = newTheme === 'light' ? '🌙' : '💡';
+}
 
+// Load saved theme on page load
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Set initial button emoji
+  const button = document.querySelector('.theme-toggle');
+  if (button) {
+    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
+  }
+})();
+</script>
 
-</body></html>
+<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+

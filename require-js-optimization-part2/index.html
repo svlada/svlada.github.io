@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -8,19 +11,10 @@
   <meta name="description" content="This is RequireJS optimizer tutorial, second one in the RequireJs series.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -41,26 +35,28 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
-    <section class="pa3 pa4-ns">
-<article class="lh-copy">
-    <h1 class="f3 lh-copy">Require.js optimizer</h1>
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="/feed/feed.xml">:rss</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
+  </nav>
+
+  <main>
+    <article>
+    <h1>Require.js optimizer</h1>
+    <p class="post-date">Published: Nov 25, 2013 </p>
+    
     <ol>
 <li><a href="#t0">Introduction</a></li>
 <li><a href="#t1">Require.js optimizer</a></li>
 <li><a href="#t2">Require.js optimizer dump dependencies to single file</a></li>
 </ol>
 <p>This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in <a href="/require-js-dependency-management-part1/">part 1</a> of the series.</p>
-<h2 class="f4 lh-copy"><a name="t0" id="t0">Introduction</a></h2>
+<h2><a name="t0" id="t0">Introduction</a></h2>
 <p>James Burke <a href="http://requirejs.org/docs/optimization.html">recommends</a> using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from <a href="http://nodejs.org/#download">here</a>.</p>
-<h2 class="f4 lh-copy"><a name="t1" id="t0">Require.js optimizer</a></h2>
+<h2><a name="t1" id="t0">Require.js optimizer</a></h2>
 <p>Create your build script file on following location <code>[webapp/build/build.js]</code></p>
 <pre class="language-js"><code class="language-js"><span class="token operator">|</span><span class="token operator">-</span><span class="token punctuation">[</span>wepapp<span class="token punctuation">]</span>
 <span class="token operator">|</span><span class="token operator">--</span><span class="token operator">-</span> <span class="token punctuation">[</span>build<span class="token punctuation">]</span>
@@ -95,7 +91,7 @@
         <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jquery'</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p><strong>appDir</strong> - Telling us where webapp root directory is located relative to <code>build.js</code> script.<br><br>
+<p><strong>appDir</strong> - Telling us where webapp root directory is located relative to <code>build.js</code> script.<br/><br>
 <strong>dir</strong> - Output directory relative to <code>build.js</code></p>
 <p>Console output of <code>build.js</code></p>
 <pre class="language-js"><code class="language-js">Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>build<span class="token operator">/</span>r<span class="token punctuation">.</span>js
@@ -177,7 +173,7 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
         <span class="token punctuation">}</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">,</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> SpecialItem<span class="token punctuation">,</span> SpecialItem
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
-<h2 class="f4 lh-copy"><a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a></h2>
+<h2><a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a></h2>
 <p>Paste the following code to your <code>build.single.js</code> file.</p>
 <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
     <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">"../js/lib"</span><span class="token punctuation">,</span>
@@ -189,7 +185,7 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
         <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jquery'</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p><strong>name</strong> - Location of module to be exported as a single file with all dependencies.<br><br>
+<p><strong>name</strong> - Location of module to be exported as a single file with all dependencies.<br/><br>
 <strong>out</strong> - File <code>app-built.js</code> is created.</p>
 <p>Console output of <code>build.single.js</code>:</p>
 <pre class="language-js"><code class="language-js"> Tracing dependencies <span class="token keyword">for</span><span class="token operator">:</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>app
@@ -203,7 +199,7 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
  <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>specialItem<span class="token punctuation">.</span>js
  <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>js<span class="token operator">/</span>lib<span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>app<span class="token punctuation">.</span>js</code></pre>
 <p>All of our modules are now glued together into single <code>[webapp/build/app-built.js]</code> file.</p>
-<h3 class="f5 lh-copy"><a name="source" id="source">Source code listing</a></h3>
+<h3><a name="source" id="source">Source code listing</a></h3>
 <p><code>build.js</code></p>
 <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
     <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">"js/lib"</span><span class="token punctuation">,</span>
@@ -238,10 +234,10 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
 <li><a href="https://github.com/jrburke/r.js/blob/master/build/example.build.js">https://github.com/jrburke/r.js/blob/master/build/example.build.js</a></li>
 </ol>
 
-
+    
+    <hr>
+    <p><a href="/">← back to home</a></p>
 </article>
-
-</section>
 <div id="disqus_thread"></div>
 <script>
 
@@ -265,8 +261,38 @@ s.setAttribute('data-timestamp', +new Date());
 
   </main>
 
+  <footer>
+"~svlada" [Modified] 2013                                                     100%
+  </footer>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update button emoji
+  const button = document.querySelector('.theme-toggle');
+  button.textContent = newTheme === 'light' ? '🌙' : '💡';
+}
 
+// Load saved theme on page load
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Set initial button emoji
+  const button = document.querySelector('.theme-toggle');
+  if (button) {
+    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
+  }
+})();
+</script>
 
-</body></html>
+<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+

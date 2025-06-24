@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -8,19 +11,10 @@
   <meta name="description" content="Sit down, relax, mix yourself a drink and enjoy the show.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -41,171 +35,121 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="/feed/feed.xml">:rss</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
+  </nav>
+
+  <main>
     
 
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
 
-<section class="pa3 pa4-ns lh-copy">
-  <article>
-    <p class="">
-      Hello, my name is Vladimir Stankovic, but I commonly use hande svlada.
-    </p>
+<h1>Vladimir Stankovic</h1>
 
-    <p class="measure-wide">
-      My current role finds me at
-      <a href="http://codereflect.io" target="_blank">Reflect</a>, where, I
-      build software specifically tailored for businesses and startups in the
-      finance industry. Much of my work focuses on simplifying these systems,
-      which frequently become more complex as they develop over time.
-    </p>
-  </article>
-  <article class="pt3 ">
-    <ul class="list pl0 ">
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/microservices-durable-request-reply/" class="link">Durable request reply</a>
+<p>I build software for finance companies at Reflect, focusing on making complex systems simpler.</p>
 
-              <time class="f6 gray pt2 pr3 ">Jan 29, 2020 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/fun-times-with-gcc-musl-alpine-linux/" class="link">Virgil crypto on Alpine linux v3.8</a>
+<h2>Recent Posts</h2>
 
-              <time class="f6 gray pt2 pr3 ">Jan 06, 2019 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/spring-session-tutorial/" class="link">Spring Session JDBC Configuration</a>
+<ul class="post-list">
+  
+    
+      <li><a href="/microservices-durable-request-reply/">Durable request reply</a> <span class="post-date">Jan 29, 2020 </span></li>
+    
+  
+    
+      <li><a href="/fun-times-with-gcc-musl-alpine-linux/">Virgil crypto on Alpine linux v3.8</a> <span class="post-date">Jan 06, 2019 </span></li>
+    
+  
+    
+      <li><a href="/spring-session-tutorial/">Spring Session JDBC Configuration</a> <span class="post-date">May 01, 2018 </span></li>
+    
+  
+    
+      <li><a href="/jwt-token-authentication-with-spring-boot/">JWT Authentication Tutorial</a> <span class="post-date">Sep 05, 2016 </span></li>
+    
+  
+    
+      <li><a href="/step-builder-pattern/">Step builder pattern</a> <span class="post-date">Jun 09, 2016 </span></li>
+    
+  
+    
+      <li><a href="/spring-batch-job-repository-configuration-for-websphere-and-oracle/">Spring batch job repository configuration for WebSphere and Oracle</a> <span class="post-date">Dec 02, 2015 </span></li>
+    
+  
+    
+      <li><a href="/ssh-public-key-authentication/">Public key authentication with Java over SSH</a> <span class="post-date">Nov 23, 2015 </span></li>
+    
+  
+    
+      <li><a href="/websphere-maven-spring-project/">Multi-module Websphere web application</a> <span class="post-date">Sep 10, 2015 </span></li>
+    
+  
+    
+      <li><a href="/voxxed-days-m-m-challange/">Voxxed Days Belgrade - M&amp;M Challange</a> <span class="post-date">May 25, 2015 </span></li>
+    
+  
+    
+      <li><a href="/proxy-ajax-requests-curl-and-symfony-2/">Proxying cross-domain requests using Symfony 2</a> <span class="post-date">Dec 23, 2013 </span></li>
+    
+  
+    
+      <li><a href="/require-js-optimization-part2/">Require.js optimizer</a> <span class="post-date">Nov 25, 2013 </span></li>
+    
+  
+    
+      <li><a href="/require-js-dependency-management-part1/">Require.js dependency management</a> <span class="post-date">Nov 23, 2013 </span></li>
+    
+  
+</ul>
 
-              <time class="f6 gray pt2 pr3 ">May 01, 2018 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/jwt-token-authentication-with-spring-boot/" class="link">JWT Authentication Tutorial</a>
+<h2>Connect</h2>
 
-              <time class="f6 gray pt2 pr3 ">Sep 05, 2016 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/step-builder-pattern/" class="link">Step builder pattern</a>
-
-              <time class="f6 gray pt2 pr3 ">Jun 09, 2016 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/spring-batch-job-repository-configuration-for-websphere-and-oracle/" class="link">Spring batch job repository configuration for WebSphere and Oracle</a>
-
-              <time class="f6 gray pt2 pr3 ">Dec 02, 2015 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/ssh-public-key-authentication/" class="link">Public key authentication with Java over SSH</a>
-
-              <time class="f6 gray pt2 pr3 ">Nov 23, 2015 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/websphere-maven-spring-project/" class="link">Multi-module Websphere web application</a>
-
-              <time class="f6 gray pt2 pr3 ">Sep 10, 2015 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/voxxed-days-m-m-challange/" class="link">Voxxed Days Belgrade - M&amp;M Challange</a>
-
-              <time class="f6 gray pt2 pr3 ">May 25, 2015 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/proxy-ajax-requests-curl-and-symfony-2/" class="link">Proxying cross-domain requests using Symfony 2</a>
-
-              <time class="f6 gray pt2 pr3 ">Dec 23, 2013 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/require-js-optimization-part2/" class="link">Require.js optimizer</a>
-
-              <time class="f6 gray pt2 pr3 ">Nov 25, 2013 </time>
-          </li>
-        
-      
-        
-          <li class="pb2 ">
-            
-            <a href="/require-js-dependency-management-part1/" class="link">Require.js dependency management</a>
-
-              <time class="f6 gray pt2 pr3 ">Nov 23, 2013 </time>
-          </li>
-        
-      
-    </ul>
-
-
-      
-
-      <!--<p>Experiments and playthings</p>-->
-      <!--<ul class="list pl0">-->
-      <!--  -->
-      <!--    -->
-      <!--      <li class="pb2 ">-->
-      <!--        -->
-      <!--        <a href="/education-plan-2023-Q3-Q4/" -->
-      <!--          class="link dim">2023 Q3/Q4 Challenge list</a>-->
-      <!--      -->
-      <!--        <time class="f6 gray pt2 pr3 ">Jun 21, 2023 </time>-->
-      <!--      </li>-->
-      <!--    -->
-      <!--  -->
-      <!--</ul>-->
-    </article>
-
-</section>
+<p>
+  Find me on <a href="https://github.com/svlada">GitHub</a>, 
+  <a href="https://twitter.com/svlada">Twitter</a>, 
+  <a href="https://www.linkedin.com/in/svlada">LinkedIn</a>, or 
+  <a href="https://news.ycombinator.com/user?id=hawkweed">Hacker News</a>.
+</p>
 
 
   </main>
 
+  <footer>
+"~svlada" [Modified] 2020                                                     100%
+  </footer>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update button emoji
+  const button = document.querySelector('.theme-toggle');
+  button.textContent = newTheme === 'light' ? '🌙' : '💡';
+}
 
+// Load saved theme on page load
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Set initial button emoji
+  const button = document.querySelector('.theme-toggle');
+  if (button) {
+    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
+  }
+})();
+</script>
 
-</body></html>
+<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+

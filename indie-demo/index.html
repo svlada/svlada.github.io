@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indie Blog - Old School Style</title>
+  <link rel="stylesheet" href="/css/indie.css">
+  <!-- Optional: Google Font for extra retro feel -->
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="indie-container">
+    <header>
+      <pre class="ascii-header">
+ ██╗   ██╗██╗      █████╗ ██████╗  █████╗ ███████╗    ██████╗ ██╗      ██████╗  ██████╗ 
+ ██║   ██║██║     ██╔══██╗██╔══██╗██╔══██╗██╔════╝    ██╔══██╗██║     ██╔═══██╗██╔════╝ 
+ ██║   ██║██║     ███████║██║  ██║███████║███████╗    ██████╔╝██║     ██║   ██║██║  ███╗
+ ╚██╗ ██╔╝██║     ██╔══██║██║  ██║██╔══██║╚════██║    ██╔══██╗██║     ██║   ██║██║   ██║
+  ╚████╔╝ ███████╗██║  ██║██████╔╝██║  ██║███████║    ██████╔╝███████╗╚██████╔╝╚██████╔╝
+   ╚═══╝  ╚══════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝    ╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝ 
+      </pre>
+      
+      <nav>
+        <a href="/">HOME</a>
+        <a href="/about">ABOUT</a>
+        <a href="/posts">ARCHIVE</a>
+        <a href="/contact">CONTACT</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="ascii-box">
+        <h1 class="glitch" data-text="WELCOME TO THE UNDERGROUND">WELCOME TO THE UNDERGROUND</h1>
+        <p class="typewriter">Hello, fellow netizen. You've found my corner of the web.<span class="cursor"></span></p>
+        
+        <p>This is where I share my thoughts on code, tech, and the digital realm. No algorithms, no tracking, just pure HTML and CSS like the old days.</p>
+      </section>
+
+      <section>
+        <h2>RECENT TRANSMISSIONS</h2>
+        <ul class="post-list">
+          <li>
+            <a href="/post/durable-request-reply">Durable request reply</a>
+            <span class="post-date">[2020-01-29]</span>
+          </li>
+          <li>
+            <a href="/post/virgil-crypto-alpine">Virgil crypto on Alpine linux v3.8</a>
+            <span class="post-date">[2019-01-06]</span>
+          </li>
+          <li>
+            <a href="/post/spring-session-jdbc">Spring Session JDBC Configuration</a>
+            <span class="post-date">[2018-05-01]</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="ascii-box">
+        <h3>SYSTEM STATUS</h3>
+        <pre>
+CPU Usage: ████████░░ 80%
+Memory:    ██████░░░░ 60%
+Disk:      ███░░░░░░░ 30%
+Uptime:    42 days, 13:37:00
+        </pre>
+      </section>
+
+      <section>
+        <h3>CONNECT</h3>
+        <p>Find me in the matrix:</p>
+        <p>
+          <a href="https://github.com/svlada">GitHub</a>
+          <a href="https://twitter.com/svlada">Twitter</a>
+          <a href="mailto:mail@example.com">Email</a>
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <pre>
+╔═══════════════════════════════════════════════════════════════════════╗
+║  (c) 2024 - Built with vim and served over HTTP/1.1                  ║
+║  No cookies | No JavaScript required | Works in lynx                  ║
+╚═══════════════════════════════════════════════════════════════════════╝
+      </pre>
+    </footer>
+  </div>
+
+  <!-- Optional: Add matrix rain effect -->
+  <canvas class="matrix-bg" id="matrix"></canvas>
+  
+  <script>
+    // Optional: Matrix rain effect
+    const canvas = document.getElementById('matrix');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      const chars = '01';
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      const drops = Array(Math.floor(columns)).fill(1);
+      
+      function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#0F0';
+        ctx.font = fontSize + 'px monospace';
+        
+        drops.forEach((y, i) => {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          const x = i * fontSize;
+          ctx.fillText(text, x, y * fontSize);
+          
+          if (y * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        });
+      }
+      
+      setInterval(draw, 35);
+    }
+  </script>
+</body>
+</html>

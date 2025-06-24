@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -8,19 +11,10 @@
   <meta name="description" content="Proxy Ajax requests, Curl and Symfony 2">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -41,17 +35,19 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
-    <section class="pa3 pa4-ns">
-<article class="lh-copy">
-    <h1 class="f3 lh-copy">Proxying cross-domain requests using Symfony 2</h1>
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="/feed/feed.xml">:rss</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
+  </nav>
+
+  <main>
+    <article>
+    <h1>Proxying cross-domain requests using Symfony 2</h1>
+    <p class="post-date">Published: Dec 23, 2013 </p>
+    
     <p>This article provides information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.</p>
 <p>Jump to the <a href="#source-code">#source-code</a>.</p>
 <p>The usual scenario looks like this:</p>
@@ -63,11 +59,11 @@
 <li>Send response back to the client</li>
 </ol>
 <p>First, check if the client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:</p>
-<pre class="language-php"><code class="language-php"> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token function">isXmlHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<h3 class="f5 lh-copy">STEP 1: Client code</h3>
+<pre class="language-php"><code class="language-php"> <span class="token variable">$request</span><span class="token operator">-></span><span class="token function">isXmlHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h3>STEP 1: Client code</h3>
 <p>The following are the steps for creating an Ajax request.</p>
 <ol>
-<li>Specify rest URL on the server for handling cross-domain ajax requests.<code>url: "{{ path('_ajaxProxy') }}"</code></li>
+<li>Specify rest URL on the server for handling cross-domain ajax requests.<code>url: &quot;{{ path('_ajaxProxy') }}&quot;</code></li>
 <li>Wrap request data</li>
 </ol>
 <p>We need some data to create a curl request on the server-side.</p>
@@ -77,14 +73,14 @@
 <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
     <span class="token literal-property property">action</span><span class="token operator">:</span> <span class="token string">"getFriendsList"</span> <span class="token comment">// Parameters you are sending to remote server</span>
 <span class="token punctuation">}</span></code></pre>
-<h3 class="f5 lh-copy">STEP 2: Forward request to remote server</h3>
+<h3>STEP 2: Forward request to remote server</h3>
 <p>This step is a bit tricky.</p>
 <p>The client request arrives to your server-side code. First, you need to parse and validate request data.</p>
 <p>To repeat once more ... you'll need the following data on server:</p>
-<pre class="language-php"><code class="language-php"><span class="token variable">$restUrl</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'restUrl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Your target url on remote server</span>
-<span class="token variable">$method</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'method'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Type of request you want to issue to remote server</span>
-<span class="token variable">$params</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'params'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Parameters you are sending to remote server</span>
-<span class="token variable">$contentType</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'contentType'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Content-type</span></code></pre>
+<pre class="language-php"><code class="language-php"><span class="token variable">$restUrl</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'restUrl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Your target url on remote server</span>
+<span class="token variable">$method</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'method'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Type of request you want to issue to remote server</span>
+<span class="token variable">$params</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'params'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Parameters you are sending to remote server</span>
+<span class="token variable">$contentType</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'contentType'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Content-type</span></code></pre>
 <p>Create curl request and set parameters that you've got from the client.</p>
 <pre class="language-php"><code class="language-php"><span class="token comment">// Initialize curl handle</span>
 <span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
@@ -110,19 +106,19 @@
 <p>In production, both applications share the same domain, but in the test environment, there is a lot of mess (different domains, ports, etc).</p>
 <p>Where is the problem?</p>
 <p>An application written in Symfony 2 needs to consume some protected backend functionalities on the Wordpress side. There is a lot of personalized data that is fetched via ajax calls, and this is the reason why we need cookies.</p>
-<h3 class="f5 lh-copy">How to get cookies from Symfony2 request and set multiple cookies to Curl?</h3>
+<h3>How to get cookies from Symfony2 request and set multiple cookies to Curl?</h3>
 <p>We need to extract multiple cookies from Symfony 2 request objects and set them to curl handle.</p>
 <pre class="language-php"><code class="language-php"><span class="token comment">// Get all cookies from Symfony request object</span>
-<span class="token variable">$requestCookies</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">cookies</span><span class="token operator">-&gt;</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token variable">$requestCookies</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">cookies</span><span class="token operator">-></span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 <span class="token comment">// Prepare and set multiple cookies to curl handle</span>
 <span class="token variable">$cookieArray</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$requestCookies</span> <span class="token keyword">as</span> <span class="token variable">$cookieName</span> <span class="token operator">=&gt;</span> <span class="token variable">$cookieValue</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$requestCookies</span> <span class="token keyword">as</span> <span class="token variable">$cookieName</span> <span class="token operator">=></span> <span class="token variable">$cookieValue</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token variable">$cookieArray</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"<span class="token interpolation"><span class="token punctuation">{</span><span class="token variable">$cookieName</span><span class="token punctuation">}</span></span>=<span class="token interpolation"><span class="token punctuation">{</span><span class="token variable">$cookieValue</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span class="token comment">// Be sure to set whitespace after '; ' when creating cookie string</span>
 <span class="token variable">$cookie_string</span> <span class="token operator">=</span> <span class="token function">implode</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'; '</span><span class="token punctuation">,</span> <span class="token variable">$cookieArray</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_COOKIE</span><span class="token punctuation">,</span> <span class="token variable">$cookie_string</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 class="f5 lh-copy">How to get cookies Curl response and set multiple cookies to Symfony response?</h3>
+<h3>How to get cookies Curl response and set multiple cookies to Symfony response?</h3>
 <p>Remember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl Http response.</p>
 <pre class="language-php"><code class="language-php"><span class="token comment">// Get header and response data from curl response</span>
 <span class="token keyword">list</span><span class="token punctuation">(</span><span class="token variable">$headers</span><span class="token punctuation">,</span> <span class="token variable">$response</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">explode</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"\r\n\r\n"</span><span class="token punctuation">,</span><span class="token variable">$response</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -133,13 +129,13 @@
 <p>Raw cookies are parsed and stored in cookie array. Then each cookie needs to be converted to Symfony Cookie object and injected to Symfony response headers.</p>
 <pre class="language-php"><code class="language-php"><span class="token keyword">foreach</span><span class="token punctuation">(</span><span class="token variable">$cookies</span> <span class="token keyword">as</span> <span class="token variable">$rawCookie</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token variable">$cookie</span> <span class="token operator">=</span> <span class="token class-name class-name-fully-qualified static-context"><span class="token punctuation">\</span>Symfony<span class="token punctuation">\</span>Component<span class="token punctuation">\</span>BrowserKit<span class="token punctuation">\</span>Cookie</span><span class="token operator">::</span><span class="token function">fromString</span><span class="token punctuation">(</span><span class="token variable">$rawCookie</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token variable">$value</span> <span class="token operator">=</span> <span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$value</span> <span class="token operator">=</span> <span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">empty</span><span class="token punctuation">(</span><span class="token variable">$value</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token variable">$value</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string single-quoted-string">' '</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'+'</span><span class="token punctuation">,</span> <span class="token variable">$value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
-    <span class="token variable">$customCookie</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cookie</span><span class="token punctuation">(</span><span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$value</span><span class="token punctuation">,</span> 
-        <span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token constant">null</span><span class="token operator">?</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token variable">$response</span><span class="token operator">-&gt;</span><span class="token property">headers</span><span class="token operator">-&gt;</span><span class="token function">setCookie</span><span class="token punctuation">(</span><span class="token variable">$customCookie</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$customCookie</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cookie</span><span class="token punctuation">(</span><span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$value</span><span class="token punctuation">,</span> 
+        <span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token constant">null</span><span class="token operator">?</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$response</span><span class="token operator">-></span><span class="token property">headers</span><span class="token operator">-></span><span class="token function">setCookie</span><span class="token punctuation">(</span><span class="token variable">$customCookie</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span></code></pre>
 <p><strong>FINAL NOTICE:</strong></p>
 <p>Close and store session data before initializing curl handle or you can run into a deadlock.</p>
@@ -186,15 +182,15 @@
 <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function-definition function">proxyAction</span><span class="token punctuation">(</span><span class="token class-name type-declaration">Request</span> <span class="token variable">$request</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token comment">// Forbid every request but jquery's XHR</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token function">isXmlHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">// isn't it an Ajax request?</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$request</span><span class="token operator">-></span><span class="token function">isXmlHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">// isn't it an Ajax request?</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token string single-quoted-string">''</span><span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> 
-                            <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'application/json'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=></span> <span class="token string single-quoted-string">'application/json'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     
-    <span class="token variable">$restUrl</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'restUrl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token variable">$method</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'method'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token variable">$params</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'params'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token variable">$contentType</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">request</span><span class="token operator">-&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'contentType'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$restUrl</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'restUrl'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$method</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'method'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$params</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'params'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$contentType</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">request</span><span class="token operator">-></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'contentType'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$contentType</span> <span class="token operator">==</span> <span class="token constant">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token variable">$contentType</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'application/json'</span><span class="token punctuation">;</span>
@@ -202,7 +198,7 @@
 
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$restUrl</span> <span class="token operator">==</span> <span class="token keyword type-declaration">null</span> <span class="token operator">||</span> <span class="token variable">$method</span> <span class="token operator">==</span> <span class="token keyword type-declaration">null</span> <span class="token operator">||</span> 
                         <span class="token operator">!</span><span class="token function">in_array</span><span class="token punctuation">(</span><span class="token variable">$method</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'GET'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'POST'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'DELETE'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token string single-quoted-string">''</span><span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=&gt;</span> <span class="token variable">$contentType</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token string single-quoted-string">''</span><span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=></span> <span class="token variable">$contentType</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     
     <span class="token function">session_write_close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -216,10 +212,10 @@
     <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_RETURNTRANSFER</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_FOLLOWLOCATION</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
-    <span class="token variable">$requestCookies</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-&gt;</span><span class="token property">cookies</span><span class="token operator">-&gt;</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token variable">$requestCookies</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-></span><span class="token property">cookies</span><span class="token operator">-></span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
     <span class="token variable">$cookieArray</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$requestCookies</span> <span class="token keyword">as</span> <span class="token variable">$cookieName</span> <span class="token operator">=&gt;</span> <span class="token variable">$cookieValue</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$requestCookies</span> <span class="token keyword">as</span> <span class="token variable">$cookieName</span> <span class="token operator">=></span> <span class="token variable">$cookieValue</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token variable">$cookieArray</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"<span class="token interpolation"><span class="token punctuation">{</span><span class="token variable">$cookieName</span><span class="token punctuation">}</span></span>=<span class="token interpolation"><span class="token punctuation">{</span><span class="token variable">$cookieValue</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     <span class="token variable">$cookie_string</span> <span class="token operator">=</span> <span class="token function">implode</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'; '</span><span class="token punctuation">,</span> <span class="token variable">$cookieArray</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -233,18 +229,18 @@
     <span class="token variable">$cookies</span> <span class="token operator">=</span> <span class="token variable">$cookies</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
         
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$response</span> <span class="token operator">===</span> <span class="token constant boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token string single-quoted-string">''</span><span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=&gt;</span> <span class="token variable">$contentType</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token string single-quoted-string">''</span><span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=></span> <span class="token variable">$contentType</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
         <span class="token variable">$response</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token variable">$response</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> 
-                                            <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=&gt;</span> <span class="token variable">$contentType</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                                            <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type'</span> <span class="token operator">=></span> <span class="token variable">$contentType</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">foreach</span><span class="token punctuation">(</span><span class="token variable">$cookies</span> <span class="token keyword">as</span> <span class="token variable">$rawCookie</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token variable">$cookie</span> <span class="token operator">=</span> <span class="token class-name class-name-fully-qualified static-context"><span class="token punctuation">\</span>Symfony<span class="token punctuation">\</span>Component<span class="token punctuation">\</span>BrowserKit<span class="token punctuation">\</span>Cookie</span><span class="token operator">::</span><span class="token function">fromString</span><span class="token punctuation">(</span><span class="token variable">$rawCookie</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token variable">$value</span> <span class="token operator">=</span> <span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$value</span> <span class="token operator">=</span> <span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">empty</span><span class="token punctuation">(</span><span class="token variable">$value</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
                 <span class="token variable">$value</span> <span class="token operator">=</span> <span class="token function">str_replace</span><span class="token punctuation">(</span><span class="token string single-quoted-string">' '</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'+'</span><span class="token punctuation">,</span> <span class="token variable">$value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
-            <span class="token variable">$customCookie</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cookie</span><span class="token punctuation">(</span><span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$value</span><span class="token punctuation">,</span> <span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token constant">null</span><span class="token operator">?</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$cookie</span><span class="token operator">-&gt;</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token variable">$response</span><span class="token operator">-&gt;</span><span class="token property">headers</span><span class="token operator">-&gt;</span><span class="token function">setCookie</span><span class="token punctuation">(</span><span class="token variable">$customCookie</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$customCookie</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cookie</span><span class="token punctuation">(</span><span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$value</span><span class="token punctuation">,</span> <span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token constant">null</span><span class="token operator">?</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getExpiresTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token variable">$cookie</span><span class="token operator">-></span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token variable">$response</span><span class="token operator">-></span><span class="token property">headers</span><span class="token operator">-></span><span class="token function">setCookie</span><span class="token punctuation">(</span><span class="token variable">$customCookie</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
         <span class="token keyword">return</span> <span class="token variable">$response</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
@@ -256,10 +252,10 @@
 <li><a href="https://twitter.com/#!/svlada">Follow me on Twitter</a></li>
 </ul>
 
-
+    
+    <hr>
+    <p><a href="/">← back to home</a></p>
 </article>
-
-</section>
 <div id="disqus_thread"></div>
 <script>
 
@@ -283,8 +279,38 @@ s.setAttribute('data-timestamp', +new Date());
 
   </main>
 
+  <footer>
+"~svlada" [Modified] 2013                                                     100%
+  </footer>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update button emoji
+  const button = document.querySelector('.theme-toggle');
+  button.textContent = newTheme === 'light' ? '🌙' : '💡';
+}
 
+// Load saved theme on page load
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Set initial button emoji
+  const button = document.querySelector('.theme-toggle');
+  if (button) {
+    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
+  }
+})();
+</script>
 
-</body></html>
+<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+

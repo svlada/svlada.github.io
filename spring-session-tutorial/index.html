@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -8,19 +11,10 @@
   <meta name="description" content="This article will show you how to configure and use Spring Session to manage session data in your web application.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -41,28 +35,30 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
-    <section class="pa3 pa4-ns">
-<article class="lh-copy">
-    <h1 class="f3 lh-copy">Spring Session JDBC Configuration</h1>
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="/feed/feed.xml">:rss</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
+  </nav>
+
+  <main>
+    <article>
+    <h1>Spring Session JDBC Configuration</h1>
+    <p class="post-date">Published: May 01, 2018 </p>
+    
     <ol>
 <li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
 <li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
 <li><a title="Test" href="#test">Test</a></li>
 </ol>
-<h2 class="f4 lh-copy"><a name="introduction" id="introduction">Introduction</a></h2>
+<h2><a name="introduction" id="introduction">Introduction</a></h2>
 <p>This guide explains setting up <a href="https://projects.spring.io/spring-session/">Spring Session</a> for database storage.</p>
 <p>See the linked GitHub <a href="https://github.com/svlada/springsession-jdbc">repo</a> for code.</p>
 <p>Before we get into how to set up <a href="https://projects.spring.io/spring-session/">Spring Session</a>, I will share my thoughts on the Stateful vs. Stateless session debate.</p>
 <p>Recently, many people started using JSON Web Token (JWT) for stateless session management. A couple of years ago I wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.</p>
-<h3 class="f5 lh-copy">Stateless</h3>
+<h3>Stateless</h3>
 <p>Pros</p>
 <ol>
 <li>No need to scale session data on the server-side as the session is maintained through cryptographically signed JSON Web Token (JWT).</li>
@@ -73,7 +69,7 @@
 <li>Potential token explosion as JSON Web Token becomes larger.</li>
 <li>Sending JSON Web Token (JWT) payload on each request can be expensive.</li>
 </ol>
-<h3 class="f5 lh-copy">Stateful</h3>
+<h3>Stateful</h3>
 <p>Pros</p>
 <ol>
 <li>Ability to log-out user</li>
@@ -85,17 +81,17 @@
 </ol>
 <p>In short, don't use JSON Web Token to manage session data for your web applications. Most of the web applications will be fine with storing session-related data on Redis.</p>
 <p>If you have microservices architecture, you can use API Gateway as a translation layer that would validate session-id and create a federated token to be used by the services. That's one use case where JSON Web Token fits nicely.</p>
-<h2 class="f4 lh-copy"><a name="project-setup" id="project-setup">Project setup</a></h2>
+<h2><a name="project-setup" id="project-setup">Project setup</a></h2>
 <p>Include <code>spring-session-core</code> and <code>spring-session-jdbc</code> in your <code>pom.xml</code> file.</p>
 <p><strong>Maven dependencies</strong></p>
-<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">&gt;</span></span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>jdbc<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">&gt;</span>
-<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">&gt;</span></span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>core<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">&gt;</span></code></pre>
+<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>jdbc<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>session<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>spring<span class="token operator">-</span>session<span class="token operator">-</span>core<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span></code></pre>
 <p><strong>Spring security configuration</strong></p>
 <p>The following class shows how to configure REST API security with the Spring Session:</p>
 <pre class="language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
@@ -154,8 +150,8 @@
 <li><strong>HttpSessionIdResolver</strong> - Use <code>HeaderHttpSessionIdResolver</code> if you want to send authentication token through Http headers. Please check the following <a href="https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f">git commit</a> regarding class name changes.</li>
 <li><strong>@EnableJdbcHttpSession</strong> - This annotation is needed as it exposes <code>SessionRepositoryFilter</code> that will use the database for storing session data.</li>
 </ol>
-<h2 class="f4 lh-copy"><a name="test" id="test">Test</a></h2>
-<h3 class="f5 lh-copy">User login</h3>
+<h2><a name="test" id="test">Test</a></h2>
+<h3>User login</h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
 <pre class="language-java"><code class="language-java">curl <span class="token operator">-</span><span class="token class-name">X</span> <span class="token constant">POST</span> \
   http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>login \
@@ -163,18 +159,18 @@
   <span class="token operator">-</span><span class="token class-name">H</span> 'content<span class="token operator">-</span>type<span class="token operator">:</span> multipart<span class="token operator">/</span>form<span class="token operator">-</span>data<span class="token punctuation">;</span> boundary<span class="token operator">=</span><span class="token operator">--</span><span class="token operator">--</span><span class="token class-name">WebKitFormBoundary7MA4YWxkTrZu0gW</span>' \
   <span class="token operator">-</span><span class="token class-name">F</span> username<span class="token operator">=</span>test \
   <span class="token operator">-</span><span class="token class-name">F</span> password<span class="token operator">=</span>test</code></pre>
-<h3 class="f5 lh-copy">User logout</h3>
+<h3>User logout</h3>
 <pre class="language-java"><code class="language-java">curl <span class="token operator">-</span><span class="token class-name">X</span> <span class="token constant">GET</span> \
   http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>logout \
   <span class="token operator">-</span><span class="token class-name">H</span> 'cache<span class="token operator">-</span>control<span class="token operator">:</span> no<span class="token operator">-</span>cache' \
   <span class="token operator">-</span><span class="token class-name">H</span> 'x<span class="token operator">-</span>auth<span class="token operator">-</span>token<span class="token operator">:</span> <span class="token number">2</span>eabcc45<span class="token operator">-</span><span class="token number">0</span>bb5<span class="token operator">-</span><span class="token number">40f</span><span class="token number">7</span><span class="token operator">-</span><span class="token number">8d</span><span class="token number">48</span><span class="token operator">-</span><span class="token number">8</span>aec0fdf0bbc'</code></pre>
-<h3 class="f5 lh-copy">Access to protected resource</h3>
+<h3>Access to protected resource</h3>
 <p>This is an example of how to access the protected resource by including the access token in the headers:</p>
 <pre class="language-java"><code class="language-java">curl <span class="token operator">-</span><span class="token class-name">X</span> <span class="token constant">GET</span> \
   http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">1999</span><span class="token operator">/</span>api<span class="token operator">/</span>sample \
   <span class="token operator">-</span><span class="token class-name">H</span> 'cache<span class="token operator">-</span>control<span class="token operator">:</span> no<span class="token operator">-</span>cache' \
   <span class="token operator">-</span><span class="token class-name">H</span> 'x<span class="token operator">-</span>auth<span class="token operator">-</span>token<span class="token operator">:</span> <span class="token number">30</span>ab6295<span class="token operator">-</span><span class="token number">7</span>b63<span class="token operator">-</span><span class="token number">4172</span><span class="token operator">-</span><span class="token number">9f</span>b3<span class="token operator">-</span><span class="token number">3514d</span><span class="token number">5e46390</span>'</code></pre>
-<h2 class="f4 lh-copy">Source code</h2>
+<h2>Source code</h2>
 <p><strong>Session Authentication Success Handler</strong></p>
 <pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SessionAuthenticationSuccessHandler</span> <span class="token keyword">implements</span> <span class="token class-name">AuthenticationSuccessHandler</span> <span class="token punctuation">{</span>
     <span class="token annotation punctuation">@Override</span>
@@ -223,10 +219,10 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 
-
+    
+    <hr>
+    <p><a href="/">← back to home</a></p>
 </article>
-
-</section>
 <div id="disqus_thread"></div>
 <script>
 
@@ -250,8 +246,38 @@ s.setAttribute('data-timestamp', +new Date());
 
   </main>
 
+  <footer>
+"~svlada" [Modified] 2018                                                     100%
+  </footer>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update button emoji
+  const button = document.querySelector('.theme-toggle');
+  button.textContent = newTheme === 'light' ? '🌙' : '💡';
+}
 
+// Load saved theme on page load
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Set initial button emoji
+  const button = document.querySelector('.theme-toggle');
+  if (button) {
+    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
+  }
+})();
+</script>
 
-</body></html>
+<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+

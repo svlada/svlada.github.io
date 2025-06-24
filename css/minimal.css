@@ -1,0 +1,176 @@
+/* Minimal Geeky Style - No BS, Just Readable */
+
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text: #374151;
+  --bg: #ffffff;
+  --link: #2563eb;
+  --border: #e5e7eb;
+  --code-bg: #f3f4f6;
+  --max-width: 65ch;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e5e7eb;
+    --bg: #111827;
+    --link: #60a5fa;
+    --border: #374151;
+    --code-bg: #1f2937;
+  }
+}
+
+body {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  padding: 2rem 1rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.125rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Navigation */
+nav {
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+nav a {
+  margin-right: 1rem;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+/* Post list */
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list li {
+  margin-bottom: 1rem;
+}
+
+.post-date {
+  color: var(--text);
+  opacity: 0.7;
+}
+
+.post-date::before {
+  content: " - ";
+}
+
+/* Code */
+code {
+  background: var(--code-bg);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  opacity: 0.7;
+}
+
+/* Utility */
+.container {
+  /* Already handled by body max-width */
+}
+
+/* Remove any unnecessary divs */
+.nav-inner {
+  /* Not needed */
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid var(--border);
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+/* Print styles */
+@media print {
+  body {
+    color: black;
+    background: white;
+  }
+  
+  nav, footer {
+    display: none;
+  }
+}

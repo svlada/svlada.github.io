@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:type" content="website">
@@ -8,19 +11,10 @@
   <meta name="description" content="This article describes how to create Spring web application that can be deployed on WebSphere application server. The goal is to to create maven project that can be used to generate EAR file.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/prism-base16-ateliersulphurpool.light.css?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="/css/index.css?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -41,25 +35,27 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
-    <section class="pa3 pa4-ns">
-<article class="lh-copy">
-    <h1 class="f3 lh-copy">Multi-module Websphere web application</h1>
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="/feed/feed.xml">:rss</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
+  </nav>
+
+  <main>
+    <article>
+    <h1>Multi-module Websphere web application</h1>
+    <p class="post-date">Published: Sep 10, 2015 </p>
+    
     <ol>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#maven-project-structure">Maven project structure</a></li>
 <li><a href="#source-code">Source code</a></li>
 </ol>
-<h3 class="f5 lh-copy"><a name="introduction" id="introduction">Introduction</a></h3>
+<h3><a name="introduction" id="introduction">Introduction</a></h3>
 <p>This article describes how to create a Spring web application that can be deployed on the WebSphere application server. The goal is to create a maven project that can be used to generate an EAR file.</p>
-<h3 class="f5 lh-copy"><a name="maven-project-structure" id="maven-project-structure">Maven project structure</a></h3>
+<h3><a name="maven-project-structure" id="maven-project-structure">Maven project structure</a></h3>
 <p>The following list shows the multi-module maven project directory structure:</p>
 <pre class="language-text"><code class="language-text">|- websphere-maven-spring-project 
 |-- app-ear/
@@ -73,62 +69,62 @@
 <p><strong>Aggregator module</strong></p>
 <p>The aggregator is a top-level module used to join multiple modules.</p>
 <p>The following is an excerpt from aggregator <code>pom.xml</code>:</p>
-<pre class="language-java"><code class="language-java">  <span class="token generics"><span class="token punctuation">&lt;</span>modelVersion<span class="token punctuation">&gt;</span></span><span class="token number">4.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>modelVersion<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>name<span class="token punctuation">&gt;</span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>name<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">&gt;</span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>packaging<span class="token punctuation">&gt;</span></span>pom<span class="token operator">&lt;</span><span class="token operator">/</span>packaging<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>url<span class="token punctuation">&gt;</span></span>http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>maven<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>org<span class="token operator">&lt;</span><span class="token operator">/</span>url<span class="token operator">&gt;</span>
-  <span class="token generics"><span class="token punctuation">&lt;</span>modules<span class="token punctuation">&gt;</span></span>
-    <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">module</span><span class="token punctuation">&gt;</span></span>app<span class="token operator">-</span>ear<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">module</span><span class="token operator">&gt;</span>
-    <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">module</span><span class="token punctuation">&gt;</span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">module</span><span class="token operator">&gt;</span>
-  <span class="token operator">&lt;</span><span class="token operator">/</span>modules<span class="token operator">&gt;</span></code></pre>
+<pre class="language-java"><code class="language-java">  <span class="token generics"><span class="token punctuation">&lt;</span>modelVersion<span class="token punctuation">></span></span><span class="token number">4.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>modelVersion<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>name<span class="token punctuation">></span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>name<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>packaging<span class="token punctuation">></span></span>pom<span class="token operator">&lt;</span><span class="token operator">/</span>packaging<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>url<span class="token punctuation">></span></span>http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>maven<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>org<span class="token operator">&lt;</span><span class="token operator">/</span>url<span class="token operator">></span>
+  <span class="token generics"><span class="token punctuation">&lt;</span>modules<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">module</span><span class="token punctuation">></span></span>app<span class="token operator">-</span>ear<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">module</span><span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">module</span><span class="token punctuation">></span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">module</span><span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>modules<span class="token operator">></span></code></pre>
 <p><strong>Sub-modules</strong></p>
 <p>Both sub-modules (<code>app-ear</code> and <code>app-webapp</code>) must include reference to the parent module as follows:</p>
-<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>parent<span class="token punctuation">&gt;</span></span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">&gt;</span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>parent<span class="token operator">&gt;</span></code></pre>
+<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>parent<span class="token punctuation">></span></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>parent<span class="token operator">></span></code></pre>
 <p><strong>Sub-module: app-ear</strong></p>
 <p>WAR module (<code>app-webapp</code>) needs to be included in the list of EAR dependencies.</p>
-<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependencies<span class="token punctuation">&gt;</span></span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">&gt;</span></span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">&gt;</span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">&gt;</span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>type<span class="token punctuation">&gt;</span></span>war<span class="token operator">&lt;</span><span class="token operator">/</span>type<span class="token operator">&gt;</span>
-	<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>dependencies<span class="token operator">&gt;</span></code></pre>
+<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependencies<span class="token punctuation">></span></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>type<span class="token punctuation">></span></span>war<span class="token operator">&lt;</span><span class="token operator">/</span>type<span class="token operator">></span>
+	<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependencies<span class="token operator">></span></code></pre>
 <p>Include <code>maven-ear-plugin</code> in the build plugins section of the app-ear pom.xml:</p>
-<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>plugin<span class="token punctuation">&gt;</span></span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>maven<span class="token punctuation">.</span>plugins<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>maven<span class="token operator">-</span>ear<span class="token operator">-</span>plugin<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">&gt;</span></span><span class="token number">2.10</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">&gt;</span>
-	<span class="token generics"><span class="token punctuation">&lt;</span>configuration<span class="token punctuation">&gt;</span></span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>finalName<span class="token punctuation">&gt;</span></span><span class="token constant">APP_EAR</span><span class="token operator">&lt;</span><span class="token operator">/</span>finalName<span class="token operator">&gt;</span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>modules<span class="token punctuation">&gt;</span></span>
-			<span class="token generics"><span class="token punctuation">&lt;</span>webModule<span class="token punctuation">&gt;</span></span>
-				<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">&gt;</span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">&gt;</span>
-				<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">&gt;</span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">&gt;</span>
-				<span class="token generics"><span class="token punctuation">&lt;</span>bundleFileName<span class="token punctuation">&gt;</span></span>app<span class="token operator">-</span>webapp<span class="token punctuation">.</span>war<span class="token operator">&lt;</span><span class="token operator">/</span>bundleFileName<span class="token operator">&gt;</span>
-				<span class="token generics"><span class="token punctuation">&lt;</span>contextRoot<span class="token punctuation">&gt;</span></span><span class="token operator">/</span>app<span class="token operator">&lt;</span><span class="token operator">/</span>contextRoot<span class="token operator">&gt;</span>
-			<span class="token operator">&lt;</span><span class="token operator">/</span>webModule<span class="token operator">&gt;</span>
-		<span class="token operator">&lt;</span><span class="token operator">/</span>modules<span class="token operator">&gt;</span>
-		<span class="token generics"><span class="token punctuation">&lt;</span>generateApplicationXml<span class="token punctuation">&gt;</span></span><span class="token boolean">true</span><span class="token operator">&lt;</span><span class="token operator">/</span>generateApplicationXml<span class="token operator">&gt;</span>
-	<span class="token operator">&lt;</span><span class="token operator">/</span>configuration<span class="token operator">&gt;</span>
+<pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>plugin<span class="token punctuation">></span></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>maven<span class="token punctuation">.</span>plugins<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>maven<span class="token operator">-</span>ear<span class="token operator">-</span>plugin<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">2.10</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>configuration<span class="token punctuation">></span></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>finalName<span class="token punctuation">></span></span><span class="token constant">APP_EAR</span><span class="token operator">&lt;</span><span class="token operator">/</span>finalName<span class="token operator">></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>modules<span class="token punctuation">></span></span>
+			<span class="token generics"><span class="token punctuation">&lt;</span>webModule<span class="token punctuation">></span></span>
+				<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+				<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+				<span class="token generics"><span class="token punctuation">&lt;</span>bundleFileName<span class="token punctuation">></span></span>app<span class="token operator">-</span>webapp<span class="token punctuation">.</span>war<span class="token operator">&lt;</span><span class="token operator">/</span>bundleFileName<span class="token operator">></span>
+				<span class="token generics"><span class="token punctuation">&lt;</span>contextRoot<span class="token punctuation">></span></span><span class="token operator">/</span>app<span class="token operator">&lt;</span><span class="token operator">/</span>contextRoot<span class="token operator">></span>
+			<span class="token operator">&lt;</span><span class="token operator">/</span>webModule<span class="token operator">></span>
+		<span class="token operator">&lt;</span><span class="token operator">/</span>modules<span class="token operator">></span>
+		<span class="token generics"><span class="token punctuation">&lt;</span>generateApplicationXml<span class="token punctuation">></span></span><span class="token boolean">true</span><span class="token operator">&lt;</span><span class="token operator">/</span>generateApplicationXml<span class="token operator">></span>
+	<span class="token operator">&lt;</span><span class="token operator">/</span>configuration<span class="token operator">></span>
 
-<span class="token operator">&lt;</span><span class="token operator">/</span>plugin<span class="token operator">&gt;</span></code></pre>
+<span class="token operator">&lt;</span><span class="token operator">/</span>plugin<span class="token operator">></span></code></pre>
 <p><strong>Sub-module: app-webapp</strong></p>
 <p>Web app module is an simple web application generated with the spring initializr.</p>
-<h3 class="f5 lh-copy"><a name="source-code" id="source-code">Source code</a></h3>
+<h3><a name="source-code" id="source-code">Source code</a></h3>
 <p>You can clone entire project from the following <a href="https://github.com/svlada/websphere-maven-spring-project">github repository</a>.</p>
 
-
+    
+    <hr>
+    <p><a href="/">← back to home</a></p>
 </article>
-
-</section>
 <div id="disqus_thread"></div>
 <script>
 
@@ -152,8 +148,38 @@ s.setAttribute('data-timestamp', +new Date());
 
   </main>
 
+  <footer>
+"~svlada" [Modified] 2015                                                     100%
+  </footer>
 
-<script data-goatcounter="https://svlada.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const currentTheme = body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update button emoji
+  const button = document.querySelector('.theme-toggle');
+  button.textContent = newTheme === 'light' ? '🌙' : '💡';
+}
 
+// Load saved theme on page load
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Set initial button emoji
+  const button = document.querySelector('.theme-toggle');
+  if (button) {
+    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
+  }
+})();
+</script>
 
-</body></html>
+<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
+
