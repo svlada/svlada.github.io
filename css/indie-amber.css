@@ -1,0 +1,272 @@
+/* Amber Monitor Theme - Old School CRT Style */
+
+:root {
+  /* Amber phosphor monitor colors */
+  --bg-main: #1a0f00;
+  --bg-secondary: #2a1500;
+  --text-primary: #ffb000;
+  --text-bright: #ffd700;
+  --text-dim: #cc8800;
+  --text-shadow: #ff6600;
+  --accent: #ffffff;
+  --link: #ffcc33;
+  --link-hover: #ffffff;
+  --border: #663300;
+}
+
+* {
+  box-sizing: border-box;
+  cursor: crosshair;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.4;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  text-shadow: 0 0 3px var(--text-shadow);
+  
+  /* Phosphor glow effect */
+  filter: contrast(1.1) brightness(1.1);
+}
+
+/* CRT curvature effect */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Scanlines */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 176, 0, 0.03) 2px,
+      rgba(255, 176, 0, 0.03) 4px
+    );
+  pointer-events: none;
+  z-index: 9;
+}
+
+/* Phosphor burn-in effect simulation */
+@keyframes flicker {
+  0% { opacity: 0.98; }
+  2% { opacity: 1; }
+  4% { opacity: 0.98; }
+  100% { opacity: 0.98; }
+}
+
+.indie-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  position: relative;
+  animation: flicker 10s infinite;
+}
+
+/* Headers with amber glow */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-bright);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  text-shadow: 0 0 10px var(--text-shadow);
+}
+
+/* Prompt-style headers */
+h1::before { content: "C:\\> "; color: var(--text-dim); }
+h2::before { content: "C:\\BLOG\\> "; color: var(--text-dim); }
+h3::before { content: "> "; color: var(--text-dim); }
+
+/* Links with classic underline */
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-style: dotted;
+}
+
+a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 15px var(--text-bright);
+  text-decoration-style: solid;
+}
+
+/* Navigation bar */
+nav {
+  border: 2px solid var(--text-dim);
+  padding: 15px;
+  margin-bottom: 30px;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      var(--bg-secondary),
+      var(--bg-secondary) 10px,
+      var(--bg-main) 10px,
+      var(--bg-main) 20px
+    );
+}
+
+nav a {
+  margin-right: 30px;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+}
+
+nav a:hover {
+  border: 1px solid var(--text-bright);
+  background-color: var(--bg-secondary);
+}
+
+/* Terminal-style lists */
+ul, ol {
+  padding-left: 30px;
+}
+
+li::marker {
+  color: var(--text-dim);
+}
+
+/* Code blocks with amber theme */
+pre, code {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  color: var(--text-bright);
+  box-shadow: inset 0 0 20px rgba(255, 176, 0, 0.1);
+}
+
+pre {
+  padding: 20px;
+  overflow-x: auto;
+  line-height: 1.3;
+  margin: 20px 0;
+}
+
+/* DOS-style box drawing */
+.dos-box {
+  margin: 30px 0;
+  padding: 20px;
+  position: relative;
+  border: 2px solid var(--text-dim);
+  background-color: var(--bg-secondary);
+}
+
+.dos-box::before {
+  content: "╔══════════════════════════════════╗";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background-color: var(--bg-main);
+  padding: 0 10px;
+  color: var(--text-bright);
+}
+
+/* Blinking underscore cursor */
+@keyframes blink-cursor {
+  0%, 49% { border-color: var(--text-bright); }
+  50%, 100% { border-color: transparent; }
+}
+
+.cursor {
+  border-right: 2px solid var(--text-bright);
+  animation: blink-cursor 1s infinite;
+  padding-right: 2px;
+}
+
+/* Retro button */
+.dos-button {
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--text-primary);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 1px;
+  box-shadow: 4px 4px 0 var(--border);
+  transition: all 0.1s;
+}
+
+.dos-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--border);
+  background-color: var(--text-primary);
+  color: var(--bg-main);
+  text-shadow: none;
+}
+
+/* ASCII table */
+.ascii-table {
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--text-dim);
+}
+
+/* Footer */
+footer {
+  margin-top: 60px;
+  padding: 30px 0;
+  border-top: 3px double var(--text-dim);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* Phosphor trails on hover */
+*::selection {
+  background-color: var(--text-bright);
+  color: var(--bg-main);
+  text-shadow: none;
+}
+
+/* Loading animation */
+@keyframes loading {
+  0% { content: "Loading.  "; }
+  33% { content: "Loading.. "; }
+  66% { content: "Loading..."; }
+}
+
+.loading::after {
+  content: "Loading.  ";
+  animation: loading 1.5s infinite;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  body { font-size: 14px; }
+  h1, h2, h3 { letter-spacing: 1px; }
+  nav a { 
+    display: block; 
+    margin: 5px 0;
+  }
+}

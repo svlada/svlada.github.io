@@ -11,16 +11,7 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
 
-  eleventyConfig.addTransform("addH1Classes", function(content, outputPath) {
-    if(outputPath && outputPath.endsWith(".html")) {
-      let $ = cheerio.load(content);
-      $("h1").addClass("f3 lh-copy");
-      $("h2").addClass("f4 lh-copy");
-      $("h3").addClass("f5 lh-copy");
-      return $.html();
-    }
-    return content;
-  });
+  // Remove the h1/h2 class transform as we're using custom CSS now
 
   eleventyConfig.addFilter("currentDateDisplay", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("MMM dd, yyyy ");
@@ -28,6 +19,10 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("MMM dd, yyyy ");
+  });
+
+  eleventyConfig.addFilter("dateYear", dateObj => {
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("yyyy");
   });
 
   eleventyConfig.addFilter("full_date", dateObj => {

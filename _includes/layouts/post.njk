@@ -2,14 +2,15 @@
 layout: layouts/base.njk
 templateClass: tmpl-post
 ---
-<section class="pa3 pa4-ns">
-<article class="lh-copy">
+<article>
     <h1>{{ title }}</h1>
+    <p class="post-date">Published: {{ page.date | readableDate }}</p>
+    
     {{ content | safe }}
-
+    
+    <hr>
+    <p><a href="/">← back to home</a></p>
 </article>
-
-</section>
 <div id="disqus_thread"></div>
 <script>
 

@@ -9,52 +9,25 @@ date: 2020-01-01
 
 <!-- <p>Look behind you, a three-headed monkey.</p> -->
 
-<section class="pa3 pa4-ns lh-copy">
-  <article>
-    <p class="">
-      Hello, my name is Vladimir Stankovic, but I commonly use hande svlada.
-    </p>
+<h1>Vladimir Stankovic</h1>
 
-    <p class="measure-wide">
-      My current role finds me at
-      <a href="http://codereflect.io" target="_blank">Reflect</a>, where, I
-      build software specifically tailored for businesses and startups in the
-      finance industry. Much of my work focuses on simplifying these systems,
-      which frequently become more complex as they develop over time.
-    </p>
-  </article>
-  <article class="pt3 ">
-    <ul class="list pl0 ">
-      {% for post in postslist | reverse %}
-        {% if post.data.title != "draft" %}
-          <li class="pb2 ">
-            
-            <a href="{{ post.url | url }}" 
-              class="link">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+<p>I build software for finance companies at Reflect, focusing on making complex systems simpler.</p>
 
-              <time class="f6 gray pt2 pr3 ">{{ post.data.date | readableDate() }}</time>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
+<h2>Recent Posts</h2>
 
+<ul class="post-list">
+  {% for post in postslist | reverse %}
+    {% if post.data.title != "draft" %}
+      <li><a href="{{ post.url | url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a> <span class="post-date">{{ post.data.date | readableDate() }}</span></li>
+    {% endif %}
+  {% endfor %}
+</ul>
 
-      {% set lablist = collections.lab %}
+<h2>Connect</h2>
 
-      <!--<p>Experiments and playthings</p>-->
-      <!--<ul class="list pl0">-->
-      <!--  {% for lab in lablist | reverse %}-->
-      <!--    {% if lab.data.title != "draft" %}-->
-      <!--      <li class="pb2 ">-->
-      <!--        -->
-      <!--        <a href="{{ lab.url | url }}" -->
-      <!--          class="link dim">{% if lab.data.title %}{{ lab.data.title }}{% else %}<code>{{ lab.url }}</code>{% endif %}</a>-->
-      <!--      -->
-      <!--        <time class="f6 gray pt2 pr3 ">{{ lab.data.date | readableDate() }}</time>-->
-      <!--      </li>-->
-      <!--    {% endif %}-->
-      <!--  {% endfor %}-->
-      <!--</ul>-->
-    </article>
-
-</section>
+<p>
+  Find me on <a href="https://github.com/svlada">GitHub</a>, 
+  <a href="https://twitter.com/svlada">Twitter</a>, 
+  <a href="https://www.linkedin.com/in/svlada">LinkedIn</a>, or 
+  <a href="https://news.ycombinator.com/user?id=hawkweed">Hacker News</a>.
+</p>

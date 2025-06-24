@@ -11,19 +11,7 @@
   <meta name="description" content="{{ renderData.description or description or metadata.description }}">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="{{ '/css/prism-base16-ateliersulphurpool.light.css' | url }}?v=1.0.2">
-
-  <!-- <link rel="stylesheet" href="{{ '/css/index.css' | url }}?v=1.8.8"> -->
-  
-  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>  
-  <style>
-    h1, h2, h3, h4, h5 { color: #5e5e8c; }
-
-    .direct-link { display: none; }
-    a { color: #5e5e8c; }
-    /* main a:visited { color: #e8f; } */
-    main article > h2 a:visited { color: #5e5e8c;}
-  </style>
+  <link rel="stylesheet" href="{{ '/css/vim.css' | url }}?v=1.0.0">
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
 
   <script type="application/ld+json">
@@ -44,16 +32,20 @@
   </script>
 </head>
 
-<body class="w-100 sans-serif center mw7 bg-washed-gray ">
-  <header>
-    <nav class="pt4 pl4 pr4 pb0 ">
-      <a class="link b f5 f5-ns dib mr3" href="/" title="Vladimir Stankovic">~</a>
-      <a class="link f5 f5-ns dib mr3" href="/about" title="About">About</a>
-    </nav>
-  </header>
-  <main class="">
+<body>
+  <nav>
+    <a href="/">~svlada</a>
+    <a href="/about">:about</a>
+    <a href="{{ metadata.feed.path | url }}">:rss</a>
+  </nav>
+
+  <main>
     {{ content | safe }}
   </main>
+
+  <footer>
+"~svlada" [Modified] {{ page.date | dateYear }}                                                     100%
+  </footer>
 </body>
 
 <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
