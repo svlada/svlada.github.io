@@ -192,11 +192,6 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/ssh/</loc>
-    <lastmod>2025-06-24</lastmod>
-  </url>
-  
-  <url>
     <loc>https://myurl.com/tags/design-patterns/</loc>
     <lastmod>2025-06-24</lastmod>
   </url>
@@ -222,12 +217,7 @@
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/voxxed-days/</loc>
-    <lastmod>2025-06-24</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://myurl.com/tags/m-m-challange/</loc>
+    <loc>https://myurl.com/tags/ssh/</loc>
     <lastmod>2025-06-24</lastmod>
   </url>
   
@@ -238,6 +228,16 @@
   
   <url>
     <loc>https://myurl.com/tags/spring/</loc>
+    <lastmod>2025-06-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/voxxed-days/</loc>
+    <lastmod>2025-06-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com/tags/m-m-challange/</loc>
     <lastmod>2025-06-24</lastmod>
   </url>
   
