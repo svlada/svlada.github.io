@@ -207,6 +207,27 @@ body::before {
   body::before {
     display: none;
   }
+  
+  /* Fix navigation on mobile */
+  nav {
+    margin: -10px -10px 10px -10px;
+    padding: 5px;
+    white-space: normal;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  nav a {
+    padding: 4px 6px;
+  }
+  
+  .theme-toggle {
+    position: static;
+    transform: none;
+    margin-left: auto;
+  }
 }
 
 /* Print as plain text */
