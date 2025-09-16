@@ -7,25 +7,14 @@ date: 2020-01-01
 ---
 {% set postslist = collections.posts %}
 
-<!-- <p>Look behind you, a three-headed monkey.</p> -->
-
-<p>Making complex systems simpler.</p>
-
-<h2>Recent Posts</h2>
-
 <ul class="post-list">
-  {% for post in postslist | reverse %}
-    {% if post.data.title != "draft" %}
-      <li><a href="{{ post.url | url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a> <span class="post-date">{{ post.data.date | readableDate() }}</span></li>
-    {% endif %}
-  {% endfor %}
+{% for post in postslist | reverse %}
+  {% if post.data.title != "draft" %}
+  <li>
+    <span class="post-title"><a href="{{ post.url | url }}">{{ post.data.title }}</a></span>
+    <span class="post-date">{{ post.data.date | htmlDateString }}</span>
+  </li>
+  {% endif %}
+{% endfor %}
 </ul>
 
-<h2>Connect</h2>
-
-<p>
-  Find me on <a href="https://github.com/svlada">GitHub</a>, 
-  <a href="https://twitter.com/svlada">Twitter</a>, 
-  <a href="https://www.linkedin.com/in/svlada">LinkedIn</a>, or 
-  <a href="https://news.ycombinator.com/user?id=hawkweed">Hacker News</a>.
-</p>

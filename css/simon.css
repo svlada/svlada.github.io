@@ -1,0 +1,381 @@
+/* Simon Willison inspired - clean technical blog */
+
+:root {
+  --bg: #ffffff;
+  --text: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #999999;
+  --link: #0000ee;  /* Classic blue link color */
+  --link-hover: #0000cc;
+  --link-visited: #551a8b;  /* Classic purple visited */
+  --code-bg: #f8f9fa;
+  --code-border: #dee2e6;
+  --border: #dee2e6;
+  --max-width: 740px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header - compact */
+header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.site-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text);
+  text-decoration: none;
+  display: inline;
+  margin-right: 1rem;
+}
+
+.site-title:hover {
+  text-decoration: underline;
+}
+
+nav {
+  display: inline;
+  font-size: 0.9rem;
+}
+
+nav a {
+  color: var(--link);
+  text-decoration: none;
+  margin-right: 0.8rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Typography - tighter spacing */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-top: 1.8rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+h4 {
+  font-size: 1.1rem;
+}
+
+/* Permalink anchors for headings */
+h2 a.headerlink,
+h3 a.headerlink {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8em;
+  margin-left: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+h2:hover a.headerlink,
+h3:hover a.headerlink {
+  opacity: 1;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+/* Post list - compact */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.post-list li {
+  margin-bottom: 0.8rem;
+}
+
+.post-date {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  display: inline;
+  margin-right: 0.5rem;
+}
+
+.post-title {
+  display: inline;
+}
+
+.post-title a {
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.post-title a:hover {
+  text-decoration: underline;
+}
+
+/* Post metadata */
+.post-meta {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-meta time {
+  font-weight: 500;
+}
+
+/* Code blocks - minimal */
+code {
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 0.9em;
+  background: #f5f5f5;
+  padding: 0.1rem 0.3rem;
+}
+
+pre {
+  background: #f5f5f5;
+  padding: 0.8rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  line-height: 1.3;
+  font-size: 0.9rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #ccc;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Lists - compact */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.2rem;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+}
+
+th {
+  background: var(--code-bg);
+  font-weight: 600;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+/* Tags */
+.tags {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.tag {
+  display: inline-block;
+  background: var(--code-bg);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.tag:hover {
+  background: var(--border);
+  text-decoration: none;
+}
+
+/* Footer - minimal */
+footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+footer a {
+  color: var(--text-secondary);
+  margin-right: 0.8rem;
+}
+
+/* Archive */
+.archive-year {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  color: var(--text);
+}
+
+.archive-posts {
+  list-style: none;
+  padding: 0;
+}
+
+.archive-posts li {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: baseline;
+}
+
+.archive-date {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  min-width: 80px;
+  margin-right: 1rem;
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 102, 204, 0.2);
+  color: var(--text);
+}
+
+/* Focus */
+:focus {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+
+  nav a {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .archive-posts li {
+    flex-direction: column;
+  }
+
+  .archive-date {
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media print {
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  nav, footer {
+    display: none;
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: underline;
+  }
+}

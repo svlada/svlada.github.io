@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:tilde.town)"
+      "WebFetch(domain:tilde.town)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:thesephist.com)",
+      "Read(//Users/svlada/Desktop/**)",
+      "WebFetch(domain:bernsteinbear.com)",
+      "WebFetch(domain:simonwillison.net)"
     ],
     "deny": []
   }

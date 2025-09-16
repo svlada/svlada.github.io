@@ -1,0 +1,243 @@
+/* Cozy minimal theme - warm, comfortable, compact */
+
+:root {
+  --bg: #fffef8;
+  --text: #3d3d3d;
+  --text-soft: #6a6a6a;
+  --link: #8b6914;
+  --link-hover: #5d450e;
+  --accent: #d4a574;
+  --border: #e8e4d9;
+  --code-bg: #f7f5ed;
+  --selection: #f0e6d2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', 'Cambria', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Simple header */
+header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.site-title {
+  font-size: 1.1rem;
+  font-weight: normal;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+/* Minimal nav */
+nav {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+nav a {
+  color: var(--text-soft);
+  text-decoration: none;
+  margin: 0 0.8rem;
+}
+
+nav a:hover {
+  color: var(--link);
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-weight: 400;
+  margin: 1.5rem 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 1.4rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-top: 1.8rem;
+}
+
+h3 {
+  font-size: 1rem;
+  font-style: italic;
+}
+
+p {
+  margin-bottom: 0.9rem;
+}
+
+/* Links */
+a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  border-bottom-color: var(--link);
+}
+
+/* Post list - compact */
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list li {
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dotted var(--border);
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-date {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+}
+
+.post-title {
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.post-title a {
+  color: var(--text);
+}
+
+.post-title a:hover {
+  color: var(--link);
+}
+
+/* Code - simple */
+code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 0.8rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 0.9rem;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.2rem;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+/* Footer - minimal */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+/* Selection */
+::selection {
+  background: var(--selection);
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem 0;
+  border-radius: 3px;
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+  margin: 1.5rem 0;
+}
+
+/* Tags */
+.tag {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  margin-right: 0.5rem;
+}
+
+/* Media query for small screens */
+@media (max-width: 620px) {
+  body {
+    padding: 1.5rem 1rem;
+    font-size: 15px;
+  }
+
+  nav a {
+    margin: 0 0.5rem;
+  }
+}
+
+/* Focus */
+:focus {
+  outline: 2px dotted var(--accent);
+  outline-offset: 2px;
+}
+
+/* Remove all unnecessary elements */
+.man-header,
+.synopsis,
+.options,
+.examples,
+.files,
+.see-also,
+.author {
+  display: none;
+}

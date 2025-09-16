@@ -1,0 +1,430 @@
+/* Japanese tea ceremony inspired - zen minimal */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500&family=Noto+Serif+JP:wght@300;400&display=swap');
+
+:root {
+  /* Wabi-sabi colors - natural, muted */
+  --bg: #faf8f3;
+  --text: #2c2c2c;
+  --text-light: #6b6b6b;
+  --text-muted: #a0a0a0;
+  --link: #704214;
+  --link-hover: #4a2c0d;
+  --accent: #8b7355;
+  --border: #e6e2d9;
+  --tea-green: #7c9885;
+  --bamboo: #d4c5a9;
+  --selection: #e8e4d9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Sans', -apple-system, sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text);
+  background: var(--bg);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 3rem;
+  letter-spacing: 0.02em;
+}
+
+/* Header - minimal presence */
+header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+header::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--border);
+  margin: 2rem auto 0;
+}
+
+.site-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+}
+
+/* Navigation - floating, subtle */
+nav {
+  text-align: center;
+  margin-bottom: 5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  margin: 0 2rem;
+  transition: color 0.4s ease;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--tea-green);
+  transition: width 0.4s ease;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* Typography - clean and spacious */
+h1, h2, h3 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 300;
+  margin: 3rem 0 1.5rem 0;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 0 0 3rem 0;
+}
+
+h1::before,
+h1::after {
+  content: "一";
+  color: var(--tea-green);
+  opacity: 0.3;
+  margin: 0 1rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-top: 4rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 1px;
+  background: var(--tea-green);
+}
+
+h3 {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+/* Links - subtle */
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+/* Post list - spacious and calm */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.post-list li {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-list li::after {
+  content: "○";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg);
+  color: var(--border);
+  padding: 0 0.5rem;
+  font-size: 0.6rem;
+}
+
+.post-date {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.post-title {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.post-title a {
+  color: var(--text);
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.post-title a:hover {
+  color: var(--tea-green);
+  padding-left: 0.5rem;
+}
+
+/* Code - minimal */
+code {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.85em;
+  background: var(--selection);
+  padding: 0.2em 0.4em;
+  border-radius: 2px;
+  color: var(--accent);
+}
+
+pre {
+  background: var(--selection);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+  border-radius: 4px;
+  line-height: 1.6;
+  border-left: 2px solid var(--tea-green);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: var(--text);
+}
+
+/* Blockquotes - zen wisdom style */
+blockquote {
+  margin: 2rem 0;
+  padding: 1rem 2rem;
+  font-style: italic;
+  color: var(--text-light);
+  position: relative;
+  text-align: center;
+  font-family: 'Noto Serif JP', serif;
+}
+
+blockquote::before {
+  content: "「";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 2rem;
+  color: var(--tea-green);
+  opacity: 0.3;
+}
+
+blockquote::after {
+  content: "」";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 2rem;
+  color: var(--tea-green);
+  opacity: 0.3;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+/* Images - with space to breathe */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 3rem auto;
+  border-radius: 2px;
+}
+
+/* Horizontal rule - decorative */
+hr {
+  border: none;
+  margin: 4rem 0;
+  text-align: center;
+  position: relative;
+}
+
+hr::before {
+  content: "◦ ◦ ◦";
+  color: var(--border);
+  letter-spacing: 1rem;
+  font-size: 0.8rem;
+}
+
+/* Footer - minimal presence */
+footer {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  position: relative;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Tags */
+.tag {
+  color: var(--text-light);
+  font-size: 0.8rem;
+  margin-right: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.tag::before {
+  content: "#";
+  opacity: 0.5;
+}
+
+/* Selection */
+::selection {
+  background: var(--tea-green);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--tea-green);
+  color: white;
+}
+
+/* Focus - subtle */
+:focus {
+  outline: 1px solid var(--tea-green);
+  outline-offset: 4px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 960px) {
+  body {
+    padding: 3rem 2rem;
+  }
+
+  nav a {
+    margin: 0 1rem;
+  }
+
+  h1::before,
+  h1::after {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 2rem 1.5rem;
+    font-size: 15px;
+  }
+
+  nav {
+    margin-bottom: 3rem;
+  }
+
+  nav a {
+    margin: 0 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .post-list li {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Loading animation - tea ceremony patience */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  animation: fadeIn 0.8s ease;
+}
+
+/* Print styles */
+@media print {
+  body {
+    font-size: 11pt;
+    color: black;
+    background: white;
+  }
+
+  nav, footer {
+    display: none;
+  }
+}
