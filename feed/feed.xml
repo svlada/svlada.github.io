@@ -889,19 +889,11 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 		<link href="https://svlada.com/step-builder-pattern/"/>
 		<updated>2016-06-09T00:00:00Z</updated>
 		<id>https://svlada.com/step-builder-pattern/</id>
-		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a title=&quot;Introduction: Step builder pattern&quot; href=&quot;https://svlada.com/step-builder-pattern/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Pros and cons about step builder pattern&quot; href=&quot;https://svlada.com/step-builder-pattern/#step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Code walkthrough&quot; href=&quot;https://svlada.com/step-builder-pattern/#code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Source code&quot; href=&quot;https://svlada.com/step-builder-pattern/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Eclipse plug-in&quot; href=&quot;https://svlada.com/step-builder-pattern/#eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;I&#39;ve recently decided to use the Amazon SES API to send emails to my &lt;a href=&quot;http://microservicesweekly.com/&quot;&gt;Microservices Weekly&lt;/a&gt; subscribers. What prompted me to use Amazon SES API is its price. It&#39;s cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a &lt;a href=&quot;https://github.com/svlada/ziggy&quot;&gt;small wrapper&lt;/a&gt; around their API.&lt;/p&gt;
-&lt;p&gt;To make a long story short, the main purpose here is to share my experience with a less well-known derivate of the Builder pattern - Step Builder pattern.&lt;/p&gt;
-&lt;p&gt;The Step Builder pattern is an object creation software design pattern. It&#39;s not so commonly mentioned in popular readings about design patterns.&lt;/p&gt;
-&lt;p&gt;The Step Builder pattern offers some neat benefits when you compare it to a traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects.&lt;/p&gt;
-&lt;h2&gt;&lt;a name=&quot;step-builder-pattern-pros-and-cons&quot; id=&quot;step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/h2&gt;
+		<content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I recently decided to use the Amazon SES API to send emails to my &lt;a href=&quot;http://microservicesweekly.com/&quot;&gt;Microservices Weekly&lt;/a&gt; subscribers. The main reason? Price. It&#39;s cheap. However, the Java client API Amazon provides isn&#39;t exactly pleasant to work with, so I built a &lt;a href=&quot;https://github.com/svlada/ziggy&quot;&gt;small wrapper&lt;/a&gt; around it.&lt;/p&gt;
+&lt;p&gt;To make a long story short, the real purpose here is to share my experience with a less well-known variation of the Builder pattern: the Step Builder pattern.&lt;/p&gt;
+&lt;p&gt;The Step Builder pattern is an object-creation design pattern that doesn&#39;t get much attention in popular design pattern discussions. Compared to the traditional builder, it offers some neat advantages. Chief among them is that it guides the client in using your API correctly. In practice, it feels like a mix of the builder pattern and a state machine—and it&#39;s often described as a wizard for building objects.&lt;/p&gt;
+&lt;h2&gt;Pros and cons&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;User guidance for your API through the object creation process step by step.&lt;/li&gt;
@@ -916,16 +908,16 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 &lt;li&gt;Low readability of code needed to implement the pattern itself.&lt;/li&gt;
 &lt;li&gt;No eclipse plugin to help with code generation. (On the other hand, there are plenty of code generators for Builder pattern generator).&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2&gt;&lt;a name=&quot;code-walkthrough&quot; id=&quot;code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Since the Step Builder pattern is a creational design pattern, let&#39;s focus on its purpose - the creation of objects.&lt;/p&gt;
-&lt;p&gt;Example of API usage is shown below:&lt;/p&gt;
+&lt;h2&gt;Code walkthrough&lt;/h2&gt;
+&lt;p&gt;Since the Step Builder pattern is a creational design pattern, its main purpose is the creation of objects.&lt;/p&gt;
+&lt;p&gt;Here&#39;s a simple example of how the API can be used:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token class-name&quot;&gt;Email&lt;/span&gt; email &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Email&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;EmailAddress&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Microservices Weekly &amp;lt;mw@microservicesweekly.com&gt;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 	&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;EmailAddress&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;svlada@gmail.com&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 	&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Subject&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Subject&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 	&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;Content&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Test email&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 	&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now, let&#39;s see how API is enforcing the initialization of an object in the pre-defined order.&lt;/p&gt;
-&lt;p&gt;The following image is the graphical representation of the state machine for constructing Email object with the Step Builder pattern (mandatory values are marked purple and optional values are yellow):&lt;br /&gt;
+&lt;p&gt;Now, let&#39;s look at how the API enforces object initialization in a predefined order.&lt;/p&gt;
+&lt;p&gt;The diagram below shows a state machine for constructing an Email object with the Step Builder pattern. Mandatory values are marked in purple, while optional values are shown in yellow:&lt;br /&gt;
 &lt;img src=&quot;https://svlada.com/img/step-builder/step-builder.png&quot; alt=&quot;Builder pattern&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Rules of thumb for implementation:&lt;/p&gt;
 &lt;ol&gt;
@@ -936,7 +928,7 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 &lt;li&gt;Define one inner static Builder class that implements all of the defined steps.&lt;/li&gt;
 &lt;li&gt;Implement step interface methods.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;Source code&lt;/h2&gt;
 &lt;p&gt;Complete Example of Step by Step builder pattern:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Email&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;EmailAddress&lt;/span&gt; from&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
@@ -1055,9 +1047,10 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 		&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; content&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;&lt;a name=&quot;eclipse-plugin&quot; id=&quot;eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;So far, I haven&#39;t found a plug-in for Eclipse that provides Step Builder code generation feature.&lt;/p&gt;
-&lt;p&gt;I&#39;ve created a GitHub repository to create an Eclipse plug-in that will provide support for Step Builder pattern generation: &lt;a href=&quot;https://github.com/svlada/alyx&quot;&gt;https://github.com/svlada/alyx&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Eclipse plug-in&lt;/h2&gt;
+&lt;p&gt;So far, I haven&#39;t found an Eclipse plug-in that supports Step Builder code generation.&lt;/p&gt;
+&lt;p&gt;To fill that gap, I&#39;ve started a GitHub repository for an Eclipse plug-in that provides Step Builder pattern generation:&lt;br /&gt;
+👉 &lt;a href=&quot;https://github.com/svlada/alyx&quot;&gt;svlada/alyx&lt;/a&gt;&lt;/p&gt;
 </content>
 	</entry>
 	

@@ -47,19 +47,11 @@
     <h1>Step builder pattern</h1>
     <p class="post-date">Published: Jun 09, 2016 </p>
     
-    <ol>
-<li><a title="Introduction: Step builder pattern" href="#introduction">Introduction</a></li>
-<li><a title="Pros and cons about step builder pattern" href="#step-builder-pattern-pros-and-cons">Pros and cons</a></li>
-<li><a title="Code walkthrough" href="#code-walkthrough">Code-walkthrough</a></li>
-<li><a title="Source code" href="#source-code">Source code</a></li>
-<li><a title="Eclipse plug-in" href="#eclipse-plugin">Eclipse plug-in</a></li>
-</ol>
-<h2><a name="introduction" id="introduction">Introduction</a></h2>
-<p>I've recently decided to use the Amazon SES API to send emails to my <a href="http://microservicesweekly.com">Microservices Weekly</a> subscribers. What prompted me to use Amazon SES API is its price. It's cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a <a href="https://github.com/svlada/ziggy">small wrapper</a> around their API.</p>
-<p>To make a long story short, the main purpose here is to share my experience with a less well-known derivate of the Builder pattern - Step Builder pattern.</p>
-<p>The Step Builder pattern is an object creation software design pattern. It's not so commonly mentioned in popular readings about design patterns.</p>
-<p>The Step Builder pattern offers some neat benefits when you compare it to a traditional builder pattern. One of the main Step Builder pattern benefits is providing the client with the guidelines on how your API should be used. It can be seen as a mixture of a builder pattern and a state machine and in fact, this pattern is often referred to as a wizard for building objects.</p>
-<h2><a name="step-builder-pattern-pros-and-cons" id="step-builder-pattern-pros-and-cons">Pros and cons</a></h2>
+    <h2>Introduction</h2>
+<p>I recently decided to use the Amazon SES API to send emails to my <a href="http://microservicesweekly.com">Microservices Weekly</a> subscribers. The main reason? Price. It's cheap. However, the Java client API Amazon provides isn't exactly pleasant to work with, so I built a <a href="https://github.com/svlada/ziggy">small wrapper</a> around it.</p>
+<p>To make a long story short, the real purpose here is to share my experience with a less well-known variation of the Builder pattern: the Step Builder pattern.</p>
+<p>The Step Builder pattern is an object-creation design pattern that doesn't get much attention in popular design pattern discussions. Compared to the traditional builder, it offers some neat advantages. Chief among them is that it guides the client in using your API correctly. In practice, it feels like a mix of the builder pattern and a state machine—and it's often described as a wizard for building objects.</p>
+<h2>Pros and cons</h2>
 <p><strong>Pros</strong></p>
 <ol>
 <li>User guidance for your API through the object creation process step by step.</li>
@@ -74,16 +66,16 @@
 <li>Low readability of code needed to implement the pattern itself.</li>
 <li>No eclipse plugin to help with code generation. (On the other hand, there are plenty of code generators for Builder pattern generator).</li>
 </ol>
-<h2><a name="code-walkthrough" id="code-walkthrough">Code-walkthrough</a></h2>
-<p>Since the Step Builder pattern is a creational design pattern, let's focus on its purpose - the creation of objects.</p>
-<p>Example of API usage is shown below:</p>
+<h2>Code walkthrough</h2>
+<p>Since the Step Builder pattern is a creational design pattern, its main purpose is the creation of objects.</p>
+<p>Here's a simple example of how the API can be used:</p>
 <pre class="language-java"><code class="language-java"><span class="token class-name">Email</span> email <span class="token operator">=</span> <span class="token class-name">Email</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token class-name">EmailAddress</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Microservices Weekly &lt;mw@microservicesweekly.com>"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span><span class="token class-name">EmailAddress</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"svlada@gmail.com"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token punctuation">.</span><span class="token function">subject</span><span class="token punctuation">(</span><span class="token class-name">Subject</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Subject"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token punctuation">.</span><span class="token function">content</span><span class="token punctuation">(</span><span class="token class-name">Content</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Test email"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Now, let's see how API is enforcing the initialization of an object in the pre-defined order.</p>
-<p>The following image is the graphical representation of the state machine for constructing Email object with the Step Builder pattern (mandatory values are marked purple and optional values are yellow):<br>
+<p>Now, let's look at how the API enforces object initialization in a predefined order.</p>
+<p>The diagram below shows a state machine for constructing an Email object with the Step Builder pattern. Mandatory values are marked in purple, while optional values are shown in yellow:<br>
 <img src="/img/step-builder/step-builder.png" alt="Builder pattern"></p>
 <p>Rules of thumb for implementation:</p>
 <ol>
@@ -94,7 +86,7 @@
 <li>Define one inner static Builder class that implements all of the defined steps.</li>
 <li>Implement step interface methods.</li>
 </ol>
-<h2><a name="source-code" id="source-code">Source code</a></h2>
+<h2>Source code</h2>
 <p>Complete Example of Step by Step builder pattern:</p>
 <pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Email</span> <span class="token punctuation">{</span>
 	<span class="token keyword">private</span> <span class="token class-name">EmailAddress</span> from<span class="token punctuation">;</span>
@@ -213,9 +205,10 @@
 		<span class="token keyword">return</span> content<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h2><a name="eclipse-plugin" id="eclipse-plugin">Eclipse plug-in</a></h2>
-<p>So far, I haven't found a plug-in for Eclipse that provides Step Builder code generation feature.</p>
-<p>I've created a GitHub repository to create an Eclipse plug-in that will provide support for Step Builder pattern generation: <a href="https://github.com/svlada/alyx">https://github.com/svlada/alyx</a></p>
+<h2>Eclipse plug-in</h2>
+<p>So far, I haven't found an Eclipse plug-in that supports Step Builder code generation.</p>
+<p>To fill that gap, I've started a GitHub repository for an Eclipse plug-in that provides Step Builder pattern generation:<br>
+👉 <a href="https://github.com/svlada/alyx">svlada/alyx</a></p>
 
     
     <hr>
