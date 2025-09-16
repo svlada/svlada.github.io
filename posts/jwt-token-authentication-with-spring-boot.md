@@ -11,28 +11,21 @@ layout: layouts/post.njk
 permalink: "jwt-token-authentication-with-spring-boot/index.html"
 ---
 
-1. <a title="Introduction: JWT Token" href="#introduction">Introduction</a>
-2. <a title="pre-requisites" href="#pre-requisites">Prerequisite</a>
-3. <a title="Spring Security: Ajax authentication" href="#ajax-authentication">Ajax authentication</a>
-4. <a title="jwt-authentication" href="#jwt-authentication">JWT Authentication</a>
+## Introduction
 
-## <a name="introduction" id="introduction">Introduction</a>
+This article is a guide to implementing JWT authentication with Spring Boot.
 
-This article is a guide on implementing JWT authentication with Spring Boot.
+At a minimum, the client must exchange a username and password to obtain a JWT. This token is then used to authenticate subsequent API calls.
 
+The core workflows for securing APIs with JWT are:
+- AJAX Login Authentication
+- JWT Token Authentication
 
-At a bare minimum, the client is required to exchange a username and password in order to obtain a JWT, which will be used for subsequent authenticated API calls.
-
-Below are the core workflows for implementing API security:
-
-1. Ajax Login Authentication
-2. JWT Token Authentication
-
-## <a name="pre-requisites" id="pre-requisites">Prerequisite</a>
+## Prerequisite
 
 See the linked GitHub [repo](https://github.com/svlada/springboot-security-jwt) for code.
 
-This project is using H2 in-memory database to store sample user data. To make things easier I have created data fixtures and configured Spring Boot to automatically load them on the application startup (```/jwt-demo/src/main/resources/data.sql```).
+This project is using H2 in-memory database to store sample user data. To simplify setup, I created data fixtures and configured Spring Boot to automatically load them at startup from: `/jwt-demo/src/main/resources/data.sql`
 
 The overall project structure is shown below:
 
@@ -64,11 +57,11 @@ The overall project structure is shown below:
 |       \---templates
 ```
 
-## <a name="ajax-authentication" id="ajax-authentication">Ajax authentication</a>
+## Ajax authentication
 
-In the context of Ajax authentication, we typically mean a scenario where the user provides credentials via a JSON payload, which is transmitted as part of an XMLHttpRequest.
+In the context of AJAX authentication, the user provides credentials in a JSON payload, sent as part of an XMLHttpRequest.
 
-In the first part of this tutorial, Ajax authentication is implemented following standard patterns outlined in the Spring Security framework. The subsequent list outlines the components to be implemented:
+In this first part of the tutorial, AJAX authentication is implemented using the standard patterns provided by the Spring Security framework. The following components need to be implemented:
 
 1. AjaxLoginProcessingFilter
 2. AjaxAuthenticationProvider
@@ -81,9 +74,9 @@ Before going into the implementation details, let's look at the request/response
 
 **Ajax authentication request example**
 
-The Authentication API allows users to exchange credentials for an authentication token.
+The Authentication API allows users to exchange their credentials for an authentication token.
 
-In this example, the client initiates the authentication process by invoking Authentication API endpoint (```/api/auth/login```).
+In this example, the client initiates the process by calling the authentication endpoint: `/api/auth/login`
 
 Raw HTTP request:
 
@@ -111,7 +104,7 @@ curl -X POST -H "X-Requested-With: XMLHttpRequest" -H "Content-Type: application
 
 **Ajax authentication response example**
 
-If client supplied credentials are valid, Authentication API will respond with the HTTP response including the following details:
+If the client supplies valid credentials, the Authentication API responds with an HTTP response that includes the following details:
 
 1. HTTP status _200 OK_
 2. Signed JWT Access and Refresh tokens included in the response body
@@ -132,12 +125,11 @@ Raw HTTP Response:
 
 **JWT Access Token**
 
-JWT Access token is used for both, authentication and authorization:
+The JWT access token is used for both authentication and authorization:
+- Authentication is performed by verifying the token's signature. If the signature is valid, access to the requested API resource is granted.
+- Authorization is determined by checking the privileges in the **scope** attribute of the token.
 
-1. Authentication is performed by verifying the JWT Access Token signature. If the signature proves to be valid, access to the requested API resource is granted.
-2. Authorization is done by looking up privileges in the **scope** attribute of JWT Access token.
-
-Decoded JWT Access token has three parts: Header, Claims and Signature as shown below:
+A decoded JWT access token consists of three parts: Header, Claims, and Signature, as shown below:
 
 Header
 ```json
@@ -169,11 +161,11 @@ Signature (base64 encoded)
 
 **JWT Refresh Token**
 
-Refresh token is long-lived token used to request new Access tokens. It's expiration time is greater than expiration time of Access token.
+A refresh token is a long-lived token used to request new access tokens. Its expiration time is longer than that of an access token.
 
-In this tutorial we'll use ```jti``` claim to maintain list of blacklisted or revoked tokens. JWT ID(```jti```) claim is defined by [RFC7519](https://tools.ietf.org/html/rfc7519#section-4.1.7) with purpose to uniquely identify individual Refresh token. 
+In this tutorial, we'll use the `jti` claim to maintain a list of blacklisted or revoked tokens. The JWT ID (`jti`) claim, defined by [RFC 7519](https://tools.ietf.org/html/rfc7519#section-4.1.7), uniquely identifies each refresh token.
 
-Decoded Refresh token has three parts: Header, Claims and Signature as shown below:
+A decoded refresh token consists of three parts: Header, Claims, and Signature, as shown below:
 
 Header
 ```json
@@ -203,12 +195,10 @@ SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0ur
 
 #### AjaxLoginProcessingFilter
 
-First step is to extend ```AbstractAuthenticationProcessingFilter``` in order to provide custom processing of Ajax authentication requests.
-
-De-serialization and basic validation of the incoming JSON payload is done in the ```AjaxLoginProcessingFilter#attemptAuthentication``` method. Upon successful validation of the JSON payload authentication logic is delegated to AjaxAuthenticationProvider class.
-
-In case of a successful authentication ```AjaxLoginProcessingFilter#successfulAuthentication``` method is invoked.
-In case of failure authentication  ```AjaxLoginProcessingFilter#unsuccessfulAuthentication``` method is invoked.
+The first step is to extend `AbstractAuthenticationProcessingFilter` to provide custom processing for AJAX authentication requests.
+- Deserialization and basic validation of the incoming JSON payload are handled in the `AjaxLoginProcessingFilter#attemptAuthentication` method. If validation succeeds, the authentication logic is delegated to the `AjaxAuthenticationProvider` class.
+- In case of successful authentication, the `AjaxLoginProcessingFilter#successfulAuthentication` method is invoked.
+- In case of failed authentication, the `AjaxLoginProcessingFilter#unsuccessfulAuthentication` method is invoked.
 
 ```java
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -265,12 +255,11 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
 #### AjaxAuthenticationProvider
 
-Responsibility of the AjaxAuthenticationProvider class is to:
-
-1. Verify user credentials against database, LDAP or some other system which holds the user data
-2. If ```username``` and ```password``` do not match the record in the database authentication exception is thrown
-3. Create UserContext and populate it with user data you need (in our case just ```username``` and ```user privileges```)
-4. Upon successful authentication delegate creation of JWT Token to ```AjaxAwareAuthenticationSuccessHandler```
+The responsibility of the `AjaxAuthenticationProvider` class is to:
+1. Verify user credentials against a database, LDAP, or another system that stores user data.
+2. Throw an authentication exception if the username and password do not match any record.
+3. Create a `UserContext` and populate it with the required user data (in this case, just the username and user privileges).
+4. Delegate JWT token creation to the `AjaxAwareAuthenticationSuccessHandler` upon successful authentication.
 
 ```java
 @Component
@@ -317,9 +306,9 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
 #### AjaxAwareAuthenticationSuccessHandler
 
-We'll implement AuthenticationSuccessHandler interface that is called when client has been successfully authenticated.
+We'll implement the `AuthenticationSuccessHandler` interface, which is invoked when a client has been successfully authenticated.
 
-AjaxAwareAuthenticationSuccessHandler class is our custom implementation of AuthenticationSuccessHandler interface. Responsibility of this class is to add JSON payload containing JWT Access and Refresh tokens into the HTTP response body.
+Our custom implementation is the `AjaxAwareAuthenticationSuccessHandler` class. Its responsibility is to add a JSON payload containing the JWT access token and refresh token to the HTTP response body.
 
 ```java
 @Component
@@ -452,11 +441,13 @@ public class JwtTokenFactory {
 }
 ```
 
-Please note that if you are instantiating Claims object outside of ```Jwts.builder()``` make sure to first invoke ```Jwts.builder()#setClaims(claims)```. Why? Well, if you don't do that, Jwts.builder will, by default, create empty Claims object. What that means? Well if you call ```Jwts.builder()#setClaims()``` after you have set subject with ```Jwts.builder()#setSubject()``` your subject will be lost. Simply new instance of Claims class will overwrite default one created by Jwts.builder().
+Please note: if you instantiate a `Claims` object outside of `Jwts.builder()`, you must first call `Jwts.builder().setClaims(claims)`.
+
+Why? By default, `Jwts.builder()` creates an empty `Claims` object. This means that if you call `.setClaims()` after setting the subject with `.setSubject()`, your subject will be overwritten. A new instance of `Claims` replaces the one created internally by `Jwts.builder()`.
 
 #### AjaxAwareAuthenticationFailureHandler
 
-AjaxAwareAuthenticationFailureHandler is invoked by ```AjaxLoginProcessingFilter``` in case of authentication failures. You can design specific error messages based on exception type that have occurred during the authentication process.
+The `AjaxAwareAuthenticationFailureHandler` is invoked by the `AjaxLoginProcessingFilter` in case of authentication failures. It can be customized to return specific error messages based on the type of exception that occurs during the authentication process.
 
 ```java
 @Component
@@ -489,9 +480,9 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
 
 ```
 
-## <a name="jwt-authentication" id="jwt-authentication">JWT Authentication</a>
+## JWT Authentication
 
-Token based authentication schema's became immensely popular in recent times, as they provide important benefits when compared to sessions/cookies:
+Token-based authentication schemes have become immensely popular in recent years, as they offer important benefits compared to traditional session and cookie-based approaches:
 
 1. CORS
 2. No need for CSRF protection
@@ -515,15 +506,17 @@ JWT Authentication flow is very simple:
 2. User sends Access token with each request to access protected API resource
 3. Access token is signed and contains user identity (e.g. user id) and authorization claims. 
 
-It's important to note that authorization claims will be included with the Access token. Why is this important? Well, let's say that authorization claims (e.g user privileges in the database) are changed during the life time of Access token. Those changes will not become effective until new Access token is issued. In most cases this is not big issue, because Access tokens are short-lived. Otherwise go with the opaque token pattern.
+It's important to note that authorization claims are embedded in the access token. Why does this matter? If authorization data (e.g., user privileges stored in the database) changes during the lifetime of an access token, those changes will not take effect until a new token is issued.
 
-Before we get to the details of the implementation, let's look the sample request to protected API resource.
+In most cases, this is not a major issue since access tokens are typically short-lived. However, if up-to-the-minute accuracy is required, consider using the opaque token pattern instead.
+
+Before diving into the implementation details, let's look at a sample request to a protected API resource.
 
 **Signed request to protected API resource**
 
-The following pattern is used for access tokens: ```<header-name> Bearer <access_token>```.
+The pattern for access tokens is: `<header-name>: Bearer <access_token>`
 
-In our example for header name (```<header-name>```) we are using ```X-Authorization```.
+In our example, the header name is `X-Authorization`.
 
 Raw HTTP request:
 ```java
@@ -538,7 +531,7 @@ CURL:
 curl -X GET -H "X-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMzkwMDY1LCJleHAiOjE0NzIzOTA5NjV9.Y9BR7q3f1npsSEYubz-u8tQ8dDOdBcVPFN7AIfWwO37KyhRugVzEbWVPO1obQlHNJWA0Nx1KrEqHqMEjuNWo5w" -H "Cache-Control: no-cache" "http://localhost:9966/api/me"
 ```
 
-Let's see the implementation details. Following are components we need to implement JWT Authentication:
+Let's look at the implementation details. The following components are required to implement JWT authentication:
 
 1. JwtTokenAuthenticationProcessingFilter
 2. JwtAuthenticationProvider
@@ -549,14 +542,15 @@ Let's see the implementation details. Following are components we need to implem
 
 #### JwtTokenAuthenticationProcessingFilter
 
-JwtTokenAuthenticationProcessingFilter filter is applied to each API (```/api/**```) with exception of the refresh token endpoint (```/api/auth/token```) and login endpoint (```/api/auth/login```).
+`JwtTokenAuthenticationProcessingFilter` applies to all API endpoints under `/api/**`, except for the refresh-token endpoint `/api/auth/token` and the login endpoint `/api/auth/login`.
 
-This filter has the following responsibilities:
+Responsibilities:
+1. Extract the access token from the `X-Authorization` header.
+   - If a token is present, delegate authentication to `JwtAuthenticationProvider`.
+   - If no token is found (or the format is invalid), throw an authentication exception.
+2. Invoke success or failure handlers based on the outcome of `JwtAuthenticationProvider`.
 
-1. Check for access token in ```X-Authorization``` header. If Access token is found in the header, delegate authentication to ```JwtAuthenticationProvider``` otherwise throw authentication exception
-2. Invokes success or failure strategies based on the outcome of authentication process performed by ```JwtAuthenticationProvider```
-
-Please ensure that ```chain.doFilter(request, response)``` is invoked upon successful authentication. You want processing of the request to advance to the next filter, because very last one filter ```FilterSecurityInterceptor#doFilter``` is responsible to actually invoke method in your controller that is handling requested API resource.
+Important: On successful authentication, ensure you call `chain.doFilter(request, response)` so processing continues to the next filter. The final filter—`FilterSecurityInterceptor#doFilter`—is responsible for invoking your controller method that handles the requested API resource.
 
 ```java
 public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
@@ -599,7 +593,7 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
 
 #### JwtHeaderTokenExtractor
 
-JwtHeaderTokenExtractor is very simple class used to extract Authorization token from header. You can extend TokenExtractor interface and provide your custom implementation that will for example extract token from URL.
+The `JwtHeaderTokenExtractor` is a simple class used to extract the authorization token from the request header. You can extend the `TokenExtractor` interface and provide a custom implementation—for example, one that extracts a token from a URL instead of a header.
 
 ```java
 @Component
@@ -623,11 +617,10 @@ public class JwtHeaderTokenExtractor implements TokenExtractor {
 
 #### JwtAuthenticationProvider
 
-JwtAuthenticationProvider has the following responsibilities:
-
-1. Verify the access token's signature
-2. Extract identity and authorization claims from Access token and use them to create UserContext
-3. If Access token is malformed, expired or simply if token is not signed with the appropriate signing key Authentication exception will be thrown
+The `JwtAuthenticationProvider` has the following responsibilities:
+1. Verify the access token's signature.
+2. Extract identity and authorization claims from the access token and use them to create a `UserContext`.
+3. Throw an authentication exception if the access token is malformed, expired, or not signed with the correct signing key.
 
 ```java
 @Component
@@ -665,7 +658,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 #### SkipPathRequestMatcher
 
-JwtTokenAuthenticationProcessingFilter  filter is configured to skip following endpoints: ```/api/auth/login``` and ```/api/auth/token```. This is achieved with ```SkipPathRequestMatcher``` implementation of ```RequestMatcher```.
+The `JwtTokenAuthenticationProcessingFilter` is configured to skip the following endpoints: `/api/auth/login` and `/api/auth/token`. This is achieved using the `SkipPathRequestMatcher` implementation of `RequestMatcher`.
 
 ```java
 public class SkipPathRequestMatcher implements RequestMatcher {
@@ -691,16 +684,15 @@ public class SkipPathRequestMatcher implements RequestMatcher {
 
 #### WebSecurityConfig
 
-WebSecurityConfig class extends WebSecurityConfigurerAdapter to provide custom security configuration.
+The `WebSecurityConfig` class extends `WebSecurityConfigurerAdapter` to provide custom security configuration.
 
-Following beans are configured and instantiated in this class:
+The following beans are configured and instantiated in this class:
+- `AjaxLoginProcessingFilter`
+- `JwtTokenAuthenticationProcessingFilter`
+- `AuthenticationManager`
+- `BCryptPasswordEncoder`
 
-1. AjaxLoginProcessingFilter
-2. JwtTokenAuthenticationProcessingFilter
-3. AuthenticationManager
-4. BCryptPasswordEncoder
-
-Also, inside ```WebSecurityConfig#configure(HttpSecurity http)``` method we'll configure patterns to define protected/unprotected API endpoints. Please note that we have disabled CSRF protection because we are not using Cookies.
+In addition, the `WebSecurityConfig#configure(HttpSecurity http)` method is used to define patterns for protected and unprotected API endpoints. Note that CSRF protection is disabled, since the application does not use cookies.
 
 ```java
 @Configuration
@@ -811,7 +803,7 @@ public class BloomFilterTokenVerifier implements TokenVerifier {
 
 ### Conclusion
 
-I heard people whispering on the web that loosing a JWT token is like loosing your house keys. So be careful.
+I've often heard it said that losing a JWT token is like losing your house keys—anyone who finds it can walk right in. So handle your tokens with care.
 
 ## References
 
