@@ -117,26 +117,6 @@
   </url>
   
   <url>
-    <loc>https://svlada.com/tags/java/</loc>
-    <lastmod>2025-09-16</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://svlada.com/tags/spring-boot/</loc>
-    <lastmod>2025-09-16</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://svlada.com/tags/jwt/</loc>
-    <lastmod>2025-09-16</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://svlada.com/tags/spring-security/</loc>
-    <lastmod>2025-09-16</lastmod>
-  </url>
-  
-  <url>
     <loc>https://svlada.com/tags/software%20architecture/</loc>
     <lastmod>2025-09-16</lastmod>
   </url>
@@ -157,12 +137,32 @@
   </url>
   
   <url>
-    <loc>https://svlada.com/tags/microservices/</loc>
+    <loc>https://svlada.com/tags/java/</loc>
     <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://svlada.com/tags/kafka/</loc>
+    <loc>https://svlada.com/tags/spring-boot/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://svlada.com/tags/jwt/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://svlada.com/tags/spring-security/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://svlada.com/tags/symfony/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://svlada.com/tags/curl/</loc>
     <lastmod>2025-09-16</lastmod>
   </url>
   
@@ -177,12 +177,12 @@
   </url>
   
   <url>
-    <loc>https://svlada.com/tags/symfony/</loc>
+    <loc>https://svlada.com/tags/microservices/</loc>
     <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://svlada.com/tags/curl/</loc>
+    <loc>https://svlada.com/tags/kafka/</loc>
     <lastmod>2025-09-16</lastmod>
   </url>
   
