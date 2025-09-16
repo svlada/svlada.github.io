@@ -11,7 +11,7 @@
   <meta name="description" content="{{ renderData.description or description or metadata.description }}">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="{{ '/css/simon.css' | url }}?v=1.0.0">
+  <link rel="stylesheet" href="{{ '/css/svlada.css' | url }}?v=1.0.0">
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
 
   <script type="application/ld+json">
@@ -34,8 +34,9 @@
 
 <body>
   <header>
-    <a href="/" class="site-title">svlada.com</a>
+    <a href="/" class="site-title">@svlada</a>
     <nav>
+      <a href="/">posts</a>
       <a href="/about">about</a>
       <a href="{{ metadata.feed.path | url }}">rss</a>
     </nav>
@@ -44,13 +45,6 @@
   <main>
     {{ content | safe }}
   </main>
-
-  <footer>
-    <a href="https://github.com/svlada">GitHub</a>
-    <a href="https://twitter.com/svlada">Twitter</a>
-    <a href="https://linkedin.com/in/svlada">LinkedIn</a>
-    <span style="float: right;">© {{ page.date | dateYear }}</span>
-  </footer>
 
 <!-- No JavaScript needed for this minimal theme -->
 

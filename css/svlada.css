@@ -30,40 +30,39 @@ body {
   line-height: 1.5;
   color: var(--text);
   background: var(--bg);
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 1rem;
+  margin: 0;
+  padding: 0;
 }
 
-/* Header - compact */
+/* Header - minimal style */
 header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ccc;
+  max-width: var(--max-width);
+  margin: 1.5rem auto 1.5rem;
+  padding: 2px 1rem;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
 }
 
 .site-title {
-  font-size: 1.2rem;
   font-weight: bold;
-  color: var(--text);
+  color: #000000;
   text-decoration: none;
-  display: inline;
-  margin-right: 1rem;
+  margin-right: 10px;
 }
 
 .site-title:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 nav {
   display: inline;
-  font-size: 0.9rem;
 }
 
 nav a {
-  color: var(--link);
+  color: #000000;
   text-decoration: none;
-  margin-right: 0.8rem;
+  margin-left: 12px;
+  font-size: 14px;
 }
 
 nav a:hover {
@@ -275,11 +274,25 @@ img {
   text-decoration: none;
 }
 
-/* Footer - minimal */
+/* Main content container */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+/* Footer - edge to edge background */
 footer {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ccc;
+  background: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 3rem;
+  padding: 1rem 0;
+}
+
+footer > div {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
   font-size: 0.85rem;
   color: var(--text-secondary);
 }

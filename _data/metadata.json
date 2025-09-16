@@ -1,13 +1,13 @@
 {
   "title": "Vladimir Stankovic - Software engineer",
-  "url": "https://myurl.com/",
+  "url": "https://svlada.com/",
   "description": "Sit down, relax, mix yourself a drink and enjoy the show.",
   "feed": {
     "subtitle": "Sit down, relax, mix yourself a drink and enjoy the show.",
     "filename": "feed.xml",
     "path": "/feed/feed.xml",
-    "url": "https://myurl.com/feed/feed.xml",
-    "id": "https://myurl.com/"
+    "url": "https://svlada.com/feed/feed.xml",
+    "id": "https://svlada.com/"
   },
   "author": {
     "name": "Vladimir Stankovic",
