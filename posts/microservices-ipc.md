@@ -10,19 +10,19 @@ layout: layouts/post.njk
 permalink: "microservices-durable-request-reply/index.html"
 ---
 
-The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given are based on the Kafka, which is distributed commit log implementation. [Reactive Manifesto](https://www.reactivemanifesto.org/glossary) explains the main characteristics of a message-driven architecture.
+The article explains a simplified distributed system based on message passing with a durable request–reply paradigm. The examples are drawn from Kafka, a distributed commit log implementation. The Reactive Manifesto outlines the main characteristics of a message-driven architecture.
 
-The following system design diagram shows a bird's-eye view of the exemplary microservice architecture:
+The system design diagram below provides a bird's-eye view of an exemplary microservice architecture:
 
 ![microserices](/img/microservices-durable-request-reply/microservices.png)
 
-Each of the following sections describes the important system components.
+Each of the following sections describes key system components.
 
 ## API Gateway
 
-The API Gateway is an infrastructural pattern for interfacing external clients with internal services. This component can be implemented using one of the non-blocking frameworks (elixir, spring-reactive, node.js, zuul 2, etc.). Almost every cloud provider like Amazon or Google offers API Gateway as a managed service. The development team should select the appropriate tool based on project budget and architectural decisions.
+The API Gateway is an infrastructure pattern that connects external clients with internal services. It can be implemented using non-blocking frameworks such as Elixir, Spring WebFlux, Node.js, or Zuul 2. Most major cloud providers, including Amazon and Google, also offer API Gateway as a managed service. The development team should choose the tool that best fits the project's budget and architectural requirements.
 
-The responsibilities of an API gateway can vary from system to system. The most common ones are:
+The responsibilities of an API Gateway vary by system. The most common include:
 
 1. Request routing
 2. Rate limit/throttling
@@ -35,40 +35,56 @@ The responsibilities of an API gateway can vary from system to system. The most 
 7. API monitoring and analytics
 8. Resource aggregation
 
-The important part of the API Gateway to focus on is the Request router. Request router routes API requests to internal services. Introducing the facade layer in front of services improves the isolation of each service. This means that the contract with external clients can remain unchanged while internal services evolve. Services should be configured to communicate through message passing. Messages are commands that are dispatched to services.
+An important aspect of the API Gateway is the request router, which directs incoming API requests to the appropriate internal services. By introducing this façade layer in front of services, each service remains isolated: the contract with external clients can stay stable even as internal services evolve. Ideally, services should communicate through message passing, where messages act as commands dispatched to the appropriate service.
 
 ## Request handling flow
 
-The overall request handling flow is described as follows:
-1. <p><strong>Accepting API request</strong> is the first step in the request routing flow. The next step is to create an in-memory request descriptor. Request descriptor is a data structure holding: correlation id and Http request handle. Correlation id is used to uniquely identify the Http request. Http request handle is a simple promise object use to send the response back to the client.  This pair can be stored in the Map for fast lookups.</p>
-2. <p><strong>Creating command</strong> The command has two parts: payload and headers. The payload is extracted from the incoming request and headers are populated with origin details: communication type (synchronous, asynchronous) and reply-to location (Rest URL or reply topic name).</p>
-3. <p><strong>Sending command to a service</strong>. The command is serialized to Kafka record and sent to an appropriate request topic on a Kafka broker.</p>
-4. <p><strong>Command handling</strong>. Internal services are consuming commands from designated request/reply Kafka topics and execute appropriate business logic.</p>
-5. <p><strong>Sending Reply command to the originator</strong>. After the service has finished with processing the command, the Reply command is sent back to the originator (e.g. Request router or another service).</p>
-6. <p><strong>Flush Http response</strong>. Replier interface (i.e. one of the Request Router components) handles service replies and sends Http responses back to the clients. Appropriate client Http handle is selected based on the correlation id extracted from the Reply command (check Accepting API request step for more details). This interface is typically closed for public clients and open to internal services.</p>
+The overall request-handling flow is as follows:
+1. <p><strong>Accepting an API request</strong> is the first step in the routing flow. Next, the system creates an in-memory request descriptor—a data structure that holds two things: a correlation ID and an HTTP request handle.</p>
+   <ul>
+   <li>The correlation ID uniquely identifies the HTTP request.</li>
+   <li>The HTTP request handle is a promise-like object used to send the response back to the client.</li>
+   </ul>
+   <p>Together, these can be stored in a map for fast lookups.</p>
+2. <p><strong>Creating a command</strong> A command consists of two parts: payload and headers.</p>
+   <ul>
+   <li>The payload is extracted from the incoming request.</li>
+   <li>The headers contain origin details, including:
+     <ul>
+     <li>communication type (synchronous or asynchronous)</li>
+     <li>reply-to location (a REST URL or reply topic name)</li>
+     </ul>
+   </li>
+   </ul>
+3. <p><strong>Sending a command to a service</strong> The command is serialized into a Kafka record and published to the appropriate request topic on a Kafka broker.</p>
+4. <p><strong>Command handling</strong> Internal services consume commands from designated request/reply Kafka topics and execute the corresponding business logic.</p>
+5. <p><strong>Sending a reply command to the originator</strong> After a service finishes processing a command, it sends a reply command back to the originator (for example, the request router or another service).</p>
+6. <p><strong>Flushing the HTTP response</strong> The replier interface (part of the request router) handles service replies and returns HTTP responses to clients. It selects the appropriate client handle based on the correlation ID extracted from the reply command (see Accepting an API request for details). This interface is typically closed to public clients but available to internal services.</p>
 
-Using a non-blocking approach provides the ability to handle a higher number of Http connections with fewer resources, thus increasing system availability with a benefit of greater system elasticity.
+Using a non-blocking approach makes it possible to handle more HTTP connections with fewer resources. This increases system availability and provides greater elasticity.
 
-The next section describes a durable request/reply mechanism for inter-process communication.
+The next section describes the durable request/reply mechanism for inter-process communication.
 
 ## Durable request reply flow
 
-Internal services can use two types of communication: **synchronous** or **asynchronous**.
+Internal services support two communication types: **synchronous** and **asynchronous**.
 
-The majority of development teams favor synchronous (i.e. Rest) communication between internal and external services. Rest communication between internal services is troublesome as it imposes the following problems:
+Most development teams favor synchronous communication (typically REST) between internal and external services. However, using REST for communication between internal services can be problematic, as it introduces the following issues:
 
 - Reduces availability.
 - Introduces complexity when joining data owned by different services.
 - Handling cascading failures and Http retries.
 - Tight coupling between services.
 
-Reliable message exchange between internal services should be asynchronous, durable and transactional. To fulfill these characteristics the following patterns are used:
+Reliable message exchange between internal services should be asynchronous, durable, and transactional. To achieve these characteristics, the following patterns are commonly used:
 - **Commit log**
   - Kafka serves as a backplane for durable and asynchronous message exchange. 
 - **Transactional outbox and log mining**
-  - Solves the problem of sending commands as a part of a business transaction. The common use case is to store data into the local database and emit a command or event to Kafka or to invoke Rest API. Debezium is an excellent tool that can be used for transaction log mining.
+  - This pattern solves the problem of sending commands as part of a business transaction. A common use case is storing data in a local database while also emitting a command or event to Kafka, or invoking a REST API. Tools like Debezium are well-suited for transaction log mining in such scenarios.
 
-To implement a durable request/reply mechanism, one request and reply topic must be created for each of the internal services. Developers should be aware of how many partitions are allocated per service. The number of partitions should be carefully designed, having in mind the scalability needs of each service. The durable request/reply flow is presented with the steps listed below:
+To implement a durable request/reply mechanism, each internal service requires its own request and reply topic. Developers should also consider the number of partitions allocated per service, as partitioning directly impacts scalability. The number of partitions should be carefully planned with the future growth of each service in mind.
+
+The durable request/reply flow is presented with the steps listed below:
 
 - **Service A (Kafka Producer): Sending command to Service B**
   - Set the following message headers: reply-topic-id of Service A and correlation-id.
@@ -81,11 +97,13 @@ To implement a durable request/reply mechanism, one request and reply topic must
   - Extract correlation-id from the Reply command.
   - Use correlation-id to find Http connection handler. Note that the Http connection handler can run on a separate node or be a part of API Gateway.
 
-When solutioning design for inter process communication, it's advisable to follow all or nothing approach (i.e. atomicity). This pattern is well known and used for decades in database servers. The good definition is the one from wikipedia:
+When designing inter-process communication, it is advisable to follow an all-or-nothing approach (i.e., atomicity). This pattern has been well known and widely used for decades in database servers. A good definition comes from Wikipedia:
 
 > _All the write operations within a transaction have an all-or-nothing effect, that is, either the transaction succeeds and all writes take effect, or otherwise, the database is  brought to a state that does not include any of the writes of the transaction._
 
-Common use case is a need to commit business transaction against local database and reliably dispatch command to a Kafka broker. Command should be dispatched only if transaction suceeds. The following are possible approaches for tackling this problem:
+A common use case is committing a business transaction to the local database while reliably dispatching a command to a Kafka broker. The command should be dispatched only if the transaction succeeds.
+
+The following are possible approaches for tackling this problem:
 
 ### Use KafkaProducer to send command to a broker inside of business logic transactional context
 
@@ -131,11 +149,11 @@ fun methodA() {
 
 ### Proper solution: Use transactional outbox
 
-Commands are persisted to outbox table in the same transaction with business logic. Debezium, which is a transaction log miner, picks up the record and pushes it to Kafka.
+Commands are persisted in an outbox table as part of the same transaction as the business logic. Debezium, a transaction log miner, then picks up the record and pushes it to Kafka.
 
-One might argue that we don't need Debezium and that Kafka Connect can be used to query for commands from the Outbox table. Big drawback of this approach is possibility to skip some commands due to transaction isolation. If you don't want to lose any commands go with transactional log miner.
+Some might argue that Debezium isn't necessary, and that Kafka Connect could be used to query commands directly from the outbox table. The drawback of this approach is the risk of missing commands due to transaction isolation. If reliability is critical and you cannot afford to lose commands, a transaction log miner is the safer choice.
 
-The following image shows a transactional outbox pattern:
+The following image illustrates the transactional outbox pattern:
 
 ![microserices](/img/microservices-durable-request-reply/request-reply.png)
 
@@ -151,7 +169,7 @@ The following image shows a transactional outbox pattern:
 ## Sagas
 Handling business transactions that span different services is done through orchestration and usage of the Saga concept defined by Garzia in early 1960. Transactional outbox is a useful pattern used to implement orchestration using Sagas.
 
-How to handle and implement distributed transactions using Sagas will be explained in the next article. Stay tuned!
+How to handle and implement distributed transactions using the Saga pattern will be covered in the next article. Stay tuned!
 
 References
 
