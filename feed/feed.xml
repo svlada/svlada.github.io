@@ -1749,16 +1749,13 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 		<link href="https://svlada.com/spring-session-tutorial/"/>
 		<updated>2018-05-01T00:00:00Z</updated>
 		<id>https://svlada.com/spring-session-tutorial/</id>
-		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a title=&quot;Introduction: Spring Session&quot; href=&quot;https://svlada.com/spring-session-tutorial/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Project setup using Maven&quot; href=&quot;https://svlada.com/spring-session-tutorial/#project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Test&quot; href=&quot;https://svlada.com/spring-session-tutorial/#test&quot;&gt;Test&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;This guide explains setting up &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; for database storage.&lt;/p&gt;
-&lt;p&gt;See the linked GitHub &lt;a href=&quot;https://github.com/svlada/springsession-jdbc&quot;&gt;repo&lt;/a&gt; for code.&lt;/p&gt;
-&lt;p&gt;Before we get into how to set up &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt;, I will share my thoughts on the Stateful vs. Stateless session debate.&lt;/p&gt;
-&lt;p&gt;Recently, many people started using JSON Web Token (JWT) for stateless session management. A couple of years ago I wrote an &lt;a href=&quot;http://www.svlada.com/jwt-token-authentication-with-spring-boot/&quot;&gt;article on that topic&lt;/a&gt; and honestly didn&#39;t know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let&#39;s see what are the pros and cons of stateless and stateful session management approaches.&lt;/p&gt;
+		<content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This guide explains how to set up &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; for database-backed storage.&lt;/p&gt;
+&lt;p&gt;For reference, see the linked GitHub &lt;a href=&quot;https://github.com/svlada/springsession-jdbc&quot;&gt;repository&lt;/a&gt; for code examples.&lt;/p&gt;
+&lt;p&gt;Before diving into the setup, I want to briefly address the stateful vs. stateless session debate.&lt;/p&gt;
+&lt;p&gt;In recent years, many developers have adopted JSON Web Tokens (JWTs) for stateless session management. A few years ago, I wrote an &lt;a href=&quot;http://www.svlada.com/jwt-token-authentication-with-spring-boot/&quot;&gt;article on the topic&lt;/a&gt;—intended mainly to demonstrate how to override and extend parts of Spring Security. At the time, I didn&#39;t anticipate how widely (and often poorly) JWTs would be applied.&lt;/p&gt;
+&lt;p&gt;To be clear: I strongly recommend not using JWTs for managing user sessions.&lt;/p&gt;
+&lt;p&gt;With that said, let&#39;s look at the pros and cons of stateless and stateful approaches.&lt;/p&gt;
 &lt;h3&gt;Stateless&lt;/h3&gt;
 &lt;p&gt;Pros&lt;/p&gt;
 &lt;ol&gt;
@@ -1780,9 +1777,9 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;ol&gt;
 &lt;li&gt;/&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;In short, don&#39;t use JSON Web Token to manage session data for your web applications. Most of the web applications will be fine with storing session-related data on Redis.&lt;/p&gt;
-&lt;p&gt;If you have microservices architecture, you can use API Gateway as a translation layer that would validate session-id and create a federated token to be used by the services. That&#39;s one use case where JSON Web Token fits nicely.&lt;/p&gt;
-&lt;h2&gt;&lt;a name=&quot;project-setup&quot; id=&quot;project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;In short: don&#39;t use JSON Web Tokens to manage session data for your web applications. For most cases, storing session-related data in Redis is more than sufficient.&lt;/p&gt;
+&lt;p&gt;In a microservices architecture, however, there is one scenario where JWTs can be useful. An API Gateway can act as a translation layer—validating the session ID and issuing a federated token for use across services. That&#39;s a case where JSON Web Tokens fit nicely.&lt;/p&gt;
+&lt;h2&gt;Project setup&lt;/h2&gt;
 &lt;p&gt;Include &lt;code&gt;spring-session-core&lt;/code&gt; and &lt;code&gt;spring-session-jdbc&lt;/code&gt; in your &lt;code&gt;pom.xml&lt;/code&gt; file.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Maven dependencies&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;dependency&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
@@ -1851,7 +1848,7 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 &lt;li&gt;&lt;strong&gt;HttpSessionIdResolver&lt;/strong&gt; - Use &lt;code&gt;HeaderHttpSessionIdResolver&lt;/code&gt; if you want to send authentication token through Http headers. Please check the following &lt;a href=&quot;https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f&quot;&gt;git commit&lt;/a&gt; regarding class name changes.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;@EnableJdbcHttpSession&lt;/strong&gt; - This annotation is needed as it exposes &lt;code&gt;SessionRepositoryFilter&lt;/code&gt; that will use the database for storing session data.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2&gt;&lt;a name=&quot;test&quot; id=&quot;test&quot;&gt;Test&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;Test&lt;/h2&gt;
 &lt;h3&gt;User login&lt;/h3&gt;
 &lt;p&gt;Check for the &lt;code&gt;x-auth-token&lt;/code&gt; in response and include it with the subsequent requests.&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;curl &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;POST&lt;/span&gt; &#92;

@@ -47,16 +47,13 @@
     <h1>Spring Session JDBC Configuration</h1>
     <p class="post-date">Published: May 01, 2018 </p>
     
-    <ol>
-<li><a title="Introduction: Spring Session" href="#introduction">Introduction</a></li>
-<li><a title="Project setup using Maven" href="#project-setup">Project setup</a></li>
-<li><a title="Test" href="#test">Test</a></li>
-</ol>
-<h2><a name="introduction" id="introduction">Introduction</a></h2>
-<p>This guide explains setting up <a href="https://projects.spring.io/spring-session/">Spring Session</a> for database storage.</p>
-<p>See the linked GitHub <a href="https://github.com/svlada/springsession-jdbc">repo</a> for code.</p>
-<p>Before we get into how to set up <a href="https://projects.spring.io/spring-session/">Spring Session</a>, I will share my thoughts on the Stateful vs. Stateless session debate.</p>
-<p>Recently, many people started using JSON Web Token (JWT) for stateless session management. A couple of years ago I wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on that topic</a> and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.</p>
+    <h2>Introduction</h2>
+<p>This guide explains how to set up <a href="https://projects.spring.io/spring-session/">Spring Session</a> for database-backed storage.</p>
+<p>For reference, see the linked GitHub <a href="https://github.com/svlada/springsession-jdbc">repository</a> for code examples.</p>
+<p>Before diving into the setup, I want to briefly address the stateful vs. stateless session debate.</p>
+<p>In recent years, many developers have adopted JSON Web Tokens (JWTs) for stateless session management. A few years ago, I wrote an <a href="http://www.svlada.com/jwt-token-authentication-with-spring-boot/">article on the topic</a>—intended mainly to demonstrate how to override and extend parts of Spring Security. At the time, I didn't anticipate how widely (and often poorly) JWTs would be applied.</p>
+<p>To be clear: I strongly recommend not using JWTs for managing user sessions.</p>
+<p>With that said, let's look at the pros and cons of stateless and stateful approaches.</p>
 <h3>Stateless</h3>
 <p>Pros</p>
 <ol>
@@ -78,9 +75,9 @@
 <ol>
 <li>/</li>
 </ol>
-<p>In short, don't use JSON Web Token to manage session data for your web applications. Most of the web applications will be fine with storing session-related data on Redis.</p>
-<p>If you have microservices architecture, you can use API Gateway as a translation layer that would validate session-id and create a federated token to be used by the services. That's one use case where JSON Web Token fits nicely.</p>
-<h2><a name="project-setup" id="project-setup">Project setup</a></h2>
+<p>In short: don't use JSON Web Tokens to manage session data for your web applications. For most cases, storing session-related data in Redis is more than sufficient.</p>
+<p>In a microservices architecture, however, there is one scenario where JWTs can be useful. An API Gateway can act as a translation layer—validating the session ID and issuing a federated token for use across services. That's a case where JSON Web Tokens fit nicely.</p>
+<h2>Project setup</h2>
 <p>Include <code>spring-session-core</code> and <code>spring-session-jdbc</code> in your <code>pom.xml</code> file.</p>
 <p><strong>Maven dependencies</strong></p>
 <pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
@@ -149,7 +146,7 @@
 <li><strong>HttpSessionIdResolver</strong> - Use <code>HeaderHttpSessionIdResolver</code> if you want to send authentication token through Http headers. Please check the following <a href="https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f">git commit</a> regarding class name changes.</li>
 <li><strong>@EnableJdbcHttpSession</strong> - This annotation is needed as it exposes <code>SessionRepositoryFilter</code> that will use the database for storing session data.</li>
 </ol>
-<h2><a name="test" id="test">Test</a></h2>
+<h2>Test</h2>
 <h3>User login</h3>
 <p>Check for the <code>x-auth-token</code> in response and include it with the subsequent requests.</p>
 <pre class="language-java"><code class="language-java">curl <span class="token operator">-</span><span class="token class-name">X</span> <span class="token constant">POST</span> \
