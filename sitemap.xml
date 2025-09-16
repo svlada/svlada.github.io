@@ -2,257 +2,257 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://myurl.com/require-js-dependency-management-part1/</loc>
+    <loc>https://svlada.com/require-js-dependency-management-part1/</loc>
     <lastmod>2013-11-23</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/require-js-optimization-part2/</loc>
+    <loc>https://svlada.com/require-js-optimization-part2/</loc>
     <lastmod>2013-11-25</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/proxy-ajax-requests-curl-and-symfony-2/</loc>
+    <loc>https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/</loc>
     <lastmod>2013-12-23</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/hire-me/</loc>
+    <loc>https://svlada.com/hire-me/</loc>
     <lastmod>2015-01-01</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/voxxed-days-m-m-challange/</loc>
+    <loc>https://svlada.com/voxxed-days-m-m-challange/</loc>
     <lastmod>2015-05-25</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/websphere-maven-spring-project/</loc>
+    <loc>https://svlada.com/websphere-maven-spring-project/</loc>
     <lastmod>2015-09-10</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/ssh-public-key-authentication/</loc>
+    <loc>https://svlada.com/ssh-public-key-authentication/</loc>
     <lastmod>2015-11-23</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</loc>
+    <loc>https://svlada.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</loc>
     <lastmod>2015-12-02</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/step-builder-pattern/</loc>
+    <loc>https://svlada.com/step-builder-pattern/</loc>
     <lastmod>2016-06-09</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/jwt-token-authentication-with-spring-boot/</loc>
+    <loc>https://svlada.com/jwt-token-authentication-with-spring-boot/</loc>
     <lastmod>2016-09-05</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/about/</loc>
+    <loc>https://svlada.com/about/</loc>
     <lastmod>2018-01-01</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/art/</loc>
+    <loc>https://svlada.com/art/</loc>
     <lastmod>2018-01-01</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/spring-session-tutorial/</loc>
+    <loc>https://svlada.com/spring-session-tutorial/</loc>
     <lastmod>2018-05-01</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/archive/</loc>
+    <loc>https://svlada.com/archive/</loc>
     <lastmod>2019-01-01</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/fun-times-with-gcc-musl-alpine-linux/</loc>
+    <loc>https://svlada.com/fun-times-with-gcc-musl-alpine-linux/</loc>
     <lastmod>2019-01-06</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/</loc>
+    <loc>https://svlada.com/</loc>
     <lastmod>2020-01-01</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/microservices-durable-request-reply/</loc>
+    <loc>https://svlada.com/microservices-durable-request-reply/</loc>
     <lastmod>2020-01-29</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/education-plan-2023-Q3-Q4/</loc>
+    <loc>https://svlada.com/education-plan-2023-Q3-Q4/</loc>
     <lastmod>2023-06-21</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/indie-demo/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/indie-demo/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/indie-integration-guide/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/indie-integration-guide/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/notes/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/notes/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/page-list/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/page-list/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/software%20architecture/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/java/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/golang/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/spring-boot/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/arduino/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/jwt/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/lab/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/spring-security/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/java/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/software%20architecture/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-boot/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/golang/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/jwt/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/arduino/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-security/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/lab/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/microservices/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/microservices/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/kafka/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/kafka/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/symfony/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/javascript/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/curl/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/require-js/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/javascript/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/symfony/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/require-js/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/curl/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring-batch/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/spring-batch/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/ssh/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/ssh/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/alpine-linux/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/alpine-linux/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/gcc/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/gcc/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/musl/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/musl/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/crypto/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/crypto/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/websphere/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/design-patterns/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/spring/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/voxxed-days/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/voxxed-days/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/m-m-challange/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/m-m-challange/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/websphere/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/design-patterns/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/spring/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/notes/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/notes/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tags/software-engineering/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tags/software-engineering/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
   
   <url>
-    <loc>https://myurl.com/tilde-demo/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <loc>https://svlada.com/tilde-demo/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
 </urlset>

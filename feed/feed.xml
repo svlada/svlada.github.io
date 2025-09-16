@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title>Vladimir Stankovic - Software engineer</title>
 	<subtitle>Sit down, relax, mix yourself a drink and enjoy the show.</subtitle>
-	<link href="https://myurl.com/feed/feed.xml" rel="self"/>
-	<link href="https://myurl.com/"/>
+	<link href="https://svlada.com/feed/feed.xml" rel="self"/>
+	<link href="https://svlada.com/"/>
 	<updated>2020-01-29T00:00:00Z</updated>
-	<id>https://myurl.com/</id>
+	<id>https://svlada.com/</id>
 	<author>
 		<name>Vladimir Stankovic</name>
 		<email>svlada@gmail.com</email>
@@ -13,15 +13,15 @@
 	
 	<entry>
 		<title>Require.js dependency management</title>
-		<link href="https://myurl.com/require-js-dependency-management-part1/"/>
+		<link href="https://svlada.com/require-js-dependency-management-part1/"/>
 		<updated>2013-11-23T00:00:00Z</updated>
-		<id>https://myurl.com/require-js-dependency-management-part1/</id>
+		<id>https://svlada.com/require-js-dependency-management-part1/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/#t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/#t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;This is the first part of two parts series, about RequireJS dependency management. In the second part, we&#39;ll dive in into the &lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;RequireJS optimizer tool&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is the first part of two parts series, about RequireJS dependency management. In the second part, we&#39;ll dive in into the &lt;a target=&quot;_blank&quot; href=&quot;https://svlada.com/require-js-optimization-part2/&quot;&gt;RequireJS optimizer tool&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Before or after reading this article I strongly recommend reading the documentation on &lt;a href=&quot;http://requirejs.org/docs/start.html&quot;&gt;RequireJS website&lt;/a&gt;. James Burke did a great job here.&lt;/p&gt;
 &lt;p&gt;RequireJS is a dependency management and async script loading tool(AMD library). What does that mean? AMD stands for Asynchronous Module Definition.&lt;/p&gt;
@@ -93,7 +93,7 @@ Consists of public api, dependency list, callback function&lt;/p&gt;
  	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; constructorFunction &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;dependency2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;&lt;a name=&quot;t2&quot; id=&quot;t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Skip to &lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/#source&quot;&gt;complete source code&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Skip to &lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#source&quot;&gt;complete source code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;It&#39;s recommended to keep modules in separate files on disk. Each module should return a function or object that will be used for object construction.&lt;/p&gt;
 &lt;p&gt;Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;wepapp&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
@@ -248,7 +248,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
  	&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;SpecialItem&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://myurl.com/require-js-optimization-part2/&quot;&gt;The next part&lt;/a&gt; of the RequireJS post series provides more information about r.js tool.&lt;/p&gt;
+&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://svlada.com/require-js-optimization-part2/&quot;&gt;The next part&lt;/a&gt; of the RequireJS post series provides more information about r.js tool.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://twitter.com/#!/svlada&quot;&gt;Follow me on Twitter&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -262,15 +262,15 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 	
 	<entry>
 		<title>Require.js optimizer</title>
-		<link href="https://myurl.com/require-js-optimization-part2/"/>
+		<link href="https://svlada.com/require-js-optimization-part2/"/>
 		<updated>2013-11-25T00:00:00Z</updated>
-		<id>https://myurl.com/require-js-optimization-part2/</id>
+		<id>https://svlada.com/require-js-optimization-part2/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/require-js-optimization-part2/#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/require-js-optimization-part2/#t1&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/require-js-optimization-part2/#t2&quot;&gt;Require.js optimizer dump dependencies to single file&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-optimization-part2/#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-optimization-part2/#t1&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-optimization-part2/#t2&quot;&gt;Require.js optimizer dump dependencies to single file&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in &lt;a href=&quot;https://myurl.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt; of the series.&lt;/p&gt;
+&lt;p&gt;This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in &lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt; of the series.&lt;/p&gt;
 &lt;h2&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;James Burke &lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;recommends&lt;/a&gt; using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from &lt;a href=&quot;http://nodejs.org/#download&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;&lt;a name=&quot;t1&quot; id=&quot;t0&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/h2&gt;
@@ -455,11 +455,11 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 	
 	<entry>
 		<title>Proxying cross-domain requests using Symfony 2</title>
-		<link href="https://myurl.com/proxy-ajax-requests-curl-and-symfony-2/"/>
+		<link href="https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/"/>
 		<updated>2013-12-23T00:00:00Z</updated>
-		<id>https://myurl.com/proxy-ajax-requests-curl-and-symfony-2/</id>
+		<id>https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/</id>
 		<content type="html">&lt;p&gt;This article provides information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
-&lt;p&gt;Jump to the &lt;a href=&quot;https://myurl.com/proxy-ajax-requests-curl-and-symfony-2/#source-code&quot;&gt;#source-code&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Jump to the &lt;a href=&quot;https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/#source-code&quot;&gt;#source-code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The usual scenario looks like this:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The client sends ajax request to the server&lt;/li&gt;
@@ -666,33 +666,33 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 	
 	<entry>
 		<title>Voxxed Days Belgrade - M&amp;M Challange</title>
-		<link href="https://myurl.com/voxxed-days-m-m-challange/"/>
+		<link href="https://svlada.com/voxxed-days-m-m-challange/"/>
 		<updated>2015-05-25T00:00:00Z</updated>
-		<id>https://myurl.com/voxxed-days-m-m-challange/</id>
+		<id>https://svlada.com/voxxed-days-m-m-challange/</id>
 		<content type="html">&lt;p&gt;Voxxed days u Beogradu je objavio zanimljiv ticket giwavay (&lt;a href=&quot;https://twitter.com/VoxxedBelgrade/status/602767912248672256&quot;&gt;https://twitter.com/VoxxedBelgrade/status/602767912248672256&lt;/a&gt;). Kudos za ideju!&lt;/p&gt;
 &lt;p&gt;Evo jednog naivnog pokušaja da se kuglice prebroje uz pomoć 3Ds max-a :)&lt;/p&gt;
 &lt;p&gt;Za referentnu vrednost je uzet prečnik jedne m&amp;amp;m ~13mm bombone. Slika je umanjena kako bi se veličine poklopile. Da bismo odredili koliko nam je potrebno objekata (aproksimativno), rešićemo jednostavnu proporciju, ako znamo da u običnu teglu od 946ml staje 1011 komada. Moguće je koristiti i drugu (bolju) jednačinu, koja je zasnovana na zapremini bombone i principu nasumičnog pakovanja, ali bez pristupa tegli i poznavanja tačne zapremine, obe su podjednako nepouzdane.&lt;/p&gt;
-&lt;img src=&quot;https://myurl.com/img/voxxed/1.jpg&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;https://myurl.com/img/voxxed/2.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://svlada.com/img/voxxed/1.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://svlada.com/img/voxxed/2.jpg&quot; alt=&quot;&quot; /&gt;
 &lt;p&gt;Napravio sam pomoćni objekat kako bih izračunao zapreminu koju su zauzele bombonice, ali to je samo aproksimacija, pošto količina odozgo staje u regularnu cilindričnu teglu, a zbog specifičnog oblika m&amp;amp;m-a očekujem veća odstupanja. To, međutim i nije toliko bitno, ali je korisno zbog uštede vremena.&lt;/p&gt;
-&lt;img src=&quot;https://myurl.com/img/voxxed/3.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://svlada.com/img/voxxed/3.jpg&quot; alt=&quot;&quot; /&gt;
 &lt;p&gt;Pokreće se simulacija, i traje dok se ne stabilizuje. Posle prve simulacije je očigledno da treba da se stavi više bombona (i da se koriguje veličina tegle u odnosu na m&amp;amp;m). Dalje se sve svodi na poređenje rezultata simulacije i referentne slike. Kao delimična potvrda poslužiće merenje šake ženske ruke sa slike. Polusavijena šaka ima dužinu od oko 158mm, sto je u skladu sa vrednošću za prosečnu dužinu šake kod žena (170mm ispružena saka).&lt;/p&gt;
 &lt;p&gt;Snimak simulacije: &lt;a href=&quot;https://www.dropbox.com/s/p2tvef52m1k9sa3/simulacija.mp4?dl=0&quot;&gt;https://www.dropbox.com/s/p2tvef52m1k9sa3/simulacija.mp4?dl=0&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Druuuuum rooooll ... U virtuelnoj tegli ima 190 bombonica... My lucky guess je da u slici na telgi ima 160 bombonica  :)&lt;/strong&gt;&lt;/p&gt;
-&lt;img src=&quot;https://myurl.com/img/voxxed/4.jpg&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;https://svlada.com/img/voxxed/4.jpg&quot; alt=&quot;&quot; /&gt;
 &lt;p&gt;Debljina tegle je nepoznata i to ce uticati na rezultat. Ne znamo ni da li je ovo standardni ili mini m&amp;amp;m (drugo je malo verovatno jer bi žena bila izuzetno mala u tom slučaju). Slika ispod pokazuje odnose između veličina svih elemenata na sceni u odnosu na žensku šaku (prosek 170mm od korena šake do vrha srednjeg prsta):&lt;/p&gt;
-&lt;img src=&quot;https://myurl.com/img/voxxed/5.jpg&quot; alt=&quot;&quot; /&gt;</content>
+&lt;img src=&quot;https://svlada.com/img/voxxed/5.jpg&quot; alt=&quot;&quot; /&gt;</content>
 	</entry>
 	
 	<entry>
 		<title>Multi-module Websphere web application</title>
-		<link href="https://myurl.com/websphere-maven-spring-project/"/>
+		<link href="https://svlada.com/websphere-maven-spring-project/"/>
 		<updated>2015-09-10T00:00:00Z</updated>
-		<id>https://myurl.com/websphere-maven-spring-project/</id>
+		<id>https://svlada.com/websphere-maven-spring-project/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/websphere-maven-spring-project/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/websphere-maven-spring-project/#maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/websphere-maven-spring-project/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/websphere-maven-spring-project/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/websphere-maven-spring-project/#maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/websphere-maven-spring-project/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article describes how to create a Spring web application that can be deployed on the WebSphere application server. The goal is to create a maven project that can be used to generate an EAR file.&lt;/p&gt;
@@ -766,15 +766,15 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 	
 	<entry>
 		<title>Public key authentication with Java over SSH</title>
-		<link href="https://myurl.com/ssh-public-key-authentication/"/>
+		<link href="https://svlada.com/ssh-public-key-authentication/"/>
 		<updated>2015-11-23T00:00:00Z</updated>
-		<id>https://myurl.com/ssh-public-key-authentication/</id>
+		<id>https://svlada.com/ssh-public-key-authentication/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/ssh-public-key-authentication/#introduction&quot;&gt;Intro&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/ssh-public-key-authentication/#generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/ssh-public-key-authentication/#copy-public-key-to-remote-host&quot;&gt;Copy public key to remote host&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/ssh-public-key-authentication/#java-code&quot;&gt;Connect to remote host from java&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/ssh-public-key-authentication/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/ssh-public-key-authentication/#introduction&quot;&gt;Intro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/ssh-public-key-authentication/#generate-key-pair&quot;&gt;Generate Key Pair&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/ssh-public-key-authentication/#copy-public-key-to-remote-host&quot;&gt;Copy public key to remote host&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/ssh-public-key-authentication/#java-code&quot;&gt;Connect to remote host from java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/ssh-public-key-authentication/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Intro&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This article shows how to securely connect (i.e. establish ssh connection) to the remote host from java application. Also, configuration details for enabling public key authentication and protecting ssh keys will be provided.&lt;/p&gt;
@@ -841,12 +841,12 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 	
 	<entry>
 		<title>Spring batch job repository configuration for WebSphere and Oracle</title>
-		<link href="https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/"/>
+		<link href="https://svlada.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/"/>
 		<updated>2015-12-02T00:00:00Z</updated>
-		<id>https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</id>
+		<id>https://svlada.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://myurl.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/#job-repository-configuration&quot;&gt;Job Repository configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://svlada.com/spring-batch-job-repository-configuration-for-websphere-and-oracle/#job-repository-configuration&quot;&gt;Job Repository configuration&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;This article describes a problem with using the default Spring Batch Job Repository configuration deployed on the WebSphere application server backed by the Oracle database. The following is the exception you may encounter:&lt;/p&gt;
@@ -886,15 +886,15 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 	
 	<entry>
 		<title>Step builder pattern</title>
-		<link href="https://myurl.com/step-builder-pattern/"/>
+		<link href="https://svlada.com/step-builder-pattern/"/>
 		<updated>2016-06-09T00:00:00Z</updated>
-		<id>https://myurl.com/step-builder-pattern/</id>
+		<id>https://svlada.com/step-builder-pattern/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a title=&quot;Introduction: Step builder pattern&quot; href=&quot;https://myurl.com/step-builder-pattern/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Pros and cons about step builder pattern&quot; href=&quot;https://myurl.com/step-builder-pattern/#step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Code walkthrough&quot; href=&quot;https://myurl.com/step-builder-pattern/#code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Source code&quot; href=&quot;https://myurl.com/step-builder-pattern/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Eclipse plug-in&quot; href=&quot;https://myurl.com/step-builder-pattern/#eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Introduction: Step builder pattern&quot; href=&quot;https://svlada.com/step-builder-pattern/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Pros and cons about step builder pattern&quot; href=&quot;https://svlada.com/step-builder-pattern/#step-builder-pattern-pros-and-cons&quot;&gt;Pros and cons&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Code walkthrough&quot; href=&quot;https://svlada.com/step-builder-pattern/#code-walkthrough&quot;&gt;Code-walkthrough&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Source code&quot; href=&quot;https://svlada.com/step-builder-pattern/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Eclipse plug-in&quot; href=&quot;https://svlada.com/step-builder-pattern/#eclipse-plugin&quot;&gt;Eclipse plug-in&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;I&#39;ve recently decided to use the Amazon SES API to send emails to my &lt;a href=&quot;http://microservicesweekly.com/&quot;&gt;Microservices Weekly&lt;/a&gt; subscribers. What prompted me to use Amazon SES API is its price. It&#39;s cheap. However, the client Java API provided by Amazon is not so simple to interact with, so I decided to create a &lt;a href=&quot;https://github.com/svlada/ziggy&quot;&gt;small wrapper&lt;/a&gt; around their API.&lt;/p&gt;
@@ -926,7 +926,7 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 	&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now, let&#39;s see how API is enforcing the initialization of an object in the pre-defined order.&lt;/p&gt;
 &lt;p&gt;The following image is the graphical representation of the state machine for constructing Email object with the Step Builder pattern (mandatory values are marked purple and optional values are yellow):&lt;br /&gt;
-&lt;img src=&quot;https://myurl.com/img/step-builder/step-builder.png&quot; alt=&quot;Builder pattern&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://svlada.com/img/step-builder/step-builder.png&quot; alt=&quot;Builder pattern&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Rules of thumb for implementation:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Add dependencies to your class. It&#39;s recommended to add a private modifier to class attributes.&lt;/li&gt;
@@ -1063,14 +1063,14 @@ and check to make sure that only the key(s) you wanted were added.&lt;/code&gt;&
 	
 	<entry>
 		<title>JWT Authentication Tutorial</title>
-		<link href="https://myurl.com/jwt-token-authentication-with-spring-boot/"/>
+		<link href="https://svlada.com/jwt-token-authentication-with-spring-boot/"/>
 		<updated>2016-09-05T00:00:00Z</updated>
-		<id>https://myurl.com/jwt-token-authentication-with-spring-boot/</id>
+		<id>https://svlada.com/jwt-token-authentication-with-spring-boot/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a title=&quot;Introduction: JWT Token&quot; href=&quot;https://myurl.com/jwt-token-authentication-with-spring-boot/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;pre-requisites&quot; href=&quot;https://myurl.com/jwt-token-authentication-with-spring-boot/#pre-requisites&quot;&gt;Prerequisite&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Spring Security: Ajax authentication&quot; href=&quot;https://myurl.com/jwt-token-authentication-with-spring-boot/#ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;jwt-authentication&quot; href=&quot;https://myurl.com/jwt-token-authentication-with-spring-boot/#jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Introduction: JWT Token&quot; href=&quot;https://svlada.com/jwt-token-authentication-with-spring-boot/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;pre-requisites&quot; href=&quot;https://svlada.com/jwt-token-authentication-with-spring-boot/#pre-requisites&quot;&gt;Prerequisite&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Spring Security: Ajax authentication&quot; href=&quot;https://svlada.com/jwt-token-authentication-with-spring-boot/#ajax-authentication&quot;&gt;Ajax authentication&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;jwt-authentication&quot; href=&quot;https://svlada.com/jwt-token-authentication-with-spring-boot/#jwt-authentication&quot;&gt;JWT Authentication&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This article is a guide on implementing JWT authentication with Spring Boot.&lt;/p&gt;
@@ -1746,13 +1746,13 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 	
 	<entry>
 		<title>Spring Session JDBC Configuration</title>
-		<link href="https://myurl.com/spring-session-tutorial/"/>
+		<link href="https://svlada.com/spring-session-tutorial/"/>
 		<updated>2018-05-01T00:00:00Z</updated>
-		<id>https://myurl.com/spring-session-tutorial/</id>
+		<id>https://svlada.com/spring-session-tutorial/</id>
 		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a title=&quot;Introduction: Spring Session&quot; href=&quot;https://myurl.com/spring-session-tutorial/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Project setup using Maven&quot; href=&quot;https://myurl.com/spring-session-tutorial/#project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a title=&quot;Test&quot; href=&quot;https://myurl.com/spring-session-tutorial/#test&quot;&gt;Test&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Introduction: Spring Session&quot; href=&quot;https://svlada.com/spring-session-tutorial/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Project setup using Maven&quot; href=&quot;https://svlada.com/spring-session-tutorial/#project-setup&quot;&gt;Project setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a title=&quot;Test&quot; href=&quot;https://svlada.com/spring-session-tutorial/#test&quot;&gt;Test&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This guide explains setting up &lt;a href=&quot;https://projects.spring.io/spring-session/&quot;&gt;Spring Session&lt;/a&gt; for database storage.&lt;/p&gt;
@@ -1924,9 +1924,9 @@ In case of failure authentication  &lt;code&gt;AjaxLoginProcessingFilter#unsucce
 	
 	<entry>
 		<title>Virgil crypto on Alpine linux v3.8</title>
-		<link href="https://myurl.com/fun-times-with-gcc-musl-alpine-linux/"/>
+		<link href="https://svlada.com/fun-times-with-gcc-musl-alpine-linux/"/>
 		<updated>2019-01-06T00:00:00Z</updated>
-		<id>https://myurl.com/fun-times-with-gcc-musl-alpine-linux/</id>
+		<id>https://svlada.com/fun-times-with-gcc-musl-alpine-linux/</id>
 		<content type="html">&lt;p&gt;This article is a quick start guide on how to debug issues with &lt;a href=&quot;https://github.com/VirgilSecurity/virgil-crypto&quot;&gt;Virgil crypto library&lt;/a&gt;, Alpine linux v3.8 and Open JDK 1.8.&lt;/p&gt;
 &lt;p&gt;Recently, I was testing crypto libraries to see which one might be the best fit for my pet project. One of these libraries was Virgil. After a couple of hours of work, I had something that can be tested out. Everything worked fine on macOS and windows dev machines, but things started breaking once I&#39;ve deployed code to Amazon.&lt;/p&gt;
 &lt;p&gt;Initial clue was the following exception (i.e. there was some problem loading libraries compiled by Virgil):&lt;/p&gt;
@@ -1952,12 +1952,12 @@ Error loading shared library ld-linux-x86-64.so.2: No such &lt;span class=&quot;
 	
 	<entry>
 		<title>Durable request reply</title>
-		<link href="https://myurl.com/microservices-durable-request-reply/"/>
+		<link href="https://svlada.com/microservices-durable-request-reply/"/>
 		<updated>2020-01-29T00:00:00Z</updated>
-		<id>https://myurl.com/microservices-durable-request-reply/</id>
+		<id>https://svlada.com/microservices-durable-request-reply/</id>
 		<content type="html">&lt;p&gt;The article explains a simplified distributed system based on the message passing with a durable request-reply paradigm. The examples given are based on the Kafka, which is distributed commit log implementation. &lt;a href=&quot;https://www.reactivemanifesto.org/glossary&quot;&gt;Reactive Manifesto&lt;/a&gt; explains the main characteristics of a message-driven architecture.&lt;/p&gt;
 &lt;p&gt;The following system design diagram shows a bird&#39;s-eye view of the exemplary microservice architecture:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://myurl.com/img/microservices-durable-request-reply/microservices.png&quot; alt=&quot;microserices&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://svlada.com/img/microservices-durable-request-reply/microservices.png&quot; alt=&quot;microserices&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Each of the following sections describes the important system components.&lt;/p&gt;
 &lt;h2&gt;API Gateway&lt;/h2&gt;
 &lt;p&gt;The API Gateway is an infrastructural pattern for interfacing external clients with internal services. This component can be implemented using one of the non-blocking frameworks (elixir, spring-reactive, node.js, zuul 2, etc.). Almost every cloud provider like Amazon or Google offers API Gateway as a managed service. The development team should select the appropriate tool based on project budget and architectural decisions.&lt;/p&gt;
@@ -2089,7 +2089,7 @@ fun &lt;span class=&quot;token function&quot;&gt;methodA&lt;/span&gt;&lt;span cl
 &lt;p&gt;Commands are persisted to outbox table in the same transaction with business logic. Debezium, which is a transaction log miner, picks up the record and pushes it to Kafka.&lt;/p&gt;
 &lt;p&gt;One might argue that we don&#39;t need Debezium and that Kafka Connect can be used to query for commands from the Outbox table. Big drawback of this approach is possibility to skip some commands due to transaction isolation. If you don&#39;t want to lose any commands go with transactional log miner.&lt;/p&gt;
 &lt;p&gt;The following image shows a transactional outbox pattern:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://myurl.com/img/microservices-durable-request-reply/request-reply.png&quot; alt=&quot;microserices&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://svlada.com/img/microservices-durable-request-reply/request-reply.png&quot; alt=&quot;microserices&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Atomicity&lt;/li&gt;

@@ -11,10 +11,7 @@
   <meta name="description" content="Sit down, relax, mix yourself a drink and enjoy the show.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
+  <link rel="stylesheet" href="/css/svlada.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -36,28 +33,18 @@
 </head>
 
 <body>
-  <nav>
-    <a href="/">~svlada</a>
-    <a href="/about">:about</a>
-    <a href="/feed/feed.xml">:rss</a>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
-  </nav>
+  <header>
+    <a href="/" class="site-title">@svlada</a>
+    <nav>
+      <a href="/">posts</a>
+      <a href="/about">about</a>
+      <a href="/feed/feed.xml">rss</a>
+    </nav>
+  </header>
 
   <main>
     <h1>Tags</h1>
 
-
-  
-  <a href="/tags/software architecture/" class="tag">software architecture</a>
-
-  
-  <a href="/tags/golang/" class="tag">golang</a>
-
-  
-  <a href="/tags/arduino/" class="tag">arduino</a>
-
-  
-  <a href="/tags/lab/" class="tag">lab</a>
 
   
   <a href="/tags/java/" class="tag">java</a>
@@ -72,22 +59,34 @@
   <a href="/tags/spring-security/" class="tag">spring-security</a>
 
   
+  <a href="/tags/software architecture/" class="tag">software architecture</a>
+
+  
+  <a href="/tags/golang/" class="tag">golang</a>
+
+  
+  <a href="/tags/arduino/" class="tag">arduino</a>
+
+  
+  <a href="/tags/lab/" class="tag">lab</a>
+
+  
   <a href="/tags/microservices/" class="tag">microservices</a>
 
   
   <a href="/tags/kafka/" class="tag">kafka</a>
 
   
-  <a href="/tags/symfony/" class="tag">symfony</a>
-
-  
-  <a href="/tags/curl/" class="tag">curl</a>
-
-  
   <a href="/tags/javascript/" class="tag">javascript</a>
 
   
   <a href="/tags/require-js/" class="tag">require-js</a>
+
+  
+  <a href="/tags/symfony/" class="tag">symfony</a>
+
+  
+  <a href="/tags/curl/" class="tag">curl</a>
 
   
   <a href="/tags/spring-batch/" class="tag">spring-batch</a>
@@ -108,10 +107,7 @@
   <a href="/tags/crypto/" class="tag">crypto</a>
 
   
-  <a href="/tags/websphere/" class="tag">websphere</a>
-
-  
-  <a href="/tags/spring/" class="tag">spring</a>
+  <a href="/tags/design-patterns/" class="tag">design-patterns</a>
 
   
   <a href="/tags/voxxed-days/" class="tag">voxxed-days</a>
@@ -120,7 +116,10 @@
   <a href="/tags/m-m-challange/" class="tag">m-m-challange</a>
 
   
-  <a href="/tags/design-patterns/" class="tag">design-patterns</a>
+  <a href="/tags/websphere/" class="tag">websphere</a>
+
+  
+  <a href="/tags/spring/" class="tag">spring</a>
 
   
   <a href="/tags/notes/" class="tag">notes</a>
@@ -132,36 +131,7 @@
 
   </main>
 
-  <footer>
-"~svlada" [Modified] 2025                                                     100%
-  </footer>
-
-<script>
-function toggleTheme() {
-  const body = document.body;
-  const currentTheme = body.getAttribute('data-theme');
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  
-  body.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  
-  // Update button emoji
-  const button = document.querySelector('.theme-toggle');
-  button.textContent = newTheme === 'light' ? '🌙' : '💡';
-}
-
-// Load saved theme on page load
-(function() {
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.body.setAttribute('data-theme', savedTheme);
-  
-  // Set initial button emoji
-  const button = document.querySelector('.theme-toggle');
-  if (button) {
-    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
-  }
-})();
-</script>
+<!-- No JavaScript needed for this minimal theme -->
 
 <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

@@ -11,10 +11,7 @@
   <meta name="description" content="Sit down, relax, mix yourself a drink and enjoy the show.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
+  <link rel="stylesheet" href="/css/svlada.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -36,71 +33,33 @@
 </head>
 
 <body>
-  <nav>
-    <a href="/">~svlada</a>
-    <a href="/about">:about</a>
-    <a href="/feed/feed.xml">:rss</a>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
-  </nav>
+  <header>
+    <a href="/" class="site-title">@svlada</a>
+    <nav>
+      <a href="/">posts</a>
+      <a href="/about">about</a>
+      <a href="/feed/feed.xml">rss</a>
+    </nav>
+  </header>
 
   <main>
     
-<h1>about</h1>
-
 <p>Hello, my name is Vladimir Stankovic, but I commonly use handle svlada.</p>
 
-<p>My current role finds me at <a href="http://codereflect.io">Reflect</a>, where, I build software specifically tailored for businesses and startups in the finance industry. Much of my work focuses on simplifying these systems, which frequently become more complex as they develop over time.</p>
+<p>At <a href="http://codereflect.io">Reflect</a>, I build software for the finance world—tools for businesses and startups that want clarity in systems that tend to grow tangled over time. My focus is on making them simpler, more reliable, and easier to live with.</p>
 
-<p>I learned to value simplicity. Organising the data and code in a way that promises the functionality and maintainability of the system requires a significant amount of time. Businesses might get this, but they don't always.</p>
+<p>I've learned that simplicity takes discipline. Organizing data and code so a system remains functional and maintainable isn't fast work, but it lasts. Some businesses understand this. Some don't. Either way, it's what I do.</p>
 
-<p>Over the years, I did consulting work for companies like FIS Global and Deloitte. These collaborations shaped my perspective about enterprise environments and their inner workings.</p>
+<p>I've also consulted for FIS Global and Deloitte, where I saw how large enterprises operate from the inside—their pace, their scale, their hidden machinery.</p>
 
-<p>My journey, however, began in healthcare. There, I developed APIs, established HIPAA-compliant environments, and streamlined data-sharing with apps for healthcare providers. I've mostly worked with Blueshield of California on their internal services and tooling.</p>
+<p>Before finance, I worked in healthcare. I built APIs, HIPAA-compliant environments, and data-sharing tools for providers, much of it with Blue Shield of California. Quiet infrastructure that helped keep their systems alive and moving.</p>
 
-<h2>contact</h2>
-
-<p><a href="mailto:svlada@gmail.com">Feel free to reach out!</a></p>
-
-<h2>find me</h2>
-
-<ul>
-  <li><a href="https://github.com/svlada">GitHub</a></li>
-  <li><a href="https://twitter.com/svlada">Twitter</a></li>
-</ul>
+<p>The best way to get in touch is by email at <a href="mailto:svlada@gmail.com">svlada@gmail.com</a>. You can also find me in other corners of the internet—<a href="https://github.com/svlada" target="_blank" rel="noopener noreferrer">GitHub</a> for code and <a href="https://linkedin.com/in/svlada" target="_blank" rel="noopener noreferrer">LinkedIn</a> for the professional facade.</p>
 
 
   </main>
 
-  <footer>
-"~svlada" [Modified] 2018                                                     100%
-  </footer>
-
-<script>
-function toggleTheme() {
-  const body = document.body;
-  const currentTheme = body.getAttribute('data-theme');
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  
-  body.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  
-  // Update button emoji
-  const button = document.querySelector('.theme-toggle');
-  button.textContent = newTheme === 'light' ? '🌙' : '💡';
-}
-
-// Load saved theme on page load
-(function() {
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.body.setAttribute('data-theme', savedTheme);
-  
-  // Set initial button emoji
-  const button = document.querySelector('.theme-toggle');
-  if (button) {
-    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
-  }
-})();
-</script>
+<!-- No JavaScript needed for this minimal theme -->
 
 <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

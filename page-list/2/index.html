@@ -11,10 +11,7 @@
   <meta name="description" content="Sit down, relax, mix yourself a drink and enjoy the show.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/vim.css?v=1.0.0">
+  <link rel="stylesheet" href="/css/svlada.css?v=1.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -36,12 +33,14 @@
 </head>
 
 <body>
-  <nav>
-    <a href="/">~svlada</a>
-    <a href="/about">:about</a>
-    <a href="/feed/feed.xml">:rss</a>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">💡</button>
-  </nav>
+  <header>
+    <a href="/" class="site-title">@svlada</a>
+    <nav>
+      <a href="/">posts</a>
+      <a href="/about">about</a>
+      <a href="/feed/feed.xml">rss</a>
+    </nav>
+  </header>
 
   <main>
     <table>
@@ -59,11 +58,7 @@
     <td></td>
   </tr>
   <tr>
-    <td><a href="/tags/websphere/"><code>/tags/websphere/</code></a></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><a href="/tags/spring/"><code>/tags/spring/</code></a></td>
+    <td><a href="/tags/design-patterns/"><code>/tags/design-patterns/</code></a></td>
     <td></td>
   </tr>
   <tr>
@@ -75,7 +70,11 @@
     <td></td>
   </tr>
   <tr>
-    <td><a href="/tags/design-patterns/"><code>/tags/design-patterns/</code></a></td>
+    <td><a href="/tags/websphere/"><code>/tags/websphere/</code></a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="/tags/spring/"><code>/tags/spring/</code></a></td>
     <td></td>
   </tr>
   <tr>
@@ -96,36 +95,7 @@
 
   </main>
 
-  <footer>
-"~svlada" [Modified] 2025                                                     100%
-  </footer>
-
-<script>
-function toggleTheme() {
-  const body = document.body;
-  const currentTheme = body.getAttribute('data-theme');
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  
-  body.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  
-  // Update button emoji
-  const button = document.querySelector('.theme-toggle');
-  button.textContent = newTheme === 'light' ? '🌙' : '💡';
-}
-
-// Load saved theme on page load
-(function() {
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.body.setAttribute('data-theme', savedTheme);
-  
-  // Set initial button emoji
-  const button = document.querySelector('.theme-toggle');
-  if (button) {
-    button.textContent = savedTheme === 'light' ? '🌙' : '💡';
-  }
-})();
-</script>
+<!-- No JavaScript needed for this minimal theme -->
 
 <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
