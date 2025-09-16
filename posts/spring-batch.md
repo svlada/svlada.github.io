@@ -9,12 +9,11 @@ layout: layouts/post.njk
 permalink: "spring-batch-job-repository-configuration-for-websphere-and-oracle/index.html"
 ---
 
-1. <a href="#introduction">Introduction</a>
-2. <a href="#job-repository-configuration">Job Repository configuration</a>
+### Introduction
 
-### <a name="introduction" id="introduction">Introduction</a>
+This article describes an issue with the default Spring Batch Job Repository configuration when deployed on a WebSphere application server backed by an Oracle database.
 
-This article describes a problem with using the default Spring Batch Job Repository configuration deployed on the WebSphere application server backed by the Oracle database. The following is the exception you may encounter:
+The following exception may occur:
 
 ```java
 org.springframework.dao.DataAccessResourceFailureException: Could not create Oracle LOB
@@ -24,13 +23,13 @@ Caused by: java.lang.ClassNotFoundException: oracle.sql.BLOB
 
 This issue is documented on the [IBM support website](http://www-01.ibm.com/support/docview.wss?uid=swg21633083).
 
-### <a name="introduction" id="introduction">Configuration</a>
+### Configuration
 
-Proper solution is to configure ```lob-handler``` dependency of the [Job Repository](http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html) and inject the [OracleLobHandler](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/support/lob/OracleLobHandler.html) bean.
+The proper solution is to configure the LOB handler dependency of the [Job Repository](http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html) and inject an [OracleLobHandler](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jdbc/support/lob/OracleLobHandler.html) bean.
 
-To support WebSphere ```lobHandler``` bean needs to be instantiated with appropriate ```nativeJdbcExtractor``` that is supported by WebSphere.
+For WebSphere support, the `lobHandler` bean must be instantiated with a compatible `nativeJdbcExtractor` provided by WebSphere.
 
-The following snippet shows [Job Repository](http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/repository/JobRepository.html) configuration details
+The following snippet shows the Job Repository configuration details:
 
 ```java
 <batch:job-repository id="jobRepository" 
