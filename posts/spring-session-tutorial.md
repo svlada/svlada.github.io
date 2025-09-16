@@ -10,19 +10,19 @@ layout: layouts/post.njk
 permalink: "spring-session-tutorial/index.html"
 ---
 
-1. <a title="Introduction: Spring Session" href="#introduction">Introduction</a>
-2. <a title="Project setup using Maven" href="#project-setup">Project setup</a>
-2. <a title="Test" href="#test">Test</a>
+## Introduction
 
-## <a name="introduction" id="introduction">Introduction</a>
+This guide explains how to set up [Spring Session](https://projects.spring.io/spring-session/) for database-backed storage.
 
-This guide explains setting up [Spring Session](https://projects.spring.io/spring-session/) for database storage. 
+For reference, see the linked GitHub [repository](https://github.com/svlada/springsession-jdbc) for code examples.
 
-See the linked GitHub [repo](https://github.com/svlada/springsession-jdbc) for code.
+Before diving into the setup, I want to briefly address the stateful vs. stateless session debate.
 
-Before we get into how to set up [Spring Session](https://projects.spring.io/spring-session/), I will share my thoughts on the Stateful vs. Stateless session debate.
+In recent years, many developers have adopted JSON Web Tokens (JWTs) for stateless session management. A few years ago, I wrote an [article on the topic](http://www.svlada.com/jwt-token-authentication-with-spring-boot/)—intended mainly to demonstrate how to override and extend parts of Spring Security. At the time, I didn't anticipate how widely (and often poorly) JWTs would be applied.
 
-Recently, many people started using JSON Web Token (JWT) for stateless session management. A couple of years ago I wrote an [article on that topic](http://www.svlada.com/jwt-token-authentication-with-spring-boot/) and honestly didn't know that it will be abused by so many people. The main idea was to show how to override and extend various parts of Spring Security. I would strongly recommend not using JWT for handling sessions. Let's see what are the pros and cons of stateless and stateful session management approaches.
+To be clear: I strongly recommend not using JWTs for managing user sessions.
+
+With that said, let's look at the pros and cons of stateless and stateful approaches.
 
 ### Stateless
 
@@ -47,11 +47,11 @@ Cons
 
 1. /
 
-In short, don't use JSON Web Token to manage session data for your web applications. Most of the web applications will be fine with storing session-related data on Redis.
+In short: don't use JSON Web Tokens to manage session data for your web applications. For most cases, storing session-related data in Redis is more than sufficient.
 
-If you have microservices architecture, you can use API Gateway as a translation layer that would validate session-id and create a federated token to be used by the services. That's one use case where JSON Web Token fits nicely. 
+In a microservices architecture, however, there is one scenario where JWTs can be useful. An API Gateway can act as a translation layer—validating the session ID and issuing a federated token for use across services. That's a case where JSON Web Tokens fit nicely. 
 
-## <a name="project-setup" id="project-setup">Project setup</a>
+## Project setup
 
 Include ``spring-session-core`` and ``spring-session-jdbc`` in your ``pom.xml`` file. 
 
@@ -131,7 +131,7 @@ The following list describes the WebSecurityConfig elements:
 3. **HttpSessionIdResolver** - Use ``HeaderHttpSessionIdResolver`` if you want to send authentication token through Http headers. Please check the following [git commit](https://github.com/spring-projects/spring-session/commit/6f05c84aa7c1f7c4efcf2c0d3c20709a79b0785f) regarding class name changes.
 4. **@EnableJdbcHttpSession** - This annotation is needed as it exposes ``SessionRepositoryFilter`` that will use the database for storing session data.
 
-## <a name="test" id="test">Test</a>
+## Test
 
 ### User login
 
