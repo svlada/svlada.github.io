@@ -16,21 +16,16 @@
 		<link href="https://svlada.com/require-js-dependency-management-part1/"/>
 		<updated>2013-11-23T00:00:00Z</updated>
 		<id>https://svlada.com/require-js-dependency-management-part1/</id>
-		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;This is the first part of two parts series, about RequireJS dependency management. In the second part, we&#39;ll dive in into the &lt;a target=&quot;_blank&quot; href=&quot;https://svlada.com/require-js-optimization-part2/&quot;&gt;RequireJS optimizer tool&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Before or after reading this article I strongly recommend reading the documentation on &lt;a href=&quot;http://requirejs.org/docs/start.html&quot;&gt;RequireJS website&lt;/a&gt;. James Burke did a great job here.&lt;/p&gt;
-&lt;p&gt;RequireJS is a dependency management and async script loading tool(AMD library). What does that mean? AMD stands for Asynchronous Module Definition.&lt;/p&gt;
-&lt;p&gt;RequireJS is asynchronous which means that you can do non-blocking and parallel fetch of your javascript files.&lt;/p&gt;
-&lt;p&gt;RequireJS is built around the Module pattern. Modern web applications tend to have fairly complex frontends. Module pattern should improve the maintainability of bloated javascript code. Remember those giant javascript files and merge conflict hell on your last project? Javascript code should consist of smaller components enforcing separation of concerns and avoiding globals since modules are wrapped by closures.&lt;/p&gt;
-&lt;p&gt;RequireJS is well defined and standardized. While we wait for ES-Harmony to knock on our doors, libraries like RequireJS are giving us hint on how we should structure our applications.&lt;/p&gt;
-&lt;h2&gt;&lt;a name=&quot;t1&quot; id=&quot;t1&quot;&gt;Basic structure&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;STEP 1 - How to structure RequireJS project&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;The following is an exemplary project structure:&lt;/p&gt;
+		<content type="html">&lt;p&gt;This article is the first part of a two-part series on RequireJS dependency management. In the second part, we&#39;ll take a closer look at the &lt;a href=&quot;https://svlada.com/require-js-optimization-part2/&quot;&gt;RequireJS optimizer tool&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Before (or after) reading this article, I strongly recommend checking out the official &lt;a href=&quot;http://requirejs.org/docs/start.html&quot;&gt;RequireJS documentation&lt;/a&gt;. James Burke has done an excellent job there.&lt;/p&gt;
+&lt;p&gt;RequireJS is a dependency management and asynchronous script loading tool—an AMD (Asynchronous Module Definition) library.&lt;/p&gt;
+&lt;p&gt;What does that mean? In practice, AMD allows you to load JavaScript files asynchronously, so they don&#39;t block the page, and dependencies are fetched in parallel.&lt;/p&gt;
+&lt;p&gt;RequireJS builds on the Module pattern, which is especially useful for modern web applications with complex frontends. Instead of dealing with giant, monolithic JavaScript files and merge conflict nightmares, you can break code into smaller, focused modules. This enforces separation of concerns and avoids polluting the global namespace, since modules are wrapped in closures.&lt;/p&gt;
+&lt;p&gt;RequireJS is well-defined and standardized. While we wait for ES Harmony (ES6 modules) to become fully mainstream, libraries like RequireJS give us an early hint of how to structure applications more cleanly and maintainably.&lt;/p&gt;
+&lt;h2&gt;Basic structure&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Step 1 – Structuring a RequireJS Project&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;A typical RequireJS project might look like this:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;wepapp&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;build&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; r&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
@@ -44,12 +39,14 @@
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;built&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;index&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;html
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;readme&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;md&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Build scripts and RequireJS optimization tool r.js are inside &lt;code&gt;[build]&lt;/code&gt; directory.&lt;/p&gt;
-&lt;p&gt;Application code resides in &lt;code&gt;[webapp/js/app]&lt;/code&gt; directory. This is the place where you should place all of your /Model/View/Router/Template code.&lt;/p&gt;
-&lt;p&gt;Libraries like jQuery, Backbone, Handlebars, and others are inside &lt;code&gt;[webapp/js/lib]&lt;/code&gt; directory.&lt;/p&gt;
-&lt;p&gt;Application config and the main entry point is &lt;code&gt;[webapp/js/app.js]&lt;/code&gt;&lt;/p&gt;
-&lt;h4&gt;STEP 2 - How to include RequireJS&lt;/h4&gt;
-&lt;p&gt;Your &lt;code&gt;[webapp/index.html]&lt;/code&gt; should look like this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;build/&lt;/strong&gt; – contains build scripts and the RequireJS optimization tool (r.js).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;webapp/js/app/&lt;/strong&gt; – holds the application code. Place all of your Model, View, Router, and Template files here.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;webapp/js/lib/&lt;/strong&gt; – contains third-party libraries such as jQuery, Backbone, Handlebars, and others.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;webapp/js/app.js&lt;/strong&gt; – the application configuration and main entry point.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Step 2 – Including RequireJS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Your &lt;code&gt;webapp/index.html&lt;/code&gt; should include RequireJS and point to your application&#39;s entry point (&lt;code&gt;app.js&lt;/code&gt;):&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;html&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;head&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;head&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;body&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
@@ -57,9 +54,12 @@
  	&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;script data&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;main&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;js/app.js&quot;&lt;/span&gt; src&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;js/lib/require.js&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;script&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;body&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;html&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Attribute &lt;code&gt;[data-main=&amp;quot;js/app.js&amp;quot;]&lt;/code&gt; is entry point of our application. This means that RequireJS will first load &lt;code&gt;[js/app.js]&lt;/code&gt; after initialization.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;STEP 3 - How to configure RequireJS&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Open your &lt;code&gt;[webapp/js/app.js]&lt;/code&gt; file.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;src=&amp;quot;js/lib/require.js&amp;quot;&lt;/strong&gt; – loads the RequireJS library.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;data-main=&amp;quot;js/app&amp;quot;&lt;/strong&gt; – tells RequireJS to load &lt;code&gt;app.js&lt;/code&gt; (without the &lt;code&gt;.js&lt;/code&gt; extension) as the entry point.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Step 3 – Configuring RequireJS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Open your &lt;code&gt;webapp/js/app.js&lt;/code&gt; file and define the RequireJS configuration:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; requirejs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  	&lt;span class=&quot;token literal-property property&quot;&gt;baseUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;js/lib&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
  	&lt;span class=&quot;token literal-property property&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -72,30 +72,48 @@
  &lt;span class=&quot;token function&quot;&gt;requirejs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;jquery&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  	console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;#test&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;[baseUrl: &#39;js/lib&#39;]&lt;/code&gt; - RequireJS loads code relative to the directory specified in baseUrl. By default, baseUrl is set to the same directory as data-main. If you don&#39;t specify data-main attribute and baseUrl property is not present in RequireJS config, then the default path is the directory that contains the HTML page which includes the RequireJS library.&lt;br /&gt;
-&lt;a href=&quot;http://requirejs.org/docs/api.html#config-baseUrl&quot;&gt;base url&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Attribute &lt;code&gt;[paths]&lt;/code&gt; &lt;a href=&quot;http://requirejs.org/docs/api.html#config-paths&quot;&gt;paths config&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;STEP 4 - How to use requre() and define() in RequireJS&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;require()&lt;/code&gt; and &lt;code&gt;define()&lt;/code&gt; are the most important concepts in RequireJS.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;define()&lt;/strong&gt; - Used for module definition.&lt;br /&gt;
-Consists of module wrapper, dependency list, and definition function.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;baseUrl&lt;/strong&gt; – sets the base directory for your modules. RequireJS loads code relative to this directory. &lt;a href=&quot;http://requirejs.org/docs/api.html#config-baseUrl&quot;&gt;Read more&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;paths&lt;/strong&gt; – maps library names to their file locations. &lt;a href=&quot;http://requirejs.org/docs/api.html#config-paths&quot;&gt;Read more&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;require([...])&lt;/strong&gt; – loads the main application module and starts the app.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Step 4 – Using require() and define() in RequireJS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The two most important concepts in RequireJS are &lt;code&gt;define()&lt;/code&gt; and &lt;code&gt;require()&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;define()&lt;/strong&gt; – used to define a module. A module definition includes:
+&lt;ol&gt;
+&lt;li&gt;A list of dependencies&lt;/li&gt;
+&lt;li&gt;A definition function that receives those dependencies as arguments&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token function&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency1&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency2&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency3&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;dependency1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dependency2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dependency3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;Module&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;property &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; value&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
  	&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Module&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;require()&lt;/strong&gt; - Used for dependency loading&lt;br /&gt;
-Consists of public api, dependency list, callback function&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token function&quot;&gt;requirejs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency1&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency2&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency3&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;dependency1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dependency2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dependency3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
- 	&lt;span class=&quot;token comment&quot;&gt;// You can use your imported module here&lt;/span&gt;
- 	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; instance &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; dependency1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; constructorFunction &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;dependency2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;&lt;a name=&quot;t2&quot; id=&quot;t2&quot;&gt;Prototypal inheritance and Require.js&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Skip to &lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/#source&quot;&gt;complete source code&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;It&#39;s recommended to keep modules in separate files on disk. Each module should return a function or object that will be used for object construction.&lt;/p&gt;
-&lt;p&gt;Now we are going to add 3 object definitions to our project: Category, Item and Specialized Item.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;require()&lt;/strong&gt; – Used for Dependency Loading&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;code&gt;require()&lt;/code&gt; function loads dependencies and executes a callback once they&#39;re available. It consists of:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A list of dependencies&lt;/li&gt;
+&lt;li&gt;A callback function that receives them as arguments&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token function&quot;&gt;requirejs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;dependency1&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;dependency2&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;dependency3&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;dependency1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dependency2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dependency3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;token comment&quot;&gt;// You can use your imported modules here&lt;/span&gt;
+	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; instance &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; dependency1&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; constructorFunction &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;dependency2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Prototypal Inheritance with RequireJS&lt;/h2&gt;
+&lt;p&gt;It&#39;s recommended to keep each module in a separate file on disk. Each module should return a function or an object that can be used for constructing instances.&lt;/p&gt;
+&lt;p&gt;In this example, we&#39;ll add three object definitions to our project:&lt;br /&gt;
+• Category&lt;br /&gt;
+• Item&lt;br /&gt;
+• SpecializedItem&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;wepapp&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;build&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; r&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
@@ -113,65 +131,64 @@ Consists of public api, dependency list, callback function&lt;/p&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;built&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt;
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;index&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;html
  &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;readme&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;md&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Category is collection of Items: &lt;code&gt;[webapp/js/app/category/category.js]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here&#39;s a clear RequireJS module definition for the Category:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token string&quot;&gt;&quot;use strict&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  &lt;span class=&quot;token function&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
- 	
+
  	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;Category&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Default name&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;category &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Default category&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;items &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;		
+ 		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;items &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token class-name&quot;&gt;Category&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function-variable function&quot;&gt;showItems&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; len &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;items&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; len&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; i&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  			console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;items&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;i&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  		&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token class-name&quot;&gt;Category&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function-variable function&quot;&gt;addItem&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;items&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Category&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Item is the base object: &lt;code&gt;[webapp/js/app/category/item.js]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here&#39;s a clean RequireJS module definition for the Item base object:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token string&quot;&gt;&quot;use strict&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  &lt;span class=&quot;token function&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;itemName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; itemName&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token class-name&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function-variable function&quot;&gt;getItemName&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;name&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;Item&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;SpecialItem is object that extends Item. To extend Item object, we must import the Item as a dependency &lt;strong&gt;[&#39;./item&#39;].&lt;/strong&gt;&lt;br /&gt;
-Now Item object is available for use in new SpecialItem module: &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here&#39;s the SpecialItem module defined with RequireJS, extending Item via prototypal inheritance:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; &lt;span class=&quot;token string&quot;&gt;&quot;use strict&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  &lt;span class=&quot;token function&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;./item&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;SpecialItem&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;itemName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;color &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Default color&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  		&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;weigth &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Default weigth&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  		&lt;span class=&quot;token function&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; itemName&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token class-name&quot;&gt;SpecialItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  	&lt;span class=&quot;token class-name&quot;&gt;SpecialItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;constructor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; SpecialItem&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  	&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;SpecialItem&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
- 
+
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
- &lt;h1&gt;&lt;a name=&quot;source&quot; id=&quot;source&quot;&gt;Source code listing&lt;/a&gt;&lt;/h1&gt;
+&lt;h2&gt;Source code listing&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;[webapp/js/app.js]&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; requirejs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
  	&lt;span class=&quot;token literal-property property&quot;&gt;baseUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;js/lib&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -248,8 +265,7 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
  	&lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;SpecialItem&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
  
  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://svlada.com/require-js-optimization-part2/&quot;&gt;The next part&lt;/a&gt; of the RequireJS post series provides more information about r.js tool.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://twitter.com/#!/svlada&quot;&gt;Follow me on Twitter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The next part of this RequireJS series will dive deeper into the r.js optimization tool.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;http://addyosmani.com/writing-modular-js/&quot;&gt;http://addyosmani.com/writing-modular-js/&lt;/a&gt;&lt;/li&gt;
@@ -265,16 +281,11 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 		<link href="https://svlada.com/require-js-optimization-part2/"/>
 		<updated>2013-11-25T00:00:00Z</updated>
 		<id>https://svlada.com/require-js-optimization-part2/</id>
-		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-optimization-part2/#t0&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-optimization-part2/#t1&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/require-js-optimization-part2/#t2&quot;&gt;Require.js optimizer dump dependencies to single file&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in &lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/&quot;&gt;part 1&lt;/a&gt; of the series.&lt;/p&gt;
-&lt;h2&gt;&lt;a name=&quot;t0&quot; id=&quot;t0&quot;&gt;Introduction&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;James Burke &lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;recommends&lt;/a&gt; using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from &lt;a href=&quot;http://nodejs.org/#download&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;&lt;a name=&quot;t1&quot; id=&quot;t0&quot;&gt;Require.js optimizer&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Create your build script file on following location &lt;code&gt;[webapp/build/build.js]&lt;/code&gt;&lt;/p&gt;
+		<content type="html">&lt;p&gt;This article covers the RequireJS optimizer (r.js) for bundling and minifying modules. For background on dependency management, see &lt;a href=&quot;https://svlada.com/require-js-dependency-management-part1/&quot;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;The RequireJS optimizer uses Node.js to bundle and minify your modules. Install Node.js from the &lt;a href=&quot;http://nodejs.org/#download&quot;&gt;official website&lt;/a&gt; before proceeding.&lt;/p&gt;
+&lt;h2&gt;Setting Up the Optimizer&lt;/h2&gt;
+&lt;p&gt;Create a build configuration file at &lt;code&gt;webapp/build/build.js&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;wepapp&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;build&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; r&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
@@ -288,12 +299,10 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
 &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;built&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;index&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;html
 &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;readme&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;md&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Build your application with node.js and r.js executing the following command&lt;/p&gt;
-&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;node r&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;o build&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The following are examples of how to build an application with RequireJS.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Example 1: Optimize modules&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Main module app.js has many dependencies and we want to bundle all that dependencies into single file. Mark modules for optimization in modules array of configuration object inside &lt;code&gt;build.js&lt;/code&gt;. First example will contain only one module for optimization &lt;code&gt;[webapp/js/app.js]&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Paste the following code to your &lt;code&gt;build.js&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Run the optimizer with:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;node&lt;/span&gt; r.js &lt;span class=&quot;token parameter variable&quot;&gt;-o&lt;/span&gt; build.js&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Example 1: Single Module Optimization&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To bundle &lt;code&gt;app.js&lt;/code&gt; and all its dependencies into one file, configure the &lt;code&gt;modules&lt;/code&gt; array in &lt;code&gt;build.js&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;baseUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;js/lib&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;appDir&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;..&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -308,9 +317,12 @@ Now Item object is available for use in new SpecialItem module: &lt;code&gt;[web
         &lt;span class=&quot;token literal-property property&quot;&gt;jquery&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;jquery&#39;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;appDir&lt;/strong&gt; - Telling us where webapp root directory is located relative to &lt;code&gt;build.js&lt;/code&gt; script.&lt;br /&gt;&lt;br /&gt;
-&lt;strong&gt;dir&lt;/strong&gt; - Output directory relative to &lt;code&gt;build.js&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Console output of &lt;code&gt;build.js&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Key options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;appDir&lt;/strong&gt; – root directory of your application (relative to build.js)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;dir&lt;/strong&gt; – output directory for optimized files&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Console output:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dist&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dist&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dist&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
@@ -327,17 +339,16 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;specialItem&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;All &lt;code&gt;[webapp/js/app.js]&lt;/code&gt; dependencies are now minified with Uglify.js and concatenated into single file. But what happened with individual modules? Module &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt; has a dependency &lt;code&gt;[webapp/js/app/category/Item.js]&lt;/code&gt;. Open your optimized &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt; and pass it to beautifier. As you can see from the output &lt;code&gt;[js/app/category/item.js]&lt;/code&gt; is not bundled with &lt;code&gt;[js/app/category/specialItem.js]&lt;/code&gt; file.&lt;/p&gt;
-&lt;p&gt;Optimized module:&lt;/p&gt;
+&lt;p&gt;All dependencies are minified and concatenated into a single file.&lt;/p&gt;
+&lt;p&gt;Note that individual modules retain their original dependencies. For example, &lt;code&gt;specialItem.js&lt;/code&gt; still references &lt;code&gt;item.js&lt;/code&gt; rather than including it:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token function&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;./item&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;SpecialItem&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;itemName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;color &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Default color&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;weigth &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Default weigth&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; itemName&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
         &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SpecialItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SpecialItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;constructor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; SpecialItem&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; SpecialItem
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Example 2: Optimize additional modules&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;In this example we will add &lt;code&gt;[webapp/js/app/category/specialItem.js]&lt;/code&gt; to modules array of &lt;code&gt;build.js&lt;/code&gt; configuration object.&lt;/p&gt;
-&lt;p&gt;Paste following code to your &lt;code&gt;build.js&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Example 2: Multiple Module Optimization&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Add &lt;code&gt;specialItem.js&lt;/code&gt; to the modules array:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;baseUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;js/lib&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;appDir&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;..&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -353,7 +364,7 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
         &lt;span class=&quot;token literal-property property&quot;&gt;jquery&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;jquery&#39;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Console output of &lt;code&gt;build.js&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Console output:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dist&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dist&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dist&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
@@ -375,8 +386,7 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 &lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;
 js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
 js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;specialItem&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now &lt;code&gt;[js/app/category/item.js]&lt;/code&gt; is bundled with &lt;code&gt;[js/app/category/specialItem.js]&lt;/code&gt; module.&lt;/p&gt;
-&lt;p&gt;Optimized module:&lt;/p&gt;
+&lt;p&gt;Now &lt;code&gt;item.js&lt;/code&gt; is bundled with &lt;code&gt;specialItem.js&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token function&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;app/category/item&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;Item&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;itemName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; itemName
@@ -390,8 +400,8 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
         &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SpecialItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Item&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SpecialItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;prototype&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;constructor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; SpecialItem&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; SpecialItem
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;&lt;a name=&quot;t2&quot; id=&quot;t0&quot;&gt;Require.js optimizer compile dependencies to single file&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Paste the following code to your &lt;code&gt;build.single.js&lt;/code&gt; file.&lt;/p&gt;
+&lt;h2&gt;Single File Build&lt;/h2&gt;
+&lt;p&gt;To bundle everything into one file, create &lt;code&gt;build.single.js&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;baseUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../js/lib&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;../app&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -402,9 +412,12 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
         &lt;span class=&quot;token literal-property property&quot;&gt;jquery&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;jquery&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt; - Location of module to be exported as a single file with all dependencies.&lt;br /&gt;&lt;br /&gt;
-&lt;strong&gt;out&lt;/strong&gt; - File &lt;code&gt;app-built.js&lt;/code&gt; is created.&lt;/p&gt;
-&lt;p&gt;Console output of &lt;code&gt;build.single.js&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Key options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;name&lt;/strong&gt; – entry module to bundle with dependencies&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;out&lt;/strong&gt; – output filename&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Console output:&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt; Tracing dependencies &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app
  Uglifying file&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;build&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;built&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
  
@@ -415,8 +428,8 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
  &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;item&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
  &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;category&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;specialItem&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js
  &lt;span class=&quot;token constant&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;vlada&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;practice&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;require&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;lib&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;js&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;All of our modules are now glued together into single &lt;code&gt;[webapp/build/app-built.js]&lt;/code&gt; file.&lt;/p&gt;
-&lt;h3&gt;&lt;a name=&quot;source&quot; id=&quot;source&quot;&gt;Source code listing&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;All modules are bundled into &lt;code&gt;webapp/build/app-built.js&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Complete Build Configurations&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;build.js&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token literal-property property&quot;&gt;baseUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;js/lib&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -444,8 +457,7 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
         &lt;span class=&quot;token literal-property property&quot;&gt;jquery&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;jquery&#39;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In the RequireJS tutorial part 3 I will talk about RequireJS integration with Backbone, Handlebars and jQuery with Require.js. Stay tuned :)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;http://requirejs.org/docs/optimization.html&quot;&gt;http://requirejs.org/docs/optimization.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/jrburke/r.js/blob/master/build/example.build.js&quot;&gt;https://github.com/jrburke/r.js/blob/master/build/example.build.js&lt;/a&gt;&lt;/li&gt;
@@ -458,40 +470,46 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 		<link href="https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/"/>
 		<updated>2013-12-23T00:00:00Z</updated>
 		<id>https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/</id>
-		<content type="html">&lt;p&gt;This article provides information on how to initiate cross-domain requests through the proxy using Curl and Symfony 2.&lt;/p&gt;
-&lt;p&gt;Jump to the &lt;a href=&quot;https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/#source-code&quot;&gt;#source-code&lt;/a&gt;.&lt;/p&gt;
+		<content type="html">&lt;p&gt;This article explains how to initiate cross-domain requests through a proxy using cURL and Symfony 2.&lt;/p&gt;
+&lt;p&gt;👉 Jump to &lt;a href=&quot;https://svlada.com/proxy-ajax-requests-curl-and-symfony-2/#source-code&quot;&gt;#source-code&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The usual scenario looks like this:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;The client sends ajax request to the server&lt;/li&gt;
-&lt;li&gt;Your server forwards request to external/remote server&lt;/li&gt;
-&lt;li&gt;Waiting on response from a remote server&lt;/li&gt;
-&lt;li&gt;Parse and process response from remote server&lt;/li&gt;
-&lt;li&gt;Send response back to the client&lt;/li&gt;
+&lt;li&gt;The client sends an AJAX request to your server.&lt;/li&gt;
+&lt;li&gt;Your server forwards the request to an external (remote) server.&lt;/li&gt;
+&lt;li&gt;The server waits for the response from the remote server.&lt;/li&gt;
+&lt;li&gt;The response is parsed and processed.&lt;/li&gt;
+&lt;li&gt;The processed response is sent back to the client.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;First, check if the client request is XmlHttpRequest. This can be done using Symfony 2 built-in method:&lt;/p&gt;
+&lt;p&gt;As a first step, check if the client request is an XmlHttpRequest. Symfony 2 provides a built-in method for this:&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;isXmlHttpRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;STEP 1: Client code&lt;/h3&gt;
-&lt;p&gt;The following are the steps for creating an Ajax request.&lt;/p&gt;
+&lt;h3&gt;Step 1: Client Code&lt;/h3&gt;
+&lt;p&gt;The following steps describe how to create an AJAX request.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Specify rest URL on the server for handling cross-domain ajax requests.&lt;code&gt;url: &amp;quot;{{ path(&#39;_ajaxProxy&#39;) }}&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Wrap request data&lt;/li&gt;
+&lt;li&gt;Specify the REST URL on the server for handling cross-domain AJAX requests: &lt;code&gt;url: &amp;quot;{{ path(&#39;_ajaxProxy&#39;) }}&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Wrap the request data.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;We need some data to create a curl request on the server-side.&lt;/p&gt;
-&lt;p&gt;For this example, you need to send an object with the following properties to your server.&lt;/p&gt;
+&lt;p&gt;You&#39;ll need some data to create a cURL request on the server side.&lt;/p&gt;
+&lt;p&gt;For this example, send an object with the following properties to your server:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;url&lt;/strong&gt; → the remote server endpoint to call&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;method&lt;/strong&gt; → the HTTP method (e.g., GET, POST)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;params&lt;/strong&gt; → request parameters or payload data&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token literal-property property&quot;&gt;restUrl&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;external-api-url&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Your target url on remote server&lt;/span&gt;
 &lt;span class=&quot;token literal-property property&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Type of request you want to issue to remote server&lt;/span&gt;
 &lt;span class=&quot;token literal-property property&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; 
     &lt;span class=&quot;token literal-property property&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;getFriendsList&quot;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Parameters you are sending to remote server&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;STEP 2: Forward request to remote server&lt;/h3&gt;
-&lt;p&gt;This step is a bit tricky.&lt;/p&gt;
-&lt;p&gt;The client request arrives to your server-side code. First, you need to parse and validate request data.&lt;/p&gt;
-&lt;p&gt;To repeat once more ... you&#39;ll need the following data on server:&lt;/p&gt;
+&lt;h3&gt;Step 2: Forward the Request to the Remote Server&lt;/h3&gt;
+&lt;p&gt;This step is a bit more involved.&lt;/p&gt;
+&lt;p&gt;When the client request reaches your server, the first task is to parse and validate the request data.&lt;/p&gt;
+&lt;p&gt;To recap, your server needs the following information from the client:&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$restUrl&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string single-quoted-string&quot;&gt;&#39;restUrl&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Your target url on remote server&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$method&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string single-quoted-string&quot;&gt;&#39;method&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Type of request you want to issue to remote server&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$params&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string single-quoted-string&quot;&gt;&#39;params&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Parameters you are sending to remote server&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$contentType&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string single-quoted-string&quot;&gt;&#39;contentType&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// Content-type&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Create curl request and set parameters that you&#39;ve got from the client.&lt;/p&gt;
+&lt;h3&gt;Step 3: Create the cURL Request&lt;/h3&gt;
+&lt;p&gt;On the server side, create a cURL request and set its parameters using the values received from the client.&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// Initialize curl handle&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;curl_init&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;  
 &lt;span class=&quot;token comment&quot;&gt;// Set request url&lt;/span&gt;
@@ -506,18 +524,23 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;curl_setopt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;CURLOPT_RETURNTRANSFER&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token constant boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;curl_setopt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;CURLOPT_FOLLOWLOCATION&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token constant boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I strongly suggest reading the PHP manual to get familiar with the curl configuration: &lt;a href=&quot;http://php.net/manual/en/function.curl-setopt.php&quot;&gt;http://php.net/manual/en/function.curl-setopt.php&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;You have enough data to send a request to the remote server. After executing the curl handle, the response from the remote server is stored in $response variable.&lt;/p&gt;
+&lt;p&gt;I strongly recommend reading the &lt;a href=&quot;http://php.net/manual/en/function.curl-setopt.php&quot;&gt;PHP manual on curl_setopt&lt;/a&gt; to get familiar with the available cURL configuration options.&lt;/p&gt;
+&lt;p&gt;At this point, you have all the necessary data to send a request to the remote server. After executing the cURL handle, the response from the remote server will be stored in the &lt;code&gt;$response&lt;/code&gt; variable.&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$response&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;curl_exec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;curl_close&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You have a basic setup. Now we are going to add cookie support to our ajax proxy.&lt;/p&gt;
+&lt;p&gt;You now have a basic setup. Next, let&#39;s add cookie support to the AJAX proxy.&lt;/p&gt;
 &lt;p&gt;Why do we need cookies?&lt;/p&gt;
-&lt;p&gt;Recently I needed to integrate Symfony 2 application with WordPress portal. Authentication is done on the Wordpress side, and Symfony application is using WordPress cookies to authorize users for accessing protected features.&lt;/p&gt;
-&lt;p&gt;In production, both applications share the same domain, but in the test environment, there is a lot of mess (different domains, ports, etc).&lt;/p&gt;
-&lt;p&gt;Where is the problem?&lt;/p&gt;
-&lt;p&gt;An application written in Symfony 2 needs to consume some protected backend functionalities on the Wordpress side. There is a lot of personalized data that is fetched via ajax calls, and this is the reason why we need cookies.&lt;/p&gt;
-&lt;h3&gt;How to get cookies from Symfony2 request and set multiple cookies to Curl?&lt;/h3&gt;
-&lt;p&gt;We need to extract multiple cookies from Symfony 2 request objects and set them to curl handle.&lt;/p&gt;
+&lt;p&gt;In my case, I had to integrate a Symfony 2 application with a WordPress portal. Authentication was handled on the WordPress side, while the Symfony application relied on WordPress cookies to authorize users for accessing protected features.&lt;/p&gt;
+&lt;p&gt;In production, both applications shared the same domain. But in the test environment, things were more complicated—different domains, ports, and other inconsistencies made the setup messy.&lt;/p&gt;
+&lt;p&gt;Where&#39;s the problem?&lt;/p&gt;
+&lt;p&gt;The Symfony 2 application needed to consume protected backend functionality from WordPress. Since much of the data was personalized and fetched via AJAX calls, cookies were required to maintain authentication and authorization.&lt;/p&gt;
+&lt;h3&gt;Getting Cookies from Symfony 2 and Passing Them to cURL&lt;/h3&gt;
+&lt;p&gt;To forward cookies from a Symfony 2 request to a remote server, you need to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Extract cookies from the Symfony request object.&lt;/li&gt;
+&lt;li&gt;Format them into a string that cURL understands.&lt;/li&gt;
+&lt;li&gt;Set them on the cURL handle.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// Get all cookies from Symfony request object&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$requestCookies&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$request&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;cookies&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
 &lt;span class=&quot;token comment&quot;&gt;// Prepare and set multiple cookies to curl handle&lt;/span&gt;
@@ -528,15 +551,15 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 &lt;span class=&quot;token comment&quot;&gt;// Be sure to set whitespace after &#39;; &#39; when creating cookie string&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$cookie_string&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;implode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string single-quoted-string&quot;&gt;&#39;; &#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$cookieArray&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;curl_setopt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;CURLOPT_COOKIE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$cookie_string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;How to get cookies Curl response and set multiple cookies to Symfony response?&lt;/h3&gt;
-&lt;p&gt;Remember when we configured curl with CURLOPT_HEADER=true? Now we are going to parse cookies from curl Http response.&lt;/p&gt;
+&lt;h3&gt;Getting Cookies from cURL Response and Passing Them to Symfony Response&lt;/h3&gt;
+&lt;p&gt;When you configure cURL with &lt;code&gt;CURLOPT_HEADER = true&lt;/code&gt;, the response will include both headers and body. From there, you can parse the Set-Cookie headers and attach them to your Symfony response.&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// Get header and response data from curl response&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$headers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$response&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;explode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string double-quoted-string&quot;&gt;&quot;&#92;r&#92;n&#92;r&#92;n&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$response&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;// We are using regex to parse cookies from curl response&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;preg_match_all&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string single-quoted-string&quot;&gt;&#39;/Set-Cookie: (.*)&#92;b/&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$headers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$cookies&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;// Store cookies&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$cookies&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$cookies&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Raw cookies are parsed and stored in cookie array. Then each cookie needs to be converted to Symfony Cookie object and injected to Symfony response headers.&lt;/p&gt;
+&lt;p&gt;Raw cookies are parsed into an array, then each entry is converted to a Symfony Cookie and added to the response headers.&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;foreach&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$cookies&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$rawCookie&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token variable&quot;&gt;$cookie&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name class-name-fully-qualified static-context&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;Symfony&lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;Component&lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;BrowserKit&lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;Cookie&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fromString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$rawCookie&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token variable&quot;&gt;$value&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$cookie&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getValue&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
@@ -547,14 +570,20 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
         &lt;span class=&quot;token variable&quot;&gt;$cookie&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getExpiresTime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$cookie&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getExpiresTime&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$cookie&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getPath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token variable&quot;&gt;$response&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token property&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&gt;&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setCookie&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;$customCookie&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;FINAL NOTICE:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Close and store session data before initializing curl handle or you can run into a deadlock.&lt;/p&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;Final Notice:&lt;/strong&gt;&lt;br /&gt;
+Be sure to close and store session data before initializing the cURL handle—otherwise, you may run into a deadlock.&lt;/p&gt;
 &lt;pre class=&quot;language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token function&quot;&gt;session_write_close&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token variable&quot;&gt;$ch&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;curl_init&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What could happen if you forgot to close the session?&lt;/p&gt;
-&lt;p&gt;Here is one scenario:&lt;/p&gt;
-&lt;p&gt;PHP script S1 creates/sends a curl POST request to script S2 on the same Apache server/PHP Environment. If pages S1 and S2 share the same session, script S2 will not start executing until the end of script S1 lifetime. But script S1 is waiting on a response from script S2. This is the point where deadlock happens. The default session handler locks the session file for the duration of the page request.&lt;/p&gt;
-&lt;p&gt;&lt;a id=&quot;source-code&quot; name=&quot;source-code&quot;&gt;Complete source code listing for ajax proxy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;What happens if you forget to close the session?&lt;/p&gt;
+&lt;p&gt;When PHP uses the default session handler, it locks the session file for the duration of the request. If S1 (a PHP script) starts a cURL POST to S2 (another PHP script) on the same server and both share the same session:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;S1 has the session locked.&lt;/li&gt;
+&lt;li&gt;S2 can&#39;t start (it tries to open the same session and blocks).&lt;/li&gt;
+&lt;li&gt;S1 is waiting for S2&#39;s response… which never comes because S2 is blocked by the lock.&lt;/li&gt;
+&lt;li&gt;Result: deadlock.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Fix: call &lt;code&gt;session_write_close();&lt;/code&gt; before you open the cURL handle so other requests can read the session.&lt;/p&gt;
+&lt;h3&gt;Complete source code listing for the AJAX proxy (Symfony 2)&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Client sample code&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sendAjaxRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     $&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;ajax&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -659,7 +688,6 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 &lt;p&gt;&lt;strong&gt;Read more about this topic:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://developer.yahoo.com/javascript/howto-proxy.html&quot;&gt;http://developer.yahoo.com/javascript/howto-proxy.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://twitter.com/#!/svlada&quot;&gt;Follow me on Twitter&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
 	</entry>
@@ -689,15 +717,10 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 		<link href="https://svlada.com/websphere-maven-spring-project/"/>
 		<updated>2015-09-10T00:00:00Z</updated>
 		<id>https://svlada.com/websphere-maven-spring-project/</id>
-		<content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/websphere-maven-spring-project/#introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/websphere-maven-spring-project/#maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://svlada.com/websphere-maven-spring-project/#source-code&quot;&gt;Source code&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3&gt;&lt;a name=&quot;introduction&quot; id=&quot;introduction&quot;&gt;Introduction&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;This article describes how to create a Spring web application that can be deployed on the WebSphere application server. The goal is to create a maven project that can be used to generate an EAR file.&lt;/p&gt;
-&lt;h3&gt;&lt;a name=&quot;maven-project-structure&quot; id=&quot;maven-project-structure&quot;&gt;Maven project structure&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;The following list shows the multi-module maven project directory structure:&lt;/p&gt;
+		<content type="html">&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;This article explains how to create a Spring web application for deployment on IBM WebSphere Application Server. The objective is to set up a Maven project that produces an EAR package (with a WAR module and application assembly) suitable for WebSphere.&lt;/p&gt;
+&lt;h3&gt;Maven project structure&lt;/h3&gt;
+&lt;p&gt;The following list shows the directory structure of the multi-module Maven project:&lt;/p&gt;
 &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;|- websphere-maven-spring-project 
 |-- app-ear/
 |---- pom.xml
@@ -706,10 +729,11 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 |---- .classpath
 |---- pom.xml
 |- pom.xml&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The project consists of one parent/aggregator module and two sub/child modules. For more information on multi-module please go to &lt;a href=&quot;http://maven.apache.org/pom.html#Aggregation&quot;&gt;maven documentation website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The project consists of one parent (aggregator) module and two child (sub) modules.&lt;/p&gt;
+&lt;p&gt;For more details on working with multi-module builds, see the official &lt;a href=&quot;http://maven.apache.org/pom.html#Aggregation&quot;&gt;Maven documentation&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Aggregator module&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;The aggregator is a top-level module used to join multiple modules.&lt;/p&gt;
-&lt;p&gt;The following is an excerpt from aggregator &lt;code&gt;pom.xml&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;The aggregator is the top-level module that brings multiple modules together into a single build.&lt;/p&gt;
+&lt;p&gt;The following is an excerpt from the pom.xml of the aggregator module:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;  &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;modelVersion&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;4.0&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;modelVersion&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
   &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
   &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
@@ -722,14 +746,14 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
     &lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;webapp&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
   &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;modules&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Sub-modules&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Both sub-modules (&lt;code&gt;app-ear&lt;/code&gt; and &lt;code&gt;app-webapp&lt;/code&gt;) must include reference to the parent module as follows:&lt;/p&gt;
+&lt;p&gt;Both sub-modules (app-ear and app-webapp) must reference the parent module in their pom.xml files, as shown below:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;parent&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
 	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;app&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;version&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;.0&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;version&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;parent&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Sub-module: app-ear&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;WAR module (&lt;code&gt;app-webapp&lt;/code&gt;) needs to be included in the list of EAR dependencies.&lt;/p&gt;
+&lt;p&gt;The WAR module (app-webapp) must be included in the list of EAR dependencies.&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;dependencies&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
 	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;dependency&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
 		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;com&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;svlada&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
@@ -738,7 +762,7 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 		&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;type&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;war&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;type&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 	&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dependency&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;dependencies&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Include &lt;code&gt;maven-ear-plugin&lt;/code&gt; in the build plugins section of the app-ear pom.xml:&lt;/p&gt;
+&lt;p&gt;In the app-ear/pom.xml, include the maven-ear-plugin in the &lt;code&gt;&amp;lt;build&amp;gt;&amp;lt;plugins&amp;gt;&lt;/code&gt; section:&lt;/p&gt;
 &lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;plugin&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
 	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;groupId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;org&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;apache&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;maven&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;plugins&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;groupId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
 	&lt;span class=&quot;token generics&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;artifactId&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;maven&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;ear&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;plugin&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;artifactId&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
@@ -758,9 +782,9 @@ js&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;app&lt;span class=&
 
 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;plugin&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Sub-module: app-webapp&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Web app module is an simple web application generated with the spring initializr.&lt;/p&gt;
-&lt;h3&gt;&lt;a name=&quot;source-code&quot; id=&quot;source-code&quot;&gt;Source code&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;You can clone entire project from the following &lt;a href=&quot;https://github.com/svlada/websphere-maven-spring-project&quot;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The web app module is a simple web application generated with Spring Initializr.&lt;/p&gt;
+&lt;h3&gt;Source code&lt;/h3&gt;
+&lt;p&gt;You can clone the entire project from the following &lt;a href=&quot;https://github.com/svlada/websphere-maven-spring-project&quot;&gt;GitHub repository&lt;/a&gt;.&lt;/p&gt;
 </content>
 	</entry>
 	

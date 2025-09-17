@@ -47,15 +47,10 @@
     <h1>Multi-module Websphere web application</h1>
     <p class="post-date">Published: Sep 10, 2015 </p>
     
-    <ol>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#maven-project-structure">Maven project structure</a></li>
-<li><a href="#source-code">Source code</a></li>
-</ol>
-<h3><a name="introduction" id="introduction">Introduction</a></h3>
-<p>This article describes how to create a Spring web application that can be deployed on the WebSphere application server. The goal is to create a maven project that can be used to generate an EAR file.</p>
-<h3><a name="maven-project-structure" id="maven-project-structure">Maven project structure</a></h3>
-<p>The following list shows the multi-module maven project directory structure:</p>
+    <h3>Introduction</h3>
+<p>This article explains how to create a Spring web application for deployment on IBM WebSphere Application Server. The objective is to set up a Maven project that produces an EAR package (with a WAR module and application assembly) suitable for WebSphere.</p>
+<h3>Maven project structure</h3>
+<p>The following list shows the directory structure of the multi-module Maven project:</p>
 <pre class="language-text"><code class="language-text">|- websphere-maven-spring-project 
 |-- app-ear/
 |---- pom.xml
@@ -64,10 +59,11 @@
 |---- .classpath
 |---- pom.xml
 |- pom.xml</code></pre>
-<p>The project consists of one parent/aggregator module and two sub/child modules. For more information on multi-module please go to <a href="http://maven.apache.org/pom.html#Aggregation">maven documentation website</a>.</p>
+<p>The project consists of one parent (aggregator) module and two child (sub) modules.</p>
+<p>For more details on working with multi-module builds, see the official <a href="http://maven.apache.org/pom.html#Aggregation">Maven documentation</a>.</p>
 <p><strong>Aggregator module</strong></p>
-<p>The aggregator is a top-level module used to join multiple modules.</p>
-<p>The following is an excerpt from aggregator <code>pom.xml</code>:</p>
+<p>The aggregator is the top-level module that brings multiple modules together into a single build.</p>
+<p>The following is an excerpt from the pom.xml of the aggregator module:</p>
 <pre class="language-java"><code class="language-java">  <span class="token generics"><span class="token punctuation">&lt;</span>modelVersion<span class="token punctuation">></span></span><span class="token number">4.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>modelVersion<span class="token operator">></span>
   <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
   <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
@@ -80,14 +76,14 @@
     <span class="token generics"><span class="token punctuation">&lt;</span><span class="token keyword">module</span><span class="token punctuation">></span></span>app<span class="token operator">-</span>webapp<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">module</span><span class="token operator">></span>
   <span class="token operator">&lt;</span><span class="token operator">/</span>modules<span class="token operator">></span></code></pre>
 <p><strong>Sub-modules</strong></p>
-<p>Both sub-modules (<code>app-ear</code> and <code>app-webapp</code>) must include reference to the parent module as follows:</p>
+<p>Both sub-modules (app-ear and app-webapp) must reference the parent module in their pom.xml files, as shown below:</p>
 <pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>parent<span class="token punctuation">></span></span>
 	<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>app<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
 	<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
 	<span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">1.0</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>parent<span class="token operator">></span></code></pre>
 <p><strong>Sub-module: app-ear</strong></p>
-<p>WAR module (<code>app-webapp</code>) needs to be included in the list of EAR dependencies.</p>
+<p>The WAR module (app-webapp) must be included in the list of EAR dependencies.</p>
 <pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependencies<span class="token punctuation">></span></span>
 	<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
 		<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>com<span class="token punctuation">.</span>svlada<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
@@ -96,7 +92,7 @@
 		<span class="token generics"><span class="token punctuation">&lt;</span>type<span class="token punctuation">></span></span>war<span class="token operator">&lt;</span><span class="token operator">/</span>type<span class="token operator">></span>
 	<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>dependencies<span class="token operator">></span></code></pre>
-<p>Include <code>maven-ear-plugin</code> in the build plugins section of the app-ear pom.xml:</p>
+<p>In the app-ear/pom.xml, include the maven-ear-plugin in the <code>&lt;build&gt;&lt;plugins&gt;</code> section:</p>
 <pre class="language-java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>plugin<span class="token punctuation">></span></span>
 	<span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>maven<span class="token punctuation">.</span>plugins<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
 	<span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>maven<span class="token operator">-</span>ear<span class="token operator">-</span>plugin<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
@@ -116,9 +112,9 @@
 
 <span class="token operator">&lt;</span><span class="token operator">/</span>plugin<span class="token operator">></span></code></pre>
 <p><strong>Sub-module: app-webapp</strong></p>
-<p>Web app module is an simple web application generated with the spring initializr.</p>
-<h3><a name="source-code" id="source-code">Source code</a></h3>
-<p>You can clone entire project from the following <a href="https://github.com/svlada/websphere-maven-spring-project">github repository</a>.</p>
+<p>The web app module is a simple web application generated with Spring Initializr.</p>
+<h3>Source code</h3>
+<p>You can clone the entire project from the following <a href="https://github.com/svlada/websphere-maven-spring-project">GitHub repository</a>.</p>
 
     
     <hr>

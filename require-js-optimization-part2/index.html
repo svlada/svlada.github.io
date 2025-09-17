@@ -47,16 +47,11 @@
     <h1>Require.js optimizer</h1>
     <p class="post-date">Published: Nov 25, 2013 </p>
     
-    <ol>
-<li><a href="#t0">Introduction</a></li>
-<li><a href="#t1">Require.js optimizer</a></li>
-<li><a href="#t2">Require.js optimizer dump dependencies to single file</a></li>
-</ol>
-<p>This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in <a href="/require-js-dependency-management-part1/">part 1</a> of the series.</p>
-<h2><a name="t0" id="t0">Introduction</a></h2>
-<p>James Burke <a href="http://requirejs.org/docs/optimization.html">recommends</a> using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from <a href="http://nodejs.org/#download">here</a>.</p>
-<h2><a name="t1" id="t0">Require.js optimizer</a></h2>
-<p>Create your build script file on following location <code>[webapp/build/build.js]</code></p>
+    <p>This article covers the RequireJS optimizer (r.js) for bundling and minifying modules. For background on dependency management, see <a href="/require-js-dependency-management-part1/">Part 1</a>.</p>
+<h2>Introduction</h2>
+<p>The RequireJS optimizer uses Node.js to bundle and minify your modules. Install Node.js from the <a href="http://nodejs.org/#download">official website</a> before proceeding.</p>
+<h2>Setting Up the Optimizer</h2>
+<p>Create a build configuration file at <code>webapp/build/build.js</code>:</p>
 <pre class="language-js"><code class="language-js"><span class="token operator">|</span><span class="token operator">-</span><span class="token punctuation">[</span>wepapp<span class="token punctuation">]</span>
 <span class="token operator">|</span><span class="token operator">--</span><span class="token operator">-</span> <span class="token punctuation">[</span>build<span class="token punctuation">]</span>
 <span class="token operator">|</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span> r<span class="token punctuation">.</span>js
@@ -70,12 +65,10 @@
 <span class="token operator">|</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span> app<span class="token operator">-</span>built<span class="token punctuation">.</span>js<span class="token operator">*</span>
 <span class="token operator">|</span><span class="token operator">-</span>index<span class="token punctuation">.</span>html
 <span class="token operator">|</span><span class="token operator">-</span>readme<span class="token punctuation">.</span>md</code></pre>
-<p>Build your application with node.js and r.js executing the following command</p>
-<pre class="language-js"><code class="language-js">node r<span class="token punctuation">.</span>js <span class="token operator">-</span>o build<span class="token punctuation">.</span>js</code></pre>
-<p>The following are examples of how to build an application with RequireJS.</p>
-<p><strong>Example 1: Optimize modules</strong></p>
-<p>Main module app.js has many dependencies and we want to bundle all that dependencies into single file. Mark modules for optimization in modules array of configuration object inside <code>build.js</code>. First example will contain only one module for optimization <code>[webapp/js/app.js]</code>.</p>
-<p>Paste the following code to your <code>build.js</code> file.</p>
+<p>Run the optimizer with:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">node</span> r.js <span class="token parameter variable">-o</span> build.js</code></pre>
+<p><strong>Example 1: Single Module Optimization</strong></p>
+<p>To bundle <code>app.js</code> and all its dependencies into one file, configure the <code>modules</code> array in <code>build.js</code>:</p>
 <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
     <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">"js/lib"</span><span class="token punctuation">,</span>
     <span class="token literal-property property">appDir</span><span class="token operator">:</span> <span class="token string">".."</span><span class="token punctuation">,</span>
@@ -90,9 +83,12 @@
         <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jquery'</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p><strong>appDir</strong> - Telling us where webapp root directory is located relative to <code>build.js</code> script.<br/><br>
-<strong>dir</strong> - Output directory relative to <code>build.js</code></p>
-<p>Console output of <code>build.js</code></p>
+<p>Key options:</p>
+<ul>
+<li><strong>appDir</strong> – root directory of your application (relative to build.js)</li>
+<li><strong>dir</strong> – output directory for optimized files</li>
+</ul>
+<p>Console output:</p>
 <pre class="language-js"><code class="language-js">Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>build<span class="token operator">/</span>r<span class="token punctuation">.</span>js
 Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>category<span class="token punctuation">.</span>js
 Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>item<span class="token punctuation">.</span>js
@@ -109,17 +105,16 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
 js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>item<span class="token punctuation">.</span>js
 js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>specialItem<span class="token punctuation">.</span>js
 js<span class="token operator">/</span>app<span class="token punctuation">.</span>js</code></pre>
-<p>All <code>[webapp/js/app.js]</code> dependencies are now minified with Uglify.js and concatenated into single file. But what happened with individual modules? Module <code>[webapp/js/app/category/specialItem.js]</code> has a dependency <code>[webapp/js/app/category/Item.js]</code>. Open your optimized <code>[webapp/js/app/category/specialItem.js]</code> and pass it to beautifier. As you can see from the output <code>[js/app/category/item.js]</code> is not bundled with <code>[js/app/category/specialItem.js]</code> file.</p>
-<p>Optimized module:</p>
+<p>All dependencies are minified and concatenated into a single file.</p>
+<p>Note that individual modules retain their original dependencies. For example, <code>specialItem.js</code> still references <code>item.js</code> rather than including it:</p>
 <pre class="language-js"><code class="language-js"><span class="token function">define</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"./item"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">Item</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">var</span> <span class="token function-variable function">SpecialItem</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">itemName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token keyword">this</span><span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token string">"Default color"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>weigth <span class="token operator">=</span> <span class="token string">"Default weigth"</span><span class="token punctuation">,</span> <span class="token function">Item</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> itemName<span class="token punctuation">)</span>
         <span class="token punctuation">}</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">,</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> SpecialItem<span class="token punctuation">,</span> SpecialItem
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
-<p><strong>Example 2: Optimize additional modules</strong></p>
-<p>In this example we will add <code>[webapp/js/app/category/specialItem.js]</code> to modules array of <code>build.js</code> configuration object.</p>
-<p>Paste following code to your <code>build.js</code> file.</p>
+<p><strong>Example 2: Multiple Module Optimization</strong></p>
+<p>Add <code>specialItem.js</code> to the modules array:</p>
 <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
     <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">"js/lib"</span><span class="token punctuation">,</span>
     <span class="token literal-property property">appDir</span><span class="token operator">:</span> <span class="token string">".."</span><span class="token punctuation">,</span>
@@ -135,7 +130,7 @@ js<span class="token operator">/</span>app<span class="token punctuation">.</spa
         <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jquery'</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>Console output of <code>build.js</code></p>
+<p>Console output:</p>
 <pre class="language-js"><code class="language-js">Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>build<span class="token operator">/</span>r<span class="token punctuation">.</span>js
 Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>category<span class="token punctuation">.</span>js
 Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>dist<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>item<span class="token punctuation">.</span>js
@@ -157,8 +152,7 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
 <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
 js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>item<span class="token punctuation">.</span>js
 js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>specialItem<span class="token punctuation">.</span>js</code></pre>
-<p>Now <code>[js/app/category/item.js]</code> is bundled with <code>[js/app/category/specialItem.js]</code> module.</p>
-<p>Optimized module:</p>
+<p>Now <code>item.js</code> is bundled with <code>specialItem.js</code>:</p>
 <pre class="language-js"><code class="language-js"><span class="token function">define</span><span class="token punctuation">(</span><span class="token string">"app/category/item"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">var</span> <span class="token function-variable function">Item</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">itemName</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> itemName
@@ -172,8 +166,8 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
         <span class="token punctuation">}</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">,</span> <span class="token class-name">SpecialItem</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> SpecialItem<span class="token punctuation">,</span> SpecialItem
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
-<h2><a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a></h2>
-<p>Paste the following code to your <code>build.single.js</code> file.</p>
+<h2>Single File Build</h2>
+<p>To bundle everything into one file, create <code>build.single.js</code>:</p>
 <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
     <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">"../js/lib"</span><span class="token punctuation">,</span>
     <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"../app"</span><span class="token punctuation">,</span>
@@ -184,9 +178,12 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
         <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jquery'</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p><strong>name</strong> - Location of module to be exported as a single file with all dependencies.<br/><br>
-<strong>out</strong> - File <code>app-built.js</code> is created.</p>
-<p>Console output of <code>build.single.js</code>:</p>
+<p>Key options:</p>
+<ul>
+<li><strong>name</strong> – entry module to bundle with dependencies</li>
+<li><strong>out</strong> – output filename</li>
+</ul>
+<p>Console output:</p>
 <pre class="language-js"><code class="language-js"> Tracing dependencies <span class="token keyword">for</span><span class="token operator">:</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>app
  Uglifying file<span class="token operator">:</span> <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>build<span class="token operator">/</span>app<span class="token operator">-</span>built<span class="token punctuation">.</span>js
  
@@ -197,8 +194,8 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
  <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>item<span class="token punctuation">.</span>js
  <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>js<span class="token operator">/</span>app<span class="token operator">/</span>category<span class="token operator">/</span>specialItem<span class="token punctuation">.</span>js
  <span class="token constant">C</span><span class="token operator">:</span><span class="token operator">/</span>vlada<span class="token operator">/</span>practice<span class="token operator">/</span>require<span class="token operator">/</span>webapp<span class="token operator">/</span>js<span class="token operator">/</span>lib<span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>app<span class="token punctuation">.</span>js</code></pre>
-<p>All of our modules are now glued together into single <code>[webapp/build/app-built.js]</code> file.</p>
-<h3><a name="source" id="source">Source code listing</a></h3>
+<p>All modules are bundled into <code>webapp/build/app-built.js</code>.</p>
+<h2>Complete Build Configurations</h2>
 <p><code>build.js</code></p>
 <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
     <span class="token literal-property property">baseUrl</span><span class="token operator">:</span> <span class="token string">"js/lib"</span><span class="token punctuation">,</span>
@@ -226,8 +223,7 @@ js<span class="token operator">/</span>app<span class="token operator">/</span>c
         <span class="token literal-property property">jquery</span><span class="token operator">:</span> <span class="token string">'jquery'</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>In the RequireJS tutorial part 3 I will talk about RequireJS integration with Backbone, Handlebars and jQuery with Require.js. Stay tuned :)</p>
-<p><strong>References</strong></p>
+<h2>References</h2>
 <ol>
 <li><a href="http://requirejs.org/docs/optimization.html">http://requirejs.org/docs/optimization.html</a></li>
 <li><a href="https://github.com/jrburke/r.js/blob/master/build/example.build.js">https://github.com/jrburke/r.js/blob/master/build/example.build.js</a></li>
