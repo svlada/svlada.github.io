@@ -10,17 +10,13 @@ layout: layouts/post.njk
 permalink: "websphere-maven-spring-project/index.html"
 ---
 
-1. <a href="#introduction">Introduction</a>
-2. <a href="#maven-project-structure">Maven project structure</a>
-4. <a href="#source-code">Source code</a>
- 
-### <a name="introduction" id="introduction">Introduction</a>
+### Introduction
 
-This article describes how to create a Spring web application that can be deployed on the WebSphere application server. The goal is to create a maven project that can be used to generate an EAR file.
+This article explains how to create a Spring web application for deployment on IBM WebSphere Application Server. The objective is to set up a Maven project that produces an EAR package (with a WAR module and application assembly) suitable for WebSphere.
 
-### <a name="maven-project-structure" id="maven-project-structure">Maven project structure</a>
+### Maven project structure
 
-The following list shows the multi-module maven project directory structure:
+The following list shows the directory structure of the multi-module Maven project:
 
 ```text
 |- websphere-maven-spring-project 
@@ -33,13 +29,15 @@ The following list shows the multi-module maven project directory structure:
 |- pom.xml
 ```
 
-The project consists of one parent/aggregator module and two sub/child modules. For more information on multi-module please go to [maven documentation website](http://maven.apache.org/pom.html#Aggregation).
+The project consists of one parent (aggregator) module and two child (sub) modules.
+
+For more details on working with multi-module builds, see the official [Maven documentation](http://maven.apache.org/pom.html#Aggregation).
 
 **Aggregator module**
 
-The aggregator is a top-level module used to join multiple modules.
+The aggregator is the top-level module that brings multiple modules together into a single build.
 
-The following is an excerpt from aggregator `pom.xml`:
+The following is an excerpt from the pom.xml of the aggregator module:
 
 ```java
   <modelVersion>4.0.0</modelVersion>
@@ -57,7 +55,7 @@ The following is an excerpt from aggregator `pom.xml`:
 
 **Sub-modules**
 
-Both sub-modules (`app-ear` and `app-webapp`) must include reference to the parent module as follows:
+Both sub-modules (app-ear and app-webapp) must reference the parent module in their pom.xml files, as shown below:
 
 ```java
 <parent>
@@ -69,7 +67,7 @@ Both sub-modules (`app-ear` and `app-webapp`) must include reference to the pare
 
 **Sub-module: app-ear** 
 
-WAR module (`app-webapp`) needs to be included in the list of EAR dependencies.
+The WAR module (app-webapp) must be included in the list of EAR dependencies.
 
 ```java
 <dependencies>
@@ -82,7 +80,7 @@ WAR module (`app-webapp`) needs to be included in the list of EAR dependencies.
 </dependencies>
 ```
 
-Include ```maven-ear-plugin``` in the build plugins section of the app-ear pom.xml:
+In the app-ear/pom.xml, include the maven-ear-plugin in the `<build><plugins>` section:
 
 ```java
 <plugin>
@@ -107,9 +105,9 @@ Include ```maven-ear-plugin``` in the build plugins section of the app-ear pom.x
 
 **Sub-module: app-webapp**
 
-Web app module is an simple web application generated with the spring initializr.
+The web app module is a simple web application generated with Spring Initializr.
 
-### <a name="source-code" id="source-code">Source code</a> 
+### Source code 
 
-You can clone entire project from the following [github repository](https://github.com/svlada/websphere-maven-spring-project).
+You can clone the entire project from the following [GitHub repository](https://github.com/svlada/websphere-maven-spring-project).
 

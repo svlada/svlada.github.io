@@ -9,19 +9,15 @@ layout: layouts/post.njk
 permalink: "require-js-optimization-part2/index.html"
 ---
 
-1. <a href="#t0">Introduction</a>
-2. <a href="#t1">Require.js optimizer</a>
-3. <a href="#t2">Require.js optimizer dump dependencies to single file</a>
+This article covers the RequireJS optimizer (r.js) for bundling and minifying modules. For background on dependency management, see [Part 1](/require-js-dependency-management-part1/).
 
-This article will help you understand the RequireJS optimizer. An introductory article about RequireJS dependency management can be found in [part 1](/require-js-dependency-management-part1/) of the series.
+## Introduction
 
-## <a name="t0" id="t0">Introduction</a>
+The RequireJS optimizer uses Node.js to bundle and minify your modules. Install Node.js from the [official website](http://nodejs.org/#download) before proceeding.
  
-James Burke [recommends](http://requirejs.org/docs/optimization.html) using node.js for optimizing and building your code. Make sure you have node.js installed on your machine. You can download node.js from [here](http://nodejs.org/#download).
- 
-## <a name="t1" id="t0">Require.js optimizer</a>
+## Setting Up the Optimizer
 
-Create your build script file on following location `[webapp/build/build.js]`
+Create a build configuration file at `webapp/build/build.js`:
 
 ```js
 |-[wepapp]
@@ -39,19 +35,15 @@ Create your build script file on following location `[webapp/build/build.js]`
 |-readme.md
 ```
  
-Build your application with node.js and r.js executing the following command
- 
-```js
+Run the optimizer with:
+
+```bash
 node r.js -o build.js
 ```
- 
-The following are examples of how to build an application with RequireJS.
- 
-**Example 1: Optimize modules**
 
-Main module app.js has many dependencies and we want to bundle all that dependencies into single file. Mark modules for optimization in modules array of configuration object inside `build.js`. First example will contain only one module for optimization `[webapp/js/app.js]`.
- 
-Paste the following code to your `build.js` file.
+**Example 1: Single Module Optimization**
+
+To bundle `app.js` and all its dependencies into one file, configure the `modules` array in `build.js`:
  
 ```js
 {
@@ -70,10 +62,11 @@ Paste the following code to your `build.js` file.
 }
 ```
  
-**appDir** - Telling us where webapp root directory is located relative to `build.js` script.<br/>
-**dir** - Output directory relative to `build.js`
- 
- Console output of `build.js`
+Key options:
+- **appDir** – root directory of your application (relative to build.js)
+- **dir** – output directory for optimized files
+
+Console output:
  
 ```js
 Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
@@ -94,9 +87,9 @@ js/app/category/specialItem.js
 js/app.js
 ```
  
-All `[webapp/js/app.js]` dependencies are now minified with Uglify.js and concatenated into single file. But what happened with individual modules? Module `[webapp/js/app/category/specialItem.js]` has a dependency `[webapp/js/app/category/Item.js]`. Open your optimized `[webapp/js/app/category/specialItem.js]` and pass it to beautifier. As you can see from the output `[js/app/category/item.js]` is not bundled with `[js/app/category/specialItem.js]` file.
- 
- Optimized module:
+All dependencies are minified and concatenated into a single file.
+
+Note that individual modules retain their original dependencies. For example, `specialItem.js` still references `item.js` rather than including it:
  
 ```js
 define(["./item"], function (Item) {
@@ -107,11 +100,9 @@ define(["./item"], function (Item) {
 })
 ```
  
-**Example 2: Optimize additional modules**
+**Example 2: Multiple Module Optimization**
 
-In this example we will add `[webapp/js/app/category/specialItem.js]` to modules array of `build.js` configuration object.
- 
-Paste following code to your `build.js` file.
+Add `specialItem.js` to the modules array:
  
 ```js
 {
@@ -131,7 +122,7 @@ Paste following code to your `build.js` file.
 }
 ```
  
- Console output of `build.js`
+Console output:
  
 ```js
 Uglifying file: C:/vlada/practice/require/webapp/build/dist/build/r.js
@@ -157,9 +148,7 @@ js/app/category/item.js
 js/app/category/specialItem.js
 ```
  
-Now `[js/app/category/item.js]` is bundled with `[js/app/category/specialItem.js]` module. 
- 
- Optimized module: 
+Now `item.js` is bundled with `specialItem.js`: 
  
 ```js
 define("app/category/item", [], function () {
@@ -177,9 +166,9 @@ define("app/category/item", [], function () {
 })
 ```
  
-## <a name="t2" id="t0">Require.js optimizer compile dependencies to single file</a>
+## Single File Build
 
-Paste the following code to your `build.single.js` file.
+To bundle everything into one file, create `build.single.js`:
  
 ```js
 {
@@ -194,10 +183,11 @@ Paste the following code to your `build.single.js` file.
 }
 ```
 
-**name** - Location of module to be exported as a single file with all dependencies.<br/>
-**out** - File `app-built.js` is created.
- 
- Console output of `build.single.js`:
+Key options:
+- **name** – entry module to bundle with dependencies
+- **out** – output filename
+
+Console output:
  
 ```js
  Tracing dependencies for: ../app
@@ -212,9 +202,9 @@ Paste the following code to your `build.single.js` file.
  C:/vlada/practice/require/webapp/js/lib/../app.js
 ```
  
-All of our modules are now glued together into single `[webapp/build/app-built.js]` file.
- 
-### <a name="source" id="source">Source code listing</a>
+All modules are bundled into `webapp/build/app-built.js`.
+
+## Complete Build Configurations
  
 `build.js`
 ```js
@@ -249,9 +239,7 @@ All of our modules are now glued together into single `[webapp/build/app-built.j
 }
 ```
  
-In the RequireJS tutorial part 3 I will talk about RequireJS integration with Backbone, Handlebars and jQuery with Require.js. Stay tuned :)
- 
-**References**
+## References
 
 1. http://requirejs.org/docs/optimization.html
 2. https://github.com/jrburke/r.js/blob/master/build/example.build.js
