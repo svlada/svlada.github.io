@@ -9,8 +9,6 @@ layout: layouts/post.njk
 permalink: "ssh-public-key-authentication/index.html"
 ---
 
-## Introduction
-
 This article demonstrates how to securely connect to a remote host from a Java application by establishing an SSH connection. It also covers configuration details for enabling public key authentication and securing SSH keys.
 
 Public key authentication allows users to establish an SSH connection without typing in a password. The key advantage is that the password is never transmitted over the network, reducing the risk of compromise.
@@ -39,7 +37,7 @@ Your identification has been saved in /home/vladimir.stankovic/.ssh/id_rsa.
 Your public key has been saved in /home/vladimir.stankovic/.ssh/id_rsa.pub.
 ```
 
-Private key is identified as ```id_rsa``` and public key as a ```id_rsa.pub```. 
+Private key is identified as ```id_rsa``` and public key as a ```id_rsa.pub```.
 
 ## Copy public key to remote host
 
@@ -63,16 +61,16 @@ I used the [JSch library](http://www.jcraft.com/jsch/) to establish the SSH conn
 
 The most important step is configuring the `com.jcraft.jsch.Session` object and adding publickey to the list of preferred authentication options.
 
-Here is a sample configuration for public key authentication: 
+Here is a sample configuration for public key authentication:
 ```java
     JSch jsch = new JSch();
     Session session = null;
     String privateKeyPath = "/home/vladimir.stankovic/.ssh/id_rsa";
     try {
-        jsch.addIdentity(privateKeyPath);	    
+        jsch.addIdentity(privateKeyPath);
         session = jsch.getSession(username, host, port);
         session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
-        java.util.Properties config = new java.util.Properties(); 
+        java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
         session.setConfig(config);
     } catch (JSchException e) {

@@ -9,8 +9,6 @@ layout: layouts/post.njk
 permalink: "spring-batch-job-repository-configuration-for-websphere-and-oracle/index.html"
 ---
 
-### Introduction
-
 This article describes an issue with the default Spring Batch Job Repository configuration when deployed on a WebSphere application server backed by an Oracle database.
 
 The following exception may occur:
@@ -32,12 +30,12 @@ For WebSphere support, the `lobHandler` bean must be instantiated with a compati
 The following snippet shows the Job Repository configuration details:
 
 ```java
-<batch:job-repository id="jobRepository" 
-    data-source="dataSource" 
-    transaction-manager="transactionManager" 
+<batch:job-repository id="jobRepository"
+    data-source="dataSource"
+    transaction-manager="transactionManager"
     lob-handler="lobHandler" />
 
-<bean id="lobHandler" 
+<bean id="lobHandler"
     class="org.springframework.jdbc.support.lob.OracleLobHandler">
     <property name="nativeJdbcExtractor" ref="nativeJdbcExtractor" />
 </bean>
@@ -62,4 +60,3 @@ The following snippet shows the Job Repository configuration details:
     <property name="entityManagerFactory" ref="entityManagerFactory"/>
 </bean>
 ```
-

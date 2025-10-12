@@ -11,8 +11,6 @@ layout: layouts/post.njk
 permalink: "jwt-token-authentication-with-spring-boot/index.html"
 ---
 
-## Introduction
-
 This article is a guide to implementing JWT authentication with Spring Boot.
 
 At a minimum, the client must exchange a username and password to obtain a JWT. This token is then used to authenticate subsequent API calls.
@@ -118,7 +116,7 @@ Raw HTTP Response:
 ```json
 {
   "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1BSRU1JVU1fTUVNQkVSIl0sImlzcyI6Imh0dHA6Ly9zdmxhZGEuY29tIiwiaWF0IjoxNDcyMDMzMzA4LCJleHAiOjE0NzIwMzQyMDh9.41rxtplFRw55ffqcw1Fhy2pnxggssdWUU8CDOherC0Kw4sgt3-rw_mPSWSgQgsR0NLndFcMPh7LSQt5mkYqROQ",
-  
+
   "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdmxhZGFAZ21haWwuY29tIiwic2NvcGVzIjpbIlJPTEVfUkVGUkVTSF9UT0tFTiJdLCJpc3MiOiJodHRwOi8vc3ZsYWRhLmNvbSIsImp0aSI6IjkwYWZlNzhjLTFkMmUtNDg2OS1hNzdlLTFkNzU0YjYwZTBjZSIsImlhdCI6MTQ3MjAzMzMwOCwiZXhwIjoxNDcyMDM2OTA4fQ.SEEG60YRznBB2O7Gn_5X6YbRmyB3ml4hnpSOxqkwQUFtqA6MZo7_n2Am2QhTJBJA1Ygv74F2IxiLv0urxGLQjg"
 }
 ```
@@ -208,8 +206,8 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     private final AuthenticationFailureHandler failureHandler;
 
     private final ObjectMapper objectMapper;
-    
-    public AjaxLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler, 
+
+    public AjaxLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler,
             AuthenticationFailureHandler failureHandler, ObjectMapper mapper) {
         super(defaultProcessUrl);
         this.successHandler = successHandler;
@@ -228,7 +226,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
         }
 
         LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
-        
+
         if (StringUtils.isBlank(loginRequest.getUsername()) || StringUtils.isBlank(loginRequest.getPassword())) {
             throw new AuthenticationServiceException("Username or Password not provided");
         }
@@ -281,19 +279,19 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
 
         User user = userService.getByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-        
+
         if (!encoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
         }
 
         if (user.getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
-        
+
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
                 .collect(Collectors.toList());
-        
+
         UserContext userContext = UserContext.create(user.getUsername(), authorities);
-        
+
         return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
     }
 
@@ -326,10 +324,10 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
         UserContext userContext = (UserContext) authentication.getPrincipal();
-        
+
         JwtToken accessToken = tokenFactory.createAccessJwtToken(userContext);
         JwtToken refreshToken = tokenFactory.createRefreshToken(userContext);
-        
+
         Map<String, String> tokenMap = new HashMap<String, String>();
         tokenMap.put("token", accessToken.getToken());
         tokenMap.put("refreshToken", refreshToken.getToken());
@@ -344,7 +342,7 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
     /**
      * Removes temporary authentication-related data which may have been stored
      * in the session during the authentication process..
-     * 
+     *
      */
     protected final void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -389,16 +387,16 @@ public class JwtTokenFactory {
 
     /**
      * Factory method for issuing new JWT Tokens.
-     * 
+     *
      * @param username
      * @param roles
      * @return
      */
     public AccessJwtToken createAccessJwtToken(UserContext userContext) {
-        if (StringUtils.isBlank(userContext.getUsername())) 
+        if (StringUtils.isBlank(userContext.getUsername()))
             throw new IllegalArgumentException("Cannot create JWT Token without username");
 
-        if (userContext.getAuthorities() == null || userContext.getAuthorities().isEmpty()) 
+        if (userContext.getAuthorities() == null || userContext.getAuthorities().isEmpty())
             throw new IllegalArgumentException("User doesn't have any privileges");
 
         Claims claims = Jwts.claims().setSubject(userContext.getUsername());
@@ -426,7 +424,7 @@ public class JwtTokenFactory {
 
         Claims claims = Jwts.claims().setSubject(userContext.getUsername());
         claims.put("scopes", Arrays.asList(Scopes.REFRESH_TOKEN.authority()));
-        
+
         String token = Jwts.builder()
           .setClaims(claims)
           .setIssuer(settings.getTokenIssuer())
@@ -453,19 +451,19 @@ The `AjaxAwareAuthenticationFailureHandler` is invoked by the `AjaxLoginProcessi
 @Component
 public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
     private final ObjectMapper mapper;
-    
+
     @Autowired
     public AjaxAwareAuthenticationFailureHandler(ObjectMapper mapper) {
         this.mapper = mapper;
-    }   
-    
+    }
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException e) throws IOException, ServletException {
-        
+
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        
+
         if (e instanceof BadCredentialsException) {
             mapper.writeValue(response.getWriter(), ErrorResponse.of("Invalid username or password", ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));
         } else if (e instanceof JwtExpiredTokenException) {
@@ -500,11 +498,11 @@ Some trade-offs have to be made with this approach:
 
 In this article we'll investigate how JWT's can used for token based authentication.
 
-JWT Authentication flow is very simple: 
+JWT Authentication flow is very simple:
 
 1. User obtains Refresh and Access tokens by providing credentials to the Authorization server
 2. User sends Access token with each request to access protected API resource
-3. Access token is signed and contains user identity (e.g. user id) and authorization claims. 
+3. Access token is signed and contains user identity (e.g. user id) and authorization claims.
 
 It's important to note that authorization claims are embedded in the access token. Why does this matter? If authorization data (e.g., user privileges stored in the database) changes during the lifetime of an access token, those changes will not take effect until a new token is issued.
 
@@ -556,9 +554,9 @@ Important: On successful authentication, ensure you call `chain.doFilter(request
 public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
     private final AuthenticationFailureHandler failureHandler;
     private final TokenExtractor tokenExtractor;
-    
+
     @Autowired
-    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler, 
+    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler,
             TokenExtractor tokenExtractor, RequestMatcher matcher) {
         super(matcher);
         this.failureHandler = failureHandler;
@@ -626,7 +624,7 @@ The `JwtAuthenticationProvider` has the following responsibilities:
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final JwtSettings jwtSettings;
-    
+
     @Autowired
     public JwtAuthenticationProvider(JwtSettings jwtSettings) {
         this.jwtSettings = jwtSettings;
@@ -642,9 +640,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> authorities = scopes.stream()
                 .map(authority -> new SimpleGrantedAuthority(authority))
                 .collect(Collectors.toList());
-        
+
         UserContext context = UserContext.create(subject, authorities);
-        
+
         return new JwtAuthenticationToken(context, context.getAuthorities());
     }
 
@@ -664,7 +662,7 @@ The `JwtTokenAuthenticationProcessingFilter` is configured to skip the following
 public class SkipPathRequestMatcher implements RequestMatcher {
     private OrRequestMatcher matchers;
     private RequestMatcher processingMatcher;
-    
+
     public SkipPathRequestMatcher(List<String> pathsToSkip, String processingPath) {
         Assert.notNull(pathsToSkip);
         List<RequestMatcher> m = pathsToSkip.stream().map(path -> new AntPathRequestMatcher(path)).collect(Collectors.toList());
@@ -702,29 +700,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/api/auth/login";
     public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
-    
+
     @Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
     @Autowired private AuthenticationSuccessHandler successHandler;
     @Autowired private AuthenticationFailureHandler failureHandler;
     @Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
     @Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
-    
+
     @Autowired private TokenExtractor tokenExtractor;
-    
+
     @Autowired private AuthenticationManager authenticationManager;
-    
+
     @Autowired private ObjectMapper objectMapper;
-        
+
     protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() throws Exception {
         AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, successHandler, failureHandler, objectMapper);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }
-    
+
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
         List<String> pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
         SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
-        JwtTokenAuthenticationProcessingFilter filter 
+        JwtTokenAuthenticationProcessingFilter filter
             = new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
@@ -735,13 +733,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(ajaxAuthenticationProvider);
         auth.authenticationProvider(jwtAuthenticationProvider);
     }
-    
+
     @Bean
     protected BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -753,7 +751,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable() // We don't need CSRF for JWT based authentication
         .exceptionHandling()
         .authenticationEntryPoint(this.authenticationEntryPoint)
-        
+
         .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

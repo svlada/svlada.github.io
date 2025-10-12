@@ -9,12 +9,11 @@ layout: layouts/post.njk
 permalink: "step-builder-pattern/index.html"
 ---
 
-## Introduction
 I recently decided to use the Amazon SES API to send emails to my [Microservices Weekly](http://microservicesweekly.com) subscribers. The main reason? Price. It's cheap. However, the Java client API Amazon provides isn't exactly pleasant to work with, so I built a [small wrapper](https://github.com/svlada/ziggy) around it.
 
 To make a long story short, the real purpose here is to share my experience with a less well-known variation of the Builder pattern: the Step Builder pattern.
 
-The Step Builder pattern is an object-creation design pattern that doesn't get much attention in popular design pattern discussions. Compared to the traditional builder, it offers some neat advantages. Chief among them is that it guides the client in using your API correctly. In practice, it feels like a mix of the builder pattern and a state machine—and it's often described as a wizard for building objects. 
+The Step Builder pattern is an object-creation design pattern that doesn't get much attention in popular design pattern discussions. Compared to the traditional builder, it offers some neat advantages. Chief among them is that it guides the client in using your API correctly. In practice, it feels like a mix of the builder pattern and a state machine—and it's often described as a wizard for building objects.
 
 ## Pros and cons
 
@@ -53,7 +52,7 @@ The diagram below shows a state machine for constructing an Email object with th
 Rules of thumb for implementation:
 
 1. Add dependencies to your class. It's recommended to add a private modifier to class attributes.
-2. Define creational steps as inner interfaces in your base class. 
+2. Define creational steps as inner interfaces in your base class.
 3. Each creational step should return the next step (interface) in the chain.
 4. The final step should be an interface called "Build" which will provide build() method.
 5. Define one inner static Builder class that implements all of the defined steps.
@@ -70,7 +69,7 @@ public class Email {
 	private List<EmailAddress> bcc;
 	private Subject subject;
 	private Content content;
-	
+
 	public static FromStep builder() {
 		return new Builder();
 	}
@@ -78,25 +77,25 @@ public class Email {
 	public interface FromStep {
 		ToStep from(EmailAddress from);
 	}
-	
+
 	public interface ToStep {
 		SubjectStep to(EmailAddress... from);
 	}
-	
+
 	public interface SubjectStep {
 		ContentStep subject(Subject subject);
 	}
-	
+
 	public interface ContentStep {
 		Build content(Content content);
 	}
-	
+
 	public interface Build {
 		Email build();
 		Build cc(EmailAddress... cc);
 		Build bcc(EmailAddress... bcc);
 	}
-	
+
 	public static class Builder implements FromStep, ToStep, SubjectStep, ContentStep, Build {
 		private EmailAddress from;
 		private List<EmailAddress> to;
@@ -104,7 +103,7 @@ public class Email {
 		private List<EmailAddress> bcc;
 		private Subject subject;
 		private Content content;
-		
+
 		@Override
 		public Email build() {
 			return new Email(this);

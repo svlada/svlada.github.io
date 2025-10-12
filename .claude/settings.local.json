@@ -6,7 +6,11 @@
       "WebFetch(domain:thesephist.com)",
       "Read(//Users/svlada/Desktop/**)",
       "WebFetch(domain:bernsteinbear.com)",
-      "WebFetch(domain:simonwillison.net)"
+      "WebFetch(domain:simonwillison.net)",
+      "WebFetch(domain:sunshowers.io)",
+      "Bash(curl:*)",
+      "Read(//tmp/**)",
+      "WebFetch(domain:lifetime-variance.sunshowers.io)"
     ],
     "deny": []
   }

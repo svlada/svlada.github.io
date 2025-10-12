@@ -10,8 +10,6 @@ layout: layouts/post.njk
 permalink: "spring-session-tutorial/index.html"
 ---
 
-## Introduction
-
 This guide explains how to set up [Spring Session](https://projects.spring.io/spring-session/) for database-backed storage.
 
 For reference, see the linked GitHub [repository](https://github.com/svlada/springsession-jdbc) for code examples.
@@ -28,7 +26,7 @@ With that said, let's look at the pros and cons of stateless and stateful approa
 
 Pros
 
-1. No need to scale session data on the server-side as the session is maintained through cryptographically signed JSON Web Token (JWT). 
+1. No need to scale session data on the server-side as the session is maintained through cryptographically signed JSON Web Token (JWT).
 
 Cons
 
@@ -41,7 +39,7 @@ Cons
 Pros
 
 1. Ability to log-out user
-2. Out-of-box sliding session 
+2. Out-of-box sliding session
 
 Cons
 
@@ -49,11 +47,11 @@ Cons
 
 In short: don't use JSON Web Tokens to manage session data for your web applications. For most cases, storing session-related data in Redis is more than sufficient.
 
-In a microservices architecture, however, there is one scenario where JWTs can be useful. An API Gateway can act as a translation layer—validating the session ID and issuing a federated token for use across services. That's a case where JSON Web Tokens fit nicely. 
+In a microservices architecture, however, there is one scenario where JWTs can be useful. An API Gateway can act as a translation layer—validating the session ID and issuing a federated token for use across services. That's a case where JSON Web Tokens fit nicely.
 
 ## Project setup
 
-Include ``spring-session-core`` and ``spring-session-jdbc`` in your ``pom.xml`` file. 
+Include ``spring-session-core`` and ``spring-session-jdbc`` in your ``pom.xml`` file.
 
 **Maven dependencies**
 

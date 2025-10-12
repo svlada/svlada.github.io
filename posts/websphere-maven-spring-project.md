@@ -10,8 +10,6 @@ layout: layouts/post.njk
 permalink: "websphere-maven-spring-project/index.html"
 ---
 
-### Introduction
-
 This article explains how to create a Spring web application for deployment on IBM WebSphere Application Server. The objective is to set up a Maven project that produces an EAR package (with a WAR module and application assembly) suitable for WebSphere.
 
 ### Maven project structure
@@ -19,7 +17,7 @@ This article explains how to create a Spring web application for deployment on I
 The following list shows the directory structure of the multi-module Maven project:
 
 ```text
-|- websphere-maven-spring-project 
+|- websphere-maven-spring-project
 |-- app-ear/
 |---- pom.xml
 |-- app-webapp/
@@ -65,7 +63,7 @@ Both sub-modules (app-ear and app-webapp) must reference the parent module in th
 </parent>
 ```
 
-**Sub-module: app-ear** 
+**Sub-module: app-ear**
 
 The WAR module (app-webapp) must be included in the list of EAR dependencies.
 
@@ -107,7 +105,6 @@ In the app-ear/pom.xml, include the maven-ear-plugin in the `<build><plugins>` s
 
 The web app module is a simple web application generated with Spring Initializr.
 
-### Source code 
+### Source code
 
 You can clone the entire project from the following [GitHub repository](https://github.com/svlada/websphere-maven-spring-project).
-
