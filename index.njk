@@ -11,8 +11,15 @@ date: 2020-01-01
 {% for post in postslist | reverse %}
   {% if post.data.title != "draft" %}
   <li>
-    <span class="post-title"><a href="{{ post.url | url }}">{{ post.data.title }}</a></span>
-    <span class="post-date">{{ post.data.date | htmlDateString }}</span>
+    <div class="post-header">
+      <h2 class="post-title">
+        <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+      </h2>
+      <time class="post-date" datetime="{{ post.data.date | htmlDateString }}">{{ post.data.date | readableDate }}</time>
+    </div>
+    {% if post.data.description %}
+    <p class="post-description">{{ post.data.description }}</p>
+    {% endif %}
   </li>
   {% endif %}
 {% endfor %}

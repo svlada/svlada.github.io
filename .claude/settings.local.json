@@ -10,7 +10,11 @@
       "WebFetch(domain:sunshowers.io)",
       "Bash(curl:*)",
       "Read(//tmp/**)",
-      "WebFetch(domain:lifetime-variance.sunshowers.io)"
+      "WebFetch(domain:lifetime-variance.sunshowers.io)",
+      "WebFetch(domain:mattrighetti.com)",
+      "Bash(tree:*)",
+      "Bash(cat:*)",
+      "Bash(npm run watch:*)"
     ],
     "deny": []
   }
