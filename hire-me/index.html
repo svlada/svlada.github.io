@@ -11,7 +11,7 @@
   <meta name="description" content="Sit down, relax, mix yourself a drink and enjoy the show.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/svlada.css?v=1.0.0">
+  <link rel="stylesheet" href="/css/svlada.css?v=2.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -26,20 +26,34 @@
           "https://github.com/svlada",
           "https://twitter.com/svlada",
           "https://www.linkedin.com/in/svlada",
-          "https://news.ycombinator.com/user?id=hawkweed"=
+          "https://news.ycombinator.com/user?id=hawkweed"
       ]
   }
+  </script>
+
+  <script>
+    // Theme switcher - check localStorage and apply theme before render
+    (function() {
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
   </script>
 </head>
 
 <body>
   <header>
-    <a href="/" class="site-title">@svlada</a>
-    <nav>
-      <a href="/">posts</a>
-      <a href="/about">about</a>
-      <a href="/feed/feed.xml">rss</a>
-    </nav>
+    <div>
+      <a href="/" class="site-title">svlada</a>
+      <nav>
+        <a href="/about">about</a>
+        <a href="/feed/feed.xml">rss</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-icon">☾</span>
+        </button>
+      </nav>
+    </div>
   </header>
 
   <main>
@@ -67,7 +81,43 @@
 
   </main>
 
-<!-- No JavaScript needed for this minimal theme -->
+  <footer>
+    <div>
+      <a href="https://github.com/svlada" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://twitter.com/svlada" target="_blank" rel="noopener">Twitter</a>
+      <a href="https://www.linkedin.com/in/svlada" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="/feed/feed.xml">RSS</a>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle functionality
+    const toggle = document.querySelector('.theme-toggle');
+    const icon = document.querySelector('.theme-icon');
+    const html = document.documentElement;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        icon.textContent = '☀';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        icon.textContent = '☾';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Set initial icon based on current theme
+    if (html.getAttribute('data-theme') === 'dark') {
+      icon.textContent = '☀';
+    }
+
+    toggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  </script>
 
 <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

@@ -11,7 +11,7 @@
   <meta name="description" content="This article describes how to create Spring web application that can be deployed on WebSphere application server. The goal is to to create maven project that can be used to generate EAR file.">
   <meta name="author" content="Vlada Stankovic">
 
-  <link rel="stylesheet" href="/css/svlada.css?v=1.0.0">
+  <link rel="stylesheet" href="/css/svlada.css?v=2.0.0">
   <link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Vladimir Stankovic - Software engineer">
 
   <script type="application/ld+json">
@@ -26,27 +26,43 @@
           "https://github.com/svlada",
           "https://twitter.com/svlada",
           "https://www.linkedin.com/in/svlada",
-          "https://news.ycombinator.com/user?id=hawkweed"=
+          "https://news.ycombinator.com/user?id=hawkweed"
       ]
   }
+  </script>
+
+  <script>
+    // Theme switcher - check localStorage and apply theme before render
+    (function() {
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
   </script>
 </head>
 
 <body>
   <header>
-    <a href="/" class="site-title">@svlada</a>
-    <nav>
-      <a href="/">posts</a>
-      <a href="/about">about</a>
-      <a href="/feed/feed.xml">rss</a>
-    </nav>
+    <div>
+      <a href="/" class="site-title">svlada</a>
+      <nav>
+        <a href="/about">about</a>
+        <a href="/feed/feed.xml">rss</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-icon">☾</span>
+        </button>
+      </nav>
+    </div>
   </header>
 
   <main>
     <article>
     <h1>Multi-module Websphere web application</h1>
-    <p class="post-date">Published: Sep 10, 2015 </p>
-    
+    <div class="post-meta">
+        <time datetime="2015-09-10">2015-09-10</time>
+    </div>
+
     <p>This article explains how to create a Spring web application for deployment on IBM WebSphere Application Server. The objective is to set up a Maven project that produces an EAR package (with a WAR module and application assembly) suitable for WebSphere.</p>
 <h3>Maven project structure</h3>
 <p>The following list shows the directory structure of the multi-module Maven project:</p>
@@ -115,23 +131,33 @@
 <h3>Source code</h3>
 <p>You can clone the entire project from the following <a href="https://github.com/svlada/websphere-maven-spring-project">GitHub repository</a>.</p>
 
-    
-    <hr>
-    <p><a href="/">← back to home</a></p>
-</article>
-<div id="disqus_thread"></div>
-<script>
 
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
+    
+    <div class="tags">
+        
+            
+        
+            
+            <a href="/tags/java/" class="tag">java</a>
+            
+        
+            
+            <a href="/tags/websphere/" class="tag">websphere</a>
+            
+        
+            
+            <a href="/tags/spring/" class="tag">spring</a>
+            
+        
+    </div>
+    
+</article>
+
+<a href="/" class="back-link">← Back to posts</a>
+
+<div id="disqus_thread" style="margin-top: 4rem;"></div>
+<script>
+(function() {
 var d = document, s = d.createElement('script');
 s.src = 'https://svlada.disqus.com/embed.js';
 s.setAttribute('data-timestamp', +new Date());
@@ -142,7 +168,43 @@ s.setAttribute('data-timestamp', +new Date());
 
   </main>
 
-<!-- No JavaScript needed for this minimal theme -->
+  <footer>
+    <div>
+      <a href="https://github.com/svlada" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://twitter.com/svlada" target="_blank" rel="noopener">Twitter</a>
+      <a href="https://www.linkedin.com/in/svlada" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="/feed/feed.xml">RSS</a>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle functionality
+    const toggle = document.querySelector('.theme-toggle');
+    const icon = document.querySelector('.theme-icon');
+    const html = document.documentElement;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        icon.textContent = '☀';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        icon.textContent = '☾';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Set initial icon based on current theme
+    if (html.getAttribute('data-theme') === 'dark') {
+      icon.textContent = '☀';
+    }
+
+    toggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+  </script>
 
 <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
