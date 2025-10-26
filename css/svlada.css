@@ -1,16 +1,16 @@
 /* Light theme (default) */
 :root {
   --bg: #ffffff;
-  --text: #000000;
-  --text-secondary: #555555;
-  --text-muted: #888888;
+  --text: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #767676;
   --accent: #0066cc;
   --link: #0066cc;
   --link-visited: #551a8b;
   --link-hover: #0052a3;
   --code-bg: #f6f6f6;
   --border: #dddddd;
-  --max-width: 700px;
+  --max-width: 784px;
 }
 
 /* Dark theme */
