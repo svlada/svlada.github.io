@@ -32,9 +32,8 @@
   </script>
 
   <script>
-    // Theme switcher - check localStorage and apply theme before render
     (function() {
-      const theme = localStorage.getItem('theme') || 'light';
+      const theme = localStorage.getItem('theme') || 'dark';
       if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
@@ -44,16 +43,15 @@
 
 <body>
   <header>
-    <div>
-      <a href="/" class="site-title">svlada</a>
-      <nav>
-        <a href="/about">about</a>
-        <a href="{{ metadata.feed.path | url }}">rss</a>
-        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
-          <span class="theme-icon">☾</span>
-        </button>
-      </nav>
-    </div>
+    <a href="/" class="site-title">svlada</a>
+    <nav>
+      <a href="/">blog</a>
+      <a href="/about">about</a>
+      <a href="{{ metadata.feed.path | url }}">rss</a>
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">☀</span>
+      </button>
+    </nav>
   </header>
 
   <main>
@@ -61,40 +59,32 @@
   </main>
 
   <footer>
-    <div>
-      <a href="https://github.com/svlada" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://twitter.com/svlada" target="_blank" rel="noopener">Twitter</a>
-      <a href="https://www.linkedin.com/in/svlada" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="{{ metadata.feed.path | url }}">RSS</a>
-    </div>
+    <a href="https://github.com/svlada">GitHub</a>
+    <a href="https://twitter.com/svlada">Twitter</a>
+    <a href="https://www.linkedin.com/in/svlada">LinkedIn</a>
+    <a href="{{ metadata.feed.path | url }}">RSS</a>
   </footer>
 
   <script>
-    // Theme toggle functionality
     const toggle = document.querySelector('.theme-toggle');
     const icon = document.querySelector('.theme-icon');
     const html = document.documentElement;
 
-    function setTheme(theme) {
-      if (theme === 'dark') {
-        html.setAttribute('data-theme', 'dark');
-        icon.textContent = '☀';
-        localStorage.setItem('theme', 'dark');
-      } else {
+    // Set correct initial icon
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    icon.textContent = currentTheme === 'dark' ? '☀' : '☾';
+
+    toggle.addEventListener('click', () => {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      if (isDark) {
         html.removeAttribute('data-theme');
         icon.textContent = '☾';
         localStorage.setItem('theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        icon.textContent = '☀';
+        localStorage.setItem('theme', 'dark');
       }
-    }
-
-    // Set initial icon based on current theme
-    if (html.getAttribute('data-theme') === 'dark') {
-      icon.textContent = '☀';
-    }
-
-    toggle.addEventListener('click', () => {
-      const currentTheme = html.getAttribute('data-theme');
-      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
   </script>
 

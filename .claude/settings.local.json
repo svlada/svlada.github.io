@@ -14,7 +14,8 @@
       "WebFetch(domain:mattrighetti.com)",
       "Bash(tree:*)",
       "Bash(cat:*)",
-      "Bash(npm run watch:*)"
+      "Bash(npm run watch:*)",
+      "WebFetch(domain:mijndertstuij.nl)"
     ],
     "deny": []
   }
