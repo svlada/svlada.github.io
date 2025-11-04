@@ -106,7 +106,7 @@ a:hover {
 
 .post-date {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: 'SF Mono', Consolas, Monaco, 'Courier New', monospace;
   display: inline;
   margin-right: 0.5rem;
@@ -138,19 +138,21 @@ a:hover {
 
 code {
   font-family: 'SF Mono', Consolas, Monaco, 'Courier New', monospace;
-  font-size: 0.85em;
+  font-size: 0.9rem;
   background: var(--code-bg);
   padding: 0.2em 0.4em;
   border-radius: 3px;
 }
 
 pre {
+  font-family: 'SF Mono', Consolas, Monaco, 'Courier New', monospace;
   background: var(--code-bg);
   padding: 1.2rem;
   margin: 1.5rem 0;
   overflow-x: auto;
   line-height: 1.5;
   border-radius: 4px;
+  font-size: 0.9rem;
 }
 
 pre code {
