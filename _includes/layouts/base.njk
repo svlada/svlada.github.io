@@ -31,14 +31,6 @@
   }
   </script>
 
-  <script>
-    (function() {
-      const theme = localStorage.getItem('theme') || 'dark';
-      if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
-  </script>
 </head>
 
 <body>
@@ -48,9 +40,6 @@
       <a href="/">blog</a>
       <a href="/about">about</a>
       <a href="{{ metadata.feed.path | url }}">rss</a>
-      <button class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-icon">☀</span>
-      </button>
     </nav>
   </header>
 
@@ -65,30 +54,7 @@
     <a href="{{ metadata.feed.path | url }}">RSS</a>
   </footer>
 
-  <script>
-    const toggle = document.querySelector('.theme-toggle');
-    const icon = document.querySelector('.theme-icon');
-    const html = document.documentElement;
-
-    // Set correct initial icon
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    icon.textContent = currentTheme === 'dark' ? '☀' : '☾';
-
-    toggle.addEventListener('click', () => {
-      const isDark = html.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        html.removeAttribute('data-theme');
-        icon.textContent = '☾';
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        icon.textContent = '☀';
-        localStorage.setItem('theme', 'dark');
-      }
-    });
-  </script>
-
-<script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script data-goatcounter="https://svlada.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
 

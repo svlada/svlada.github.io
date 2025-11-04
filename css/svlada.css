@@ -1,24 +1,30 @@
 :root {
-  --bg: #ffffff;
-  --text: #333333;
-  --text-secondary: #666666;
-  --text-muted: #999999;
-  --link: #0066cc;
-  --link-hover: #0052a3;
-  --border: #e5e5e5;
-  --code-bg: #f8f8f8;
+  /* Catppuccin Mocha */
+  --bg: #1e1e2e;
+  --text: #cdd6f4;
+  --text-secondary: #bac2de;
+  --text-muted: #a6adc8;
+  --link: #89b4fa;
+  --link-hover: #b4befe;
+  --border: #313244;
+  --code-bg: #181825;
+  --surface: #313244;
+  --overlay: #6c7086;
+  --blue: #89b4fa;
+  --lavender: #b4befe;
+  --sapphire: #74c7ec;
+  --sky: #89dceb;
+  --teal: #94e2d5;
+  --green: #a6e3a1;
+  --yellow: #f9e2af;
+  --peach: #fab387;
+  --maroon: #eba0ac;
+  --red: #f38ba8;
+  --mauve: #cba6f7;
+  --pink: #f5c2e7;
+  --flamingo: #f2cdcd;
+  --rosewater: #f5e0dc;
   --max-width: 784px;
-}
-
-[data-theme="dark"] {
-  --bg: #1a1a1a;
-  --text: #e0e0e0;
-  --text-secondary: #b0b0b0;
-  --text-muted: #808080;
-  --link: #6699ff;
-  --link-hover: #99bbff;
-  --border: #333333;
-  --code-bg: #262626;
 }
 
 * {
@@ -178,8 +184,6 @@ a:hover {
   color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
 }
 
 code {
@@ -251,9 +255,6 @@ img {
   height: auto;
   display: block;
   margin: 1.5rem 0;
-}
-
-[data-theme="dark"] img {
   filter: invert(1) hue-rotate(180deg);
 }
 

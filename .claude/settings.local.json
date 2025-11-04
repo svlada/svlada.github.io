@@ -15,7 +15,13 @@
       "Bash(tree:*)",
       "Bash(cat:*)",
       "Bash(npm run watch:*)",
-      "WebFetch(domain:mijndertstuij.nl)"
+      "WebFetch(domain:mijndertstuij.nl)",
+      "WebFetch(domain:madmalik.github.io)",
+      "Bash(unzip:*)",
+      "Bash(git restore:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:catppuccin.com)"
     ],
     "deny": []
   }
