@@ -22,7 +22,11 @@
       "WebFetch(domain:github.com)",
       "WebSearch",
       "WebFetch(domain:catppuccin.com)",
-      "WebFetch(domain:blog.flotes.app)"
+      "WebFetch(domain:blog.flotes.app)",
+      "WebFetch(domain:wezterm.org)",
+      "WebFetch(domain:meyerweb.com)",
+      "WebFetch(domain:devcara.com)",
+      "WebFetch(domain:cleberg.net)"
     ],
     "deny": []
   }
