@@ -147,16 +147,6 @@
   </url>
   
   <url>
-    <loc>https://svlada.com/tags/microservices/</loc>
-    <lastmod>2025-11-04</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://svlada.com/tags/kafka/</loc>
-    <lastmod>2025-11-04</lastmod>
-  </url>
-  
-  <url>
     <loc>https://svlada.com/tags/java/</loc>
     <lastmod>2025-11-04</lastmod>
   </url>
@@ -183,6 +173,16 @@
   
   <url>
     <loc>https://svlada.com/tags/require-js/</loc>
+    <lastmod>2025-11-04</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://svlada.com/tags/microservices/</loc>
+    <lastmod>2025-11-04</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://svlada.com/tags/kafka/</loc>
     <lastmod>2025-11-04</lastmod>
   </url>
   
