@@ -1,30 +1,10 @@
 :root {
-  /* Catppuccin Mocha */
   --bg: #1e1e2e;
   --text: #cdd6f4;
-  --text-secondary: #bac2de;
-  --text-muted: #a6adc8;
+  --text-muted: #6c7086;
   --link: #89b4fa;
-  --link-hover: #b4befe;
-  --border: #313244;
   --code-bg: #181825;
-  --surface: #313244;
-  --overlay: #6c7086;
-  --blue: #89b4fa;
-  --lavender: #b4befe;
-  --sapphire: #74c7ec;
-  --sky: #89dceb;
-  --teal: #94e2d5;
-  --green: #a6e3a1;
-  --yellow: #f9e2af;
-  --peach: #fab387;
-  --maroon: #eba0ac;
-  --red: #f38ba8;
-  --mauve: #cba6f7;
-  --pink: #f5c2e7;
-  --flamingo: #f2cdcd;
-  --rosewater: #f5e0dc;
-  --max-width: 784px;
+  --max-width: 650px;
 }
 
 * {
@@ -40,88 +20,63 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--text);
   background: var(--bg);
-  transition: background-color 0.2s, color 0.2s;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
 header {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 3rem 1.5rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: 3rem;
 }
 
 .site-title {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: normal;
   color: var(--text);
   text-decoration: none;
 }
 
-.site-title:hover {
-  color: var(--link);
-}
-
 nav {
+  margin-top: 0.5rem;
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 nav a {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 nav a:hover {
   color: var(--link);
 }
 
-.theme-toggle {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0;
-  line-height: 1;
-}
-
-.theme-toggle:hover {
-  color: var(--link);
-}
-
 main {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 1.5rem 4rem;
+  margin-bottom: 3rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.3;
   color: var(--text);
-  margin: 2rem 0 1rem;
+  margin: 1.5rem 0 0.5rem;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-top: 0;
-  margin-bottom: 0.5rem;
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-top: 2.5rem;
+  font-size: 1.2rem;
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 p {
@@ -130,12 +85,11 @@ p {
 
 a {
   color: var(--link);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 a:hover {
-  color: var(--link-hover);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .post-list {
@@ -145,35 +99,26 @@ a:hover {
 }
 
 .post-list li {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.post-list li:last-child {
-  border-bottom: none;
+  margin-bottom: 0.5rem;
 }
 
 .post-date {
   color: var(--text-muted);
   font-size: 0.9rem;
-  display: block;
-  margin-bottom: 0.4rem;
-  font-variant-numeric: tabular-nums;
+  margin-right: 1rem;
 }
 
 .post-title {
-  display: block;
+  display: inline;
 }
 
 .post-title a {
-  font-size: 1.2rem;
-  font-weight: 600;
   color: var(--text);
+  text-decoration: none;
 }
 
 .post-title a:hover {
-  color: var(--link);
+  text-decoration: underline;
 }
 
 .post-description {
@@ -300,21 +245,15 @@ article {
 }
 
 footer {
-  max-width: var(--max-width);
-  margin: 4rem auto 0;
-  padding: 2rem 1.5rem;
-  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  padding-top: 1rem;
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 footer a {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin-right: 1rem;
-}
-
-footer a:hover {
-  color: var(--link);
 }
 
 .archive-year {
@@ -355,31 +294,8 @@ hr {
 }
 
 @media (max-width: 768px) {
-  html {
-    font-size: 17px;
-  }
-
-  header {
-    padding: 2rem 1rem 1.5rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  main {
-    padding: 0 1rem 3rem;
-  }
-
-  footer {
-    padding: 2rem 1rem;
-  }
-
-  h1 {
-    font-size: 1.75rem;
-  }
-
-  h2 {
-    font-size: 1.4rem;
+  body {
+    padding: 1.5rem 0.75rem;
   }
 }
 

@@ -21,7 +21,8 @@
       "Bash(git restore:*)",
       "WebFetch(domain:github.com)",
       "WebSearch",
-      "WebFetch(domain:catppuccin.com)"
+      "WebFetch(domain:catppuccin.com)",
+      "WebFetch(domain:blog.flotes.app)"
     ],
     "deny": []
   }
