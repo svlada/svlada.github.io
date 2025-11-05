@@ -27,32 +27,32 @@ This project is using H2 in-memory database to store sample user data. To simpli
 
 The overall project structure is shown below:
 
-```java
-+---main
-|   +---java
-|   |   \---com
-|   |       \---svlada
-|   |           +---common
-|   |           +---entity
-|   |           +---profile
-|   |           |   \---endpoint
-|   |           +---security
-|   |           |   +---auth
-|   |           |   |   +---ajax
-|   |           |   |   \---jwt
-|   |           |   |       +---extractor
-|   |           |   |       \---verifier
-|   |           |   +---config
-|   |           |   +---endpoint
-|   |           |   +---exceptions
-|   |           |   \---model
-|   |           |       \---token
-|   |           \---user
-|   |               +---repository
-|   |               \---service
-|   \---resources
-|       +---static
-|       \---templates
+```
+main
+├── java
+│   └── com
+│       └── svlada
+│           ├── common
+│           ├── entity
+│           ├── profile
+│           │   └── endpoint
+│           ├── security
+│           │   ├── auth
+│           │   │   ├── ajax
+│           │   │   └── jwt
+│           │   │       ├── extractor
+│           │   │       └── verifier
+│           │   ├── config
+│           │   ├── endpoint
+│           │   ├── exceptions
+│           │   └── model
+│           │       └── token
+│           └── user
+│               ├── repository
+│               └── service
+└── resources
+    ├── static
+    └── templates
 ```
 
 ## Ajax authentication
