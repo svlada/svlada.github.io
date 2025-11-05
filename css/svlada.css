@@ -32,13 +32,6 @@ header {
   margin-bottom: 2rem;
 }
 
-.site-title {
-  font-size: 1rem;
-  font-weight: normal;
-  color: var(--text-muted);
-  text-decoration: none;
-}
-
 nav {
   display: inline;
 }
@@ -144,10 +137,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.post-description {
-  display: none;
-}
-
 .post-meta {
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -189,8 +178,8 @@ pre code {
 blockquote {
   margin: 1.5rem 0;
   padding-left: 1.5rem;
-  border-left: 3px solid var(--border);
-  color: var(--text-secondary);
+  border-left: 3px solid var(--text-muted);
+  color: var(--text-muted);
 }
 
 ul, ol {
@@ -212,7 +201,7 @@ table {
 th, td {
   text-align: left;
   padding: 0.6rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--text-muted);
 }
 
 th {
@@ -231,20 +220,20 @@ img {
 .tags {
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--text-muted);
 }
 
 .tag {
   display: inline-block;
   background: var(--code-bg);
-  color: var(--text-secondary);
+  color: var(--text-muted);
   padding: 0.3rem 0.6rem;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
   font-size: 0.85rem;
   text-decoration: none;
   border-radius: 3px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--text-muted);
 }
 
 .tag:hover {
@@ -261,8 +250,8 @@ article {
   display: inline-block;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  color: var(--text-secondary);
+  border-top: 1px solid var(--text-muted);
+  color: var(--text-muted);
 }
 
 .back-link:hover {
@@ -281,30 +270,9 @@ footer a {
   margin-right: 1rem;
 }
 
-.archive-year {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 2rem 0 1rem;
-}
-
-.archive-posts {
-  list-style: none;
-  padding: 0;
-}
-
-.archive-posts li {
-  margin-bottom: 0.8rem;
-}
-
-.archive-date {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-right: 1rem;
-}
-
 hr {
   border: none;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--text-muted);
   margin: 2rem 0;
 }
 
@@ -340,7 +308,7 @@ hr {
     background: #ffffff;
   }
 
-  nav, footer, .theme-toggle, .back-link, .tags {
+  nav, footer, .back-link, .tags {
     display: none;
   }
 
