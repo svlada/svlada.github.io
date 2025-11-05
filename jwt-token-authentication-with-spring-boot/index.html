@@ -60,31 +60,32 @@
 <p>See the linked GitHub <a href="https://github.com/svlada/springboot-security-jwt">repo</a> for code.</p>
 <p>This project is using H2 in-memory database to store sample user data. To simplify setup, I created data fixtures and configured Spring Boot to automatically load them at startup from: <code>/jwt-demo/src/main/resources/data.sql</code></p>
 <p>The overall project structure is shown below:</p>
-<pre class="language-java"><code class="language-java"><span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>main
-<span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>java
-<span class="token operator">|</span>   <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>com
-<span class="token operator">|</span>   <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>svlada
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>common
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>entity
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>profile
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>endpoint
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>security
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>auth
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>ajax
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>jwt
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>       <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>extractor
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>verifier
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>config
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>endpoint
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>exceptions
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>model
-<span class="token operator">|</span>   <span class="token operator">|</span>           <span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>token
-<span class="token operator">|</span>   <span class="token operator">|</span>           \<span class="token operator">--</span><span class="token operator">-</span>user
-<span class="token operator">|</span>   <span class="token operator">|</span>               <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span>repository
-<span class="token operator">|</span>   <span class="token operator">|</span>               \<span class="token operator">--</span><span class="token operator">-</span>service
-<span class="token operator">|</span>   \<span class="token operator">--</span><span class="token operator">-</span>resources
-<span class="token operator">|</span>       <span class="token operator">+</span><span class="token operator">--</span><span class="token operator">-</span><span class="token keyword">static</span>
-<span class="token operator">|</span>       \<span class="token operator">--</span><span class="token operator">-</span>templates</code></pre>
+<pre><code>main
+├── java
+│   └── com
+│       └── svlada
+│           ├── common
+│           ├── entity
+│           ├── profile
+│           │   └── endpoint
+│           ├── security
+│           │   ├── auth
+│           │   │   ├── ajax
+│           │   │   └── jwt
+│           │   │       ├── extractor
+│           │   │       └── verifier
+│           │   ├── config
+│           │   ├── endpoint
+│           │   ├── exceptions
+│           │   └── model
+│           │       └── token
+│           └── user
+│               ├── repository
+│               └── service
+└── resources
+    ├── static
+    └── templates
+</code></pre>
 <h2>Ajax authentication</h2>
 <p>In the context of AJAX authentication, the user provides credentials in a JSON payload, sent as part of an XMLHttpRequest.</p>
 <p>In this first part of the tutorial, AJAX authentication is implemented using the standard patterns provided by the Spring Security framework. The following components need to be implemented:</p>
