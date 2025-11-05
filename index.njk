@@ -6,15 +6,28 @@ navtitle: "Blog"
 date: 2020-01-01
 ---
 {% set postslist = collections.posts %}
+{% set currentYear = "" %}
 
-<ul class="post-list">
+<div class="post-list">
 {% for post in postslist | reverse %}
   {% if post.data.title != "draft" %}
+    {% set postYear = post.data.date | dateYear %}
+    {% if postYear != currentYear %}
+      {% if currentYear != "" %}
+</ul>
+      {% endif %}
+<h2 class="month-year">{{ postYear }}</h2>
+<ul>
+      {% set currentYear = postYear %}
+    {% endif %}
   <li>
-    <time class="post-date">{{ post.data.date | readableDate }}</time>
-    <div class="post-title"><a href="{{ post.url | url }}">{{ post.data.title }}</a></div>
+    <time class="post-date">{{ post.data.date | dateMonthDay }}:</time>
+    <span class="post-title"><a href="{{ post.url | url }}">{{ post.data.title }}</a></span>
   </li>
   {% endif %}
 {% endfor %}
+{% if currentYear != "" %}
 </ul>
+{% endif %}
+</div>
 

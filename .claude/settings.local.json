@@ -26,7 +26,8 @@
       "WebFetch(domain:wezterm.org)",
       "WebFetch(domain:meyerweb.com)",
       "WebFetch(domain:devcara.com)",
-      "WebFetch(domain:cleberg.net)"
+      "WebFetch(domain:cleberg.net)",
+      "WebFetch(domain:bacardi55.io)"
     ],
     "deny": []
   }
